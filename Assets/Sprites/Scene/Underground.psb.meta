@@ -33,7 +33,7 @@ ScriptedImporter:
     spriteMeshType: 1
     alignment: 0
     spritePivot: {x: 0.5, y: 0.5}
-    spritePixelsToUnits: 100
+    spritePixelsToUnits: 200
     spriteBorder: {x: 0, y: 0, z: 0, w: 0}
     spriteGenerateFallbackPhysicsShape: 0
     generateCubemap: 6
@@ -93,15 +93,15 @@ ScriptedImporter:
   rigSpriteImportData:
   - name: Opened Coffin
     originalName: 
-    pivot: {x: 0.5, y: 0}
+    pivot: {x: 0.5, y: 0.07906654}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 9
-      y: 2059
-      width: 492
-      height: 210
+      x: 12
+      y: 2044
+      width: 516
+      height: 237
     spriteID: 980b3aa6a24eb6541a306d8d37fa40c9
     spriteBone: []
     spriteOutline: []
@@ -111,18 +111,18 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 9, y: 2059}
+    uvTransform: {x: 12, y: 2044}
   - name: Closed Coffin
     originalName: 
-    pivot: {x: 0.5, y: 0}
+    pivot: {x: 0.5, y: 0.05706709}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 607
-      y: 2059
-      width: 492
-      height: 286
+      x: 609
+      y: 2044
+      width: 517
+      height: 312
     spriteID: 859bc2a3e52ab7a498b1c24c82e515c1
     spriteBone: []
     spriteOutline: []
@@ -132,18 +132,18 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 607, y: 2059}
+    uvTransform: {x: 609, y: 2044}
   - name: Rigth Coffin With Snake
     originalName: 
-    pivot: {x: 0.35, y: 0}
+    pivot: {x: 0.36, y: 0.06}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 15
-      y: 1823
-      width: 306
-      height: 188
+      x: 17
+      y: 1810
+      width: 330
+      height: 214
     spriteID: 115631ebe24757f43b3914225dca47d1
     spriteBone: []
     spriteOutline: []
@@ -153,18 +153,18 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 15, y: 1823}
+    uvTransform: {x: 17, y: 1810}
   - name: Left Coffin With Snake
     originalName: 
-    pivot: {x: 0.65, y: 0}
+    pivot: {x: 0.64, y: 0.06}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 537
-      y: 1841
-      width: 306
-      height: 188
+      x: 539
+      y: 1828
+      width: 330
+      height: 213
     spriteID: c50efbce367f353408cb7f94fe8ad288
     spriteBone: []
     spriteOutline: []
@@ -174,18 +174,18 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 537, y: 1841}
+    uvTransform: {x: 539, y: 1828}
   - name: Left Coffin With Awake Snake
     originalName: 
-    pivot: {x: 0.35, y: 0}
+    pivot: {x: 0.36, y: 0.06}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 27
-      y: 1561
-      width: 306
-      height: 188
+      x: 29
+      y: 1548
+      width: 329
+      height: 214
     spriteID: 4ffdb595556f92442bc2d71decc4d2b1
     spriteBone: []
     spriteOutline: []
@@ -195,18 +195,18 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 27, y: 1561}
+    uvTransform: {x: 29, y: 1548}
   - name: Left Coffin With Awake Snak
     originalName: 
-    pivot: {x: 0.65, y: 0}
+    pivot: {x: 0.64, y: 0.06}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 525
-      y: 1579
-      width: 304
-      height: 188
+      x: 527
+      y: 1566
+      width: 329
+      height: 213
     spriteID: dea472f1e781d1d47900031ff3a16677
     spriteBone: []
     spriteOutline: []
@@ -216,18 +216,18 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 525, y: 1579}
+    uvTransform: {x: 527, y: 1566}
   - name: Plate
     originalName: 
-    pivot: {x: 0.5, y: 0.3}
+    pivot: {x: 0.5, y: 0.23149973}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 11
-      y: 1377
-      width: 446
-      height: 58
+      x: 12
+      y: 1364
+      width: 471
+      height: 83
     spriteID: 4becea0b988cddc4983fb1015cbf1fe0
     spriteBone: []
     spriteOutline: []
@@ -237,18 +237,18 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 11, y: 1377}
+    uvTransform: {x: 12, y: 1364}
   - name: Full
     originalName: 
-    pivot: {x: 0.5, y: 0}
+    pivot: {x: 0.5, y: 0.1}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 3
-      y: 1097
-      width: 222
-      height: 188
+      y: 1084
+      width: 248
+      height: 212
     spriteID: c548692afa2f13f4eb4fed695ec58355
     spriteBone: []
     spriteOutline: []
@@ -258,18 +258,18 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 3, y: 1097}
+    uvTransform: {x: 3, y: 1084}
   - name: Left Broken Stair
     originalName: 
-    pivot: {x: 0.5, y: 0}
+    pivot: {x: 0.5, y: 0.1}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 11
-      y: 833
-      width: 232
-      height: 194
+      x: 12
+      y: 820
+      width: 257
+      height: 219
     spriteID: 107a0fade2d44c24089dafa03711495d
     spriteBone: []
     spriteOutline: []
@@ -279,18 +279,18 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 11, y: 833}
+    uvTransform: {x: 12, y: 820}
   - name: Right Broken Stair
     originalName: 
-    pivot: {x: 0.5, y: 0}
+    pivot: {x: 0.5, y: 0.1}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 375
-      y: 835
-      width: 234
-      height: 192
+      x: 377
+      y: 821
+      width: 257
+      height: 218
     spriteID: 5187814ab128c774fb88cdfab5d36b47
     spriteBone: []
     spriteOutline: []
@@ -300,18 +300,18 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 375, y: 835}
+    uvTransform: {x: 377, y: 821}
   - name: Left Stair
     originalName: 
-    pivot: {x: 0.5, y: 0}
+    pivot: {x: 0.5, y: 0.1}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 3
-      y: 547
-      width: 232
-      height: 192
+      x: 4
+      y: 533
+      width: 257
+      height: 218
     spriteID: ce57d0643b3aa5d4fbbaa2235d20dcfe
     spriteBone: []
     spriteOutline: []
@@ -321,18 +321,18 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 3, y: 547}
+    uvTransform: {x: 4, y: 533}
   - name: Right Stair
     originalName: 
-    pivot: {x: 0.5, y: 0}
+    pivot: {x: 0.5, y: 0.1}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 379
-      y: 551
-      width: 230
-      height: 194
+      y: 537
+      width: 257
+      height: 219
     spriteID: cd1b2a26174b98f40b8c01bd869fdba9
     spriteBone: []
     spriteOutline: []
@@ -342,18 +342,18 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 379, y: 551}
+    uvTransform: {x: 379, y: 537}
   - name: Left Decoration (1)
     originalName: 
-    pivot: {x: -1, y: 0}
+    pivot: {x: -0.5, y: 0.1}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 13
-      y: 245
-      width: 70
-      height: 188
+      x: 16
+      y: 232
+      width: 93
+      height: 212
     spriteID: 62cd7f3981d4b494085bc326894e64b7
     spriteBone: []
     spriteOutline: []
@@ -363,18 +363,18 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 13, y: 245}
+    uvTransform: {x: 16, y: 232}
   - name: Right Decoration (2)
     originalName: 
-    pivot: {x: 1.3, y: 0}
+    pivot: {x: 1.3, y: 0.1}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 249
-      y: 249
-      width: 94
-      height: 186
+      x: 251
+      y: 235
+      width: 119
+      height: 212
     spriteID: a985554632587414585564a084ff2dee
     spriteBone: []
     spriteOutline: []
@@ -384,18 +384,18 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 249, y: 249}
+    uvTransform: {x: 251, y: 235}
   - name: Left Decoration (2)
     originalName: 
-    pivot: {x: -0.3, y: 0}
+    pivot: {x: -0.3, y: 0.1}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 477
-      y: 249
-      width: 94
-      height: 188
+      x: 478
+      y: 236
+      width: 119
+      height: 212
     spriteID: 9368eb519dfbfa44283cae0f6e6cb883
     spriteBone: []
     spriteOutline: []
@@ -405,18 +405,18 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 477, y: 249}
+    uvTransform: {x: 478, y: 236}
   - name: Right Decoration (1)
     originalName: 
-    pivot: {x: 2, y: 0}
+    pivot: {x: 1.5, y: 0.1}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 737
-      y: 250
-      width: 68
-      height: 188
+      x: 739
+      y: 233
+      width: 93
+      height: 212
     spriteID: 124350cfc56cd7a4cab2bb79536b3b8c
     spriteBone: []
     spriteOutline: []
@@ -426,18 +426,18 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 737, y: 250}
+    uvTransform: {x: 739, y: 233}
   - name: Background
     originalName: 
-    pivot: {x: 0.5, y: 0.07}
+    pivot: {x: 0.5, y: 0.1}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 22
-      y: 1
-      width: 232
-      height: 202
+      x: 44
+      y: 4
+      width: 226
+      height: 194
     spriteID: 515c39c06772ffd43af58e17ad405bc6
     spriteBone: []
     spriteOutline: []
@@ -447,7 +447,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 22, y: 1}
+    uvTransform: {x: 44, y: 4}
   characterData:
     bones: []
     parts: []
@@ -461,12 +461,45 @@ ScriptedImporter:
     dimension: {x: 0, y: 0}
     characterGroups: []
     boneReadOnly: 0
-  platformSettings: []
+  platformSettings:
+  - name: DefaultTexturePlatform
+    overridden: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
+  - name: Standalone
+    overridden: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
+  - name: Server
+    overridden: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
   mosaicLayers: 1
   characterMode: 1
   documentPivot: {x: 0, y: 0}
   documentAlignment: 7
-  importHiddenLayers: 0
+  importHiddenLayers: 1
   layerMappingOption: 2
   generatePhysicsShape: 0
   paperDollMode: 0
