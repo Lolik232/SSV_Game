@@ -110,7 +110,7 @@ public class PlayerController : MonoBehaviour
     {
         float yMovement = _rb.velocity.y;
 
-        if (_isGrounded && yMovement <= float.Epsilon || _isWallSliding)
+        if (_isGrounded && yMovement <= 0.01f || _isWallSliding)
         {
             RestoreAmountOfJumps();
         }
@@ -165,7 +165,7 @@ public class PlayerController : MonoBehaviour
     {
         float xMovement = _rb.velocity.x;
 
-        _isWalking = Mathf.Abs(xMovement) > float.Epsilon;
+        _isWalking = _isGrounded && Mathf.Abs(xMovement) > float.Epsilon;
     }
 
     private void CheckInput()

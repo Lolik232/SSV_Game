@@ -47,7 +47,7 @@ ScriptedImporter:
     flipbookRows: 0
     flipbookColumns: 0
     ignorePngGamma: 0
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 0
@@ -91,228 +91,18 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   mosaicSpriteImportData: []
   rigSpriteImportData:
-  - name: Opened Coffin
+  - name: L
     originalName: 
-    pivot: {x: 0.5, y: 0.07906654}
-    alignment: 9
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 12
-      y: 2044
-      width: 516
-      height: 237
-    spriteID: 980b3aa6a24eb6541a306d8d37fa40c9
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    parentGroupIndex: -1
-    uvTransform: {x: 12, y: 2044}
-  - name: Closed Coffin
-    originalName: 
-    pivot: {x: 0.5, y: 0.05706709}
-    alignment: 9
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 609
-      y: 2044
-      width: 517
-      height: 312
-    spriteID: 859bc2a3e52ab7a498b1c24c82e515c1
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    parentGroupIndex: -1
-    uvTransform: {x: 609, y: 2044}
-  - name: Rigth Coffin With Snake
-    originalName: 
-    pivot: {x: 0.36, y: 0.06}
-    alignment: 9
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 17
-      y: 1810
-      width: 330
-      height: 214
-    spriteID: 115631ebe24757f43b3914225dca47d1
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    parentGroupIndex: -1
-    uvTransform: {x: 17, y: 1810}
-  - name: Left Coffin With Snake
-    originalName: 
-    pivot: {x: 0.64, y: 0.06}
-    alignment: 9
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 539
-      y: 1828
-      width: 330
-      height: 213
-    spriteID: c50efbce367f353408cb7f94fe8ad288
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    parentGroupIndex: -1
-    uvTransform: {x: 539, y: 1828}
-  - name: Left Coffin With Awake Snake
-    originalName: 
-    pivot: {x: 0.36, y: 0.06}
-    alignment: 9
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 29
-      y: 1548
-      width: 329
-      height: 214
-    spriteID: 4ffdb595556f92442bc2d71decc4d2b1
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    parentGroupIndex: -1
-    uvTransform: {x: 29, y: 1548}
-  - name: Left Coffin With Awake Snak
-    originalName: 
-    pivot: {x: 0.64, y: 0.06}
-    alignment: 9
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 527
-      y: 1566
-      width: 329
-      height: 213
-    spriteID: dea472f1e781d1d47900031ff3a16677
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    parentGroupIndex: -1
-    uvTransform: {x: 527, y: 1566}
-  - name: Plate
-    originalName: 
-    pivot: {x: 0.5, y: 0.23149973}
-    alignment: 9
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 12
-      y: 1364
-      width: 471
-      height: 83
-    spriteID: 4becea0b988cddc4983fb1015cbf1fe0
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    parentGroupIndex: -1
-    uvTransform: {x: 12, y: 1364}
-  - name: Full
-    originalName: 
-    pivot: {x: 0.5, y: 0.1}
-    alignment: 9
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 3
-      y: 1084
-      width: 248
-      height: 212
-    spriteID: c548692afa2f13f4eb4fed695ec58355
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    parentGroupIndex: -1
-    uvTransform: {x: 3, y: 1084}
-  - name: Left Broken Stair
-    originalName: 
-    pivot: {x: 0.5, y: 0.1}
-    alignment: 9
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 12
-      y: 820
-      width: 257
-      height: 219
-    spriteID: 107a0fade2d44c24089dafa03711495d
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    parentGroupIndex: -1
-    uvTransform: {x: 12, y: 820}
-  - name: Right Broken Stair
-    originalName: 
-    pivot: {x: 0.5, y: 0.1}
-    alignment: 9
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 377
-      y: 821
-      width: 257
-      height: 218
-    spriteID: 5187814ab128c774fb88cdfab5d36b47
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    parentGroupIndex: -1
-    uvTransform: {x: 377, y: 821}
-  - name: Left Stair
-    originalName: 
-    pivot: {x: 0.5, y: 0.1}
-    alignment: 9
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
-      y: 533
-      width: 257
-      height: 218
-    spriteID: ce57d0643b3aa5d4fbbaa2235d20dcfe
+      y: 884
+      width: 200
+      height: 200
+    spriteID: ee2521045c97a714c9d055883eb5574f
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -321,19 +111,19 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 4, y: 533}
-  - name: Right Stair
+    uvTransform: {x: 4, y: 884}
+  - name: B
     originalName: 
-    pivot: {x: 0.5, y: 0.1}
-    alignment: 9
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 379
-      y: 537
-      width: 257
-      height: 219
-    spriteID: cd1b2a26174b98f40b8c01bd869fdba9
+      x: 224
+      y: 884
+      width: 200
+      height: 200
+    spriteID: afba9a5bdf4584840bbcefa982d6c2e4
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -342,19 +132,19 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 379, y: 537}
-  - name: Left Decoration (1)
+    uvTransform: {x: 224, y: 884}
+  - name: R
     originalName: 
-    pivot: {x: -0.5, y: 0.1}
-    alignment: 9
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 16
-      y: 232
-      width: 93
-      height: 212
-    spriteID: 62cd7f3981d4b494085bc326894e64b7
+      x: 4
+      y: 664
+      width: 200
+      height: 200
+    spriteID: 18611b25f477c7f4b9840146db81edb1
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -363,19 +153,19 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 16, y: 232}
-  - name: Right Decoration (2)
+    uvTransform: {x: 4, y: 664}
+  - name: T
     originalName: 
-    pivot: {x: 1.3, y: 0.1}
-    alignment: 9
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 251
-      y: 235
-      width: 119
-      height: 212
-    spriteID: a985554632587414585564a084ff2dee
+      x: 224
+      y: 664
+      width: 200
+      height: 200
+    spriteID: 43a6af358844ada408fda6abc8d1622c
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -384,19 +174,19 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 251, y: 235}
-  - name: Left Decoration (2)
+    uvTransform: {x: 224, y: 664}
+  - name: LT
     originalName: 
-    pivot: {x: -0.3, y: 0.1}
-    alignment: 9
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 478
-      y: 236
-      width: 119
-      height: 212
-    spriteID: 9368eb519dfbfa44283cae0f6e6cb883
+      x: 4
+      y: 444
+      width: 200
+      height: 200
+    spriteID: 4619e762b384aed47ac6634422230f73
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -405,19 +195,19 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 478, y: 236}
-  - name: Right Decoration (1)
+    uvTransform: {x: 4, y: 444}
+  - name: RB
     originalName: 
-    pivot: {x: 1.5, y: 0.1}
-    alignment: 9
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 739
-      y: 233
-      width: 93
-      height: 212
-    spriteID: 124350cfc56cd7a4cab2bb79536b3b8c
+      x: 224
+      y: 444
+      width: 200
+      height: 200
+    spriteID: eefd489ceb167934b83d14a2533b4d39
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -426,19 +216,61 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 739, y: 233}
-  - name: Background
+    uvTransform: {x: 224, y: 444}
+  - name: RT
     originalName: 
-    pivot: {x: 0.5, y: 0.1}
-    alignment: 9
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 44
+      x: 4
+      y: 224
+      width: 200
+      height: 200
+    spriteID: c1e02a57805cd634daa99f59d53887e0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 4, y: 224}
+  - name: LB
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 224
+      y: 224
+      width: 200
+      height: 200
+    spriteID: 95464fee18cf6ad4d98e52ab3c96f0d0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 224, y: 224}
+  - name: C
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 224
       y: 4
-      width: 226
-      height: 194
-    spriteID: 515c39c06772ffd43af58e17ad405bc6
+      width: 200
+      height: 200
+    spriteID: e1d1e2d4ecd4b4c4187a1dbcc41a2bba
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -447,7 +279,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 44, y: 4}
+    uvTransform: {x: 224, y: 4}
   characterData:
     bones: []
     parts: []
