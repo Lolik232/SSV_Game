@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: T
+  m_Name: T Stair
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: -7371825274760370756, guid: 7b6c2bff1df5e9a46b6b8b4acf453167, type: 3}
+  m_Sprite: {fileID: 5118953734354190455, guid: 7b6c2bff1df5e9a46b6b8b4acf453167, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1

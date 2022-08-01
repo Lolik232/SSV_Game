@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     }
 
     [SerializeField]
-    private float _movementSpeed = 15f;
+    private float _movementSpeed = 10f;
 
     [SerializeField]
     private LayerMask _whatIsGround;
@@ -29,30 +29,25 @@ public class PlayerController : MonoBehaviour
     private float _wallSlideSpeed;
 
     [SerializeField]
-    private float _jumpForce = 35f;
+    private float _jumpForce = 16f;
     [SerializeField]
     private int _maxAmountOfJumps = 1;
-    [SerializeField]
-    private float _movementForceInAir;
     [SerializeField]
     private float _airDragMultiplier = 0.9f;
     [SerializeField]
     private float _jumpHeightMultiplier = 0.5f;
 
+    private float _jumpTimer;
+
+    [SerializeField]
+    private float _jumpTimerSet = 0.2f;
+
     private int _amountOfJumpsLeft;
 
     [SerializeField]
-    private float _wallHopForce;
-    [SerializeField]
     private float _wallJumpForce;
-
-    [SerializeField]
-    private Vector2 _wallHopDirection;
     [SerializeField]
     private Vector2 _wallJumpDirection;
-
-    private int _facingDirection = 1;
-
 
     private float _movementInputDirection;
 
@@ -61,7 +56,9 @@ public class PlayerController : MonoBehaviour
     private bool _isGrounded;
     private bool _isTouchingWall;
     private bool _isWallSliding;
-    private bool _canJump;
+    private bool _canNormalJump;
+    private bool _canWallJump;
+    private bool _isAttemptingToJump;
 
     private Rigidbody2D _rb;
     private Animator _animator;
@@ -74,7 +71,6 @@ public class PlayerController : MonoBehaviour
 
         RestoreAmountOfJumps();
 
-        _wallHopDirection.Normalize();
         _wallJumpDirection.Normalize();
     }
 
@@ -86,6 +82,7 @@ public class PlayerController : MonoBehaviour
         UpdateaAnimations();
         CheckIfCanJump();
         CheckIfWallSliding();
+        CheckJump();
     }
 
     private void FixedUpdate()
@@ -96,9 +93,17 @@ public class PlayerController : MonoBehaviour
 
     private void CheckIfWallSliding()
     {
-        float yMovement = _rb.velocity.y;
+        _isWallSliding = _isTouchingWall && IsInputDirectionSameToFacingDirection();
+    }
 
-        _isWallSliding = _isTouchingWall && !_isGrounded && yMovement < -float.Epsilon;
+    private bool IsInputDirectionSameToFacingDirection()
+    {
+        return float.IsNegative(_movementInputDirection) == !_isFacingRight || !IsTryingToMove();
+    }
+
+    private bool IsTryingToMove()
+    {
+        return Mathf.Abs(_movementInputDirection) > 0.01f;
     }
 
     private void RestoreAmountOfJumps()
@@ -110,12 +115,14 @@ public class PlayerController : MonoBehaviour
     {
         float yMovement = _rb.velocity.y;
 
-        if (_isGrounded && yMovement <= 0.01f || _isWallSliding)
+        if (_isGrounded && yMovement <= 0.01f)
         {
             RestoreAmountOfJumps();
         }
 
-        _canJump = _amountOfJumpsLeft > 0;
+        _canNormalJump = _amountOfJumpsLeft > 0;
+
+        _canWallJump = _isTouchingWall;
     }
 
     private void CheckSurroundings()
@@ -154,8 +161,7 @@ public class PlayerController : MonoBehaviour
 
     private void CheckMovementDirection()
     {
-        if (_isFacingRight && _movementInputDirection < -float.Epsilon ||
-            !_isFacingRight && _movementInputDirection > float.Epsilon)
+        if (!IsInputDirectionSameToFacingDirection())
         {
             Flip();
         }
@@ -174,7 +180,15 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetButtonDown("Jump"))
         {
-            TryJump();
+            if (_isGrounded)
+            {
+                Jump(NormalJump);
+            }
+            else
+            {
+                _jumpTimer = _jumpTimerSet;
+                _isAttemptingToJump = true;
+            }
         }
 
         if (Input.GetButtonUp("Jump") && _rb.velocity.y > float.Epsilon)
@@ -191,47 +205,71 @@ public class PlayerController : MonoBehaviour
         _rb.velocity = new Vector2(xMovement, yMovement);
     }
 
-    private void TryJump()
+    private void CheckJump()
     {
-        if (_canJump)
+        if (_jumpTimer > 0)
         {
-            if (!_isWallSliding)
+            if (_isGrounded)
             {
-                NormalJump();
+                Jump(NormalJump);
             }
-            else if (Mathf.Abs(_movementInputDirection) > float.Epsilon)
+            else if (_isTouchingWall &&
+                    IsTryingToMove() &&
+                    !IsInputDirectionSameToFacingDirection())
             {
-                WallJump(_wallJumpForce, _wallJumpDirection, _movementInputDirection);
-            }
-            else
-            {
-                WallJump(_wallHopForce, _wallHopDirection, -_facingDirection);
+                Jump(WallJump);
             }
         }
+
+        if (_isAttemptingToJump)
+        {
+            _jumpTimer -= Time.deltaTime;
+        }
+    }
+
+    delegate void JumpType();
+
+    private void Jump(JumpType jump)
+    {
+        jump();
+
+        _amountOfJumpsLeft--;
+
+        _jumpTimer = 0;
+        _isAttemptingToJump = false;
     }
 
     private void NormalJump()
     {
-        float xMovement = _rb.velocity.x;
-        float yMovement = _jumpForce;
+        if (_canNormalJump)
+        {
+            float xMovement = _rb.velocity.x;
+            float yMovement = _jumpForce;
 
-        _rb.velocity = new Vector2(xMovement, yMovement);
-
-        _amountOfJumpsLeft--;
+            _rb.velocity = new Vector2(xMovement, yMovement);
+        }
     }
 
-    private void WallJump(float force, Vector2 wallDirection, float unitDirection)
+    private void WallJump()
     {
-        float xImpulse = force * wallDirection.x * unitDirection;
-        float yImpulse = force * wallDirection.y;
+        if (_canWallJump)
+        {
+            float xMovement = _rb.velocity.x;
+            float yMovement = 0;
 
-        var forceToAdd = new Vector2(xImpulse, yImpulse);
+            _rb.velocity = new Vector2(xMovement, yMovement);
 
-        _rb.AddForce(forceToAdd, ForceMode2D.Impulse);
+            float xImpulse = _wallJumpForce * _wallJumpDirection.x * _movementInputDirection;
+            float yImpulse = _wallJumpForce * _wallJumpDirection.y;
 
-        _isWallSliding = false;
+            var forceToAdd = new Vector2(xImpulse, yImpulse);
 
-        _amountOfJumpsLeft--;
+            _rb.AddForce(forceToAdd, ForceMode2D.Impulse);
+
+            _isWallSliding = false;
+
+            RestoreAmountOfJumps();
+        }
     }
 
     private void ApplyMovement()
@@ -239,33 +277,17 @@ public class PlayerController : MonoBehaviour
         float xMovement = _rb.velocity.x;
         float yMovement = _rb.velocity.y;
 
-        if (_isGrounded)
+        if (!_isGrounded && !_isWallSliding && !IsTryingToMove())
         {
-            xMovement = _movementInputDirection * _movementSpeed;
-            yMovement = _rb.velocity.y;
+            xMovement *= _airDragMultiplier;
         }
-        else if (!_isWallSliding)
-        {
-            if (Mathf.Abs(_movementInputDirection) > float.Epsilon)
-            {
-                var forceToAdd = new Vector2(_movementForceInAir * _movementInputDirection, 0);
-
-                _rb.AddForce(forceToAdd);
-
-                if (Mathf.Abs(_rb.velocity.x) > _movementSpeed)
-                {
-                    xMovement = _movementSpeed * _movementInputDirection;
-                }
-            }
-            else
-            {
-                xMovement *= _airDragMultiplier;
-            } 
-        } 
-
-        if (_isWallSliding && yMovement < -_wallSlideSpeed)
+        else if (_isWallSliding && yMovement < -_wallSlideSpeed)
         {
             yMovement = -_wallSlideSpeed;
+        }
+        else
+        {
+            xMovement = _movementSpeed * _movementInputDirection;
         }
 
         _rb.velocity = new Vector2(xMovement, yMovement);
@@ -275,7 +297,6 @@ public class PlayerController : MonoBehaviour
     {
         if (!_isWallSliding)
         {
-            _facingDirection = -_facingDirection;
             _isFacingRight = !_isFacingRight;
 
             var scale = transform.localScale;

@@ -93,7 +93,7 @@ ScriptedImporter:
   rigSpriteImportData:
   - name: L
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -102,7 +102,7 @@ ScriptedImporter:
       y: 884
       width: 200
       height: 200
-    spriteID: ee2521045c97a714c9d055883eb5574f
+    spriteID: 28d76bc77aae98747a3acc0dc8a37d6b
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -111,7 +111,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 4, y: 884}
+    uvTransform: {x: 4, y: 4}
   - name: B
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -123,7 +123,7 @@ ScriptedImporter:
       y: 884
       width: 200
       height: 200
-    spriteID: afba9a5bdf4584840bbcefa982d6c2e4
+    spriteID: 09080f38b483a61489cd2a44d97241fd
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -144,7 +144,7 @@ ScriptedImporter:
       y: 664
       width: 200
       height: 200
-    spriteID: 18611b25f477c7f4b9840146db81edb1
+    spriteID: 88dfcde527919b8478f8cb3eaecc5a99
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -154,7 +154,7 @@ ScriptedImporter:
     tessellationDetail: 0
     parentGroupIndex: -1
     uvTransform: {x: 4, y: 664}
-  - name: T
+  - name: T Stair
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -165,7 +165,7 @@ ScriptedImporter:
       y: 664
       width: 200
       height: 200
-    spriteID: 43a6af358844ada408fda6abc8d1622c
+    spriteID: 54fdb64b58ca81a4ba1d1ccd0ba42685
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -175,7 +175,7 @@ ScriptedImporter:
     tessellationDetail: 0
     parentGroupIndex: -1
     uvTransform: {x: 224, y: 664}
-  - name: LT
+  - name: LT Stair
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -186,7 +186,7 @@ ScriptedImporter:
       y: 444
       width: 200
       height: 200
-    spriteID: 4619e762b384aed47ac6634422230f73
+    spriteID: ba4f45877a59f9842a31e96f0516355d
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -207,7 +207,7 @@ ScriptedImporter:
       y: 444
       width: 200
       height: 200
-    spriteID: eefd489ceb167934b83d14a2533b4d39
+    spriteID: 64b5fdb3823553b44b0a718b839e9f24
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -217,7 +217,28 @@ ScriptedImporter:
     tessellationDetail: 0
     parentGroupIndex: -1
     uvTransform: {x: 224, y: 444}
-  - name: RT
+  - name: LT
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 444
+      y: 444
+      width: 200
+      height: 200
+    spriteID: dfdcfc1d30f1e7444a8e3019c1409267
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 444, y: 444}
+  - name: RT Stair
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -228,7 +249,7 @@ ScriptedImporter:
       y: 224
       width: 200
       height: 200
-    spriteID: c1e02a57805cd634daa99f59d53887e0
+    spriteID: 7ff12641c11f16d4eb89215429983402
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -249,7 +270,7 @@ ScriptedImporter:
       y: 224
       width: 200
       height: 200
-    spriteID: 95464fee18cf6ad4d98e52ab3c96f0d0
+    spriteID: a8d2f16d5cf4abe41b66a79cc606d617
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -259,6 +280,48 @@ ScriptedImporter:
     tessellationDetail: 0
     parentGroupIndex: -1
     uvTransform: {x: 224, y: 224}
+  - name: RT
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 444
+      y: 224
+      width: 200
+      height: 200
+    spriteID: 7ac555bf7c402474ab602cdc702e4296
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 444, y: 224}
+  - name: T
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 4
+      width: 200
+      height: 200
+    spriteID: 2c246231aaf3eb649b2037ccad9ebb9f
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 4, y: 4}
   - name: C
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -270,7 +333,7 @@ ScriptedImporter:
       y: 4
       width: 200
       height: 200
-    spriteID: e1d1e2d4ecd4b4c4187a1dbcc41a2bba
+    spriteID: fe421752bcbfdec4ebc3b6a54583a010
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -347,7 +410,7 @@ ScriptedImporter:
     spriteName: Tiles
     isGroup: 0
     parentIndex: -1
-    spriteID: af6c23c1c40cdbb4db897c3f166b97a5
+    spriteID: 28d76bc77aae98747a3acc0dc8a37d6b
     layerID: 0
     mosaicPosition: {x: 4, y: 4}
     flatten: 0

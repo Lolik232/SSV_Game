@@ -283,13 +283,11 @@ MonoBehaviour:
   _wallSlideSpeed: 3
   _jumpForce: 16
   _maxAmountOfJumps: 1
-  _movementForceInAir: 50
   _airDragMultiplier: 0.95
   _jumpHeightMultiplier: 0.5
-  _wallHopForce: 10
+  _jumpTimerSet: 0.2
   _wallJumpForce: 15
-  _wallHopDirection: {x: 1, y: 0.5}
-  _wallJumpDirection: {x: 1, y: 1}
+  _wallJumpDirection: {x: 1, y: 0.5}
 --- !u!114 &2790941051723618479
 MonoBehaviour:
   m_ObjectHideFlags: 0
