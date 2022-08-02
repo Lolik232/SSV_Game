@@ -7,62 +7,109 @@ public class PlayerController : MonoBehaviour
         Idle,
         Walk,
         Jump,
-        WallSlide
+        WallSlide,
+        Climb
     }
+
+    private float _movementInputDirection;
+
+    private int _facingDirection = 1;
+    private int _lastWallJumpDirection;
 
     [SerializeField]
     private float _movementSpeed = 10f;
-
     [SerializeField]
-    private LayerMask _whatIsGround;
-
-    [SerializeField]
-    private Transform _groundChecker;
-    [SerializeField]
-    private float _groundCheckRadius;
-
-    [SerializeField]
-    private Transform _wallChecker;
-    [SerializeField]
-    private float _wallCheckDistance;
-    [SerializeField]
-    private float _wallSlideSpeed;
-
+    private float _wallSlideSpeed = 2f;
     [SerializeField]
     private float _jumpForce = 16f;
     [SerializeField]
-    private int _maxAmountOfJumps = 1;
+    private float _wallJumpForce = 10f;
+
     [SerializeField]
     private float _airDragMultiplier = 0.9f;
     [SerializeField]
     private float _jumpHeightMultiplier = 0.5f;
 
-    private float _jumpTimer;
+    [SerializeField]
+    private float _groundCheckRadius;
+    [SerializeField]
+    private float _wallCheckDistance;
 
     [SerializeField]
     private float _jumpTimerSet = 0.2f;
+    [SerializeField]
+    private float _turnTimerSet = 0.1f;
+    [SerializeField]
+    private float _wallJumpTimerSet = 0.5f;
+
+    [SerializeField]
+    private int _maxAmountOfJumps = 1;
+
+    [SerializeField]
+    private Transform _groundChecker;
+    [SerializeField]
+    private Transform _wallChecker;
+    [SerializeField]
+    private Transform _ledgeChecker;
+
+    [SerializeField]
+    private LayerMask _whatIsGround;
+
+    [SerializeField]
+    private Vector2 _ledgeClimbOffsetStart;
+    [SerializeField]
+    private Vector2 _ledgeClimbOffsetEnd;
+
+    [SerializeField]
+    private Vector2 _wallJumpDirection;
+
+    private float _jumpTimer;
+    private float _turnTimer;
+    private float _wallJumpTimer;
 
     private int _amountOfJumpsLeft;
 
     [SerializeField]
-    private float _wallJumpForce;
-    [SerializeField]
-    private Vector2 _wallJumpDirection;
-
-    private float _movementInputDirection;
-
     private bool _isFacingRight = true;
-    private bool _isWalking;
-    private bool _isGrounded;
-    private bool _isTouchingWall;
-    private bool _isWallSliding;
-    private bool _canNormalJump;
-    private bool _canWallJump;
-    private bool _isAttemptingToJump;
+    [SerializeField]
+    private bool _isWalking = false;
+    [SerializeField]
+    private bool _isGrounded = false;
+    [SerializeField]
+    private bool _isTouchingWall = false;
+    [SerializeField]
+    private bool _isWallSliding = false;
+    [SerializeField]
+    private bool _isTouchingLedge = false;
+    [SerializeField]
+    private bool _canNormalJump = false;
+    [SerializeField]
+    private bool _canWallJump = false;
+    [SerializeField]
+    private bool _isAttemptingToJump = false;
+    [SerializeField]
+    private bool _checkJumpMultiplier = false;
+    [SerializeField]
+    private bool _canMove = true;
+    [SerializeField]
+    private bool _canFlip = true;
+    private bool _hasWallJumped = false;
+    [SerializeField]
+    private bool _canClimbLedge = false;
+    [SerializeField]
+    private bool _ledgeDetected = false;
+
+    [SerializeField]
+    private Vector2 _ledgePosBottom;
+    [SerializeField]
+    private Vector2 _ledgePosStart;
+    [SerializeField]
+    private Vector2 _ledgePosEnd;
+
+    private RaycastHit2D[] _raycastBuffer = new RaycastHit2D[4];
 
     private Rigidbody2D _rb;
     private Animator _animator;
-
 
     private void Start()
     {
@@ -83,6 +130,7 @@ public class PlayerController : MonoBehaviour
         CheckIfCanJump();
         CheckIfWallSliding();
         CheckJump();
+        CheckLedgeClimb();
     }
 
     private void FixedUpdate()
@@ -93,12 +141,12 @@ public class PlayerController : MonoBehaviour
 
     private void CheckIfWallSliding()
     {
-        _isWallSliding = _isTouchingWall && IsInputDirectionSameToFacingDirection();
+        _isWallSliding = _isTouchingWall && IsInputDirectionSameTo(_facingDirection) && _rb.velocity.y < 0 && !_canClimbLedge;
     }
 
-    private bool IsInputDirectionSameToFacingDirection()
+    private bool IsInputDirectionSameTo(float direction)
     {
-        return float.IsNegative(_movementInputDirection) == !_isFacingRight || !IsTryingToMove();
+        return float.IsNegative(_movementInputDirection) == float.IsNegative(direction) || !IsTryingToMove();
     }
 
     private bool IsTryingToMove()
@@ -125,12 +173,69 @@ public class PlayerController : MonoBehaviour
         _canWallJump = _isTouchingWall;
     }
 
+    private void CheckLedgeClimb()
+    {
+        if (_ledgeDetected && !_canClimbLedge)
+        {
+            _canClimbLedge = true;
+
+            float startX = _ledgePosBottom.x;
+            float endX = _ledgePosBottom.x;
+            float startY = _ledgePosBottom.y + _ledgeClimbOffsetStart.y;
+            float endY = _ledgePosBottom.y + _ledgeClimbOffsetEnd.y;
+
+            if (_isFacingRight)
+            {
+                startX += _wallCheckDistance - _ledgeClimbOffsetStart.x;
+                endX += _ledgeClimbOffsetEnd.x;
+            }
+            else
+            {
+                startX += _ledgeClimbOffsetStart.x;
+                endX -= _ledgeClimbOffsetEnd.x;
+            }
+
+            _ledgePosStart = new Vector2(startX, startY);
+            _ledgePosEnd = new Vector2(endX, endY);
+
+            _canMove = false;
+            _canFlip = false;
+        }
+
+        if (_canClimbLedge)
+        {
+            _rb.position = _ledgePosStart;
+        }
+    }
+
+    public void FinishLedgeClimb()
+    {
+        _canClimbLedge = false;
+        int hitCounter = _rb.Cast(Vector2.up, _raycastBuffer, _ledgePosEnd.y - _ledgePosStart.y) + 
+                         _rb.Cast(Vector2.right, _raycastBuffer, _ledgePosEnd.x - _ledgePosStart.x);
+
+        if (hitCounter == 0)
+        {
+            _rb.position = _ledgePosEnd;
+        }
+        
+        _canMove = true;
+        _canFlip = true;
+        _ledgeDetected = false;
+    }
+
     private void CheckSurroundings()
     {
         _isGrounded = Physics2D.OverlapCircle(_groundChecker.position, _groundCheckRadius, _whatIsGround);
 
-        Vector2 wallCheckDirection = _isFacingRight ? Vector2.right : Vector2.left;
-        _isTouchingWall = Physics2D.Raycast(_wallChecker.position, wallCheckDirection, _wallCheckDistance, _whatIsGround);
+        _isTouchingWall = Physics2D.Raycast(_wallChecker.position, Vector2.right, _wallCheckDistance * _facingDirection, _whatIsGround);
+        _isTouchingLedge = Physics2D.Raycast(_ledgeChecker.position, Vector2.right, _wallCheckDistance * _facingDirection, _whatIsGround);
+
+        if (_isTouchingWall && !_isTouchingLedge && !_ledgeDetected)
+        {
+            _ledgeDetected = true;
+            _ledgePosBottom = _wallChecker.position;
+        }
     }
 
     private void UpdateaAnimations()
@@ -145,6 +250,10 @@ public class PlayerController : MonoBehaviour
             {
                 _animator.SetInteger("state", (int)AnimationStates.Idle);
             }
+        }
+        else if (_canClimbLedge)
+        {
+            _animator.SetInteger("state", (int)AnimationStates.Climb);
         }
         else
         {
@@ -161,7 +270,7 @@ public class PlayerController : MonoBehaviour
 
     private void CheckMovementDirection()
     {
-        if (!IsInputDirectionSameToFacingDirection())
+        if (!IsInputDirectionSameTo(_facingDirection))
         {
             Flip();
         }
@@ -191,8 +300,28 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (Input.GetButtonUp("Jump") && _rb.velocity.y > float.Epsilon)
+        if (Input.GetButtonDown("Horizontal") && _isTouchingWall &&
+            !_isGrounded && !IsInputDirectionSameTo(_facingDirection))
         {
+            _canMove = false;
+            _canFlip = false;
+
+            _turnTimer = _turnTimerSet;
+        }
+
+        if (_turnTimer > 0)
+        {
+            _turnTimer -= Time.deltaTime;
+        }
+        else
+        {
+            _canMove = true;
+            _canFlip = true;
+        }
+
+        if (_checkJumpMultiplier && !Input.GetButton("Jump") && _rb.velocity.y > float.Epsilon)
+        {
+            _checkJumpMultiplier = false;
             SlowJumpDown();
         }
     }
@@ -215,7 +344,7 @@ public class PlayerController : MonoBehaviour
             }
             else if (_isTouchingWall &&
                     IsTryingToMove() &&
-                    !IsInputDirectionSameToFacingDirection())
+                    !IsInputDirectionSameTo(_facingDirection))
             {
                 Jump(WallJump);
             }
@@ -224,6 +353,26 @@ public class PlayerController : MonoBehaviour
         if (_isAttemptingToJump)
         {
             _jumpTimer -= Time.deltaTime;
+        }
+
+        if (_wallJumpTimer > 0)
+        {
+            if (_hasWallJumped && !IsInputDirectionSameTo(_lastWallJumpDirection))
+            {
+                float xMovement = _rb.velocity.x;
+                float yMovement = Mathf.Min(0, _rb.velocity.y);
+
+                _rb.velocity = new Vector2(xMovement, yMovement);
+
+                _hasWallJumped = false;
+            }
+
+            _wallJumpTimer -= Time.deltaTime;
+
+        }
+        else
+        {
+            _hasWallJumped = false;
         }
     }
 
@@ -237,6 +386,7 @@ public class PlayerController : MonoBehaviour
 
         _jumpTimer = 0;
         _isAttemptingToJump = false;
+        _checkJumpMultiplier = true;
     }
 
     private void NormalJump()
@@ -269,6 +419,12 @@ public class PlayerController : MonoBehaviour
             _isWallSliding = false;
 
             RestoreAmountOfJumps();
+
+            _turnTimer = 0;
+
+            _hasWallJumped = true;
+            _wallJumpTimer = _wallJumpTimerSet;
+            _lastWallJumpDirection = -_facingDirection;
         }
     }
 
@@ -281,13 +437,14 @@ public class PlayerController : MonoBehaviour
         {
             xMovement *= _airDragMultiplier;
         }
-        else if (_isWallSliding && yMovement < -_wallSlideSpeed)
-        {
-            yMovement = -_wallSlideSpeed;
-        }
-        else
+        else if (_canMove)
         {
             xMovement = _movementSpeed * _movementInputDirection;
+        }
+
+        if (_isWallSliding && yMovement < -_wallSlideSpeed)
+        {
+            yMovement = -_wallSlideSpeed;
         }
 
         _rb.velocity = new Vector2(xMovement, yMovement);
@@ -295,8 +452,9 @@ public class PlayerController : MonoBehaviour
 
     private void Flip()
     {
-        if (!_isWallSliding)
+        if (!_isWallSliding && _canFlip)
         {
+            _facingDirection = -_facingDirection;
             _isFacingRight = !_isFacingRight;
 
             var scale = transform.localScale;
@@ -312,10 +470,18 @@ public class PlayerController : MonoBehaviour
 
         Vector3 position = _wallChecker.position;
 
-        float xDst = position.x + (_isFacingRight ? _wallCheckDistance : -_wallCheckDistance);
+        float xDst = position.x + _wallCheckDistance * _facingDirection;
         float yDst = position.y;
         float zDst = position.z;
 
+        Gizmos.DrawLine(position, new Vector3(xDst, yDst, zDst));
+
+
+        position = _ledgeChecker.position;
+
+        xDst = position.x + _wallCheckDistance * _facingDirection;
+        yDst = position.y;
+        zDst = position.z;
 
         Gizmos.DrawLine(position, new Vector3(xDst, yDst, zDst));
     }
