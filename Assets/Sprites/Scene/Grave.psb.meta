@@ -427,23 +427,13 @@ ScriptedImporter:
   resliceFromLayer: 0
   mosaicPSDLayers: []
   rigPSDLayers:
-  - name: Decorations
+  - name: Tiles
     spriteName: Decorations
     isGroup: 0
     parentIndex: -1
     spriteID: d585e5839ab3d6248bae8cfd38d7e6b4
     layerID: 0
     mosaicPosition: {x: 4, y: 4}
-    flatten: 0
-    isImported: 1
-    isVisible: 1
-  - name: Tiles
-    spriteName: Tiles
-    isGroup: 0
-    parentIndex: -1
-    spriteID: 1e181f3446f52654fba24b1eede46c28
-    layerID: -649846117
-    mosaicPosition: {x: 4, y: 2888}
     flatten: 0
     isImported: 1
     isVisible: 1
