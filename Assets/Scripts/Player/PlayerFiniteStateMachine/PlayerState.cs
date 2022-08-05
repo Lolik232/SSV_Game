@@ -7,6 +7,8 @@ public class PlayerState
     protected PlayerStateMachine _stateMachine;
     protected PlayerData _playerData;
 
+    protected Boolean _isAnimationFinished;
+
     protected Single _startTime;
 
     private String _animBoolName;
@@ -27,6 +29,8 @@ public class PlayerState
         _startTime = Time.time;
 
         Debug.Log(_animBoolName);
+
+        _isAnimationFinished = false;
     }
 
     public virtual void Exit()
@@ -44,8 +48,9 @@ public class PlayerState
         DoChecks();
     }
 
-    public virtual void DoChecks()
-    {
+    public virtual void DoChecks() { }
 
-    }
+    public virtual void AnimationTrigger() { }
+
+    public virtual void AnimationFinishTrigger() => _isAnimationFinished = true;
 }
