@@ -121,7 +121,7 @@ public class Player : MonoBehaviour
         return Physics2D.OverlapCircle(_groundChecker.position, _playerData.groundCheckRadius, _playerData.whatIsGround);
     }
 
-    public Boolean CheckIftouchingWall()
+    public Boolean CheckIftTouchingWall()
     {
         return Physics2D.Raycast(_wallChecker.position, FacingDirection * Vector2.right, _playerData.wallCheckDistance, _playerData.whatIsGround);
     }

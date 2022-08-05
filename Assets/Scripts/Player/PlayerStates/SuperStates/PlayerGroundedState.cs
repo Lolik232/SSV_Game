@@ -24,7 +24,7 @@ public class PlayerGroundedState : PlayerState
 
         _isGrounded = _player.CheckIfGrounded();
 
-        _isTouchingWall = _player.CheckIftouchingWall();
+        _isTouchingWall = _player.CheckIftTouchingWall();
     }
 
     public override void Enter()
@@ -49,7 +49,6 @@ public class PlayerGroundedState : PlayerState
 
         if (_jumpInput && _player.JumpState.CanJump())
         {
-            _player.InputHandler.UseJumpInput();
             _stateMachine.ChangeState(_player.JumpState);
         }
         else if (!_isGrounded)

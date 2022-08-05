@@ -12,6 +12,8 @@ public class PlayerWallJumpState : PlayerAbilityState
     {
         base.Enter();
 
+        _player.InputHandler.UseJumpInput();
+
         _player.JumpState.ResetAmountOfJumpsLeft();
         _player.SetVelocity(_playerData.wallJumpVelocity, _playerData.wallJumpAngle, _wallJumpDirection);
         _player.CheckIfShouldFlip(_wallJumpDirection);
