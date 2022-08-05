@@ -14,8 +14,10 @@ public class PlayerInAirState : PlayerState
 
     private Boolean _isJumping;
 
-
     private Boolean _isTouchingWall;
+    private Boolean _isTouchingWallBack;
+
+    private Boolean _grabInput;
 
     public PlayerInAirState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
@@ -27,6 +29,7 @@ public class PlayerInAirState : PlayerState
 
         _isGrounded = _player.CheckIfGrounded();
         _isTouchingWall = _player.CheckIftouchingWall();
+        _isTouchingWallBack = _player.CheckIftouchingWallBack();
     }
 
     public override void Enter()
@@ -49,6 +52,7 @@ public class PlayerInAirState : PlayerState
 
         _jumpInput = _player.InputHandler.JumpInput;
         _jumpInputStop = _player.InputHandler.JumpInputStop;
+        _grabInput = _player.InputHandler.GrabInput;
 
         CheckJumpMultiplier();
 
@@ -56,9 +60,19 @@ public class PlayerInAirState : PlayerState
         {
             _stateMachine.ChangeState(_player.LandState);
         } 
+        else if (_jumpInput && (_isTouchingWall || _isTouchingWallBack))
+        {
+            _player.WallJumpState.DetermineWallJumpDirection(_isTouchingWall);
+            _stateMachine.ChangeState(_player.WallJumpState);
+        }
         else if (_jumpInput && _player.JumpState.CanJump())
         {
+            _player.InputHandler.UseJumpInput();
             _stateMachine.ChangeState(_player.JumpState);
+        }
+        else if (_isTouchingWall && _grabInput)
+        {
+            _stateMachine.ChangeState(_player.WallGrabState);
         }
         else if (_isTouchingWall && _xInput == _player.FacingDirection && _player.CurrentVelocity.y <= 0f)
         {

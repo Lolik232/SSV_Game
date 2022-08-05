@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     public PlayerIdleState IdleState { get; private set; }
     public PlayerMoveState MoveState { get; private set; }
     public PlayerJumpState JumpState { get; private set; }
+    public PlayerWallJumpState WallJumpState { get; private set; }
     public PlayerInAirState InAirState { get; private set; }
     public PlayerLandState LandState { get; private set; }
     public PlayerWallSlideState WallSlideState { get; private set; }
@@ -53,6 +54,7 @@ public class Player : MonoBehaviour
         IdleState = new PlayerIdleState(this, StateMachine, _playerData, "idle");
         MoveState = new PlayerMoveState(this, StateMachine, _playerData, "move");
         JumpState = new PlayerJumpState(this, StateMachine, _playerData, "inAir");
+        WallJumpState = new PlayerWallJumpState(this, StateMachine, _playerData, "inAir");
         InAirState = new PlayerInAirState(this, StateMachine, _playerData, "inAir");
         LandState = new PlayerLandState(this, StateMachine, _playerData, "land");
         WallClimbState = new PlayerWallClimbState(this, StateMachine, _playerData, "wallClimb");
@@ -85,6 +87,16 @@ public class Player : MonoBehaviour
     #endregion
 
     #region Set Functions
+
+    public void SetVelocity(Single velocity, Vector2 angle, Int32 direction)
+    {
+        angle.Normalize();
+
+        _workspace.Set(angle.x * velocity * direction, angle.y * velocity);
+
+        Rigidbody.velocity = _workspace;
+        CurrentVelocity = _workspace;
+    }
     public void SetVelocityX(Single velocity)
     {
         _workspace.Set(velocity, CurrentVelocity.y);
@@ -111,7 +123,12 @@ public class Player : MonoBehaviour
 
     public Boolean CheckIftouchingWall()
     {
-        return Physics2D.Raycast(_wallChecker.position, Vector2.right * FacingDirection, _playerData.wallCheckDistance, _playerData.whatIsGround);
+        return Physics2D.Raycast(_wallChecker.position, FacingDirection * Vector2.right, _playerData.wallCheckDistance, _playerData.whatIsGround);
+    }
+
+    public Boolean CheckIftouchingWallBack()
+    {
+        return Physics2D.Raycast(_wallChecker.position, -FacingDirection * Vector2.right, _playerData.wallCheckDistance, _playerData.whatIsGround);
     }
 
     public void CheckIfShouldFlip(Int32 xInput)
@@ -145,8 +162,8 @@ public class Player : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(_groundChecker.position, _playerData.groundCheckRadius);
-       
-        Gizmos.DrawLine(_wallChecker.position, _wallChecker.position + _playerData.wallCheckDistance * FacingDirection * Vector3.right);
+
+        Gizmos.DrawLine(_wallChecker.position - _playerData.wallCheckDistance * FacingDirection * Vector3.right, _wallChecker.position + _playerData.wallCheckDistance * FacingDirection * Vector3.right);
     }
 
     #endregion

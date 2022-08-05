@@ -10,6 +10,8 @@ public class PlayerInputHandler : MonoBehaviour
 
     public Int32 NormInutY { get; private set; }
 
+    public Boolean GrabInput { get; private set; }
+
     public Boolean JumpInput { get; private set; }
     public Boolean JumpInputStop { get; private set; }
 
@@ -27,8 +29,23 @@ public class PlayerInputHandler : MonoBehaviour
     {
         RawMovementInput = context.ReadValue<Vector2>();
 
-        NormInutX = (Int32)(RawMovementInput * Vector2.right).normalized.x;
-        NormInutY = (Int32)(RawMovementInput * Vector2.up).normalized.y;
+        if (Mathf.Abs(RawMovementInput.x) > 0.5f)
+        {
+            NormInutX = (Int32)(RawMovementInput * Vector2.right).normalized.x;
+        } 
+        else
+        {
+            NormInutX = 0;
+        }
+
+        if (Mathf.Abs(RawMovementInput.y) > 0.5f)
+        {
+            NormInutY = (Int32)(RawMovementInput * Vector2.up).normalized.y;
+        }
+        else
+        {
+            NormInutY = 0;
+        }
     }
 
     public void OnJumpInput(InputAction.CallbackContext context)
@@ -42,6 +59,18 @@ public class PlayerInputHandler : MonoBehaviour
         else if (context.canceled)
         {
             JumpInputStop = true;
+        }
+    }
+
+    public void OnGrabInput(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            GrabInput = true;
+        }
+        else if (context.canceled)
+        {
+            GrabInput = false;
         }
     }
 

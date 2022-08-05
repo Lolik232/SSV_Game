@@ -30,7 +30,7 @@ public class PlayerMoveState : PlayerGroundedState
 
         _player.SetVelocityX(_playerData.movementVelocity * _xInput);
 
-        if (_xInput == 0)
+        if (_xInput == 0 && !_isExitingState)
         {
             _stateMachine.ChangeState(_player.IdleState);
         }
