@@ -21,6 +21,11 @@ public class PlayerDashState : PlayerAbilityState
     {
     }
 
+    public override void AnimationFinishTrigger()
+    {
+        base.AnimationFinishTrigger();
+    }
+
     public override void DoChecks()
     {
         base.DoChecks();
@@ -41,6 +46,7 @@ public class PlayerDashState : PlayerAbilityState
         Time.timeScale = _playerData.holdTimeSccale;
         _startTime = Time.unscaledTime;
 
+        _player.Anim.SetBool("applyDash", false);
         _player.DashDirectionIndicator.gameObject.SetActive(true);
     }
 
@@ -52,6 +58,8 @@ public class PlayerDashState : PlayerAbilityState
         {
             _player.SetVelocityY(_player.CurrentVelocity.y * _playerData.dashEndYMultiplier);
         }
+
+        _player.DashDirectionIndicator.gameObject.SetActive(false);
     }
 
     public override void LogicUpdate()
@@ -90,7 +98,7 @@ public class PlayerDashState : PlayerAbilityState
                 _player.Rigidbody.drag = _playerData.drag;
                 _player.SetVelocity(_playerData.dashVelocity, _dashDirection);
 
-                _player.DashDirectionIndicator.gameObject.SetActive(false);
+                _player.Anim.SetBool("applyDash", true);
             }
         }
         else

@@ -165,7 +165,7 @@
                 {
                     "name": "",
                     "id": "7f634e98-5b54-4f41-bb0c-5f04de11c66a",
-                    "path": "<Mouse>/rightButton",
+                    "path": "<Keyboard>/alt",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
@@ -179,7 +179,7 @@
                     "path": "<Gamepad>/buttonWest",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Gamepad",
                     "action": "Dash",
                     "isComposite": false,
                     "isPartOfComposite": false

@@ -205,6 +205,11 @@ public class Player : MonoBehaviour
         scale.x = -scale.x;
 
         transform.localScale = scale;
+
+        var angle = DashDirectionIndicator.rotation;
+        angle.x = 180f;
+
+        DashDirectionIndicator.rotation = angle;
     }
     #endregion
 

@@ -5,6 +5,12 @@ using UnityEngine;
 
 public class PlayerData : ScriptableObject
 {
+    [Header("after Image")]
+    public Single activeTime = 0.1f;
+    public Single alphaSet = 0.8f;
+    public Single alphMultiplier = 0.85f;
+
+
     [Header("Move State")]
     public Single movementVelocity = 10f;
 
