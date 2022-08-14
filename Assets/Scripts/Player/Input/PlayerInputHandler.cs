@@ -1,138 +1,86 @@
 using System;
+
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerInputHandler : MonoBehaviour
 {
-    private PlayerInput _playerInput;
+    private PlayerData _data;
 
-    private Camera _cam;
-
-    public Vector2 RawDashDirectionInput { get; private set; }
-    public Vector2Int DashDirectionInput { get; private set; }
-    public Vector2 RawMovementInput { get; private set; }
-
-    public Int32 NormInutX { get; private set; }
-
-    public Int32 NormInutY { get; private set; }
-
-    public Boolean GrabInput { get; private set; }
-    public Boolean DashInput { get; private set; }
-    public Boolean DashInputStop { get; private set; }
+    public Int32 NormInputX { get; private set; }
+    public Int32 NormInputY { get; private set; }
 
     public Boolean JumpInput { get; private set; }
-    public Boolean JumpInputStop { get; private set; }
+    public Boolean IsJumpInputActive { get; private set; }
 
     [SerializeField]
-    private Single _inputHoldTime = 0.1f;
+    private Single _jumpInputHoldTime = 0.1f;
 
-    private Single _inputInputStartTime;
-    private Single _dashInputStartTime;
+    private Single _jumpInputStartTime;
 
-    private void Start()
-    {
-        _playerInput = GetComponent<PlayerInput>();
-        _cam = Camera.main;
-    }
+    private Single JumpEndTime { get => _jumpInputStartTime + _jumpInputHoldTime; }
+
 
     private void Update()
     {
         CheckJumpInputHoldTime();
-        CheckDashInputHoldTime();
     }
+
+    public void Initialize(PlayerData data)
+    {
+        _data = data;   
+    }
+
+    #region Move
 
     public void OnMoveInput(InputAction.CallbackContext context)
     {
-        RawMovementInput = context.ReadValue<Vector2>();
+        var rawMoveInput = context.ReadValue<Vector2>();
 
-        if (Mathf.Abs(RawMovementInput.x) > 0.5f)
-        {
-            NormInutX = (Int32)(RawMovementInput * Vector2.right).normalized.x;
-        }
-        else
-        {
-            NormInutX = 0;
-        }
-
-        if (Mathf.Abs(RawMovementInput.y) > 0.5f)
-        {
-            NormInutY = (Int32)(RawMovementInput * Vector2.up).normalized.y;
-        }
-        else
-        {
-            NormInutY = 0;
-        }
+        NormalizeMoveInputX(rawMoveInput.x);
+        NormalizeMoveInputY(rawMoveInput.y);
     }
 
-    public void OnGrabInput(InputAction.CallbackContext context)
-    {
-        if (context.started)
-        {
-            GrabInput = true;
-        }
-        else if (context.canceled)
-        {
-            GrabInput = false;
-        }
-    }
+    private void NormalizeMoveInputX(Single rawMoveInputX) => NormInputX = (Mathf.Abs(rawMoveInputX) > _data.moveInputTolerance) ? (Int32)(rawMoveInputX * Vector2.right).normalized.x : 0;
+    private void NormalizeMoveInputY(Single rawMoveInputY) => NormInputY = (Mathf.Abs(rawMoveInputY) > _data.moveInputTolerance) ? (Int32)(rawMoveInputY * Vector2.up).normalized.y : 0;
 
-    public void OnDashInput(InputAction.CallbackContext context)
-    {
-        if (context.started)
-        {
-            DashInput = true;
-            DashInputStop = false;
-            _dashInputStartTime = Time.time;
-        }
-        else if (context.canceled)
-        {
-            DashInputStop = true;
-        }
-    }
+    #endregion
 
-    public void UseDashInput() => DashInput = false;
-
-    private void CheckDashInputHoldTime()
-    {
-        if (Time.time >= _dashInputStartTime + _inputHoldTime)
-        {
-            DashInput = false;
-        }
-    }
-
-    public void OnDashDirectionInput(InputAction.CallbackContext context)
-    {
-        RawDashDirectionInput = context.ReadValue<Vector2>();
-
-        if (_playerInput.currentControlScheme == "Keyboard")
-        {
-            RawDashDirectionInput = _cam.ScreenToWorldPoint((Vector3)RawDashDirectionInput) - transform.position;
-        }
-
-        DashDirectionInput = Vector2Int.RoundToInt(RawDashDirectionInput.normalized);
-    }
+    #region Jump
 
     public void OnJumpInput(InputAction.CallbackContext context)
     {
         if (context.started)
         {
             JumpInput = true;
-            JumpInputStop = false;
-            _inputInputStartTime = Time.time;
+            IsJumpInputActive = true;
+            _jumpInputStartTime = GetScaledTime();
         }
         else if (context.canceled)
         {
-            JumpInputStop = true;
+            IsJumpInputActive = false;
         }
     }
 
-    public void UseJumpInput() => JumpInput = false;
+    public void MarkJumpInputAsUsed() => JumpInput = false;
 
     private void CheckJumpInputHoldTime()
     {
-        if (Time.time >= _inputInputStartTime + _inputHoldTime)
+        if (GetScaledTime() >= JumpEndTime)
         {
             JumpInput = false;
         }
+    }
+
+    #endregion
+
+    public Single GetScaledTime()
+    {
+        return Time.time;
+    }
+
+    public Single GetUnscaledTime()
+    {
+        return Time.unscaledTime;
     }
 }

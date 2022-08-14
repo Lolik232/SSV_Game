@@ -58,7 +58,7 @@
                     "path": "<Gamepad>/leftStick",
                     "interactions": "",
                     "processors": "StickDeadzone",
-                    "groups": "Gamepad",
+                    "groups": "Keyboard;Joystick",
                     "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -120,6 +120,28 @@
                 },
                 {
                     "name": "",
+                    "id": "60a84483-27c9-4d03-acb9-6e77b1d0e413",
+                    "path": "<Joystick>/stick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Joystick",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0ec7a108-1c75-46da-a05c-c383a57b7ae1",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "f961f164-1430-4a22-8c8f-6f41c381d799",
                     "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
@@ -142,6 +164,17 @@
                 },
                 {
                     "name": "",
+                    "id": "69857e42-29e3-4576-b24f-8d52132f3d7d",
+                    "path": "<Joystick>/stick/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Joystick",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "ce2c3236-d0c6-4941-a432-ac0874834a39",
                     "path": "<Keyboard>/ctrl",
                     "interactions": "",
@@ -158,6 +191,17 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
+                    "action": "Grab",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0c163f5d-8238-4004-94ef-ca13be490ccc",
+                    "path": "<Joystick>/trigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Joystick",
                     "action": "Grab",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -232,6 +276,17 @@
             "devices": [
                 {
                     "devicePath": "<Gamepad>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        },
+        {
+            "name": "Joystick",
+            "bindingGroup": "Joystick",
+            "devices": [
+                {
+                    "devicePath": "<HID::ShanWan PC/PS3/Android>",
                     "isOptional": false,
                     "isOR": false
                 }

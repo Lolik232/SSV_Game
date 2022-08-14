@@ -56,26 +56,19 @@
     <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Player\PlayerFiniteStateMachine\PlayerState.cs" />
-    <Compile Include="Assets\Scripts\Player\PlayerStates\SubStates\PlayerLedgeClimbState.cs" />
-    <Compile Include="Assets\Scripts\Player\PlayerStates\SubStates\PlayerIdleState.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSuperSates\PlayerGroundedState.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerStateMachine\PlayerState.cs" />
     <Compile Include="Assets\Scripts\Player\Input\PlayerInputHandler.cs" />
-    <Compile Include="Assets\Scripts\Player\PlayerStates\SuperStates\PlayerTouchingWallState.cs" />
-    <Compile Include="Assets\Scripts\Player\PlayerStates\SubStates\PlayerJumpState.cs" />
-    <Compile Include="Assets\Scripts\Player\PlayerStates\SuperStates\PlayerAbilityState.cs" />
-    <Compile Include="Assets\Scripts\Player\AfterImage\PlayerAfterImageSprite.cs" />
-    <Compile Include="Assets\Scripts\Player\PlayerStates\SubStates\PlayerInAirState.cs" />
-    <Compile Include="Assets\Scripts\Player\PlayerStates\SubStates\PlayerWallGrabState.cs" />
-    <Compile Include="Assets\Scripts\Player\PlayerStates\SubStates\PlayerLandState.cs" />
-    <Compile Include="Assets\Scripts\Player\PlayerFiniteStateMachine\PlayerStateMachine.cs" />
-    <Compile Include="Assets\Scripts\Player\PlayerStates\SubStates\PlayerMoveState.cs" />
-    <Compile Include="Assets\Scripts\Player\PlayerFiniteStateMachine\Player.cs" />
     <Compile Include="Assets\Scripts\Player\Data\PlayerData.cs" />
-    <Compile Include="Assets\Scripts\Player\PlayerStates\SuperStates\PlayerGroundedState.cs" />
-    <Compile Include="Assets\Scripts\Player\PlayerStates\SubStates\PlayerWallSlideState.cs" />
-    <Compile Include="Assets\Scripts\Player\PlayerStates\SubStates\PlayerWallClimbState.cs" />
-    <Compile Include="Assets\Scripts\Player\PlayerStates\SubStates\PlayerWallJumpState.cs" />
-    <Compile Include="Assets\Scripts\Player\PlayerStates\SubStates\PlayerDashState.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSuperSates\PlayerEnvironmentState.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSubStates\PlayerInAirState.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerStateMachine\Player.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerStateMachine\PlayerStateMachine.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSubStates\PlayerIdleState.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerStateMachine\PlayerStatesDescriptor.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSubStates\PlayerMoveState.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSuperSates\PlayerAbilityState.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSubStates\PlayerLandState.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
