@@ -16,9 +16,11 @@ MonoBehaviour:
   groundSlopeTolerance: 0.01
   movementVelocity: 10
   jumpCoyoteTime: 0.1
-  groundCheckRadius: 0.15
-  groundIsCloseCheckDistance: 0.3
-  wallCheckDistance: 0.3
+  amountOfJumps: 1
+  jumpVelocity: 16
+  groundCheckRadius: 0.4
+  groundIsCloseCheckDistance: 0.6
+  wallCheckDistance: 0.5
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8

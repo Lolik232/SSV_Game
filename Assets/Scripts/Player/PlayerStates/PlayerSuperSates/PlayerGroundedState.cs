@@ -25,6 +25,8 @@ public class PlayerGroundedState : PlayerEnvironmentState
     public override void Enter()
     {
         base.Enter();
+
+        StatesDescriptor.JumpState.ResetAmountOfJumpsLeft();
     }
 
     public override void Exit()
@@ -36,9 +38,18 @@ public class PlayerGroundedState : PlayerEnvironmentState
     {
         base.LogicUpdate();
 
-        if (!_isGrounded)
+        if (JumpInput && StatesDescriptor.JumpState.CanJump())
         {
-            ChangeState(_statesDescriptor.InAirState);
+            StateMachine.ChangeState(StatesDescriptor.JumpState);
+        }
+        else if (!IsGrounded)
+        {
+            StatesDescriptor.InAirState.StartCoyoteTime();
+            ChangeState(StatesDescriptor.InAirState);
+        } 
+        else if (IsTouchingWall && IsTouchingLedge && GrabInput)
+        {
+            ChangeState(StatesDescriptor.WallGrabState);
         }
     }
 

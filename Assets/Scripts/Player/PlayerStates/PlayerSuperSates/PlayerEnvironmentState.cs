@@ -3,13 +3,14 @@ using UnityEngine;
 
 public class PlayerEnvironmentState : PlayerState
 {
-    protected Boolean _isGrounded;
-    protected Boolean _isGroundFar;
-    protected Boolean _isTouchingWall;
-    protected Boolean _isTouchingWallBack;
-    protected Boolean _isTouchingLedge;
+    protected Boolean IsGrounded;
+    protected Boolean IsGroundFar;
+    protected Boolean IsTouchingWall;
+    protected Boolean IsTouchingWallBack;
+    protected Boolean IsTouchingLedge;
 
-    protected Boolean _jumpInput;
+    protected Boolean JumpInput;
+    protected Boolean GrabInput;
 
     public PlayerEnvironmentState(Player player, PlayerStatesDescriptor statesDescriptor, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, statesDescriptor, stateMachine, playerData, animBoolName)
     {
@@ -39,18 +40,19 @@ public class PlayerEnvironmentState : PlayerState
     {
         base.DoChecks();
 
-        _isGrounded = _player.CheckIfGrounded();
-        _isGroundFar = _player.CheckIfGroundFar();
-        _isTouchingWall = _player.CheckIfTouchingWall();
-        _isTouchingWallBack = _player.CheckIfTouchingWallBack();
-        _isTouchingLedge = _player.CheckIfTouchingLedge();
+        IsGrounded = Player.CheckIfGrounded();
+        IsGroundFar = Player.CheckIfGroundFar();
+        IsTouchingWall = Player.CheckIfTouchingWall();
+        IsTouchingWallBack = Player.CheckIfTouchingWallBack();
+        IsTouchingLedge = Player.CheckIfTouchingLedge();
     }
 
     public override void LogicUpdate()
     {
         base.LogicUpdate();
 
-        _jumpInput = _player.InputHandler.JumpInput;
+        JumpInput = Player.InputHandler.JumpInput.IsActive;
+        GrabInput = Player.InputHandler.GrabInput.IsActive;
     }
 
     public override void PhysicsUpdate()

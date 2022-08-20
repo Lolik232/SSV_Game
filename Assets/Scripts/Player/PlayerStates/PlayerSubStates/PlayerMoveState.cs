@@ -26,12 +26,12 @@ public class PlayerMoveState : PlayerGroundedState
     {
         base.LogicUpdate();
 
-        _player.CheckIfShouldFlip(_xInput);
-        _player.SetVelocityX(_data.movementVelocity * _xInput);
+        Player.CheckIfShouldFlip(InputX);
+        Player.SetVelocityX(Data.movementVelocity * InputX);
 
-        if (_xInput == 0)
+        if (InputX == 0)
         {
-            _stateMachine.ChangeState(_statesDescriptor.IdleState);
+            StateMachine.ChangeState(StatesDescriptor.IdleState);
         } 
     }
 

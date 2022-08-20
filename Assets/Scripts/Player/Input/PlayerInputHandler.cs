@@ -5,30 +5,28 @@ using UnityEngine.InputSystem;
 
 public class PlayerInputHandler : MonoBehaviour
 {
-    private PlayerData _data;
-
+    [SerializeField]
+    private PlayerData m_Data;
+    
     public Int32 NormInputX { get; private set; }
     public Int32 NormInputY { get; private set; }
 
-    public Boolean JumpInput { get; private set; }
-    public Boolean IsJumpInputActive { get; private set; }
+    public PlayerTimeDependentAction JumpInput { get; private set; }
 
-    [SerializeField]
-    private Single _jumpInputHoldTime = 0.1f;
+    public Boolean IsJumpInputHold { get; private set; }
 
-    private Single _jumpInputStartTime;
+    public PlayerAction GrabInput { get; private set; }
 
-    private Single JumpEndTime { get => _jumpInputStartTime + _jumpInputHoldTime; }
 
+    private void Awake()
+    {
+        JumpInput = new PlayerTimeDependentAction(m_Data.jumpInputHoldTime);
+        GrabInput = new PlayerAction();
+    }
 
     private void Update()
     {
         CheckJumpInputHoldTime();
-    }
-
-    public void Initialize(PlayerData data)
-    {
-        _data = data;   
     }
 
     #region Move
@@ -41,8 +39,8 @@ public class PlayerInputHandler : MonoBehaviour
         NormalizeMoveInputY(rawMoveInput.y);
     }
 
-    private void NormalizeMoveInputX(Single rawMoveInputX) => NormInputX = (Mathf.Abs(rawMoveInputX) > _data.moveInputTolerance) ? (Int32)(rawMoveInputX * Vector2.right).normalized.x : 0;
-    private void NormalizeMoveInputY(Single rawMoveInputY) => NormInputY = (Mathf.Abs(rawMoveInputY) > _data.moveInputTolerance) ? (Int32)(rawMoveInputY * Vector2.up).normalized.y : 0;
+    private void NormalizeMoveInputX(Single rawMoveInputX) => NormInputX = (Mathf.Abs(rawMoveInputX) > m_Data.moveInputTolerance) ? (Int32)(rawMoveInputX * Vector2.right).normalized.x : 0;
+    private void NormalizeMoveInputY(Single rawMoveInputY) => NormInputY = (Mathf.Abs(rawMoveInputY) > m_Data.moveInputTolerance) ? (Int32)(rawMoveInputY * Vector2.up).normalized.y : 0;
 
     #endregion
 
@@ -52,35 +50,38 @@ public class PlayerInputHandler : MonoBehaviour
     {
         if (context.started)
         {
-            JumpInput = true;
-            IsJumpInputActive = true;
-            _jumpInputStartTime = GetScaledTime();
+            JumpInput.Start();
+            IsJumpInputHold = true;
         }
         else if (context.canceled)
         {
-            IsJumpInputActive = false;
+            IsJumpInputHold = false;
         }
     }
 
-    public void MarkJumpInputAsUsed() => JumpInput = false;
-
     private void CheckJumpInputHoldTime()
     {
-        if (GetScaledTime() >= JumpEndTime)
+        if (JumpInput.IsOutOfTime())
         {
-            JumpInput = false;
+            JumpInput.End();
         }
     }
 
     #endregion
 
-    public Single GetScaledTime()
+    #region Wall Climb/Grab
+
+    public void OnGrabInput(InputAction.CallbackContext context)
     {
-        return Time.time;
+        if (context.started)
+        {
+            GrabInput.Start();
+        }
+        else if (context.canceled)
+        {
+            GrabInput.End();
+        }
     }
 
-    public Single GetUnscaledTime()
-    {
-        return Time.unscaledTime;
-    }
+    #endregion
 }

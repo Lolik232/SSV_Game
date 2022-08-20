@@ -3,18 +3,16 @@ using UnityEngine;
 
 public class PlayerInAirState : PlayerEnvironmentState
 {
+    private PlayerAction m_Jumping;
+
+    private PlayerTimeDependentAction m_CoyoteTime;
+
+    private Boolean m_isJumpInputHold;
+
     public PlayerInAirState(Player player, PlayerStatesDescriptor statesDescriptor, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, statesDescriptor, stateMachine, playerData, animBoolName)
     {
-    }
-
-    public override void AnimationFinishTrigger()
-    {
-        base.AnimationFinishTrigger();
-    }
-
-    public override void AnimationTrigger(int id = 0)
-    {
-        base.AnimationTrigger(id);
+        m_CoyoteTime = new PlayerTimeDependentAction(Data.jumpCoyoteTime);
+        m_Jumping = new PlayerAction();
     }
 
     public override void DoChecks()
@@ -36,18 +34,54 @@ public class PlayerInAirState : PlayerEnvironmentState
     {
         base.LogicUpdate();
 
-        if (_isGrounded && _player.CurrentVelocity.y < _data.groundSlopeTolerance)
+        CheckCoyoteTime();
+
+        m_isJumpInputHold = Player.InputHandler.IsJumpInputHold;
+
+        CheckJumpMultiplier();
+
+        if (IsGrounded && Player.CurrentVelocity.y < Data.groundSlopeTolerance)
         {
-            ChangeState(_statesDescriptor.LandState);
+            ChangeState(StatesDescriptor.LandState);
         } 
+        else if (JumpInput && StatesDescriptor.JumpState.CanJump())
+        {
+            Player.InputHandler.JumpInput.End();
+            ChangeState(StatesDescriptor.JumpState);
+        }
+        else if (IsTouchingWall && IsTouchingLedge && GrabInput && StatesDescriptor.WallGrabState.CanGrab())
+        {
+            ChangeState(StatesDescriptor.WallGrabState);
+        }
+        else if (IsTouchingWall && InputX == Player.FacingDirection && Player.CurrentVelocity.y <= 0f)
+        {
+            ChangeState(StatesDescriptor.WallSlideState);
+        }
         else
         {
-            _player.CheckIfShouldFlip(_xInput);
+            Player.CheckIfShouldFlip(InputX);
 
-            _player.SetVelocityX(_data.movementVelocity * _xInput);
+            Player.SetVelocityX(Data.movementVelocity * InputX);
 
-            _player.Animator.SetFloat("yVelocity", _player.CurrentVelocity.y);
-            _player.Animator.SetFloat("xVelocity", Mathf.Abs(_player.CurrentVelocity.x));
+            Player.Animator.SetFloat("yVelocity", Player.CurrentVelocity.y);
+            Player.Animator.SetFloat("xVelocity", Mathf.Abs(Player.CurrentVelocity.x));
+        }
+    }
+
+    private void CheckJumpMultiplier()
+    {
+        if (m_Jumping.IsActive)
+        {
+            if (Player.CurrentVelocity.y <= 0f)
+            {
+                m_Jumping.End();
+            }
+            else if (!m_isJumpInputHold)
+            {
+                Player.SetVelocityY(Player.CurrentVelocity.y * Data.vriableJumpHeightMultiplier);
+
+                m_Jumping.End();
+            }
         }
     }
 
@@ -55,4 +89,18 @@ public class PlayerInAirState : PlayerEnvironmentState
     {
         base.PhysicsUpdate();
     }
+
+    public void StartJumping() => m_Jumping.Start();
+
+    public void StartCoyoteTime() => m_CoyoteTime.Start();
+
+    private void CheckCoyoteTime()
+    {
+        if (m_CoyoteTime.IsActive && m_CoyoteTime.IsOutOfTime())
+        {
+            m_CoyoteTime.End();
+
+            StatesDescriptor.JumpState.DecreaseAmountOfJumpsLeft();
+        }
+    } 
 }

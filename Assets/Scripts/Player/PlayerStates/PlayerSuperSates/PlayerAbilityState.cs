@@ -4,6 +4,7 @@ using UnityEngine;
 public class PlayerAbilityState : PlayerState
 {
     private Boolean _isGrounded;
+    protected Boolean IsAbilityDone;
     public PlayerAbilityState(Player player, PlayerStatesDescriptor statesDescriptor, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, statesDescriptor, stateMachine, playerData, animBoolName)
     {
     }
@@ -22,12 +23,14 @@ public class PlayerAbilityState : PlayerState
     {
         base.DoChecks();
 
-        _isGrounded = _player.CheckIfGrounded();
+        _isGrounded = Player.CheckIfGrounded();
     }
 
     public override void Enter()
     {
         base.Enter();
+
+        IsAbilityDone = false;
     }
 
     public override void Exit()
@@ -39,15 +42,15 @@ public class PlayerAbilityState : PlayerState
     {
         base.LogicUpdate();
 
-        if (!_isActive)
+        if (IsAbilityDone)
         {
-            if (_isGrounded && _player.CurrentVelocity.y < _data.groundSlopeTolerance)
+            if (_isGrounded && Player.CurrentVelocity.y < Data.groundSlopeTolerance)
             {
-                ChangeState(_statesDescriptor.IdleState);
+                ChangeState(StatesDescriptor.IdleState);
             }
             else
             {
-                ChangeState(_statesDescriptor.InAirState);
+                ChangeState(StatesDescriptor.InAirState);
             }
         } 
     }

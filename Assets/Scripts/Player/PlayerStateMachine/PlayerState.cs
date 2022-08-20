@@ -3,56 +3,53 @@ using UnityEngine;
 
 public class PlayerState
 {
-    protected Player _player;
-    protected PlayerStatesDescriptor _statesDescriptor;
-    protected PlayerStateMachine _stateMachine;
-    protected PlayerData _data;
+    protected Player Player;
+    protected PlayerStatesDescriptor StatesDescriptor;
+    protected PlayerStateMachine StateMachine;
+    protected PlayerData Data;
 
-    protected Boolean _isAnimationFinished;
-    protected Boolean _isActive;
+    protected Boolean IsAnimationFinished;
+    protected Boolean IsActive;
 
-    protected Int32 _xInput;
-    protected Int32 _yInput;
+    protected Int32 InputX;
+    protected Int32 InputY;
 
-    protected Single _startTime;
-
-    private readonly String _animBoolName;
+    private readonly String m_AnimBoolName;
 
     public PlayerState(Player player, PlayerStatesDescriptor statesDescriptor, PlayerStateMachine stateMachine, PlayerData playerData, String animBoolName)
     {
-        _player = player;
-        _statesDescriptor = statesDescriptor;
-        _stateMachine = stateMachine;
-        _data = playerData;
-        _animBoolName = animBoolName;
+        Player = player;
+        StatesDescriptor = statesDescriptor;
+        StateMachine = stateMachine;
+        Data = playerData;
+        m_AnimBoolName = animBoolName;
     }
 
     public virtual void Enter()
     {
         DoChecks();
 
-        StartAnimation(_animBoolName);
-        _startTime = GetScaledTime();
-        _isActive = true;
+        StartAnimation(m_AnimBoolName);
+        IsActive = true;
 
-        Debug.Log(_animBoolName);
+        Debug.Log(m_AnimBoolName);
     }
 
     public virtual void Exit()
     {
-        EndAnimation(_animBoolName);
-        _isActive = false;
+        EndAnimation(m_AnimBoolName);
+        IsActive = false;
     }
 
     public virtual void LogicUpdate()
     {
-        if (!_isActive)
+        if (!IsActive)
         {
             return;
         }
 
-        _xInput = _player.InputHandler.NormInputX;
-        _yInput = _player.InputHandler.NormInputY;
+        InputX = Player.InputHandler.NormInputX;
+        InputY = Player.InputHandler.NormInputY;
     }
 
     public virtual void PhysicsUpdate()
@@ -67,32 +64,22 @@ public class PlayerState
 
     public virtual void AnimationTrigger(Int32 id = 0) { }
 
-    public virtual void AnimationFinishTrigger() => _isAnimationFinished = true;
+    public virtual void AnimationFinishTrigger() => IsAnimationFinished = true;
 
     protected void ChangeState(PlayerState newState)
     {
-        _stateMachine.ChangeState(newState);
+        StateMachine.ChangeState(newState);
     }
 
     protected void StartAnimation(String animationName)
     {
-        _player.Animator.SetBool(animationName, true);
-        _isAnimationFinished = false;
+        Player.Animator.SetBool(animationName, true);
+        IsAnimationFinished = false;
     }
 
     protected void EndAnimation(String animationName)
     {
-        _player.Animator.SetBool(animationName, false);
-        _isAnimationFinished = true;
-    }
-
-    protected Single GetScaledTime()
-    {
-        return _player.InputHandler.GetScaledTime();
-    }
-
-    protected Single GetUnscaledTime()
-    {
-        return _player.InputHandler.GetUnscaledTime();
+        Player.Animator.SetBool(animationName, false);
+        IsAnimationFinished = true;
     }
 }
