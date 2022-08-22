@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PlayerWallSlideState : PlayerTouchingWallState
 {
-    public PlayerWallSlideState(Player player, PlayerStatesDescriptor statesDescriptor, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, statesDescriptor, stateMachine, playerData, animBoolName)
+    public PlayerWallSlideState(Player player, PlayerStatesManager statesDescriptor, StateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, statesDescriptor, stateMachine, playerData, animBoolName)
     {
     }
 

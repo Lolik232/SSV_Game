@@ -8,7 +8,7 @@ public class PlayerWallGrabState : PlayerTouchingWallState
 
     private Single m_EnduranceGrabLimit;
 
-    public PlayerWallGrabState(Player player, PlayerStatesDescriptor statesDescriptor, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, statesDescriptor, stateMachine, playerData, animBoolName)
+    public PlayerWallGrabState(Player player, PlayerStatesManager statesDescriptor, StateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, statesDescriptor, stateMachine, playerData, animBoolName)
     {
         m_EnduranceGrabLimit = Data.enduranceGrabLimit;
     }
@@ -49,10 +49,10 @@ public class PlayerWallGrabState : PlayerTouchingWallState
 
         Player.ResetVelocity();
     }
-    public Boolean CanGrab() => Player.Endurance.CurrentPoints >= m_EnduranceGrabLimit;
+    public Boolean CanGrab() => Player.Endurance.CurrentValue.Value >= m_EnduranceGrabLimit;
 
     private void DecreaseEndurance()
     {
-        Player.Endurance.ChangePoints(-Data.grabEnduranceDecreasing * Time.deltaTime);
+        Player.Endurance.ChangeValue(-Data.grabEnduranceDecreasing * Time.deltaTime);
     }
 }

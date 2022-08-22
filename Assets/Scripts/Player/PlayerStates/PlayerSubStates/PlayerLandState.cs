@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PlayerLandState : PlayerGroundedState
 {
-    public PlayerLandState(Player player, PlayerStatesDescriptor statesDescriptor, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, statesDescriptor, stateMachine, playerData, animBoolName)
+    public PlayerLandState(Player player, PlayerStatesManager statesDescriptor, StateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, statesDescriptor, stateMachine, playerData, animBoolName)
     {
     }
 

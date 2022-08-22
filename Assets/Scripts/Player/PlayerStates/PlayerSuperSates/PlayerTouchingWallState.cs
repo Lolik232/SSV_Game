@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PlayerTouchingWallState : PlayerEnvironmentState
 {
-    public PlayerTouchingWallState(Player player, PlayerStatesDescriptor statesDescriptor, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, statesDescriptor, stateMachine, playerData, animBoolName)
+    public PlayerTouchingWallState(Player player, PlayerStatesManager statesDescriptor, StateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, statesDescriptor, stateMachine, playerData, animBoolName)
     {
     }
 
@@ -26,14 +26,14 @@ public class PlayerTouchingWallState : PlayerEnvironmentState
     {
         base.Enter();
 
-        Player.Endurance.BlockRegeneration();
+        Player.Endurance.DisableRegeneration();
     }
 
     public override void Exit()
     {
         base.Exit();
 
-        Player.Endurance.ResetRegeneration();
+        Player.Endurance.EnableRegeneration();
     }
 
     public override void LogicUpdate()

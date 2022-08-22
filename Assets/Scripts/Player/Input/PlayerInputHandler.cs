@@ -3,25 +3,25 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
 public class PlayerInputHandler : MonoBehaviour
 {
-    [SerializeField]
-    private PlayerData m_Data;
+    [SerializeField]  private PlayerData m_Data;
     
     public Int32 NormInputX { get; private set; }
     public Int32 NormInputY { get; private set; }
 
-    public PlayerTimeDependentAction JumpInput { get; private set; }
+    public TimeDependentState JumpInput { get; private set; }
 
     public Boolean IsJumpInputHold { get; private set; }
 
-    public PlayerAction GrabInput { get; private set; }
+    public TriggerState GrabInput { get; private set; }
 
 
     private void Awake()
     {
-        JumpInput = new PlayerTimeDependentAction(m_Data.jumpInputHoldTime);
-        GrabInput = new PlayerAction();
+        JumpInput = new TimeDependentState(m_Data.jumpInputHoldTime);
+        GrabInput = new TriggerState();
     }
 
     private void Update()

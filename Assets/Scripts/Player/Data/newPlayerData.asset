@@ -14,13 +14,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveInputTolerance: 0.5
   groundSlopeTolerance: 0.01
+  jumpInputHoldTime: 0.1
   movementVelocity: 10
-  jumpCoyoteTime: 0.1
   amountOfJumps: 1
   jumpVelocity: 16
+  jumpCoyoteTime: 0.1
+  vriableJumpHeightMultiplier: 0.5
+  maxDuration: 5
+  enduranceGrabLimit: 1
+  wallClimbVelocity: 4
+  enduranceClimbLimit: 3
+  wallSlideVelocity: 2
   groundCheckRadius: 0.4
   groundIsCloseCheckDistance: 0.6
   wallCheckDistance: 0.5
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8
+  climbEnduranceDecreasing: 3
+  grabEnduranceDecreasing: 1

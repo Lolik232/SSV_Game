@@ -8,7 +8,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Walk
-  m_Speed: 1
+  m_Speed: 2
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 3939231919168308663}
@@ -62,7 +62,7 @@ BlendTree:
   m_Childs:
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: b4ecef4f935ee9e409e8c42766408000, type: 2}
-    m_Threshold: -3
+    m_Threshold: -5
     m_Position: {x: 1, y: -8}
     m_TimeScale: 1
     m_CycleOffset: 0
@@ -70,7 +70,7 @@ BlendTree:
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: 7d392081f9f002148990c61687496988, type: 2}
-    m_Threshold: 0
+    m_Threshold: 2
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
@@ -94,7 +94,7 @@ BlendTree:
     m_Mirror: 0
   m_BlendParameter: yVelocity
   m_BlendParameterY: yVelocity
-  m_MinThreshold: -3
+  m_MinThreshold: -5
   m_MaxThreshold: 13
   m_UseAutomaticThresholds: 0
   m_NormalizedBlendValues: 0

@@ -5,7 +5,7 @@ public class PlayerAbilityState : PlayerState
 {
     private Boolean _isGrounded;
     protected Boolean IsAbilityDone;
-    public PlayerAbilityState(Player player, PlayerStatesDescriptor statesDescriptor, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, statesDescriptor, stateMachine, playerData, animBoolName)
+    public PlayerAbilityState(Player player, PlayerStatesManager statesDescriptor, StateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, statesDescriptor, stateMachine, playerData, animBoolName)
     {
     }
 

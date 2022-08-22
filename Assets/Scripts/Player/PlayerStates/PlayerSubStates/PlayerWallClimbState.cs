@@ -5,7 +5,7 @@ public class PlayerWallClimbState : PlayerTouchingWallState
 {
     private Single m_EnduranceClimbLimit;
 
-    public PlayerWallClimbState(Player player, PlayerStatesDescriptor statesDescriptor, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, statesDescriptor, stateMachine, playerData, animBoolName)
+    public PlayerWallClimbState(Player player, PlayerStatesManager statesDescriptor, StateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, statesDescriptor, stateMachine, playerData, animBoolName)
     {
         m_EnduranceClimbLimit = Data.enduranceClimbLimit;
     }
@@ -24,10 +24,10 @@ public class PlayerWallClimbState : PlayerTouchingWallState
         DecreaseEndurance();
     }
 
-    public Boolean CanClimb() => Player.Endurance.CurrentPoints >= m_EnduranceClimbLimit;
+    public Boolean CanClimb() => Player.Endurance.CurrentValue.Value >= m_EnduranceClimbLimit;
 
     private void DecreaseEndurance()
     {
-        Player.Endurance.ChangePoints(-Data.climbEnduranceDecreasing * Time.deltaTime);
+        Player.Endurance.ChangeValue(-Data.climbEnduranceDecreasing * Time.deltaTime);
     }
 }

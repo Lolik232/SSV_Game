@@ -12,7 +12,7 @@ public class PlayerEnvironmentState : PlayerState
     protected Boolean JumpInput;
     protected Boolean GrabInput;
 
-    public PlayerEnvironmentState(Player player, PlayerStatesDescriptor statesDescriptor, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, statesDescriptor, stateMachine, playerData, animBoolName)
+    public PlayerEnvironmentState(Player player, PlayerStatesManager statesDescriptor, StateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, statesDescriptor, stateMachine, playerData, animBoolName)
     {
     }
 

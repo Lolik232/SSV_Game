@@ -3,16 +3,16 @@ using UnityEngine;
 
 public class PlayerInAirState : PlayerEnvironmentState
 {
-    private PlayerAction m_Jumping;
+    private TriggerState m_Jumping;
 
-    private PlayerTimeDependentAction m_CoyoteTime;
+    private TimeDependentState m_CoyoteTime;
 
     private Boolean m_isJumpInputHold;
 
-    public PlayerInAirState(Player player, PlayerStatesDescriptor statesDescriptor, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, statesDescriptor, stateMachine, playerData, animBoolName)
+    public PlayerInAirState(Player player, PlayerStatesManager statesDescriptor, StateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, statesDescriptor, stateMachine, playerData, animBoolName)
     {
-        m_CoyoteTime = new PlayerTimeDependentAction(Data.jumpCoyoteTime);
-        m_Jumping = new PlayerAction();
+        m_CoyoteTime = new TimeDependentState(Data.jumpCoyoteTime);
+        m_Jumping = new TriggerState();
     }
 
     public override void DoChecks()
