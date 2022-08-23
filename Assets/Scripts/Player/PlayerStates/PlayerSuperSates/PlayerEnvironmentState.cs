@@ -13,7 +13,7 @@ public class PlayerEnvironmentState : PlayerState
     protected Boolean JumpInput;
     protected Boolean GrabInput;
 
-    public PlayerEnvironmentState(PlayerStatesManager statesDescriptor, string animBoolName) : base(statesDescriptor, animBoolName)
+    public PlayerEnvironmentState(PlayerStatesManager statesManager, string animBoolName) : base(statesManager, animBoolName)
     {
     }
 
@@ -26,6 +26,9 @@ public class PlayerEnvironmentState : PlayerState
         EnvironmentCheckersManager.WallChecker.TargetDetectionChangedEvent += SetIsTouchingWall;
         EnvironmentCheckersManager.WallBackChecker.TargetDetectionChangedEvent += SetIsTouchingWallBack;
         EnvironmentCheckersManager.LedgeChecker.TargetDetectionChangedEvent += SetIsTouchingLedge;
+
+        InputHandler.JumpInput.StateChangedEvent += SetJumpInput;
+        InputHandler.GrabInput.StateChangedEvent += SetGrabInput;
     }
 
     public override void Exit()
@@ -37,15 +40,12 @@ public class PlayerEnvironmentState : PlayerState
         EnvironmentCheckersManager.WallChecker.TargetDetectionChangedEvent -= SetIsTouchingWall;
         EnvironmentCheckersManager.WallBackChecker.TargetDetectionChangedEvent -= SetIsTouchingWallBack;
         EnvironmentCheckersManager.LedgeChecker.TargetDetectionChangedEvent -= SetIsTouchingLedge;
+
+        InputHandler.JumpInput.StateChangedEvent -= SetJumpInput;
+        InputHandler.GrabInput.StateChangedEvent -= SetGrabInput;
     }
 
-    public override void LogicUpdate()
-    {
-        base.LogicUpdate();
-
-        JumpInput = InputHandler.JumpInput.IsActive;
-        GrabInput = InputHandler.GrabInput.IsActive;
-    }
+    public override void LogicUpdate() => base.LogicUpdate();
 
     private void SetIsGrounded(Boolean value) => IsGrounded = value;
     private void SetIsGroundClose(Boolean value) => IsGroundClose = value;
@@ -53,4 +53,6 @@ public class PlayerEnvironmentState : PlayerState
     private void SetIsTouchingWallBack(Boolean value) => IsTouchingWallBack = value;
     private void SetIsTouchingLedge(Boolean value) => IsTouchingLedge = value;
 
+    private void SetJumpInput(Boolean value) => JumpInput = value;
+    private void SetGrabInput(Boolean value) => GrabInput = value;
 }

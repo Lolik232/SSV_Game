@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerAnimationController : MonoBehaviour
 {
-    public TriggerState IsAnimationPlaying { get; private set; }
+    public TriggerAction IsAnimationPlaying { get; private set; }
     public String CurrentAnimationName { get; private set; }
 
     private Animator m_Anim;
@@ -22,19 +22,9 @@ public class PlayerAnimationController : MonoBehaviour
 
     private void OnStateChanged(PlayerState state)
     {
-        StopAnimation();
-        PlayAnimation(state);
-    }
-
-    private void PlayAnimation(PlayerState state)
-    {
-        m_Anim.SetBool(CurrentAnimationName = state.AnimBoolName, true);
-        IsAnimationPlaying.Initiate();
-    }
-
-    private void StopAnimation()
-    {
         m_Anim.SetBool(CurrentAnimationName, false);
         IsAnimationPlaying.Terminate();
+        m_Anim.SetBool(CurrentAnimationName = state.AnimBoolName, true);
+        IsAnimationPlaying.Initiate();
     }
 }

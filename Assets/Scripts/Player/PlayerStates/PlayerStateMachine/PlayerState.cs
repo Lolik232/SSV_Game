@@ -1,12 +1,10 @@
 using System;
 
-using UnityEngine;
-
 public class PlayerState
 {
-    public TriggerState IsActive { get; private set; }
+    public TriggerAction IsActive { get; private set; }
 
-    protected readonly PlayerStatesManager StatesDescriptor;
+    protected readonly PlayerStatesManager StatesManager;
     protected readonly StateMachine StateMachine;
     protected readonly PlayerMoveController MoveController;
     protected readonly PlayerInputHandler InputHandler;
@@ -16,35 +14,45 @@ public class PlayerState
     protected Int32 InputX;
     protected Int32 InputY;
 
+    protected Boolean IsAnimationFinished;
+
     public readonly String AnimBoolName;
 
-    public PlayerState(PlayerStatesManager statesDescriptor, String animBoolName)
+    public PlayerState(PlayerStatesManager statesManager, String animBoolName)
     {
-        StatesDescriptor = statesDescriptor;
-        EnvironmentCheckersManager = StatesDescriptor.EnvironmentCheckersManager;
-        MoveController = StatesDescriptor.MoveController;
-        InputHandler = MoveController.PlayerInputHandler;
-        StateMachine = StatesDescriptor.StateMachine;
-        Data = StatesDescriptor.Data;
+        StatesManager = statesManager;
+        EnvironmentCheckersManager = StatesManager.EnvironmentCheckersManager;
+        MoveController = StatesManager.MoveController;
+        InputHandler = StatesManager.InputHandler;
+        StateMachine = StatesManager.StateMachine;
+        Data = StatesManager.Data;
 
         AnimBoolName = animBoolName;
+
+        IsActive = new TriggerAction();
     }
 
     public virtual void Enter()
     {
         IsActive.Initiate();
+
+        InputHandler.NormInputX.StateChangedEvent += SetInputX;
+        InputHandler.NormInputY.StateChangedEvent += SetInputY;
     }
 
-    public virtual void Exit() => IsActive.Terminate();
+    public virtual void Exit()
+    {
+        IsActive.Terminate();
+
+        InputHandler.NormInputX.StateChangedEvent -= SetInputX;
+        InputHandler.NormInputY.StateChangedEvent -= SetInputY;
+    }
 
     public virtual void LogicUpdate()
     {
-        if (!IsActive)
-        {
-            return;
-        }
-
-        InputX = InputHandler.NormInputX;
-        InputY = InputHandler.NormInputY;
+        if (!IsActive) { return; }
     }
+
+    private void SetInputX(Int32 value) => InputX = value;
+    private void SetInputY(Int32 value) => InputY = value;
 }

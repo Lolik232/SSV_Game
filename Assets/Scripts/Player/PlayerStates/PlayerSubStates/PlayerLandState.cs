@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PlayerLandState : PlayerGroundedState
 {
-    public PlayerLandState(Player player, PlayerStatesManager statesDescriptor, StateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, statesDescriptor, stateMachine, playerData, animBoolName)
+    public PlayerLandState(PlayerStatesManager statesManager,string animBoolName) : base(statesManager, animBoolName)
     {
     }
 
@@ -15,11 +15,11 @@ public class PlayerLandState : PlayerGroundedState
         {
             if (InputX != 0)
             {
-                ChangeState(StatesDescriptor.MoveState);
+                StateMachine.ChangeState(StatesManager.MoveState);
             }
             else if (IsAnimationFinished)
             {
-                ChangeState(StatesDescriptor.IdleState);
+                StateMachine.ChangeState(StatesManager.IdleState);
             }
         }
     }

@@ -22,7 +22,7 @@ public class EnvironmentCheckersManager : MonoBehaviour
 
     public MoveController MoveController { get; private set; }
 
-    private void Awake()
+    protected virtual void Awake()
     {
         GroundChecker = new GroundChecker(m_GroundChecker, m_Data.groundCheckRadius, m_Data.whatIsGround);
         GroundCloseChecker = new BarrierChecker(m_GroundChecker, m_Data.groundIsCloseCheckDistance, Vector2.down, m_Data.whatIsGround);
@@ -31,7 +31,7 @@ public class EnvironmentCheckersManager : MonoBehaviour
         LedgeChecker = new BarrierChecker(m_LedgeChecker, m_Data.wallCheckDistance, Vector2.right, m_Data.whatIsGround);
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         MoveController = GetComponent<MoveController>();
 
@@ -40,7 +40,7 @@ public class EnvironmentCheckersManager : MonoBehaviour
         MoveController.FlipEvent += LedgeChecker.OnFlip;
     }
 
-    private void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         GroundChecker.CheckIfGrounded();
         GroundCloseChecker.CheckIfTouchingBarrier();
@@ -49,19 +49,19 @@ public class EnvironmentCheckersManager : MonoBehaviour
         LedgeChecker.CheckIfTouchingBarrier();
     }
 
-    private void OnDestroy()
+    protected virtual void OnDestroy()
     {
         MoveController.FlipEvent -= WallChecker.OnFlip;
         MoveController.FlipEvent -= WallBackChecker.OnFlip;
         MoveController.FlipEvent -= LedgeChecker.OnFlip;
     }
 
-    private void OnDrawGizmos()
+    protected virtual void OnDrawGizmos()
     {
-        GroundChecker.OnDrawGizmos();
-        GroundCloseChecker.OnDrawGizmos();
-        WallChecker.OnDrawGizmos();
-        WallBackChecker.OnDrawGizmos();
-        LedgeChecker.OnDrawGizmos();
+        GroundChecker?.OnDrawGizmos();
+        GroundCloseChecker?.OnDrawGizmos();
+        WallChecker?.OnDrawGizmos();
+        WallBackChecker?.OnDrawGizmos();
+        LedgeChecker?.OnDrawGizmos();
     }
 }

@@ -7,8 +7,9 @@ public class PlayerMoveController : MoveController
 {
     public PlayerInputHandler PlayerInputHandler { get; private set; }
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         PlayerInputHandler = GetComponent<PlayerInputHandler>();
     }
 }

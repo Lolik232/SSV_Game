@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PlayerWallSlideState : PlayerTouchingWallState
 {
-    public PlayerWallSlideState(Player player, PlayerStatesManager statesDescriptor, StateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, statesDescriptor, stateMachine, playerData, animBoolName)
+    public PlayerWallSlideState(PlayerStatesManager statesManager, string animBoolName) : base(statesManager,  animBoolName)
     {
     }
 
@@ -11,11 +11,11 @@ public class PlayerWallSlideState : PlayerTouchingWallState
     {
         base.LogicUpdate();
 
-        Player.SetVelocityY(-Data.wallSlideVelocity);
+        MoveController.SetVelocityY(-Data.wallSlideVelocity);
 
-        if (StatesDescriptor.WallGrabState.CanGrab() && GrabInput && InputY >= 0)
+        if (GrabInput && InputY >= 0)
         {
-            ChangeState(StatesDescriptor.WallGrabState);
+            StateMachine.ChangeState(StatesManager.WallGrabState);
         }
     }
 }

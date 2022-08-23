@@ -5,7 +5,7 @@ public class PlayerWallClimbState : PlayerTouchingWallState
 {
     private Single m_EnduranceClimbLimit;
 
-    public PlayerWallClimbState(Player player, PlayerStatesManager statesDescriptor, StateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, statesDescriptor, stateMachine, playerData, animBoolName)
+    public PlayerWallClimbState(PlayerStatesManager statesManager, string animBoolName) : base(statesManager, animBoolName)
     {
         m_EnduranceClimbLimit = Data.enduranceClimbLimit;
     }
@@ -14,20 +14,11 @@ public class PlayerWallClimbState : PlayerTouchingWallState
     {
         base.LogicUpdate();
 
-        Player.SetVelocityY(Data.wallClimbVelocity);
+        MoveController.SetVelocityY(Data.wallClimbVelocity);
 
-        if (!StatesDescriptor.WallGrabState.CanGrab() || InputY != 1)
+        if (InputY != 1)
         {
-            ChangeState(StatesDescriptor.WallGrabState);
+            StateMachine.ChangeState(StatesManager.WallGrabState);
         }
-
-        DecreaseEndurance();
-    }
-
-    public Boolean CanClimb() => Player.Endurance.CurrentValue.Value >= m_EnduranceClimbLimit;
-
-    private void DecreaseEndurance()
-    {
-        Player.Endurance.ChangeValue(-Data.climbEnduranceDecreasing * Time.deltaTime);
     }
 }

@@ -8,7 +8,7 @@ public class PlayerWallGrabState : PlayerTouchingWallState
 
     private Single m_EnduranceGrabLimit;
 
-    public PlayerWallGrabState(Player player, PlayerStatesManager statesDescriptor, StateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, statesDescriptor, stateMachine, playerData, animBoolName)
+    public PlayerWallGrabState(PlayerStatesManager statesManager,string animBoolName) : base(statesManager, animBoolName)
     {
         m_EnduranceGrabLimit = Data.enduranceGrabLimit;
     }
@@ -17,7 +17,7 @@ public class PlayerWallGrabState : PlayerTouchingWallState
     {
         base.Enter();
 
-        m_HoldPosition = Player.transform.position;
+        m_HoldPosition = MoveController.transform.position;
     }
 
     public override void Exit()
@@ -31,28 +31,20 @@ public class PlayerWallGrabState : PlayerTouchingWallState
 
         HoldPosition();
 
-        if (StatesDescriptor.WallClimbState.CanClimb() && InputY > 0f)
+        if (InputY > 0f)
         {
-            ChangeState(StatesDescriptor.WallClimbState);
+            StateMachine.ChangeState(StatesManager.WallClimbState);
         } 
-        else if (Player.Endurance.IsEmpty() || InputY < 0f || !GrabInput)
+        else if (InputY < 0f || !GrabInput)
         {
-            ChangeState(StatesDescriptor.WallSlideState);
+            StateMachine.ChangeState(StatesManager.WallSlideState);
         }
-
-        DecreaseEndurance();
     }
 
     private void HoldPosition()
     {
-        Player.transform.position = m_HoldPosition;
+        MoveController.transform.position = m_HoldPosition;
 
-        Player.ResetVelocity();
-    }
-    public Boolean CanGrab() => Player.Endurance.CurrentValue.Value >= m_EnduranceGrabLimit;
-
-    private void DecreaseEndurance()
-    {
-        Player.Endurance.ChangeValue(-Data.grabEnduranceDecreasing * Time.deltaTime);
+        MoveController.SetVelocityZero();
     }
 }

@@ -3,32 +3,18 @@ using UnityEngine;
 
 public class PlayerAbilityState : PlayerState
 {
-    private Boolean _isGrounded;
+    protected Boolean IsGrounded;
+
     protected Boolean IsAbilityDone;
-    public PlayerAbilityState(Player player, PlayerStatesManager statesDescriptor, StateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, statesDescriptor, stateMachine, playerData, animBoolName)
+    public PlayerAbilityState(PlayerStatesManager statesManager, string animBoolName) : base(statesManager, animBoolName)
     {
-    }
-
-    public override void OnAnimationFinishTrigger()
-    {
-        base.OnAnimationFinishTrigger();
-    }
-
-    public override void OnAnimationTrigger(int id = 0)
-    {
-        base.OnAnimationTrigger(id);
-    }
-
-    public override void DoChecks()
-    {
-        base.DoChecks();
-
-        _isGrounded = Player.CheckIfGrounded();
     }
 
     public override void Enter()
     {
         base.Enter();
+
+        EnvironmentCheckersManager.GroundChecker.TargetDetectionChangedEvent += SetIsGrounded;
 
         IsAbilityDone = false;
     }
@@ -36,6 +22,8 @@ public class PlayerAbilityState : PlayerState
     public override void Exit()
     {
         base.Exit();
+
+        EnvironmentCheckersManager.GroundChecker.TargetDetectionChangedEvent -= SetIsGrounded;
     }
 
     public override void LogicUpdate()
@@ -44,19 +32,16 @@ public class PlayerAbilityState : PlayerState
 
         if (IsAbilityDone)
         {
-            if (_isGrounded && Player.CurrentVelocity.y < Data.groundSlopeTolerance)
+            if (IsGrounded && MoveController.CurrentVelocityY < Data.groundSlopeTolerance)
             {
-                ChangeState(StatesDescriptor.IdleState);
+                StateMachine.ChangeState(StatesManager.IdleState);
             }
             else
             {
-                ChangeState(StatesDescriptor.InAirState);
+                StateMachine.ChangeState(StatesManager.InAirState);
             }
         } 
     }
 
-    public override void PhysicsUpdate()
-    {
-        base.PhysicsUpdate();
-    }
+    private void SetIsGrounded(Boolean value) => IsGrounded = value;
 }

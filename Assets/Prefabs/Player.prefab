@@ -10,6 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 31484021258618762}
   - component: {fileID: 1920291699585250337}
+  - component: {fileID: 1353056767493987491}
+  - component: {fileID: 1928498655514867950}
+  - component: {fileID: 316172657420060830}
+  - component: {fileID: 2208835767755916529}
   - component: {fileID: 5879672992432325320}
   - component: {fileID: 907170881316087725}
   - component: {fileID: 4705714146389201328}
@@ -66,7 +70,7 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1353056767493987491}
         m_TargetAssemblyTypeName: PlayerInputHandler, Assembly-CSharp
         m_MethodName: OnMoveInput
         m_Mode: 0
@@ -81,11 +85,35 @@ MonoBehaviour:
     m_ActionId: ed89881b-c280-4b70-8ce5-1ef311331c2f
     m_ActionName: Gameplay/Movement[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1353056767493987491}
+        m_TargetAssemblyTypeName: PlayerInputHandler, Assembly-CSharp
+        m_MethodName: OnJumpInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: a5dac414-bdb1-4099-8d2d-5d4b15b885db
     m_ActionName: Gameplay/Jump[/Keyboard/space]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1353056767493987491}
+        m_TargetAssemblyTypeName: PlayerInputHandler, Assembly-CSharp
+        m_MethodName: OnGrabInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 15bef49b-c94c-4708-bdba-dd4906b66ccb
     m_ActionName: Gameplay/Grab[/Keyboard/ctrl]
   - m_PersistentCalls:
@@ -101,6 +129,59 @@ MonoBehaviour:
   m_DefaultActionMap: Gameplay
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &1353056767493987491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16557013547266712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f14da5371442f9498775185a268f13d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Data: {fileID: 11400000, guid: a075596a544cf4240950c7dd59045d6f, type: 2}
+--- !u!114 &1928498655514867950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16557013547266712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e6e89a19beaf9946b4b362d05f3f31a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &316172657420060830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16557013547266712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45c4c094422a41c44b61f2cd842f308b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_GroundChecker: {fileID: 4233284729964781069}
+  m_WallChecker: {fileID: 4264563235534962539}
+  m_LedgeChecker: {fileID: 8871013175122695980}
+  m_Data: {fileID: 11400000, guid: a075596a544cf4240950c7dd59045d6f, type: 2}
+--- !u!114 &2208835767755916529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16557013547266712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e7837ac818a8f94f9c1f7ef77ae4abb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!95 &5879672992432325320
 Animator:
   serializedVersion: 4

@@ -3,13 +3,8 @@ using UnityEngine;
 
 public class PlayerIdleState : PlayerGroundedState
 {
-    public PlayerIdleState(PlayerStatesManager statesDescriptor, string animBoolName) : base(statesDescriptor, animBoolName)
+    public PlayerIdleState(PlayerStatesManager statesManager, string animBoolName) : base(statesManager, animBoolName)
     {
-    }
-
-    public override void DoChecks()
-    {
-        base.DoChecks();
     }
 
     public override void Enter()
@@ -30,12 +25,7 @@ public class PlayerIdleState : PlayerGroundedState
 
         if (InputX != 0)
         {
-            StateMachine.ChangeState(StatesDescriptor.MoveState);
+            StateMachine.ChangeState(StatesManager.MoveState);
         }
-    }
-
-    public override void PhysicsUpdate()
-    {
-        base.PhysicsUpdate();
     }
 }

@@ -1,106 +1,98 @@
 using System;
+
 using UnityEngine;
 
 public class PlayerInAirState : PlayerEnvironmentState
 {
-    private TriggerState m_Jumping;
+    private TriggerAction m_Jumping;
 
-    private TimeDependentState m_CoyoteTime;
+    private TimeDependentAction m_CoyoteTime;
 
-    private Boolean m_isJumpInputHold;
-
-    public PlayerInAirState(Player player, PlayerStatesManager statesDescriptor, StateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, statesDescriptor, stateMachine, playerData, animBoolName)
+    public PlayerInAirState(PlayerStatesManager statesManager, string animBoolName) : base(statesManager, animBoolName)
     {
-        m_CoyoteTime = new TimeDependentState(Data.jumpCoyoteTime);
-        m_Jumping = new TriggerState();
-    }
-
-    public override void DoChecks()
-    {
-        base.DoChecks();
+        m_CoyoteTime = new TimeDependentAction(Data.jumpCoyoteTime);
+        m_Jumping = new TriggerAction();
     }
 
     public override void Enter()
     {
         base.Enter();
+
+        InputHandler.JumpInputHold.StateChangedEvent += OnJumpInputHoldStateChanged;
+        MoveController.CurrentVelocityY.StateChangedEvent += OnCurrentVelocityYStateChanged;
+        
+        m_CoyoteTime.StateChangedEvent += OnCoyoteTimeStateChanged;
     }
 
     public override void Exit()
     {
         base.Exit();
+
+        InputHandler.JumpInputHold.StateChangedEvent -= OnJumpInputHoldStateChanged;
+        MoveController.CurrentVelocityY.StateChangedEvent -= OnCurrentVelocityYStateChanged;
+        m_CoyoteTime.StateChangedEvent -= OnCoyoteTimeStateChanged;
     }
 
     public override void LogicUpdate()
     {
         base.LogicUpdate();
 
-        CheckCoyoteTime();
-
-        m_isJumpInputHold = Player.InputHandler.IsJumpInputHold;
-
-        CheckJumpMultiplier();
-
-        if (IsGrounded && Player.CurrentVelocity.y < Data.groundSlopeTolerance)
+        if (IsGrounded && MoveController.CurrentVelocityY < Data.groundSlopeTolerance)
         {
-            ChangeState(StatesDescriptor.LandState);
-        } 
-        else if (JumpInput && StatesDescriptor.JumpState.CanJump())
-        {
-            Player.InputHandler.JumpInput.Terminate();
-            ChangeState(StatesDescriptor.JumpState);
+            StateMachine.ChangeState(StatesManager.LandState);
         }
-        else if (IsTouchingWall && IsTouchingLedge && GrabInput && StatesDescriptor.WallGrabState.CanGrab())
+        else if (JumpInput && StatesManager.JumpState.CanJump())
         {
-            ChangeState(StatesDescriptor.WallGrabState);
+            InputHandler.JumpInput.Terminate();
+            StateMachine.ChangeState(StatesManager.JumpState);
         }
-        else if (IsTouchingWall && InputX == Player.FacingDirection && Player.CurrentVelocity.y <= 0f)
+        else if (IsTouchingWall && IsTouchingLedge && GrabInput)
         {
-            ChangeState(StatesDescriptor.WallSlideState);
+            StateMachine.ChangeState(StatesManager.WallGrabState);
+        }
+        else if (IsTouchingWall && InputX == MoveController.FacingDirection && MoveController.CurrentVelocityY <= 0f)
+        {
+            StateMachine.ChangeState(StatesManager.WallSlideState);
         }
         else
         {
-            Player.CheckIfShouldFlip(InputX);
-
-            Player.SetVelocityX(Data.movementVelocity * InputX);
-
-            Player.Animator.SetFloat("yVelocity", Player.CurrentVelocity.y);
-            Player.Animator.SetFloat("xVelocity", Mathf.Abs(Player.CurrentVelocity.x));
+            MoveController.CheckIfShouldFlip(InputX);
+            MoveController.SetVelocityX(Data.movementVelocity * InputX);
         }
     }
 
-    private void CheckJumpMultiplier()
+    private void OnPlayerJumpStateIsActiveStateValueChanged(Boolean isActive)
     {
-        if (m_Jumping.IsActive)
+        if (isActive)
         {
-            if (Player.CurrentVelocity.y <= 0f)
-            {
-                m_Jumping.Terminate();
-            }
-            else if (!m_isJumpInputHold)
-            {
-                Player.SetVelocityY(Player.CurrentVelocity.y * Data.vriableJumpHeightMultiplier);
-
-                m_Jumping.Terminate();
-            }
+            m_Jumping.Initiate();
         }
     }
-
-    public override void PhysicsUpdate()
-    {
-        base.PhysicsUpdate();
-    }
-
-    public void StartJumping() => m_Jumping.Initiate();
 
     public void StartCoyoteTime() => m_CoyoteTime.Initiate();
 
-    private void CheckCoyoteTime()
+    private void OnJumpInputHoldStateChanged(Boolean isActive)
     {
-        if (m_CoyoteTime.IsActive && m_CoyoteTime.IsOutOfTime())
+        if (m_Jumping.IsActive && !isActive && MoveController.CurrentVelocityY > 0f)
         {
-            m_CoyoteTime.Terminate();
-
-            StatesDescriptor.JumpState.DecreaseAmountOfJumpsLeft();
+            MoveController.SetVelocityY(MoveController.CurrentVelocityY * Data.variableJumpHeightMultiplier);
+            m_Jumping.Terminate();
         }
-    } 
+    }
+
+    private void OnCurrentVelocityYStateChanged(Single value)
+    {
+        if (m_Jumping.IsActive && value <= 0f)
+        {
+            m_Jumping.Terminate();
+        }
+    }
+
+    private void OnCoyoteTimeStateChanged(Boolean isActive)
+    {
+        if (isActive)
+        {
+            StatesManager.JumpState.DecreaseAmountOfJumpsLeft();
+        }
+    }
 }

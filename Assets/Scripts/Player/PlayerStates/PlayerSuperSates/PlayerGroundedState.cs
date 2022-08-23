@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PlayerGroundedState : PlayerEnvironmentState
 {
-    public PlayerGroundedState(PlayerStatesManager statesDescriptor, string animBoolName) : base(statesDescriptor, animBoolName)
+    public PlayerGroundedState(PlayerStatesManager statesManager, string animBoolName) : base(statesManager, animBoolName)
     {
     }
 
@@ -11,7 +11,7 @@ public class PlayerGroundedState : PlayerEnvironmentState
     {
         base.Enter();
 
-        StatesDescriptor.JumpState.ResetAmountOfJumpsLeft();
+        StatesManager.JumpState.ResetAmountOfJumpsLeft();
     }
 
     public override void Exit()
@@ -23,18 +23,18 @@ public class PlayerGroundedState : PlayerEnvironmentState
     {
         base.LogicUpdate();
 
-        if (JumpInput && StatesDescriptor.JumpState.CanJump())
+        if (JumpInput && StatesManager.JumpState.CanJump())
         {
-            StateMachine.ChangeState(StatesDescriptor.JumpState);
+            StateMachine.ChangeState(StatesManager.JumpState);
         }
         else if (!IsGrounded)
         {
-            StatesDescriptor.InAirState.StartCoyoteTime();
-            StateMachine.ChangeState(StatesDescriptor.InAirState);
+            StatesManager.InAirState.StartCoyoteTime();
+            StateMachine.ChangeState(StatesManager.InAirState);
         } 
         else if (IsTouchingWall && IsTouchingLedge && GrabInput)
         {
-            StateMachine.ChangeState(StatesDescriptor.WallGrabState);
+            StateMachine.ChangeState(StatesManager.WallGrabState);
         }
     }
 }

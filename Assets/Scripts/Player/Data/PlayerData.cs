@@ -19,7 +19,7 @@ public class PlayerData : UnitData
 
     [Header("In Air State")]
     public Single jumpCoyoteTime = 0.1f;
-    public Single vriableJumpHeightMultiplier = 0.5f;
+    public Single variableJumpHeightMultiplier = 0.5f;
 
     [Header("Wall Grab State")]
     public Single maxDuration = 5f;

@@ -1,11 +1,11 @@
 using System;
 using UnityEngine;
 
-public class PlayerStatsDescriptor
+public class PlayerStatsManager
 {
     //private UnitCharacteristic m_Endurance; 
 
-    //public PlayerStatsDescriptor(UnitCharacteristic endurance)
+    //public PlayerStatsManager(UnitCharacteristic endurance)
     //{
     //    m_Endurance = endurance;
     //}

@@ -58,14 +58,14 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\All\Environment\BarrierChecker.cs" />
     <Compile Include="Assets\Scripts\Player\Input\PlayerMoveController.cs" />
-    <Compile Include="Assets\Scripts\Player\PlayerActions\TimeDependentState.cs" />
+    <Compile Include="Assets\Scripts\All\Actions\TimeDependentAction.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerStateMachine\PlayerStatesManager.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStats\PlayerStatsDescriptor.cs" />
     <Compile Include="Assets\Scripts\All\Data\UnitData.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSuperSates\PlayerGroundedState.cs" />
     <Compile Include="Assets\Scripts\All\States\State.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSubStates\PlayerJumpState.cs" />
-    <Compile Include="Assets\Scripts\Player\PlayerActions\TriggerState.cs" />
+    <Compile Include="Assets\Scripts\All\Actions\TriggerAction.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSuperSates\PlayerAbilityState.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSubStates\PlayerWallGrabState.cs" />
     <Compile Include="Assets\Scripts\All\Environment\GroundChecker.cs" />
@@ -81,13 +81,13 @@
     <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSubStates\PlayerWallClimbState.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSuperSates\PlayerEnvironmentState.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSubStates\PlayerInAirState.cs" />
-    <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerStateMachine\Player.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSubStates\PlayerWallSlideState.cs" />
-    <Compile Include="Assets\Scripts\Player\PlayerActions\PlayerTimeFloatingAction.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSubStates\PlayerIdleState.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSubStates\PlayerMoveState.cs" />
     <Compile Include="Assets\Scripts\All\Environment\EnvironmentChecker.cs" />
     <Compile Include="Assets\Scripts\All\States\StateMachine.cs" />
+    <Compile Include="Assets\Scripts\All\Actions\ValueChangingAction.cs" />
+    <Compile Include="Assets\Scripts\All\Actions\CoroutineManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
