@@ -1,9 +1,26 @@
 using System;
+
 using UnityEngine;
 
 public class StateMachine
 {
-    public PlayerState CurrentState { get; private set; }
+    private PlayerState m_CurrentState;
+    public PlayerState CurrentState
+    {
+        get
+        {
+            return m_CurrentState;
+        }
+        private set
+        {
+            if (m_CurrentState != value)
+            {
+                SendStateChanged(m_CurrentState = value);
+            }
+        }
+    }
+
+    public event Action<PlayerState> StateChangedEvent;
 
     public void Initialize(PlayerState initialState)
     {
@@ -16,5 +33,10 @@ public class StateMachine
         CurrentState.Exit();
         CurrentState = newState;
         CurrentState.Enter();
+    }
+
+    private void SendStateChanged(PlayerState newState)
+    {
+        StateChangedEvent?.Invoke(newState);
     }
 }

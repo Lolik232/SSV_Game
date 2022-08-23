@@ -16,7 +16,7 @@ public class PlayerIdleState : PlayerGroundedState
     {
         base.Enter();
 
-        Player.ResetVelocityX();
+        MoveController.SetVelocityX(0f);
     }
 
     public override void Exit()
@@ -30,13 +30,12 @@ public class PlayerIdleState : PlayerGroundedState
 
         if (InputX != 0)
         {
-            ChangeState(StatesDescriptor.MoveState);
+            StateMachine.ChangeState(StatesDescriptor.MoveState);
         }
     }
 
     public override void PhysicsUpdate()
     {
-
         base.PhysicsUpdate();
     }
 }

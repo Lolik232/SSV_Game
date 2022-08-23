@@ -25,7 +25,7 @@ public abstract class EnvironmentChecker
 
     protected LayerMask WhatIsTarget;
 
-    public event Action<Boolean> TargetDetectionCangedEvent;
+    public event Action<Boolean> TargetDetectionChangedEvent;
 
     public EnvironmentChecker(Transform checker, LayerMask whatIsTarget)
     {
@@ -35,6 +35,6 @@ public abstract class EnvironmentChecker
 
     private void SendTargetDetectionChanged(Boolean isDetected)
     {
-        TargetDetectionCangedEvent?.Invoke(isDetected);
+        TargetDetectionChangedEvent?.Invoke(isDetected);
     }
 }

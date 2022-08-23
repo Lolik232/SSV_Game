@@ -7,14 +7,14 @@ public class PlayerTouchingWallState : PlayerEnvironmentState
     {
     }
 
-    public override void AnimationFinishTrigger()
+    public override void OnAnimationFinishTrigger()
     {
-        base.AnimationFinishTrigger();
+        base.OnAnimationFinishTrigger();
     }
 
-    public override void AnimationTrigger(int id = 0)
+    public override void OnAnimationTrigger(int id = 0)
     {
-        base.AnimationTrigger(id);
+        base.OnAnimationTrigger(id);
     }
 
     public override void DoChecks()

@@ -46,7 +46,7 @@ public class PlayerInAirState : PlayerEnvironmentState
         } 
         else if (JumpInput && StatesDescriptor.JumpState.CanJump())
         {
-            Player.InputHandler.JumpInput.End();
+            Player.InputHandler.JumpInput.Terminate();
             ChangeState(StatesDescriptor.JumpState);
         }
         else if (IsTouchingWall && IsTouchingLedge && GrabInput && StatesDescriptor.WallGrabState.CanGrab())
@@ -74,13 +74,13 @@ public class PlayerInAirState : PlayerEnvironmentState
         {
             if (Player.CurrentVelocity.y <= 0f)
             {
-                m_Jumping.End();
+                m_Jumping.Terminate();
             }
             else if (!m_isJumpInputHold)
             {
                 Player.SetVelocityY(Player.CurrentVelocity.y * Data.vriableJumpHeightMultiplier);
 
-                m_Jumping.End();
+                m_Jumping.Terminate();
             }
         }
     }
@@ -90,15 +90,15 @@ public class PlayerInAirState : PlayerEnvironmentState
         base.PhysicsUpdate();
     }
 
-    public void StartJumping() => m_Jumping.Start();
+    public void StartJumping() => m_Jumping.Initiate();
 
-    public void StartCoyoteTime() => m_CoyoteTime.Start();
+    public void StartCoyoteTime() => m_CoyoteTime.Initiate();
 
     private void CheckCoyoteTime()
     {
         if (m_CoyoteTime.IsActive && m_CoyoteTime.IsOutOfTime())
         {
-            m_CoyoteTime.End();
+            m_CoyoteTime.Terminate();
 
             StatesDescriptor.JumpState.DecreaseAmountOfJumpsLeft();
         }

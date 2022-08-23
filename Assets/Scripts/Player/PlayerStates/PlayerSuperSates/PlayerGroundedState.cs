@@ -7,21 +7,6 @@ public class PlayerGroundedState : PlayerEnvironmentState
     {
     }
 
-    public override void AnimationFinishTrigger()
-    {
-        base.AnimationFinishTrigger();
-    }
-
-    public override void AnimationTrigger(int id = 0)
-    {
-        base.AnimationTrigger(id);
-    }
-
-    public override void DoChecks()
-    {
-        base.DoChecks();
-    }
-
     public override void Enter()
     {
         base.Enter();
@@ -45,16 +30,11 @@ public class PlayerGroundedState : PlayerEnvironmentState
         else if (!IsGrounded)
         {
             StatesDescriptor.InAirState.StartCoyoteTime();
-            ChangeState(StatesDescriptor.InAirState);
+            StateMachine.ChangeState(StatesDescriptor.InAirState);
         } 
         else if (IsTouchingWall && IsTouchingLedge && GrabInput)
         {
-            ChangeState(StatesDescriptor.WallGrabState);
+            StateMachine.ChangeState(StatesDescriptor.WallGrabState);
         }
-    }
-
-    public override void PhysicsUpdate()
-    {
-        base.PhysicsUpdate();
     }
 }

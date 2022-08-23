@@ -50,7 +50,7 @@ public class PlayerInputHandler : MonoBehaviour
     {
         if (context.started)
         {
-            JumpInput.Start();
+            JumpInput.Initiate();
             IsJumpInputHold = true;
         }
         else if (context.canceled)
@@ -63,7 +63,7 @@ public class PlayerInputHandler : MonoBehaviour
     {
         if (JumpInput.IsOutOfTime())
         {
-            JumpInput.End();
+            JumpInput.Terminate();
         }
     }
 
@@ -75,11 +75,11 @@ public class PlayerInputHandler : MonoBehaviour
     {
         if (context.started)
         {
-            GrabInput.Start();
+            GrabInput.Initiate();
         }
         else if (context.canceled)
         {
-            GrabInput.End();
+            GrabInput.Terminate();
         }
     }
 

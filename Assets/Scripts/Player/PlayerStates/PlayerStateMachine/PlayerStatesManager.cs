@@ -2,14 +2,12 @@ using System;
 
 using UnityEngine;
 
-[RequireComponent(typeof(EnvironmentCheckersManager), typeof(PlayerMoveController))]
+[RequireComponent(typeof(EnvironmentCheckersManager))]
 public class PlayerStatesManager : MonoBehaviour
 {
     public EnvironmentCheckersManager EnvironmentCheckersManager { get; private set; }
     public PlayerMoveController MoveController { get; private set; }
-
-    [SerializeField] private PlayerData m_Data;
-    public PlayerData Data { get => m_Data; private set => m_Data = value; }
+    public PlayerData Data { get; private set; }
 
     public StateMachine StateMachine { get; private set; }
 
@@ -25,19 +23,21 @@ public class PlayerStatesManager : MonoBehaviour
     private void Awake()
     {
         StateMachine = new StateMachine();
-
-        IdleState = new PlayerIdleState(this, "idle");
-        MoveState = new PlayerMoveState(player, this, m_StateMachine, data, "move");
-        InAirState = new PlayerInAirState(player, this, m_StateMachine, data, "inAir");
-        LandState = new PlayerLandState(player, this, m_StateMachine, data, "land");
-        JumpState = new PlayerJumpState(player, this, m_StateMachine, data, "inAir");
-        WallGrabState = new PlayerWallGrabState(player, this, m_StateMachine, data, "wallGrab");
-        WallSlideState = new PlayerWallSlideState(player, this, m_StateMachine, data, "wallSlide");
-        WallClimbState = new PlayerWallClimbState(player, this, m_StateMachine, data, "wallClimb");
     }
 
     private void Start()
     {
+        EnvironmentCheckersManager = GetComponent<EnvironmentCheckersManager>();
+        MoveController = (PlayerMoveController)EnvironmentCheckersManager.MoveController;
+        Data = (PlayerData)EnvironmentCheckersManager.Data;
 
+        IdleState = new PlayerIdleState(this, "idle");
+        MoveState = new PlayerMoveState(this, "move");
+        InAirState = new PlayerInAirState(this, "inAir");
+        LandState = new PlayerLandState(this, "land");
+        JumpState = new PlayerJumpState(this, "inAir");
+        WallGrabState = new PlayerWallGrabState(this, "wallGrab");
+        WallSlideState = new PlayerWallSlideState(this, "wallSlide");
+        WallClimbState = new PlayerWallClimbState(this, "wallClimb");
     }
 }

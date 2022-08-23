@@ -10,4 +10,8 @@ public class UnitData : ScriptableObject
     public Single groundIsCloseCheckDistance;
     public Single wallCheckDistance;
     public LayerMask whatIsGround;
+
+    [Header("Endurance")]
+    public Single climbEnduranceDecreasing = 3f;
+    public Single grabEnduranceDecreasing = 1f;
 }

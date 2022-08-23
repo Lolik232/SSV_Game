@@ -56,16 +56,26 @@
     <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\All\Environment\BarrierChecker.cs" />
+    <Compile Include="Assets\Scripts\Player\Input\PlayerMoveController.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerActions\TimeDependentState.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerStateMachine\PlayerStatesManager.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStats\PlayerStatsDescriptor.cs" />
+    <Compile Include="Assets\Scripts\All\Data\UnitData.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSuperSates\PlayerGroundedState.cs" />
+    <Compile Include="Assets\Scripts\All\States\State.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSubStates\PlayerJumpState.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerActions\TriggerState.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSuperSates\PlayerAbilityState.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSubStates\PlayerWallGrabState.cs" />
+    <Compile Include="Assets\Scripts\All\Environment\GroundChecker.cs" />
+    <Compile Include="Assets\Scripts\All\Movement\MoveController.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSubStates\PlayerLedgeClimbState.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSubStates\PlayerLandState.cs" />
+    <Compile Include="Assets\Animation\Animation Controllers\Player\PlayerAnimationController.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSuperSates\PlayerTouchingWallState.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerStateMachine\PlayerState.cs" />
+    <Compile Include="Assets\Scripts\All\Environment\EnvironmentCheckersManager.cs" />
     <Compile Include="Assets\Scripts\Player\Input\PlayerInputHandler.cs" />
     <Compile Include="Assets\Scripts\Player\Data\PlayerData.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSubStates\PlayerWallClimbState.cs" />
@@ -76,17 +86,8 @@
     <Compile Include="Assets\Scripts\Player\PlayerActions\PlayerTimeFloatingAction.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSubStates\PlayerIdleState.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSubStates\PlayerMoveState.cs" />
-    <Compile Include="Assets\Scripts\All\Environment\EnvironmentCheckersManager.cs" />
     <Compile Include="Assets\Scripts\All\Environment\EnvironmentChecker.cs" />
-    <Compile Include="Assets\Scripts\All\Environment\GroundChecker.cs" />
-    <Compile Include="Assets\Scripts\All\Environment\BarrierChecker.cs" />
-    <Compile Include="Assets\Scripts\All\Data\UnitData.cs" />
-    <Compile Include="Assets\Scripts\All\Movement\MoveController.cs" />
-    <Compile Include="Assets\Scripts\Player\Input\PlayerMoveController.cs" />
     <Compile Include="Assets\Scripts\All\States\StateMachine.cs" />
-    <Compile Include="Assets\Scripts\All\States\State.cs" />
-    <Compile Include="Assets\Scripts\Player\PlayerActions\TriggerState.cs" />
-    <Compile Include="Assets\Scripts\Player\PlayerActions\TimeDependentState.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
