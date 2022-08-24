@@ -25,15 +25,15 @@ public class PlayerStatesManager : MonoBehaviour
 
     private void Awake()
     {
+        EnvironmentCheckersManager = GetComponent<EnvironmentCheckersManager>();
+        MoveController = GetComponent<PlayerMoveController>();
+        InputHandler = GetComponent<PlayerInputHandler>();
+
         StateMachine = new StateMachine();
     }
 
     private void Start()
     {
-        EnvironmentCheckersManager = GetComponent<EnvironmentCheckersManager>();
-        MoveController = GetComponent<PlayerMoveController>();
-        InputHandler = GetComponent<PlayerInputHandler>();
-
         IdleState = new PlayerIdleState(this, "idle");
         MoveState = new PlayerMoveState(this, "move");
         InAirState = new PlayerInAirState(this, "inAir");

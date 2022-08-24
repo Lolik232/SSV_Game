@@ -445,8 +445,8 @@ ScriptedImporter:
     - name: Head
       guid: e57631ce238ec76429da16239b081d4d
       position: {x: 231.51729, y: 39.360382, z: 0}
-      rotation: {x: 0, y: 0, z: 0.7147733, w: 0.6993563}
-      length: 255.25436
+      rotation: {x: 0, y: 0, z: 0.7147733, w: 0.69935626}
+      length: 255.25444
       parentId: -1
       color:
         serializedVersion: 2
@@ -2100,8 +2100,8 @@ ScriptedImporter:
     - name: Head
       guid: e57631ce238ec76429da16239b081d4d
       position: {x: 132.13443, y: -0.000011846278, z: 0}
-      rotation: {x: 0, y: 0, z: 0.07115323, w: 0.99746543}
-      length: 255.25438
+      rotation: {x: 0, y: 0, z: 0.071153276, w: 0.99746543}
+      length: 255.25441
       parentId: 0
       color:
         serializedVersion: 2

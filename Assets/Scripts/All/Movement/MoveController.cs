@@ -59,12 +59,12 @@ public abstract class MoveController : MonoBehaviour
     {
         CurrentVelocityX = new ValueChangingAction<Single>();
         CurrentVelocityY = new ValueChangingAction<Single>();
+
+        RB = GetComponent<Rigidbody2D>();
     }
 
     protected virtual void Start()
     {
-        RB = GetComponent<Rigidbody2D>();
-
         FacingDirection = 1;
     }
 

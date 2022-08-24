@@ -19,7 +19,7 @@ public class PlayerInAirState : PlayerEnvironmentState
         base.Enter();
 
         InputHandler.JumpInputHold.StateChangedEvent += OnJumpInputHoldStateChanged;
-        MoveController.CurrentVelocityY.StateChangedEvent += OnCurrentVelocityYStateChanged;
+        MoveController.CurrentVelocityY.StateChangedEvent += OnCurrentVelocityYChanged;
         
         m_CoyoteTime.StateChangedEvent += OnCoyoteTimeStateChanged;
     }
@@ -29,7 +29,7 @@ public class PlayerInAirState : PlayerEnvironmentState
         base.Exit();
 
         InputHandler.JumpInputHold.StateChangedEvent -= OnJumpInputHoldStateChanged;
-        MoveController.CurrentVelocityY.StateChangedEvent -= OnCurrentVelocityYStateChanged;
+        MoveController.CurrentVelocityY.StateChangedEvent -= OnCurrentVelocityYChanged;
         m_CoyoteTime.StateChangedEvent -= OnCoyoteTimeStateChanged;
     }
 
@@ -61,7 +61,7 @@ public class PlayerInAirState : PlayerEnvironmentState
         }
     }
 
-    private void OnPlayerJumpStateIsActiveStateValueChanged(Boolean isActive)
+    private void OnPlayerJumpStateChanged(Boolean isActive)
     {
         if (isActive)
         {
@@ -80,7 +80,7 @@ public class PlayerInAirState : PlayerEnvironmentState
         }
     }
 
-    private void OnCurrentVelocityYStateChanged(Single value)
+    private void OnCurrentVelocityYChanged(Single value)
     {
         if (m_Jumping.IsActive && value <= 0f)
         {

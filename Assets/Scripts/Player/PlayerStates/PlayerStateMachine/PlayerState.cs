@@ -1,5 +1,7 @@
 using System;
 
+using UnityEngine;
+
 public class PlayerState
 {
     public TriggerAction IsActive { get; private set; }
@@ -36,8 +38,13 @@ public class PlayerState
     {
         IsActive.Initiate();
 
+        InputX = InputHandler.NormInputX;
+        InputY = InputHandler.NormInputY;
+
         InputHandler.NormInputX.StateChangedEvent += SetInputX;
         InputHandler.NormInputY.StateChangedEvent += SetInputY;
+
+        Debug.Log(AnimBoolName);
     }
 
     public virtual void Exit()

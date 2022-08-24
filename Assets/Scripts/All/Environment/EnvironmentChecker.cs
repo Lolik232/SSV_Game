@@ -21,7 +21,9 @@ public abstract class EnvironmentChecker
             
     }
 
-    protected Vector2 Position;
+    protected Transform Checker;
+
+    protected Vector2 Position => Checker.position;
 
     protected LayerMask WhatIsTarget;
 
@@ -29,7 +31,7 @@ public abstract class EnvironmentChecker
 
     public EnvironmentChecker(Transform checker, LayerMask whatIsTarget)
     {
-        Position = checker.position;
+        Checker = checker;
         WhatIsTarget = whatIsTarget;
     }
 

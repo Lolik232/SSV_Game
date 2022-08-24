@@ -60,6 +60,7 @@
     <Compile Include="Assets\Scripts\Player\Input\PlayerMoveController.cs" />
     <Compile Include="Assets\Scripts\All\Actions\TimeDependentAction.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerStateMachine\PlayerStatesManager.cs" />
+    <Compile Include="Assets\Scripts\All\Actions\ValueChangingAction.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStats\PlayerStatsDescriptor.cs" />
     <Compile Include="Assets\Scripts\All\Data\UnitData.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSuperSates\PlayerGroundedState.cs" />
@@ -83,11 +84,11 @@
     <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSubStates\PlayerInAirState.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSubStates\PlayerWallSlideState.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSubStates\PlayerIdleState.cs" />
+    <Compile Include="Assets\Scripts\All\Actions\CoroutineManager.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSubStates\PlayerMoveState.cs" />
     <Compile Include="Assets\Scripts\All\Environment\EnvironmentChecker.cs" />
     <Compile Include="Assets\Scripts\All\States\StateMachine.cs" />
-    <Compile Include="Assets\Scripts\All\Actions\ValueChangingAction.cs" />
-    <Compile Include="Assets\Scripts\All\Actions\CoroutineManager.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerManager\Player.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

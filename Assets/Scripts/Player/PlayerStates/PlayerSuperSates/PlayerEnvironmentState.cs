@@ -21,11 +21,20 @@ public class PlayerEnvironmentState : PlayerState
     {
         base.Enter();
 
+        IsGrounded = EnvironmentCheckersManager.GroundChecker.IsDetected;
+        IsGroundClose = EnvironmentCheckersManager.GroundCloseChecker.IsDetected;
+        IsTouchingWall = EnvironmentCheckersManager.WallChecker.IsDetected;
+        IsTouchingWallBack = EnvironmentCheckersManager.WallBackChecker.IsDetected;
+        IsTouchingLedge = EnvironmentCheckersManager.LedgeChecker.IsDetected;
+
         EnvironmentCheckersManager.GroundChecker.TargetDetectionChangedEvent += SetIsGrounded;
         EnvironmentCheckersManager.GroundCloseChecker.TargetDetectionChangedEvent += SetIsGroundClose;
         EnvironmentCheckersManager.WallChecker.TargetDetectionChangedEvent += SetIsTouchingWall;
         EnvironmentCheckersManager.WallBackChecker.TargetDetectionChangedEvent += SetIsTouchingWallBack;
         EnvironmentCheckersManager.LedgeChecker.TargetDetectionChangedEvent += SetIsTouchingLedge;
+
+        JumpInput = InputHandler.JumpInput;
+        GrabInput = InputHandler.GrabInput;
 
         InputHandler.JumpInput.StateChangedEvent += SetJumpInput;
         InputHandler.GrabInput.StateChangedEvent += SetGrabInput;

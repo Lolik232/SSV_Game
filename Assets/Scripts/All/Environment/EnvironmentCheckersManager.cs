@@ -29,12 +29,12 @@ public class EnvironmentCheckersManager : MonoBehaviour
         WallChecker = new BarrierChecker(m_WallChecker, m_Data.wallCheckDistance, Vector2.right, m_Data.whatIsGround);
         WallBackChecker = new BarrierChecker(m_WallChecker, m_Data.wallCheckDistance, Vector2.left, m_Data.whatIsGround);
         LedgeChecker = new BarrierChecker(m_LedgeChecker, m_Data.wallCheckDistance, Vector2.right, m_Data.whatIsGround);
+
+        MoveController = GetComponent<MoveController>();
     }
 
     protected virtual void Start()
     {
-        MoveController = GetComponent<MoveController>();
-
         MoveController.FlipEvent += WallChecker.OnFlip;
         MoveController.FlipEvent += WallBackChecker.OnFlip;
         MoveController.FlipEvent += LedgeChecker.OnFlip;

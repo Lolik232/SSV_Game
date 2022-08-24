@@ -10,14 +10,27 @@ public class PlayerAnimationController : MonoBehaviour
 
     private Animator m_Anim;
     private StateMachine m_StateMachine;
+    private PlayerStatesManager m_StateManager;
 
+
+    private void Awake()
+    {
+        m_Anim = GetComponent<Animator>();
+        m_StateManager = GetComponent<PlayerStatesManager>();
+
+        IsAnimationPlaying = new TriggerAction();
+    }
 
     private void Start()
     {
-        m_Anim = GetComponent<Animator>();
-        m_StateMachine = GetComponent<PlayerStatesManager>().StateMachine;
+        m_StateMachine = m_StateManager.StateMachine;
 
         m_StateMachine.StateChangedEvent += OnStateChanged;
+    }
+
+    private void OnDestroy()
+    {
+        m_StateMachine.StateChangedEvent -= OnStateChanged;
     }
 
     private void OnStateChanged(PlayerState state)
