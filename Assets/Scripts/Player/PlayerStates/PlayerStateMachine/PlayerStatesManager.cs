@@ -2,15 +2,12 @@ using System;
 
 using UnityEngine;
 
-[RequireComponent(typeof(EnvironmentCheckersManager), typeof(PlayerMoveController), typeof(PlayerInputHandler))]
-public class PlayerStatesManager : MonoBehaviour
+public class PlayerStatesManager
 {
     public EnvironmentCheckersManager EnvironmentCheckersManager { get; private set; }
     public PlayerMoveController MoveController { get; private set; }
     public PlayerInputHandler InputHandler { get; private set; }
-
-    [SerializeField] private PlayerData m_Data;
-    public PlayerData Data { get => m_Data; private set => m_Data = value; }
+    public PlayerData Data { get; private set; }
 
     public StateMachine StateMachine { get; private set; }
 
@@ -23,16 +20,17 @@ public class PlayerStatesManager : MonoBehaviour
     public PlayerWallSlideState WallSlideState { get; private set; }
     public PlayerWallClimbState WallClimbState { get; private set; }
 
-    private void Awake()
+    public PlayerStatesManager(EnvironmentCheckersManager environmentCheckersManager, PlayerMoveController moveController, PlayerInputHandler inputHandler, PlayerData data)
     {
-        EnvironmentCheckersManager = GetComponent<EnvironmentCheckersManager>();
-        MoveController = GetComponent<PlayerMoveController>();
-        InputHandler = GetComponent<PlayerInputHandler>();
+        EnvironmentCheckersManager = environmentCheckersManager;
+        MoveController = moveController;
+        InputHandler = inputHandler;
+        Data = data;
 
         StateMachine = new StateMachine();
     }
 
-    private void Start()
+    public void Initialize()
     {
         IdleState = new PlayerIdleState(this, "idle");
         MoveState = new PlayerMoveState(this, "move");
@@ -46,7 +44,7 @@ public class PlayerStatesManager : MonoBehaviour
         StateMachine.Initialize(IdleState);
     }
 
-    private void Update()
+    public void LogicUpdate()
     {
         StateMachine.CurrentState.LogicUpdate();
     }

@@ -1,34 +1,29 @@
 using System;
 using UnityEngine;
 
-[RequireComponent(typeof(Animator), typeof(PlayerStatesManager))]
-
-public class PlayerAnimationController : MonoBehaviour
+public class PlayerAnimationController
 {
     public TriggerAction IsAnimationPlaying { get; private set; }
     public String CurrentAnimationName { get; private set; }
 
     private Animator m_Anim;
     private StateMachine m_StateMachine;
-    private PlayerStatesManager m_StateManager;
 
 
-    private void Awake()
+    public PlayerAnimationController(Animator anim, StateMachine stateMachine)
     {
-        m_Anim = GetComponent<Animator>();
-        m_StateManager = GetComponent<PlayerStatesManager>();
+        m_Anim = anim;
+        m_StateMachine = stateMachine;
 
         IsAnimationPlaying = new TriggerAction();
     }
 
-    private void Start()
+    public void Initialize()
     {
-        m_StateMachine = m_StateManager.StateMachine;
-
         m_StateMachine.StateChangedEvent += OnStateChanged;
     }
 
-    private void OnDestroy()
+    ~PlayerAnimationController()
     {
         m_StateMachine.StateChangedEvent -= OnStateChanged;
     }

@@ -24,12 +24,12 @@ public class TriggerAction
 
     public virtual void Initiate()
     {
-        m_IsActive = true;
+        IsActive = true;
     }
 
     public virtual void Terminate()
     {
-        m_IsActive = false;
+        IsActive = false;
     }
 
     public static implicit operator Boolean(TriggerAction a) => a.IsActive;

@@ -1,46 +1,37 @@
 using System;
 using UnityEngine;
 
-[RequireComponent(typeof(MoveController))]
-public class EnvironmentCheckersManager : MonoBehaviour
+public class EnvironmentCheckersManager
 {
-
-    [SerializeField] private Transform m_GroundChecker;
     public GroundChecker GroundChecker { get; private set; }
     public BarrierChecker GroundCloseChecker { get; private set; }
 
-
-    [SerializeField] private Transform m_WallChecker;
     public BarrierChecker WallChecker { get; private set; }
     public BarrierChecker WallBackChecker { get; private set; }
 
-    [SerializeField] private Transform m_LedgeChecker;
     public BarrierChecker LedgeChecker { get; private set; }
-
-    [SerializeField] private UnitData m_Data;
-    public UnitData Data { get => m_Data; private set => m_Data = value; }
 
     public MoveController MoveController { get; private set; }
 
-    protected virtual void Awake()
+    public EnvironmentCheckersManager(Transform groundChecker, Transform wallChecker, Transform ledgeChecker, MoveController moveController, UnitData data)
     {
-        GroundChecker = new GroundChecker(m_GroundChecker, m_Data.groundCheckRadius, m_Data.whatIsGround);
-        GroundCloseChecker = new BarrierChecker(m_GroundChecker, m_Data.groundIsCloseCheckDistance, Vector2.down, m_Data.whatIsGround);
-        WallChecker = new BarrierChecker(m_WallChecker, m_Data.wallCheckDistance, Vector2.right, m_Data.whatIsGround);
-        WallBackChecker = new BarrierChecker(m_WallChecker, m_Data.wallCheckDistance, Vector2.left, m_Data.whatIsGround);
-        LedgeChecker = new BarrierChecker(m_LedgeChecker, m_Data.wallCheckDistance, Vector2.right, m_Data.whatIsGround);
+        GroundChecker = new GroundChecker(groundChecker, data.groundCheckRadius, data.whatIsGround);
+        GroundCloseChecker = new BarrierChecker(groundChecker, data.groundIsCloseCheckDistance, Vector2.down, data.whatIsGround);
+        WallChecker = new BarrierChecker(wallChecker, data.wallCheckDistance, Vector2.right, data.whatIsGround);
+        WallBackChecker = new BarrierChecker(wallChecker, data.wallCheckDistance, Vector2.left, data.whatIsGround);
+        LedgeChecker = new BarrierChecker(ledgeChecker, data.wallCheckDistance, Vector2.right, data.whatIsGround);
 
-        MoveController = GetComponent<MoveController>();
+        MoveController = moveController;
     }
 
-    protected virtual void Start()
+    public void Initialize()
     {
-        MoveController.FlipEvent += WallChecker.OnFlip;
-        MoveController.FlipEvent += WallBackChecker.OnFlip;
-        MoveController.FlipEvent += LedgeChecker.OnFlip;
+        MoveController.FacingDirection.StateChangedEvent += WallChecker.OnFacingDirectionChanged;
+        MoveController.FacingDirection.StateChangedEvent += WallBackChecker.OnFacingDirectionChanged;
+        MoveController.FacingDirection.StateChangedEvent += LedgeChecker.OnFacingDirectionChanged;
     }
 
-    protected virtual void FixedUpdate()
+    public void PhysicsUpdate()
     {
         GroundChecker.CheckIfGrounded();
         GroundCloseChecker.CheckIfTouchingBarrier();
@@ -49,14 +40,14 @@ public class EnvironmentCheckersManager : MonoBehaviour
         LedgeChecker.CheckIfTouchingBarrier();
     }
 
-    protected virtual void OnDestroy()
+    ~EnvironmentCheckersManager()
     {
-        MoveController.FlipEvent -= WallChecker.OnFlip;
-        MoveController.FlipEvent -= WallBackChecker.OnFlip;
-        MoveController.FlipEvent -= LedgeChecker.OnFlip;
+        MoveController.FacingDirection.StateChangedEvent -= WallChecker.OnFacingDirectionChanged;
+        MoveController.FacingDirection.StateChangedEvent -= WallBackChecker.OnFacingDirectionChanged;
+        MoveController.FacingDirection.StateChangedEvent -= LedgeChecker.OnFacingDirectionChanged;
     }
 
-    protected virtual void OnDrawGizmos()
+    public void OnDrawGizmos()
     {
         GroundChecker?.OnDrawGizmos();
         GroundCloseChecker?.OnDrawGizmos();

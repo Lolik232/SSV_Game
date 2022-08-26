@@ -1,15 +1,12 @@
 using System;
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerInputHandler))]
-
 public class PlayerMoveController : MoveController
 {
-    public PlayerInputHandler PlayerInputHandler { get; private set; }
+    public PlayerInputHandler InputHandler { get; private set; }
 
-    protected override void Awake()
+    public PlayerMoveController(Transform transform, Rigidbody2D rigidbody2D, PlayerInputHandler inputHandler) : base(transform, rigidbody2D)
     {
-        base.Awake();
-        PlayerInputHandler = GetComponent<PlayerInputHandler>();
+        InputHandler = inputHandler;
     }
 }

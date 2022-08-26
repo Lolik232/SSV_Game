@@ -81,6 +81,7 @@
     <Compile Include="Assets\Scripts\Player\Data\PlayerData.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSubStates\PlayerWallClimbState.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSuperSates\PlayerEnvironmentState.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerManager\Player.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSubStates\PlayerInAirState.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSubStates\PlayerWallSlideState.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSubStates\PlayerIdleState.cs" />
@@ -88,7 +89,6 @@
     <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSubStates\PlayerMoveState.cs" />
     <Compile Include="Assets\Scripts\All\Environment\EnvironmentChecker.cs" />
     <Compile Include="Assets\Scripts\All\States\StateMachine.cs" />
-    <Compile Include="Assets\Scripts\Player\PlayerManager\Player.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

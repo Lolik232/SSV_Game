@@ -27,14 +27,14 @@ public class PlayerEnvironmentState : PlayerState
         IsTouchingWallBack = EnvironmentCheckersManager.WallBackChecker.IsDetected;
         IsTouchingLedge = EnvironmentCheckersManager.LedgeChecker.IsDetected;
 
+        JumpInput = InputHandler.JumpInput;
+        GrabInput = InputHandler.GrabInput;
+
         EnvironmentCheckersManager.GroundChecker.TargetDetectionChangedEvent += SetIsGrounded;
         EnvironmentCheckersManager.GroundCloseChecker.TargetDetectionChangedEvent += SetIsGroundClose;
         EnvironmentCheckersManager.WallChecker.TargetDetectionChangedEvent += SetIsTouchingWall;
         EnvironmentCheckersManager.WallBackChecker.TargetDetectionChangedEvent += SetIsTouchingWallBack;
         EnvironmentCheckersManager.LedgeChecker.TargetDetectionChangedEvent += SetIsTouchingLedge;
-
-        JumpInput = InputHandler.JumpInput;
-        GrabInput = InputHandler.GrabInput;
 
         InputHandler.JumpInput.StateChangedEvent += SetJumpInput;
         InputHandler.GrabInput.StateChangedEvent += SetGrabInput;
@@ -63,5 +63,5 @@ public class PlayerEnvironmentState : PlayerState
     private void SetIsTouchingLedge(Boolean value) => IsTouchingLedge = value;
 
     private void SetJumpInput(Boolean value) => JumpInput = value;
-    private void SetGrabInput(Boolean value) => GrabInput = value;
+    private void SetGrabInput(Boolean value) => GrabInput = value; 
 }

@@ -2,18 +2,16 @@ using System;
 
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
-
-public abstract class MoveController : MonoBehaviour
+public abstract class MoveController
 {
-    public Int32 FacingDirection { get; private set; }
+    public ValueChangingAction<Int32> FacingDirection { get; private set; }
 
     public ValueChangingAction<Single> CurrentVelocityX { get; private set; }
     public ValueChangingAction<Single> CurrentVelocityY { get; private set; }
 
     public Rigidbody2D RB { get; private set; }
 
-    public event Action FlipEvent;
+    public Transform Transform { get; private set; }
 
     public void CheckIfShouldFlip(Int32 direction)
     {
@@ -26,8 +24,9 @@ public abstract class MoveController : MonoBehaviour
     public void SetVelocityZero() => SetVelocity(Vector2.zero);
     public void SetVelocity(Single velocity, Vector2 angle, Int32 direction) => SetVelocity(angle.normalized.x * velocity * direction, angle.normalized.y * velocity);
     public void SetVelocity(Single velocity, Vector2 angle) => SetVelocity(velocity * angle);
-    public void SetVelocityX(Single velocity) => SetVelocity(velocity, CurrentVelocityY);
-    public void SetVelocityY(Single velocity) => SetVelocity(CurrentVelocityX, velocity);
+    public void SetVelocityX(Single velocity) => SetVelocity(velocity, RB.velocity.y);
+    public void SetVelocityY(Single velocity) => SetVelocity(RB.velocity.x, velocity);
+
     private void SetVelocity(Single velocityX, Single velocityY) => SetVelocity(new Vector2(velocityX, velocityY));
     private void SetVelocity(Vector2 velocity)
     {
@@ -41,34 +40,30 @@ public abstract class MoveController : MonoBehaviour
         CurrentVelocityY.Value = RB.velocity.y;
     }
 
-    protected virtual void Flip() => Flip(transform);
+    protected virtual void Flip() => Flip(Transform);
     private void Flip(Transform targetTransform)
     {
-        FacingDirection = -FacingDirection;
+        FacingDirection.Value = -FacingDirection;
         targetTransform.Rotate(0f, 180f, 0f);
-
-        SendFlip();
     }
 
-    protected void SendFlip()
-    {
-        FlipEvent?.Invoke();
-    }
-
-    protected virtual void Awake()
+    public MoveController(Transform transform, Rigidbody2D rigidbody2D)
     {
         CurrentVelocityX = new ValueChangingAction<Single>();
         CurrentVelocityY = new ValueChangingAction<Single>();
 
-        RB = GetComponent<Rigidbody2D>();
+        FacingDirection = new ValueChangingAction<Int32>();
+
+        RB = rigidbody2D;
+        Transform = transform;
     }
 
-    protected virtual void Start()
+    public virtual void Initialize()
     {
-        FacingDirection = 1;
+        FacingDirection.Value = 1;
     }
 
-    protected virtual void Update()
+    public virtual void LogicUpdate()
     {
         UpdateCurrentVelocity();
     }

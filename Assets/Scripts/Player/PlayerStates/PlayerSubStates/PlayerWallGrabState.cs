@@ -17,7 +17,7 @@ public class PlayerWallGrabState : PlayerTouchingWallState
     {
         base.Enter();
 
-        m_HoldPosition = MoveController.transform.position;
+        m_HoldPosition = MoveController.Transform.position;
     }
 
     public override void Exit()
@@ -43,7 +43,7 @@ public class PlayerWallGrabState : PlayerTouchingWallState
 
     private void HoldPosition()
     {
-        MoveController.transform.position = m_HoldPosition;
+        MoveController.Transform.position = m_HoldPosition;
 
         MoveController.SetVelocityZero();
     }

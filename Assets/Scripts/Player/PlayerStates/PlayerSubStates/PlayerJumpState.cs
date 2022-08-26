@@ -21,6 +21,16 @@ public class PlayerJumpState : PlayerAbilityState
         IsAbilityDone = true;
     }
 
+    public override void Exit()
+    {
+        base.Exit();
+    }
+
+    public override void LogicUpdate()
+    {
+        base.LogicUpdate();
+    }
+
     public Boolean CanJump() => m_AmountOfJumpsLeft > 0;
 
     public void ResetAmountOfJumpsLeft() => m_AmountOfJumpsLeft = Data.amountOfJumps;

@@ -13,7 +13,7 @@ public class BarrierChecker : EnvironmentChecker
         m_Direction = direction;
     }
 
-    public void OnFlip()
+    public void OnFacingDirectionChanged(Int32 direction)
     {
         m_Direction.Set(-m_Direction.x, m_Direction.y);
     }

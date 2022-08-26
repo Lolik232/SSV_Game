@@ -7,6 +7,16 @@ public class PlayerWallSlideState : PlayerTouchingWallState
     {
     }
 
+    public override void Enter()
+    {
+        base.Enter();
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+    }
+
     public override void LogicUpdate()
     {
         base.LogicUpdate();

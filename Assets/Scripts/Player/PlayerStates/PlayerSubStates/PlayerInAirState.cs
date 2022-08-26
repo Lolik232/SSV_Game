@@ -20,8 +20,8 @@ public class PlayerInAirState : PlayerEnvironmentState
 
         InputHandler.JumpInputHold.StateChangedEvent += OnJumpInputHoldStateChanged;
         MoveController.CurrentVelocityY.StateChangedEvent += OnCurrentVelocityYChanged;
-        
         m_CoyoteTime.StateChangedEvent += OnCoyoteTimeStateChanged;
+        StatesManager.JumpState.IsActive.StateChangedEvent += OnJumpInputHoldStateChanged;
     }
 
     public override void Exit()
@@ -31,6 +31,7 @@ public class PlayerInAirState : PlayerEnvironmentState
         InputHandler.JumpInputHold.StateChangedEvent -= OnJumpInputHoldStateChanged;
         MoveController.CurrentVelocityY.StateChangedEvent -= OnCurrentVelocityYChanged;
         m_CoyoteTime.StateChangedEvent -= OnCoyoteTimeStateChanged;
+        StatesManager.JumpState.IsActive.StateChangedEvent -= OnJumpInputHoldStateChanged;
     }
 
     public override void LogicUpdate()
@@ -43,7 +44,6 @@ public class PlayerInAirState : PlayerEnvironmentState
         }
         else if (JumpInput && StatesManager.JumpState.CanJump())
         {
-            InputHandler.JumpInput.Terminate();
             StateMachine.ChangeState(StatesManager.JumpState);
         }
         else if (IsTouchingWall && IsTouchingLedge && GrabInput)
