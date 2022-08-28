@@ -47,6 +47,11 @@ public abstract class MoveController
         targetTransform.Rotate(0f, 180f, 0f);
     }
 
+    public MoveController()
+    {
+
+    }
+
     public MoveController(Transform transform, Rigidbody2D rigidbody2D)
     {
         CurrentVelocityX = new ValueChangingAction<Single>();

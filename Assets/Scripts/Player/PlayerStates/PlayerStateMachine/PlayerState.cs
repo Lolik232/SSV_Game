@@ -4,17 +4,21 @@ using UnityEngine;
 
 public class PlayerState
 {
-    public TriggerAction IsActive { get; private set; }
+    protected Boolean IsActive;
 
     protected readonly PlayerStatesManager StatesManager;
     protected readonly StateMachine StateMachine;
     protected readonly PlayerMoveController MoveController;
     protected readonly PlayerInputHandler InputHandler;
     protected readonly EnvironmentCheckersManager EnvironmentCheckersManager;
+    protected readonly PlayerAbilitiesManager AbilitiesManager;
     protected readonly PlayerData Data;
 
-    protected Int32 InputX;
-    protected Int32 InputY;
+    protected Int32 InputX { get; private set; }
+    protected Int32 InputY { get; private set; }
+
+    protected Single VelocityX { get; private set; }
+    protected Single VelocityY { get; private set; }
 
     protected Boolean IsAnimationFinished;
 
@@ -27,6 +31,7 @@ public class PlayerState
         MoveController = StatesManager.MoveController;
         InputHandler = StatesManager.InputHandler;
         StateMachine = StatesManager.StateMachine;
+        AbilitiesManager = StatesManager.AbilitiesManager;
         Data = StatesManager.Data;
 
         AnimBoolName = animBoolName;
@@ -34,25 +39,45 @@ public class PlayerState
         IsActive = new TriggerAction();
     }
 
+    public event Action EnterEvent;
+    public event Action ExitEvent;
+
+
+    public virtual void Initialize()
+    {
+
+    }
+
     public virtual void Enter()
     {
-        IsActive.Initiate();
+        IsActive = true;
 
         InputX = InputHandler.NormInputX;
         InputY = InputHandler.NormInputY;
+        VelocityX = MoveController.CurrentVelocityX;
+        VelocityY = MoveController.CurrentVelocityY;
 
         InputHandler.NormInputX.StateChangedEvent += SetInputX;
         InputHandler.NormInputY.StateChangedEvent += SetInputY;
+        MoveController.CurrentVelocityX.StateChangedEvent += SetVelocityX;
+        MoveController.CurrentVelocityY.StateChangedEvent += SetVelocityY;
 
         Debug.Log(AnimBoolName);
+
+        SendEnter();
     }
 
     public virtual void Exit()
     {
-        IsActive.Terminate();
+
+        IsActive = false;
 
         InputHandler.NormInputX.StateChangedEvent -= SetInputX;
         InputHandler.NormInputY.StateChangedEvent -= SetInputY;
+        MoveController.CurrentVelocityX.StateChangedEvent -= SetVelocityX;
+        MoveController.CurrentVelocityY.StateChangedEvent -= SetVelocityY;
+
+        SendExit();
     }
 
     public virtual void LogicUpdate()
@@ -62,4 +87,16 @@ public class PlayerState
 
     private void SetInputX(Int32 value) => InputX = value;
     private void SetInputY(Int32 value) => InputY = value;
+    private void SetVelocityX(Single value) => VelocityX = value;
+    private void SetVelocityY(Single value) => VelocityY = value;
+
+    protected virtual void SendEnter()
+    {
+        EnterEvent?.Invoke();
+    }
+
+    protected virtual void SendExit()
+    {
+        ExitEvent?.Invoke();
+    }
 }

@@ -1,4 +1,5 @@
 using System;
+
 using UnityEngine;
 
 public class PlayerAnimationController
@@ -9,13 +10,18 @@ public class PlayerAnimationController
     private Animator m_Anim;
     private StateMachine m_StateMachine;
 
+    private readonly Player m_Player;
 
-    public PlayerAnimationController(Animator anim, StateMachine stateMachine)
+    public PlayerAnimationController(Player player)
     {
-        m_Anim = anim;
-        m_StateMachine = stateMachine;
-
+        m_Player = player;
         IsAnimationPlaying = new TriggerAction();
+    }
+
+    public void SetDependencies()
+    {
+        m_Anim = m_Player.Anim;
+        m_StateMachine = m_Player.StatesManager.StateMachine;
     }
 
     public void Initialize()

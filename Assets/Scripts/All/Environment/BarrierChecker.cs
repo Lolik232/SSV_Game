@@ -1,30 +1,34 @@
 using System;
+
 using UnityEngine;
 
 public class BarrierChecker : EnvironmentChecker
 {
-    private readonly Single m_Distance;
+    public readonly Single Distance;
 
-    private Vector2 m_Direction;
+    private Int32 m_FacingDirection;
+
+    private readonly Vector2 m_Direction;
+    public Vector2 Direction => new(m_Direction.x * m_FacingDirection, m_Direction.y);
 
     public BarrierChecker(Transform checker, Single distance, Vector2 direction, LayerMask whatIsTarget) : base(checker, whatIsTarget)
     {
-        m_Distance = distance;
+        Distance = distance;
         m_Direction = direction;
     }
 
     public void OnFacingDirectionChanged(Int32 direction)
     {
-        m_Direction.Set(-m_Direction.x, m_Direction.y);
+        m_FacingDirection = direction;
     }
 
     public void CheckIfTouchingBarrier()
     {
-        IsDetected = Physics2D.Raycast(Position, m_Direction, m_Distance, WhatIsTarget);
+        IsDetected = Physics2D.Raycast(Position, Direction, Distance, WhatIsTarget);
     }
 
     public void OnDrawGizmos()
     {
-        Gizmos.DrawLine(Position, Position + m_Direction * m_Distance);
+        Gizmos.DrawLine(Position, Position + Direction * Distance);
     }
 }

@@ -3,20 +3,18 @@ using UnityEngine;
 
 public class PlayerJumpState : PlayerAbilityState
 {
-    private Int32 m_AmountOfJumpsLeft;
     public PlayerJumpState(PlayerStatesManager statesManager, string animBoolName) : base(statesManager, animBoolName)
     {
-        ResetAmountOfJumpsLeft();
+    }
+
+    public override void Initialize()
+    {
+        base.Initialize();
     }
 
     public override void Enter()
     {
         base.Enter();
-
-        MoveController.SetVelocityY(Data.jumpVelocity);
-
-        InputHandler.JumpInput.Terminate();
-        DecreaseAmountOfJumpsLeft();
 
         IsAbilityDone = true;
     }
@@ -30,10 +28,4 @@ public class PlayerJumpState : PlayerAbilityState
     {
         base.LogicUpdate();
     }
-
-    public Boolean CanJump() => m_AmountOfJumpsLeft > 0;
-
-    public void ResetAmountOfJumpsLeft() => m_AmountOfJumpsLeft = Data.amountOfJumps;
-
-    public void DecreaseAmountOfJumpsLeft() => m_AmountOfJumpsLeft--;
 }

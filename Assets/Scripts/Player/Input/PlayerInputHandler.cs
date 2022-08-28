@@ -3,10 +3,9 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-
 public class PlayerInputHandler : MonoBehaviour
 {
-    [SerializeField]  private PlayerData m_Data;
+    [SerializeField] private PlayerData m_Data;
     
     public ValueChangingAction<Int32> NormInputX { get; private set; }
     public ValueChangingAction<Int32> NormInputY { get; private set; }
@@ -17,15 +16,31 @@ public class PlayerInputHandler : MonoBehaviour
 
     public TriggerAction GrabInput { get; private set; }
 
+    private Player m_Player;
+
+    public PlayerStatesManager StatesManager { get; private set; }
 
     private void Awake()
     {
+        m_Player = GetComponent<Player>();
+
         NormInputX = new ValueChangingAction<Int32>();
         NormInputY = new ValueChangingAction<Int32>();
 
         JumpInput = new TimeDependentAction(m_Data.jumpInputHoldTime);
-        JumpInputHold = new TriggerAction();
         GrabInput = new TriggerAction();
+        JumpInputHold = new TriggerAction();
+    }
+
+    public void SetDependencies()
+    {
+        StatesManager = m_Player.StatesManager;
+
+    }
+
+    public void Initialize()
+    {
+        StatesManager.JumpState.EnterEvent += JumpInput.Terminate;
     }
 
     #region Move
@@ -54,7 +69,7 @@ public class PlayerInputHandler : MonoBehaviour
         }
         else if (context.canceled)
         {
-            JumpInputHold.Initiate();
+            JumpInputHold.Terminate();
         }
     }
 

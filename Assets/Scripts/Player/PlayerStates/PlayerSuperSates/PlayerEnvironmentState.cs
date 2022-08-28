@@ -17,6 +17,13 @@ public class PlayerEnvironmentState : PlayerState
     {
     }
 
+    public event Action<Single, Int32> MoveEvent;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+    }
+
     public override void Enter()
     {
         base.Enter();
@@ -56,6 +63,11 @@ public class PlayerEnvironmentState : PlayerState
 
     public override void LogicUpdate() => base.LogicUpdate();
 
+    protected void SendMove(Single velocityX, Int32 direction)
+    {
+        MoveEvent?.Invoke(velocityX, direction);
+    }
+
     private void SetIsGrounded(Boolean value) => IsGrounded = value;
     private void SetIsGroundClose(Boolean value) => IsGroundClose = value;
     private void SetIsTouchingWall(Boolean value) => IsTouchingWall = value;
@@ -63,5 +75,5 @@ public class PlayerEnvironmentState : PlayerState
     private void SetIsTouchingLedge(Boolean value) => IsTouchingLedge = value;
 
     private void SetJumpInput(Boolean value) => JumpInput = value;
-    private void SetGrabInput(Boolean value) => GrabInput = value; 
+    private void SetGrabInput(Boolean value) => GrabInput = value;
 }

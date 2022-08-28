@@ -7,11 +7,12 @@ public class PlayerIdleState : PlayerGroundedState
     {
     }
 
+    public event Action StandEvent;
+
     public override void Enter()
     {
         base.Enter();
-
-        MoveController.SetVelocityX(0f);
+        SendStand();
     }
 
     public override void Exit()
@@ -27,5 +28,10 @@ public class PlayerIdleState : PlayerGroundedState
         {
             StateMachine.ChangeState(StatesManager.MoveState);
         }
+    }
+
+    protected void SendStand()
+    {
+        StandEvent?.Invoke();
     }
 }

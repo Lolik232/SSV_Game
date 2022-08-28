@@ -6,7 +6,7 @@ public class TriggerAction
     public Boolean IsActive
     {
         get { return m_IsActive; }
-        protected set
+        set
         {
             if (m_IsActive != value)
             {

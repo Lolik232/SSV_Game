@@ -1,4 +1,5 @@
 using System;
+
 using UnityEngine;
 
 public class PlayerMoveState : PlayerGroundedState
@@ -21,12 +22,13 @@ public class PlayerMoveState : PlayerGroundedState
     {
         base.LogicUpdate();
 
-        MoveController.CheckIfShouldFlip(InputX);
-        MoveController.SetVelocityX(Data.movementVelocity * InputX);
-
         if (InputX == 0)
         {
             StateMachine.ChangeState(StatesManager.IdleState);
-        } 
+        }
+        else
+        {
+            SendMove(Data.movementVelocity, InputX);
+        }
     }
 }

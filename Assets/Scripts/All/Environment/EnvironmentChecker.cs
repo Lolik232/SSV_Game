@@ -23,9 +23,9 @@ public abstract class EnvironmentChecker
 
     protected Transform Checker;
 
-    protected Vector2 Position => Checker.position;
+    public Vector2 Position => Checker.position;
 
-    protected LayerMask WhatIsTarget;
+    public LayerMask WhatIsTarget { get; private set; }
 
     public event Action<Boolean> TargetDetectionChangedEvent;
 

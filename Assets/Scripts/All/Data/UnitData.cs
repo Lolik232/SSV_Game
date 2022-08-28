@@ -14,4 +14,7 @@ public class UnitData : ScriptableObject
     [Header("Endurance")]
     public Single climbEnduranceDecreasing = 3f;
     public Single grabEnduranceDecreasing = 1f;
+
+    [Header("Parameters")]
+    public Vector2 size;
 }

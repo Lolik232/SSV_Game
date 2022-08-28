@@ -89,6 +89,8 @@
     <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSubStates\PlayerMoveState.cs" />
     <Compile Include="Assets\Scripts\All\Environment\EnvironmentChecker.cs" />
     <Compile Include="Assets\Scripts\All\States\StateMachine.cs" />
+    <Compile Include="Assets\Scripts\Player\Abilities\PlayerJumpAbility.cs" />
+    <Compile Include="Assets\Scripts\Player\Abilities\PlayerAbilitiesManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

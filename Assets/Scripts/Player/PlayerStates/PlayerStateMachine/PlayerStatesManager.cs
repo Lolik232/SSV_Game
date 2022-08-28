@@ -7,6 +7,7 @@ public class PlayerStatesManager
     public EnvironmentCheckersManager EnvironmentCheckersManager { get; private set; }
     public PlayerMoveController MoveController { get; private set; }
     public PlayerInputHandler InputHandler { get; private set; }
+    public PlayerAbilitiesManager AbilitiesManager { get; private set; }
     public PlayerData Data { get; private set; }
 
     public StateMachine StateMachine { get; private set; }
@@ -20,18 +21,23 @@ public class PlayerStatesManager
     public PlayerWallSlideState WallSlideState { get; private set; }
     public PlayerWallClimbState WallClimbState { get; private set; }
 
-    public PlayerStatesManager(EnvironmentCheckersManager environmentCheckersManager, PlayerMoveController moveController, PlayerInputHandler inputHandler, PlayerData data)
+    private readonly Player m_Player;
+
+    public PlayerStatesManager(Player player)
     {
-        EnvironmentCheckersManager = environmentCheckersManager;
-        MoveController = moveController;
-        InputHandler = inputHandler;
-        Data = data;
+        m_Player = player;
 
         StateMachine = new StateMachine();
     }
 
-    public void Initialize()
+    public void SetDependencies()
     {
+        AbilitiesManager = m_Player.AbilitiesManager;
+        EnvironmentCheckersManager = m_Player.EnvironmentCheckersManager;
+        MoveController = m_Player.MoveController;
+        InputHandler = m_Player.InputHandler;
+        Data = m_Player.Data;
+
         IdleState = new PlayerIdleState(this, "idle");
         MoveState = new PlayerMoveState(this, "move");
         InAirState = new PlayerInAirState(this, "inAir");
@@ -40,7 +46,18 @@ public class PlayerStatesManager
         WallGrabState = new PlayerWallGrabState(this, "wallGrab");
         WallSlideState = new PlayerWallSlideState(this, "wallSlide");
         WallClimbState = new PlayerWallClimbState(this, "wallClimb");
+    }
 
+    public void Initialize()
+    {
+        IdleState.Initialize();
+        MoveState.Initialize();
+        InAirState.Initialize();
+        LandState.Initialize();
+        JumpState.Initialize();
+        WallGrabState.Initialize();
+        WallSlideState.Initialize();
+        WallClimbState.Initialize();
         StateMachine.Initialize(IdleState);
     }
 

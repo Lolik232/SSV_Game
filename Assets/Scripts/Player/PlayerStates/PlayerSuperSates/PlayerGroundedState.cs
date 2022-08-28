@@ -1,17 +1,19 @@
 using System;
+
 using UnityEngine;
 
 public class PlayerGroundedState : PlayerEnvironmentState
 {
+
     public PlayerGroundedState(PlayerStatesManager statesManager, string animBoolName) : base(statesManager, animBoolName)
     {
     }
 
+    public event Action GroundLeaveEvent;
+
     public override void Enter()
     {
         base.Enter();
-
-        StatesManager.JumpState.ResetAmountOfJumpsLeft();
     }
 
     public override void Exit()
@@ -23,18 +25,25 @@ public class PlayerGroundedState : PlayerEnvironmentState
     {
         base.LogicUpdate();
 
-        if (JumpInput && StatesManager.JumpState.CanJump())
+        if (JumpInput && AbilitiesManager.JumpAbility.CanJump)
         {
+            SendGroundLeave();
             StateMachine.ChangeState(StatesManager.JumpState);
         }
         else if (!IsGrounded)
         {
-            StatesManager.InAirState.StartCoyoteTime();
+            SendGroundLeave();
             StateMachine.ChangeState(StatesManager.InAirState);
-        } 
+        }
         else if (IsTouchingWall && IsTouchingLedge && GrabInput)
         {
+            SendGroundLeave();
             StateMachine.ChangeState(StatesManager.WallGrabState);
         }
+    }
+
+    protected void SendGroundLeave()
+    {
+        GroundLeaveEvent?.Invoke();
     }
 }

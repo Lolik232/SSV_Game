@@ -31,4 +31,8 @@ public class PlayerData : UnitData
 
     [Header("Wall Slide State")]
     public Single wallSlideVelocity = 2f;
+
+    [Header("Ledge Climb State")]
+    public Vector2 startOffset;
+    public Vector2 endOffset;
 }

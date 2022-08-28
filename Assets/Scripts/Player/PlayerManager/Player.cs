@@ -15,6 +15,8 @@ public class Player : MonoBehaviour
 
     public PlayerInputHandler InputHandler { get; private set; }
 
+    public PlayerAbilitiesManager AbilitiesManager { get; private set; }
+
     public Rigidbody2D RB { get; private set; }
 
     public Animator Anim { get; private set; }
@@ -33,18 +35,27 @@ public class Player : MonoBehaviour
         InputHandler = GetComponent<PlayerInputHandler>();
         Anim = GetComponent<Animator>();
 
-        MoveController = new PlayerMoveController(transform, RB, InputHandler);
+        MoveController = new PlayerMoveController(this);
         EnvironmentCheckersManager = new EnvironmentCheckersManager(m_GroundChecker, m_WallChecker, m_LedgeChecker, MoveController, Data);
-        StatesManager = new PlayerStatesManager(EnvironmentCheckersManager, MoveController, InputHandler, Data);
-        AnimationController = new PlayerAnimationController(Anim, StatesManager.StateMachine);
+        StatesManager = new PlayerStatesManager(this);
+        AnimationController = new PlayerAnimationController(this);
+        AbilitiesManager = new PlayerAbilitiesManager(this);
     }
 
     private void Start()
     {
+        InputHandler.SetDependencies();
+        StatesManager.SetDependencies();
+        MoveController.SetDependencies();
+        AnimationController.SetDependencies();
+        AbilitiesManager.SetDependencies();
+
+        InputHandler.Initialize();
         EnvironmentCheckersManager.Initialize();
         StatesManager.Initialize();
         MoveController.Initialize();
         AnimationController.Initialize();
+        AbilitiesManager.Initialize();
     }
 
     private void Update()
