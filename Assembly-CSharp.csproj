@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\All\Environment\BarrierChecker.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerAbilities\PlayerJumpAbility.cs" />
     <Compile Include="Assets\Scripts\Player\Input\PlayerMoveController.cs" />
     <Compile Include="Assets\Scripts\All\Actions\TimeDependentAction.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerStateMachine\PlayerStatesManager.cs" />
@@ -64,8 +65,8 @@
     <Compile Include="Assets\Scripts\Player\PlayerStats\PlayerStatsDescriptor.cs" />
     <Compile Include="Assets\Scripts\All\Data\UnitData.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSuperSates\PlayerGroundedState.cs" />
-    <Compile Include="Assets\Scripts\All\States\State.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSubStates\PlayerJumpState.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerAbilities\PlayerAbilitiesManager.cs" />
     <Compile Include="Assets\Scripts\All\Actions\TriggerAction.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSuperSates\PlayerAbilityState.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSubStates\PlayerWallGrabState.cs" />
@@ -89,8 +90,13 @@
     <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSubStates\PlayerMoveState.cs" />
     <Compile Include="Assets\Scripts\All\Environment\EnvironmentChecker.cs" />
     <Compile Include="Assets\Scripts\All\States\StateMachine.cs" />
-    <Compile Include="Assets\Scripts\Player\Abilities\PlayerJumpAbility.cs" />
-    <Compile Include="Assets\Scripts\Player\Abilities\PlayerAbilitiesManager.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerStateMachine\IPlayerState.cs" />
+    <Compile Include="Assets\Scripts\All\Unit\Unit.cs" />
+    <Compile Include="Assets\Scripts\All\Characteristics\Characteristic.cs" />
+    <Compile Include="Assets\Scripts\All\Characteristics\Parameter.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerCharacteristicManager\PlayerCharacteristicsManager.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerAbilities\PlayerAbility.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerAbilities\PlayerWallClimbAbility.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

@@ -1,13 +1,11 @@
 using System;
+
 using UnityEngine;
 
 public class PlayerWallClimbState : PlayerTouchingWallState
 {
-    private Single m_EnduranceClimbLimit;
-
-    public PlayerWallClimbState(PlayerStatesManager statesManager, string animBoolName) : base(statesManager, animBoolName)
+    public PlayerWallClimbState(PlayerStatesManager statesManager, Player player, PlayerData data, string animBoolName) : base(statesManager, player, data, animBoolName)
     {
-        m_EnduranceClimbLimit = Data.enduranceClimbLimit;
     }
 
     public override void Enter()
@@ -20,15 +18,27 @@ public class PlayerWallClimbState : PlayerTouchingWallState
         base.Exit();
     }
 
+    public override void InputUpdate()
+    {
+        base.InputUpdate();
+    }
+
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-
-        MoveController.SetVelocityY(Data.wallClimbVelocity);
-
-        if (InputY != 1)
+        if (Player.CharacteristicsManager.Endurance.IsEmpty() || InputY != 1)
         {
-            StateMachine.ChangeState(StatesManager.WallGrabState);
+            StatesManager.StateMachine.ChangeState(StatesManager.WallGrabState);
         }
+    }
+
+    public override void PhysicsUpdate()
+    {
+        base.PhysicsUpdate();
+    }
+
+    protected override void DoChecks()
+    {
+        base.DoChecks();
     }
 }

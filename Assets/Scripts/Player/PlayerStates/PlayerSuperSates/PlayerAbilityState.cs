@@ -1,47 +1,57 @@
 using System;
+
 using UnityEngine;
 
 public class PlayerAbilityState : PlayerState
 {
-    protected Boolean IsGrounded;
+    protected bool IsGrounded;
 
-    protected Boolean IsAbilityDone;
-    public PlayerAbilityState(PlayerStatesManager statesManager, string animBoolName) : base(statesManager, animBoolName)
+    protected bool IsAbilityDone;
+
+    public PlayerAbilityState(PlayerStatesManager statesManager, Player player, PlayerData data, string animBoolName) : base(statesManager, player, data, animBoolName)
     {
     }
 
     public override void Enter()
     {
         base.Enter();
-
-        EnvironmentCheckersManager.GroundChecker.TargetDetectionChangedEvent += SetIsGrounded;
-
         IsAbilityDone = false;
     }
 
     public override void Exit()
     {
         base.Exit();
+    }
 
-        EnvironmentCheckersManager.GroundChecker.TargetDetectionChangedEvent -= SetIsGrounded;
+    public override void InputUpdate()
+    {
+        base.InputUpdate();
     }
 
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-
         if (IsAbilityDone)
         {
-            if (IsGrounded && MoveController.CurrentVelocityY < Data.groundSlopeTolerance)
+            if (IsGrounded)
             {
-                StateMachine.ChangeState(StatesManager.IdleState);
+                StatesManager.StateMachine.ChangeState(StatesManager.IdleState);
             }
             else
             {
-                StateMachine.ChangeState(StatesManager.InAirState);
+                StatesManager.StateMachine.ChangeState(StatesManager.InAirState);
             }
-        } 
+        }
     }
 
-    private void SetIsGrounded(Boolean value) => IsGrounded = value;
+    public override void PhysicsUpdate()
+    {
+        base.PhysicsUpdate();
+    }
+
+    protected override void DoChecks()
+    {
+        base.DoChecks();
+        IsGrounded = Player.EnvironmentCheckersManager.GroundChecker.IsDetected;
+    }
 }

@@ -6,14 +6,14 @@ using UnityEngine;
 public class UnitData : ScriptableObject
 {
     [Header("Check Variables")]
-    public Single groundCheckRadius;
-    public Single groundIsCloseCheckDistance;
-    public Single wallCheckDistance;
+    public float groundCheckRadius;
+    public float groundIsCloseCheckDistance;
+    public float wallCheckDistance;
     public LayerMask whatIsGround;
 
     [Header("Endurance")]
-    public Single climbEnduranceDecreasing = 3f;
-    public Single grabEnduranceDecreasing = 1f;
+    public float baseEndurance = 10f;
+    public float baseEnduranceRegeneration = 2f;
 
     [Header("Parameters")]
     public Vector2 size;

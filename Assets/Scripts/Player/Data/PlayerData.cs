@@ -6,33 +6,37 @@ using UnityEngine;
 public class PlayerData : UnitData
 {
     [Header("Input Handler")]
-    public Single moveInputTolerance = 0.2f;
-    public Single groundSlopeTolerance = 0.01f;
-    public Single jumpInputHoldTime = 0.1f;
+    public float moveInputTolerance = 0.2f;
+    public float groundSlopeTolerance = 0.01f;
+    public float jumpInputHoldTime = 0.1f;
 
     [Header("Move State")]
-    public Single movementVelocity = 10f;
+    public float movementVelocity = 10f;
 
     [Header("Jump State")]
-    public Int32 amountOfJumps = 1;
-    public Single jumpVelocity = 16f;
+    public int amountOfJumps = 1;
+    public float jumpVelocity = 16f;
 
     [Header("In Air State")]
-    public Single jumpCoyoteTime = 0.1f;
-    public Single variableJumpHeightMultiplier = 0.5f;
+    public float jumpCoyoteTime = 0.1f;
+    public float variableJumpHeightMultiplier = 0.5f;
 
     [Header("Wall Grab State")]
-    public Single maxDuration = 5f;
-    public Single enduranceGrabLimit = 1f;
+    public float maxDuration = 5f;
+    public float minGrabEndurance = 1f;
     
     [Header("Wall Climb State")]
-    public Single wallClimbVelocity = 3f;
-    public Single enduranceClimbLimit = 3f;
+    public float wallClimbVelocity = 3f;
+    public float minClimbEndurance = 2f;
 
     [Header("Wall Slide State")]
-    public Single wallSlideVelocity = 2f;
+    public float wallSlideVelocity = 2f;
 
     [Header("Ledge Climb State")]
     public Vector2 startOffset;
     public Vector2 endOffset;
+
+    [Header("Endurance")]
+    public float climbEnduranceFatigueRate = 3f;
+    public float grabEnduranceFatigueRate = 1f;
 }

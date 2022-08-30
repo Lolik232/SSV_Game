@@ -7,8 +7,8 @@ public class PlayerInputHandler : MonoBehaviour
 {
     [SerializeField] private PlayerData m_Data;
     
-    public ValueChangingAction<Int32> NormInputX { get; private set; }
-    public ValueChangingAction<Int32> NormInputY { get; private set; }
+    public ValueChangingAction<int> NormInputX { get; private set; }
+    public ValueChangingAction<int> NormInputY { get; private set; }
 
     public TimeDependentAction JumpInput { get; private set; }
 
@@ -16,31 +16,28 @@ public class PlayerInputHandler : MonoBehaviour
 
     public TriggerAction GrabInput { get; private set; }
 
-    private Player m_Player;
-
-    public PlayerStatesManager StatesManager { get; private set; }
+    public Player Player { get; private set; }
 
     private void Awake()
     {
-        m_Player = GetComponent<Player>();
+        Player = GetComponent<Player>();
 
-        NormInputX = new ValueChangingAction<Int32>();
-        NormInputY = new ValueChangingAction<Int32>();
+        NormInputX = new ValueChangingAction<int>();
+        NormInputY = new ValueChangingAction<int>();
 
         JumpInput = new TimeDependentAction(m_Data.jumpInputHoldTime);
         GrabInput = new TriggerAction();
         JumpInputHold = new TriggerAction();
     }
 
-    public void SetDependencies()
+    public void Start()
     {
-        StatesManager = m_Player.StatesManager;
-
+        Player.StatesManager.JumpState.EnterEvent += JumpInput.Terminate;
     }
 
-    public void Initialize()
+    public void OnDestroy()
     {
-        StatesManager.JumpState.EnterEvent += JumpInput.Terminate;
+        Player.StatesManager.JumpState.EnterEvent -= JumpInput.Terminate;
     }
 
     #region Move
@@ -53,8 +50,8 @@ public class PlayerInputHandler : MonoBehaviour
         NormalizeMoveInputY(rawMoveInput.y);
     }
 
-    private void NormalizeMoveInputX(Single rawMoveInputX) => NormInputX.Value = (Mathf.Abs(rawMoveInputX) > m_Data.moveInputTolerance) ? (Int32)(rawMoveInputX * Vector2.right).normalized.x : 0;
-    private void NormalizeMoveInputY(Single rawMoveInputY) => NormInputY.Value = (Mathf.Abs(rawMoveInputY) > m_Data.moveInputTolerance) ? (Int32)(rawMoveInputY * Vector2.up).normalized.y : 0;
+    private void NormalizeMoveInputX(float rawMoveInputX) => NormInputX.Value = (Mathf.Abs(rawMoveInputX) > m_Data.moveInputTolerance) ? (int)(rawMoveInputX * Vector2.right).normalized.x : 0;
+    private void NormalizeMoveInputY(float rawMoveInputY) => NormInputY.Value = (Mathf.Abs(rawMoveInputY) > m_Data.moveInputTolerance) ? (int)(rawMoveInputY * Vector2.up).normalized.y : 0;
 
     #endregion
 

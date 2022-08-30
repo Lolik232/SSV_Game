@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class PlayerMoveState : PlayerGroundedState
 {
-    public PlayerMoveState(PlayerStatesManager statesManager, string animBoolName) : base(statesManager, animBoolName)
+    public event Action MoveEvent;
+
+    public PlayerMoveState(PlayerStatesManager statesManager, Player player, PlayerData data, string animBoolName) : base(statesManager, player, data, animBoolName)
     {
     }
 
@@ -18,17 +20,42 @@ public class PlayerMoveState : PlayerGroundedState
         base.Exit();
     }
 
+    public override void InputUpdate()
+    {
+        base.InputUpdate();
+    }
+
     public override void LogicUpdate()
     {
         base.LogicUpdate();
 
         if (InputX == 0)
         {
-            StateMachine.ChangeState(StatesManager.IdleState);
+            StatesManager.StateMachine.ChangeState(StatesManager.IdleState);
         }
         else
         {
-            SendMove(Data.movementVelocity, InputX);
+            OnMove();
         }
+    }
+
+    public override void PhysicsUpdate()
+    {
+        base.PhysicsUpdate();
+    }
+
+    protected override void DoChecks()
+    {
+        base.DoChecks();
+    }
+
+    protected override void OnExit()
+    {
+        base.OnExit();
+    }
+
+    protected virtual void OnMove()
+    {
+        MoveEvent?.Invoke();
     }
 }

@@ -2,14 +2,11 @@ using System;
 
 using UnityEngine;
 
-public class PlayerGroundedState : PlayerEnvironmentState
+public abstract class PlayerGroundedState : PlayerEnvironmentState
 {
-
-    public PlayerGroundedState(PlayerStatesManager statesManager, string animBoolName) : base(statesManager, animBoolName)
+    protected PlayerGroundedState(PlayerStatesManager statesManager, Player player, PlayerData data, string animBoolName) : base(statesManager, player, data, animBoolName)
     {
     }
-
-    public event Action GroundLeaveEvent;
 
     public override void Enter()
     {
@@ -25,25 +22,18 @@ public class PlayerGroundedState : PlayerEnvironmentState
     {
         base.LogicUpdate();
 
-        if (JumpInput && AbilitiesManager.JumpAbility.CanJump)
+        if (JumpInput && Player.AbilitiesManager.JumpAbility.CanJump)
         {
-            SendGroundLeave();
-            StateMachine.ChangeState(StatesManager.JumpState);
+            StatesManager.StateMachine.ChangeState(StatesManager.JumpState);
         }
         else if (!IsGrounded)
         {
-            SendGroundLeave();
-            StateMachine.ChangeState(StatesManager.InAirState);
+            StatesManager.InAirState.CoyoteTime.Initiate();
+            StatesManager.StateMachine.ChangeState(StatesManager.InAirState);
         }
-        else if (IsTouchingWall && IsTouchingLedge && GrabInput)
+        else if (IsTouchingWall && IsTouchingLedge && GrabInput && Player.AbilitiesManager.WallClimbAbility.CanGrab)
         {
-            SendGroundLeave();
-            StateMachine.ChangeState(StatesManager.WallGrabState);
+            StatesManager.StateMachine.ChangeState(StatesManager.WallGrabState);
         }
-    }
-
-    protected void SendGroundLeave()
-    {
-        GroundLeaveEvent?.Invoke();
     }
 }

@@ -1,21 +1,17 @@
 using System;
 using UnityEngine;
 
-public class PlayerJumpState : PlayerAbilityState
+public class PlayerJumpState: PlayerAbilityState
 {
-    public PlayerJumpState(PlayerStatesManager statesManager, string animBoolName) : base(statesManager, animBoolName)
+    public PlayerJumpState(PlayerStatesManager statesManager, Player player, PlayerData data, string animBoolName) : base(statesManager, player, data, animBoolName)
     {
-    }
-
-    public override void Initialize()
-    {
-        base.Initialize();
     }
 
     public override void Enter()
     {
         base.Enter();
 
+        StatesManager.InAirState.Jumping.Initiate();
         IsAbilityDone = true;
     }
 
@@ -24,8 +20,23 @@ public class PlayerJumpState : PlayerAbilityState
         base.Exit();
     }
 
+    public override void InputUpdate()
+    {
+        base.InputUpdate();
+    }
+
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+    }
+
+    public override void PhysicsUpdate()
+    {
+        base.PhysicsUpdate();
+    }
+
+    protected override void DoChecks()
+    {
+        base.DoChecks();
     }
 }

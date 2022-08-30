@@ -2,20 +2,29 @@ using System;
 
 public class TriggerAction
 {
-    private Boolean m_IsActive;
-    public Boolean IsActive
+    private bool m_IsActive;
+    public bool IsActive
     {
         get { return m_IsActive; }
         set
         {
             if (m_IsActive != value)
             {
-                SendStateChanged(m_IsActive = value);
+                m_IsActive = value;
+                if (value)
+                {
+                    OnActive();
+                }
+                else
+                {
+                    OnInactive();
+                }
             }
         }
     }
 
-    public event Action<Boolean> StateChangedEvent;
+    public event Action ActiveEvent;
+    public event Action InactiveEvent;
 
     public TriggerAction()
     {
@@ -32,18 +41,23 @@ public class TriggerAction
         IsActive = false;
     }
 
-    public static implicit operator Boolean(TriggerAction a) => a.IsActive;
+    public static implicit operator bool(TriggerAction a) => a.IsActive;
 
-    public static Boolean operator ==(TriggerAction lhs, TriggerAction rhs) => lhs.IsActive == rhs.IsActive;
-    public static Boolean operator !=(TriggerAction lhs, TriggerAction rhs) => lhs.IsActive != rhs.IsActive;
+    public static bool operator ==(TriggerAction lhs, TriggerAction rhs) => lhs.IsActive == rhs.IsActive;
+    public static bool operator !=(TriggerAction lhs, TriggerAction rhs) => lhs.IsActive != rhs.IsActive;
 
-    public override Boolean Equals(object obj) => obj is TriggerAction action && this == action;
+    public override bool Equals(object obj) => obj is TriggerAction action && this == action;
 
-    public override Int32 GetHashCode() => HashCode.Combine(IsActive);
+    public override int GetHashCode() => HashCode.Combine(IsActive);
 
-    private void SendStateChanged(Boolean isActive)
+    private void OnActive()
     {
-        StateChangedEvent?.Invoke(isActive);
+        ActiveEvent?.Invoke();
+    }
+
+    private void OnInactive()
+    {
+        InactiveEvent?.Invoke();
     }
 }
 

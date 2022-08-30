@@ -4,46 +4,30 @@ using UnityEngine;
 
 public class PlayerInAirState : PlayerEnvironmentState
 {
-    private TriggerAction m_Jumping;
+    public TriggerAction Jumping { get; private set; }
 
-    private TimeDependentAction m_CoyoteTime;
-    private Boolean m_IsJumpInputHold;
+    public TimeDependentAction CoyoteTime { get; private set; }
 
-    public PlayerInAirState(PlayerStatesManager statesManager, string animBoolName) : base(statesManager, animBoolName)
+    private bool m_IsJumpInputHold;
+
+    public PlayerInAirState(PlayerStatesManager statesManager, Player player, PlayerData data, string animBoolName) : base(statesManager, player, data, animBoolName)
     {
-        m_CoyoteTime = new TimeDependentAction(Data.jumpCoyoteTime);
-        m_Jumping = new TriggerAction();
+        Jumping = new TriggerAction();
+        CoyoteTime = new TimeDependentAction(Data.jumpCoyoteTime);
     }
+
+    public event Action MoveEvent;
 
     public event Action JumpStopEvent;
-    public event Action CoyoteTimeEndEvent;
-
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        StatesManager.JumpState.EnterEvent += m_Jumping.Initiate;
-        StatesManager.IdleState.GroundLeaveEvent += m_CoyoteTime.Initiate;
-        StatesManager.MoveState.GroundLeaveEvent += m_CoyoteTime.Initiate;
-        StatesManager.LandState.GroundLeaveEvent += m_CoyoteTime.Initiate;
-    }
 
     public override void Enter()
     {
         base.Enter();
-
-        m_IsJumpInputHold = InputHandler.JumpInputHold;
-
-        InputHandler.JumpInputHold.StateChangedEvent += SetIsJumpInputHold;
-        m_CoyoteTime.StateChangedEvent += OnCoyouteTimeEnd;
     }
 
     public override void Exit()
     {
         base.Exit();
-
-        InputHandler.JumpInputHold.StateChangedEvent -= SetIsJumpInputHold;
-        m_CoyoteTime.StateChangedEvent -= OnCoyouteTimeEnd;
     }
 
     public override void LogicUpdate()
@@ -53,64 +37,68 @@ public class PlayerInAirState : PlayerEnvironmentState
         CheckIfJumpEnd();
         CheckJumpHold();
 
-        if (IsGrounded && VelocityY < Data.groundSlopeTolerance)
+        if (IsGrounded && Velocity.y < Data.groundSlopeTolerance)
         {
-            StateMachine.ChangeState(StatesManager.LandState);
+            StatesManager.StateMachine.ChangeState(StatesManager.LandState);
         }
-        else if (JumpInput && AbilitiesManager.JumpAbility.CanJump)
+        else if (JumpInput && Player.AbilitiesManager.JumpAbility.CanJump)
         {
-            StateMachine.ChangeState(StatesManager.JumpState);
+            StatesManager.StateMachine.ChangeState(StatesManager.JumpState);
         }
-        else if (IsTouchingWall && IsTouchingLedge && GrabInput)
+        else if (Player.AbilitiesManager.WallClimbAbility.CanGrab && IsTouchingWall && IsTouchingLedge && GrabInput)
         {
-            StateMachine.ChangeState(StatesManager.WallGrabState);
+            StatesManager.StateMachine.ChangeState(StatesManager.WallGrabState);
         }
-        else if (IsTouchingWall && InputX == MoveController.FacingDirection && VelocityY <= 0f)
+        else if (IsTouchingWall && InputX == Player.MoveController.FacingDirection && Velocity.y <= 0f)
         {
-            StateMachine.ChangeState(StatesManager.WallSlideState);
+            StatesManager.StateMachine.ChangeState(StatesManager.WallSlideState);
         }
         else
         {
-            SendMove(Data.movementVelocity, InputX);
+            OnMove();
         }
     }
 
-    protected void SendJumpStop()
+    public override void InputUpdate()
+    {
+        base.InputUpdate();
+        m_IsJumpInputHold = Player.InputHandler.JumpInputHold;
+    }
+
+    public override void PhysicsUpdate()
+    {
+        base.PhysicsUpdate();
+    }
+
+    protected override void DoChecks()
+    {
+        base.DoChecks();
+    }
+
+    protected void OnJumpInputStop()
     {
         JumpStopEvent?.Invoke();
     }
 
-    protected void SendCoyoteTimeEnd()
-    {
-        CoyoteTimeEndEvent?.Invoke();
-    }
-
     private void CheckJumpHold()
     {
-        if (IsActive && m_Jumping.IsActive && !m_IsJumpInputHold && VelocityY > 0f)
+        if (IsActive && Jumping && !m_IsJumpInputHold && Velocity.y > 0f)
         {
-            SendJumpStop();
-            m_Jumping.Terminate();
+            OnJumpInputStop();
+            Jumping.Terminate();
         }
     }
 
     private void CheckIfJumpEnd()
     {
-        if (m_Jumping.IsActive && VelocityY <= 0f)
+        if (Jumping.IsActive && Velocity.y <= 0f)
         {
-            m_Jumping.Terminate();
+            Jumping.Terminate();
         }
     }
 
-    private void OnCoyouteTimeEnd(Boolean isActive)
+    protected virtual void OnMove()
     {
-        if (!isActive)
-        {
-            SendCoyoteTimeEnd();
-        }
+        MoveEvent?.Invoke();
     }
-
-    private void SetIsJumpInputHold(Boolean isActive) => m_IsJumpInputHold = isActive;
-
-
 }

@@ -3,53 +3,99 @@ using UnityEngine;
 
 public class PlayerMoveController : MoveController
 {
-    public PlayerInputHandler InputHandler { get; private set; }
-    public PlayerStatesManager StatesManager { get; private set; }
+    private Player Player { get; }
+    private PlayerData Data { get; set; }
 
-    private PlayerData m_Data;
+    private int InputX;
+    private int InputY;
 
-    private readonly Player m_Player;
-
-    public PlayerMoveController(Player player) : base(player.transform, player.RB)
+    public PlayerMoveController(Player player, PlayerData data) : base(player, data)
     {
-        m_Player = player;
-    }
-
-    public void SetDependencies()
-    {
-        InputHandler = m_Player.InputHandler;
-        StatesManager = m_Player.StatesManager;
-        m_Data = m_Player.Data;
+        Player = player;
+        Data = data;
     }
 
     public override void Initialize()
     {
         base.Initialize();
-        StatesManager.IdleState.StandEvent += OnStand;
-        StatesManager.MoveState.MoveEvent += OnMove;
-        StatesManager.InAirState.MoveEvent += OnMove;
-        StatesManager.InAirState.JumpStopEvent += OnJumpStop;
-        StatesManager.JumpState.EnterEvent += OnJump;
+        Player.StatesManager.IdleState.EnterEvent += OnIdleEnter;
+        Player.StatesManager.MoveState.MoveEvent += OnMove;
+        Player.StatesManager.InAirState.MoveEvent += OnMove;
+
+        Player.StatesManager.InAirState.JumpStopEvent += OnJumpStop;
+        Player.StatesManager.JumpState.EnterEvent += OnJump;
+
+        Player.StatesManager.WallGrabState.EnterEvent += OnWallGrabEnter;
+        Player.StatesManager.WallGrabState.ExitEvent += OnWallGrabExit;
+        Player.StatesManager.WallSlideState.EnterEvent += OnWallSlideEnter;
+        Player.StatesManager.WallSlideState.ExitEvent += OnWallSlideExit;
+        Player.StatesManager.WallClimbState.EnterEvent += OnWallClimbEnter;
+        Player.StatesManager.WallClimbState.ExitEvent += OnWallClimbExit;
     }
 
-    private void OnMove(Single velocityX, Int32 direction)
+    public override void LogicUpdate()
     {
-        CheckIfShouldFlip(direction);
-        SetVelocityX(velocityX * direction);
+        base.LogicUpdate();
+        InputX = Player.InputHandler.NormInputX;
+        InputY = Player.InputHandler.NormInputY;
+    }
+
+    public override void PhysicsUpdate()
+    {
+        base.PhysicsUpdate();
+    }
+
+    private void OnMove()
+    {
+        CheckIfShouldFlip(InputX);
+        SetVelocityX(Data.movementVelocity * InputX);
     }
 
     private void OnJump()
     {
-        SetVelocityY(m_Data.jumpVelocity);
+        SetVelocityY(Player.AbilitiesManager.JumpAbility.JumpVelocity);
     }
     
     private void OnJumpStop()
     {
-        SetVelocityY(CurrentVelocityY * m_Data.variableJumpHeightMultiplier);
+        SetVelocityY(CurrentVelocity.y * Player.AbilitiesManager.JumpAbility.VariableJumpHeightMultiplier);
     }
 
-    private void OnStand()
+    private void OnIdleEnter()
     {
         SetVelocityX(0f);
+    }
+
+    private void OnWallGrabEnter()
+    {
+        HoldPosition = Player.transform.position;
+        NeedToHoldPosition = true;
+    }
+
+    private void OnWallGrabExit()
+    {
+        NeedToHoldPosition = false;
+    }
+
+    private void OnWallSlideEnter()
+    {
+        HoldVelocity.Set(0f, -Player.AbilitiesManager.WallClimbAbility.SlideVelocity);
+        NeedToHoldVelocity = true;
+    }
+
+    private void OnWallSlideExit()
+    {
+        NeedToHoldVelocity = false;
+    }
+
+    private void OnWallClimbEnter()
+    {
+        HoldVelocity.Set(0f, Player.AbilitiesManager.WallClimbAbility.ClimbVelocity);
+        NeedToHoldVelocity = true;
+    }
+
+    private void OnWallClimbExit()
+    {
+        NeedToHoldVelocity = false;
     }
 }

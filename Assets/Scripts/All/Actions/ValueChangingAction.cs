@@ -27,12 +27,12 @@ public class ValueChangingAction<T> where T : IEquatable<T>, IComparable<T>
 
     public static implicit operator T(ValueChangingAction<T> vca) => vca.Value;
 
-    public static Boolean operator ==(ValueChangingAction<T> lhs, ValueChangingAction<T> rhs) => lhs.Equals(rhs);
-    public static Boolean operator !=(ValueChangingAction<T> lhs, ValueChangingAction<T> rhs) => !lhs.Equals(rhs);
-    public static Boolean operator >(ValueChangingAction<T> lhs, ValueChangingAction<T> rhs) => lhs.Value.CompareTo(rhs.Value) > 0;
-    public static Boolean operator <(ValueChangingAction<T> lhs, ValueChangingAction<T> rhs) => lhs.Value.CompareTo(rhs.Value) < 0;
-    public static Boolean operator >=(ValueChangingAction<T> lhs, ValueChangingAction<T> rhs) => lhs.Value.CompareTo(rhs.Value) >= 0;
-    public static Boolean operator <=(ValueChangingAction<T> lhs, ValueChangingAction<T> rhs) => lhs.Value.CompareTo(rhs.Value) <= 0;
+    public static bool operator ==(ValueChangingAction<T> lhs, ValueChangingAction<T> rhs) => lhs.Equals(rhs);
+    public static bool operator !=(ValueChangingAction<T> lhs, ValueChangingAction<T> rhs) => !lhs.Equals(rhs);
+    public static bool operator >(ValueChangingAction<T> lhs, ValueChangingAction<T> rhs) => lhs.Value.CompareTo(rhs.Value) > 0;
+    public static bool operator <(ValueChangingAction<T> lhs, ValueChangingAction<T> rhs) => lhs.Value.CompareTo(rhs.Value) < 0;
+    public static bool operator >=(ValueChangingAction<T> lhs, ValueChangingAction<T> rhs) => lhs.Value.CompareTo(rhs.Value) >= 0;
+    public static bool operator <=(ValueChangingAction<T> lhs, ValueChangingAction<T> rhs) => lhs.Value.CompareTo(rhs.Value) <= 0;
 
     public override bool Equals(object obj)
     {

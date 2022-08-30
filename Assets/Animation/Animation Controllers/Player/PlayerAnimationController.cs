@@ -3,42 +3,27 @@ using System;
 using UnityEngine;
 
 public class PlayerAnimationController
-{
-    public TriggerAction IsAnimationPlaying { get; private set; }
-    public String CurrentAnimationName { get; private set; }
-
-    private Animator m_Anim;
-    private StateMachine m_StateMachine;
-
-    private readonly Player m_Player;
+{ 
+    public readonly Player Player;
 
     public PlayerAnimationController(Player player)
     {
-        m_Player = player;
-        IsAnimationPlaying = new TriggerAction();
-    }
-
-    public void SetDependencies()
-    {
-        m_Anim = m_Player.Anim;
-        m_StateMachine = m_Player.StatesManager.StateMachine;
+        Player = player;
     }
 
     public void Initialize()
     {
-        m_StateMachine.StateChangedEvent += OnStateChanged;
+        Player.StatesManager.StateMachine.StateEnterEvent += OnStateEnter;
+        Player.StatesManager.StateMachine.StateExitEvent += OnStateExit;
     }
 
-    ~PlayerAnimationController()
+    private void OnStateEnter(PlayerState state)
     {
-        m_StateMachine.StateChangedEvent -= OnStateChanged;
+        Player.Anim.SetBool(state.AnimBoolName, true);
     }
 
-    private void OnStateChanged(PlayerState state)
+    private void OnStateExit(PlayerState state)
     {
-        m_Anim.SetBool(CurrentAnimationName, false);
-        IsAnimationPlaying.Terminate();
-        m_Anim.SetBool(CurrentAnimationName = state.AnimBoolName, true);
-        IsAnimationPlaying.Initiate();
+        Player.Anim.SetBool(state.AnimBoolName, false);
     }
 }

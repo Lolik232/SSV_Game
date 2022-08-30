@@ -4,63 +4,23 @@ using UnityEngine;
 
 public abstract class MoveController
 {
-    public ValueChangingAction<Int32> FacingDirection { get; private set; }
+    private Unit Unit { get; set; }
+    private UnitData Data { get; set; }
+    public ValueChangingAction<int> FacingDirection { get; private set; }
 
-    public ValueChangingAction<Single> CurrentVelocityX { get; private set; }
-    public ValueChangingAction<Single> CurrentVelocityY { get; private set; }
+    public Vector2 CurrentVelocity { get; private set; }
 
-    public Rigidbody2D RB { get; private set; }
+    protected Vector2 HoldPosition;
+    protected Vector2 HoldVelocity;
 
-    public Transform Transform { get; private set; }
+    protected bool NeedToHoldPosition;
+    protected bool NeedToHoldVelocity;
 
-    public void CheckIfShouldFlip(Int32 direction)
+    public MoveController(Unit unit, UnitData data)
     {
-        if (direction != 0 && direction != FacingDirection)
-        {
-            Flip();
-        }
-    }
-
-    public void SetVelocityZero() => SetVelocity(Vector2.zero);
-    public void SetVelocity(Single velocity, Vector2 angle, Int32 direction) => SetVelocity(angle.normalized.x * velocity * direction, angle.normalized.y * velocity);
-    public void SetVelocity(Single velocity, Vector2 angle) => SetVelocity(velocity * angle);
-    public void SetVelocityX(Single velocity) => SetVelocity(velocity, RB.velocity.y);
-    public void SetVelocityY(Single velocity) => SetVelocity(RB.velocity.x, velocity);
-
-    private void SetVelocity(Single velocityX, Single velocityY) => SetVelocity(new Vector2(velocityX, velocityY));
-    private void SetVelocity(Vector2 velocity)
-    {
-        RB.velocity = velocity;
-        UpdateCurrentVelocity();
-    }
-
-    private void UpdateCurrentVelocity()
-    {
-        CurrentVelocityX.Value = RB.velocity.x;
-        CurrentVelocityY.Value = RB.velocity.y;
-    }
-
-    protected virtual void Flip() => Flip(Transform);
-    private void Flip(Transform targetTransform)
-    {
-        FacingDirection.Value = -FacingDirection;
-        targetTransform.Rotate(0f, 180f, 0f);
-    }
-
-    public MoveController()
-    {
-
-    }
-
-    public MoveController(Transform transform, Rigidbody2D rigidbody2D)
-    {
-        CurrentVelocityX = new ValueChangingAction<Single>();
-        CurrentVelocityY = new ValueChangingAction<Single>();
-
-        FacingDirection = new ValueChangingAction<Int32>();
-
-        RB = rigidbody2D;
-        Transform = transform;
+        Unit = unit;
+        Data = data;
+        FacingDirection = new ValueChangingAction<int>();
     }
 
     public virtual void Initialize()
@@ -70,6 +30,57 @@ public abstract class MoveController
 
     public virtual void LogicUpdate()
     {
-        UpdateCurrentVelocity();
+        CheckIfHoldPosition();
+        CheckIfHoldVelocity();
+        CurrentVelocity = Unit.RB.velocity;
+    }
+    public virtual void PhysicsUpdate()
+    {
+
+    }
+
+    public void CheckIfShouldFlip(int direction)
+    {
+        if (direction != 0 && direction != FacingDirection)
+        {
+            Flip();
+        }
+    }
+
+    protected void CheckIfHoldPosition()
+    {
+        if (NeedToHoldPosition)
+        {
+            Unit.transform.position = HoldPosition;
+            SetVelocityZero();
+        }
+    }
+
+    protected void CheckIfHoldVelocity()
+    {
+        if (NeedToHoldVelocity)
+        {
+            SetVelocity(HoldVelocity);
+        }
+    }
+
+    protected void SetVelocityZero() => SetVelocity(Vector2.zero);
+    protected void SetVelocity(float velocity, Vector2 angle, int direction) => SetVelocity(angle.normalized.x * velocity * direction, angle.normalized.y * velocity);
+    protected void SetVelocity(float velocity, Vector2 angle) => SetVelocity(velocity * angle);
+    protected void SetVelocity(float velocityX, float velocityY) => SetVelocity(new Vector2(velocityX, velocityY));
+    protected void SetVelocityX(float velocity) => SetVelocity(velocity, Unit.RB.velocity.y);
+    protected void SetVelocityY(float velocity) => SetVelocity(Unit.RB.velocity.x, velocity);
+
+    private void SetVelocity(Vector2 velocity)
+    {
+        Unit.RB.velocity = velocity;
+        CurrentVelocity = velocity;
+    }
+
+    protected virtual void Flip() => Flip(Unit.transform);
+    private void Flip(Transform targetTransform)
+    {
+        FacingDirection.Value = -FacingDirection;
+        targetTransform.Rotate(0f, 180f, 0f);
     }
 }

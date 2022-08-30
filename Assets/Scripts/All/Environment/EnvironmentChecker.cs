@@ -4,8 +4,8 @@ using UnityEngine;
 
 public abstract class EnvironmentChecker
 {
-    private Boolean m_IsDetected;
-    public Boolean IsDetected
+    private bool m_IsDetected;
+    public bool IsDetected
     {
         get
         {
@@ -15,7 +15,15 @@ public abstract class EnvironmentChecker
         {
             if (m_IsDetected != value)
             {
-                SendTargetDetectionChanged(m_IsDetected = value);
+                m_IsDetected = value;
+                if (value)
+                {
+                    OnTargetDetected();
+                }
+                else
+                {
+                    OnTargetLost();
+                }
             }
         }
             
@@ -27,7 +35,8 @@ public abstract class EnvironmentChecker
 
     public LayerMask WhatIsTarget { get; private set; }
 
-    public event Action<Boolean> TargetDetectionChangedEvent;
+    public event Action TargetDetectedEvent;
+    public event Action TargetLostEvent;
 
     public EnvironmentChecker(Transform checker, LayerMask whatIsTarget)
     {
@@ -35,8 +44,12 @@ public abstract class EnvironmentChecker
         WhatIsTarget = whatIsTarget;
     }
 
-    private void SendTargetDetectionChanged(Boolean isDetected)
+    protected virtual void OnTargetDetected()
     {
-        TargetDetectionChangedEvent?.Invoke(isDetected);
+        TargetDetectedEvent?.Invoke();
+    }
+    protected virtual void OnTargetLost()
+    {
+        TargetLostEvent?.Invoke();
     }
 }

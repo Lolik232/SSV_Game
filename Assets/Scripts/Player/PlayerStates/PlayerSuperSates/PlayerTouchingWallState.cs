@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PlayerTouchingWallState : PlayerEnvironmentState
 {
-    public PlayerTouchingWallState(PlayerStatesManager statesManager, string animBoolName) : base(statesManager, animBoolName)
+    public PlayerTouchingWallState(PlayerStatesManager statesManager, Player player, PlayerData data, string animBoolName) : base(statesManager, player, data, animBoolName)
     {
     }
 
@@ -17,6 +17,11 @@ public class PlayerTouchingWallState : PlayerEnvironmentState
         base.Exit();
     }
 
+    public override void InputUpdate()
+    {
+        base.InputUpdate();
+    }
+
     public override void LogicUpdate()
     {
         base.LogicUpdate();
@@ -27,11 +32,21 @@ public class PlayerTouchingWallState : PlayerEnvironmentState
         }
         else if (IsGrounded && !GrabInput)
         {
-            StateMachine.ChangeState(StatesManager.IdleState);
+            StatesManager.StateMachine.ChangeState(StatesManager.IdleState);
         }
-        else if (!IsTouchingWall || (InputX != MoveController.FacingDirection && !GrabInput))
+        else if (!IsTouchingWall || (InputX != Player.MoveController.FacingDirection && !GrabInput))
         {
-            StateMachine.ChangeState(StatesManager.InAirState);
+            StatesManager.StateMachine.ChangeState(StatesManager.InAirState);
         }
+    }
+
+    public override void PhysicsUpdate()
+    {
+        base.PhysicsUpdate();
+    }
+
+    protected override void DoChecks()
+    {
+        base.DoChecks();
     }
 }

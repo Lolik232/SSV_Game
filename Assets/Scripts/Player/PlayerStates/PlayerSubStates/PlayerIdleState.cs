@@ -3,21 +3,23 @@ using UnityEngine;
 
 public class PlayerIdleState : PlayerGroundedState
 {
-    public PlayerIdleState(PlayerStatesManager statesManager, string animBoolName) : base(statesManager, animBoolName)
+    public PlayerIdleState(PlayerStatesManager statesManager, Player player, PlayerData data, string animBoolName) : base(statesManager, player, data, animBoolName)
     {
     }
-
-    public event Action StandEvent;
 
     public override void Enter()
     {
         base.Enter();
-        SendStand();
     }
 
     public override void Exit()
     {
         base.Exit();
+    }
+
+    public override void InputUpdate()
+    {
+        base.InputUpdate();
     }
 
     public override void LogicUpdate()
@@ -26,12 +28,22 @@ public class PlayerIdleState : PlayerGroundedState
 
         if (InputX != 0)
         {
-            StateMachine.ChangeState(StatesManager.MoveState);
+            StatesManager.StateMachine.ChangeState(StatesManager.MoveState);
         }
     }
 
-    protected void SendStand()
+    public override void PhysicsUpdate()
     {
-        StandEvent?.Invoke();
+        base.PhysicsUpdate();
+    }
+
+    protected override void DoChecks()
+    {
+        base.DoChecks();
+    }
+
+    protected override void OnExit()
+    {
+        base.OnExit();
     }
 }

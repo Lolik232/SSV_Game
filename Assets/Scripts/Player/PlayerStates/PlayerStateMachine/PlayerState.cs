@@ -2,100 +2,77 @@ using System;
 
 using UnityEngine;
 
-public class PlayerState
+public abstract class PlayerState : IPlayerState
 {
-    protected Boolean IsActive;
-
     protected readonly PlayerStatesManager StatesManager;
-    protected readonly StateMachine StateMachine;
-    protected readonly PlayerMoveController MoveController;
-    protected readonly PlayerInputHandler InputHandler;
-    protected readonly EnvironmentCheckersManager EnvironmentCheckersManager;
-    protected readonly PlayerAbilitiesManager AbilitiesManager;
+    protected readonly Player Player;
     protected readonly PlayerData Data;
 
-    protected Int32 InputX { get; private set; }
-    protected Int32 InputY { get; private set; }
+    protected int InputX;
+    protected int InputY;
 
-    protected Single VelocityX { get; private set; }
-    protected Single VelocityY { get; private set; }
+    protected Vector2 Velocity { get; private set; }
 
-    protected Boolean IsAnimationFinished;
+    protected bool IsActive { get; private set; }
 
-    public readonly String AnimBoolName;
+    public readonly string AnimBoolName;
 
-    public PlayerState(PlayerStatesManager statesManager, String animBoolName)
+    protected PlayerState(PlayerStatesManager statesManager, Player player, PlayerData data, string animBoolName)
     {
         StatesManager = statesManager;
-        EnvironmentCheckersManager = StatesManager.EnvironmentCheckersManager;
-        MoveController = StatesManager.MoveController;
-        InputHandler = StatesManager.InputHandler;
-        StateMachine = StatesManager.StateMachine;
-        AbilitiesManager = StatesManager.AbilitiesManager;
-        Data = StatesManager.Data;
-
+        Player = player;
+        Data = data;
         AnimBoolName = animBoolName;
-
-        IsActive = new TriggerAction();
     }
 
     public event Action EnterEvent;
     public event Action ExitEvent;
 
 
-    public virtual void Initialize()
-    {
-
-    }
-
     public virtual void Enter()
     {
         IsActive = true;
-
-        InputX = InputHandler.NormInputX;
-        InputY = InputHandler.NormInputY;
-        VelocityX = MoveController.CurrentVelocityX;
-        VelocityY = MoveController.CurrentVelocityY;
-
-        InputHandler.NormInputX.StateChangedEvent += SetInputX;
-        InputHandler.NormInputY.StateChangedEvent += SetInputY;
-        MoveController.CurrentVelocityX.StateChangedEvent += SetVelocityX;
-        MoveController.CurrentVelocityY.StateChangedEvent += SetVelocityY;
-
-        Debug.Log(AnimBoolName);
-
-        SendEnter();
+        DoChecks();
+        OnEnter();
     }
 
     public virtual void Exit()
     {
-
         IsActive = false;
+        OnExit();
+    }
 
-        InputHandler.NormInputX.StateChangedEvent -= SetInputX;
-        InputHandler.NormInputY.StateChangedEvent -= SetInputY;
-        MoveController.CurrentVelocityX.StateChangedEvent -= SetVelocityX;
-        MoveController.CurrentVelocityY.StateChangedEvent -= SetVelocityY;
-
-        SendExit();
+    public virtual void InputUpdate()
+    {
+        InputX = Player.InputHandler.NormInputX;
+        InputY = Player.InputHandler.NormInputY;
     }
 
     public virtual void LogicUpdate()
     {
         if (!IsActive) { return; }
+
+        InputUpdate();
+
+        Velocity = Player.MoveController.CurrentVelocity;
     }
 
-    private void SetInputX(Int32 value) => InputX = value;
-    private void SetInputY(Int32 value) => InputY = value;
-    private void SetVelocityX(Single value) => VelocityX = value;
-    private void SetVelocityY(Single value) => VelocityY = value;
+    public virtual void PhysicsUpdate()
+    {
+        DoChecks();
+    }
 
-    protected virtual void SendEnter()
+    protected virtual void DoChecks()
+    {
+
+    }
+
+    protected virtual void OnEnter()
     {
         EnterEvent?.Invoke();
     }
 
-    protected virtual void SendExit()
+    protected virtual void OnExit()
     {
         ExitEvent?.Invoke();
     }

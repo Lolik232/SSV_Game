@@ -2,78 +2,57 @@ using System;
 
 using UnityEngine;
 
-public class PlayerEnvironmentState : PlayerState
+public abstract class PlayerEnvironmentState : PlayerState
 {
-    protected Boolean IsGrounded;
-    protected Boolean IsGroundClose;
-    protected Boolean IsTouchingWall;
-    protected Boolean IsTouchingWallBack;
-    protected Boolean IsTouchingLedge;
+    protected bool IsGrounded;
+    protected bool IsGroundClose;
+    protected bool IsTouchingWall;
+    protected bool IsTouchingWallBack;
+    protected bool IsTouchingLedge;
 
-    protected Boolean JumpInput;
-    protected Boolean GrabInput;
+    protected bool JumpInput;
+    protected bool GrabInput;
 
-    public PlayerEnvironmentState(PlayerStatesManager statesManager, string animBoolName) : base(statesManager, animBoolName)
+    protected PlayerEnvironmentState(PlayerStatesManager statesManager, Player player, PlayerData data, string animBoolName) : base(statesManager, player, data, animBoolName)
     {
-    }
-
-    public event Action<Single, Int32> MoveEvent;
-
-    public override void Initialize()
-    {
-        base.Initialize();
     }
 
     public override void Enter()
     {
         base.Enter();
-
-        IsGrounded = EnvironmentCheckersManager.GroundChecker.IsDetected;
-        IsGroundClose = EnvironmentCheckersManager.GroundCloseChecker.IsDetected;
-        IsTouchingWall = EnvironmentCheckersManager.WallChecker.IsDetected;
-        IsTouchingWallBack = EnvironmentCheckersManager.WallBackChecker.IsDetected;
-        IsTouchingLedge = EnvironmentCheckersManager.LedgeChecker.IsDetected;
-
-        JumpInput = InputHandler.JumpInput;
-        GrabInput = InputHandler.GrabInput;
-
-        EnvironmentCheckersManager.GroundChecker.TargetDetectionChangedEvent += SetIsGrounded;
-        EnvironmentCheckersManager.GroundCloseChecker.TargetDetectionChangedEvent += SetIsGroundClose;
-        EnvironmentCheckersManager.WallChecker.TargetDetectionChangedEvent += SetIsTouchingWall;
-        EnvironmentCheckersManager.WallBackChecker.TargetDetectionChangedEvent += SetIsTouchingWallBack;
-        EnvironmentCheckersManager.LedgeChecker.TargetDetectionChangedEvent += SetIsTouchingLedge;
-
-        InputHandler.JumpInput.StateChangedEvent += SetJumpInput;
-        InputHandler.GrabInput.StateChangedEvent += SetGrabInput;
     }
 
     public override void Exit()
     {
         base.Exit();
-
-        EnvironmentCheckersManager.GroundChecker.TargetDetectionChangedEvent -= SetIsGrounded;
-        EnvironmentCheckersManager.GroundCloseChecker.TargetDetectionChangedEvent -= SetIsGroundClose;
-        EnvironmentCheckersManager.WallChecker.TargetDetectionChangedEvent -= SetIsTouchingWall;
-        EnvironmentCheckersManager.WallBackChecker.TargetDetectionChangedEvent -= SetIsTouchingWallBack;
-        EnvironmentCheckersManager.LedgeChecker.TargetDetectionChangedEvent -= SetIsTouchingLedge;
-
-        InputHandler.JumpInput.StateChangedEvent -= SetJumpInput;
-        InputHandler.GrabInput.StateChangedEvent -= SetGrabInput;
     }
 
-    public override void LogicUpdate() => base.LogicUpdate();
-
-    protected void SendMove(Single velocityX, Int32 direction)
+    public override void InputUpdate()
     {
-        MoveEvent?.Invoke(velocityX, direction);
+        base.InputUpdate();
+
+        JumpInput = Player.InputHandler.JumpInput;
+        GrabInput = Player.InputHandler.GrabInput;
     }
 
-    private void SetIsGrounded(Boolean value) => IsGrounded = value;
-    private void SetIsGroundClose(Boolean value) => IsGroundClose = value;
-    private void SetIsTouchingWall(Boolean value) => IsTouchingWall = value;
-    private void SetIsTouchingWallBack(Boolean value) => IsTouchingWallBack = value;
-    private void SetIsTouchingLedge(Boolean value) => IsTouchingLedge = value;
+    public override void LogicUpdate()
+    {
+        base.LogicUpdate();
+    }
 
-    private void SetJumpInput(Boolean value) => JumpInput = value;
-    private void SetGrabInput(Boolean value) => GrabInput = value;
+    public override void PhysicsUpdate()
+    {
+        base.PhysicsUpdate();
+    }
+
+    protected override void DoChecks()
+    {
+        base.DoChecks();
+
+        IsGrounded = Player.EnvironmentCheckersManager.GroundChecker.IsDetected;
+        IsGroundClose = Player.EnvironmentCheckersManager.GroundCloseChecker.IsDetected;
+        IsTouchingWall = Player.EnvironmentCheckersManager.WallChecker.IsDetected;
+        IsTouchingWallBack = Player.EnvironmentCheckersManager.WallBackChecker.IsDetected;
+        IsTouchingLedge = Player.EnvironmentCheckersManager.LedgeChecker.IsDetected;
+    }
 }

@@ -4,20 +4,13 @@ using UnityEngine;
 
 public class PlayerWallGrabState : PlayerTouchingWallState
 {
-    private Vector2 m_HoldPosition;
-
-    private Single m_EnduranceGrabLimit;
-
-    public PlayerWallGrabState(PlayerStatesManager statesManager,string animBoolName) : base(statesManager, animBoolName)
+    public PlayerWallGrabState(PlayerStatesManager statesManager, Player player, PlayerData data, string animBoolName) : base(statesManager, player, data, animBoolName)
     {
-        m_EnduranceGrabLimit = Data.enduranceGrabLimit;
     }
 
     public override void Enter()
     {
         base.Enter();
-
-        m_HoldPosition = MoveController.Transform.position;
     }
 
     public override void Exit()
@@ -25,26 +18,32 @@ public class PlayerWallGrabState : PlayerTouchingWallState
         base.Exit();
     }
 
+    public override void InputUpdate()
+    {
+        base.InputUpdate();
+    }
+
     public override void LogicUpdate()
     {
         base.LogicUpdate();
 
-        HoldPosition();
-
-        if (InputY > 0f)
+        if (Player.AbilitiesManager.WallClimbAbility.CanClimb && InputY > 0)
         {
-            StateMachine.ChangeState(StatesManager.WallClimbState);
-        } 
-        else if (InputY < 0f || !GrabInput)
+            StatesManager.StateMachine.ChangeState(StatesManager.WallClimbState);
+        }
+        else if (Player.CharacteristicsManager.Endurance.IsEmpty() || InputY < 0 || !GrabInput)
         {
-            StateMachine.ChangeState(StatesManager.WallSlideState);
+            StatesManager.StateMachine.ChangeState(StatesManager.WallSlideState);
         }
     }
 
-    private void HoldPosition()
+    public override void PhysicsUpdate()
     {
-        MoveController.Transform.position = m_HoldPosition;
+        base.PhysicsUpdate();
+    }
 
-        MoveController.SetVelocityZero();
+    protected override void DoChecks()
+    {
+        base.DoChecks();
     }
 }

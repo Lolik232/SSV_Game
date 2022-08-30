@@ -1,42 +1,38 @@
 using System;
 
 using UnityEngine;
+using UnityEngine.InputSystem.LowLevel;
 
 public class StateMachine
 {
-    private PlayerState m_CurrentState;
-    public PlayerState CurrentState
-    {
-        get
-        {
-            return m_CurrentState;
-        }
-        private set
-        {
-            if (m_CurrentState != value)
-            {
-                SendStateChanged(m_CurrentState = value);
-            }
-        }
-    }
+    public PlayerState CurrentState { get; private set; }
 
-    public event Action<PlayerState> StateChangedEvent;
 
-    public void Initialize(PlayerState initialState)
-    {
-        CurrentState = initialState;
-        CurrentState.Enter();
-    }
+    public event Action<PlayerState> StateEnterEvent;
+    public event Action<PlayerState> StateExitEvent;
+
+    public StateMachine(PlayerState initialState = null) => ChangeState(initialState);
 
     public void ChangeState(PlayerState newState)
     {
-        CurrentState.Exit();
+        if (newState == null) { return; }
+        if (CurrentState != null)
+        {
+            CurrentState.Exit();
+            OnStateExit(CurrentState);
+        }
         CurrentState = newState;
         CurrentState.Enter();
+        OnStateEnter(CurrentState);
     }
 
-    private void SendStateChanged(PlayerState newState)
+    protected virtual void OnStateEnter(PlayerState state)
     {
-        StateChangedEvent?.Invoke(newState);
+        StateEnterEvent?.Invoke(state);
+    }
+
+    protected virtual void OnStateExit(PlayerState state)
+    {
+        StateExitEvent?.Invoke(state);
     }
 }

@@ -1,9 +1,11 @@
 using System;
+using Unity.VisualScripting;
+
 using UnityEngine;
 
 public class PlayerWallSlideState : PlayerTouchingWallState
 {
-    public PlayerWallSlideState(PlayerStatesManager statesManager, string animBoolName) : base(statesManager,  animBoolName)
+    public PlayerWallSlideState(PlayerStatesManager statesManager, Player player, PlayerData data, string animBoolName) : base(statesManager, player, data, animBoolName)
     {
     }
 
@@ -17,15 +19,28 @@ public class PlayerWallSlideState : PlayerTouchingWallState
         base.Exit();
     }
 
+    public override void InputUpdate()
+    {
+        base.InputUpdate();
+    }
+
     public override void LogicUpdate()
     {
         base.LogicUpdate();
 
-        MoveController.SetVelocityY(-Data.wallSlideVelocity);
-
-        if (GrabInput && InputY >= 0)
-        {
-            StateMachine.ChangeState(StatesManager.WallGrabState);
+        if (Player.AbilitiesManager.WallClimbAbility.CanGrab && GrabInput && InputY >= 0)
+{
+            StatesManager.StateMachine.ChangeState(StatesManager.WallGrabState);
         }
+    }
+
+    public override void PhysicsUpdate()
+    {
+        base.PhysicsUpdate();
+    }
+
+    protected override void DoChecks()
+    {
+        base.DoChecks();
     }
 }
