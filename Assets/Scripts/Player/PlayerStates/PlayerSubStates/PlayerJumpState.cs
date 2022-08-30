@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 public class PlayerJumpState: PlayerAbilityState
-{
+{ 
     public PlayerJumpState(PlayerStatesManager statesManager, Player player, PlayerData data, string animBoolName) : base(statesManager, player, data, animBoolName)
     {
     }
@@ -12,6 +12,7 @@ public class PlayerJumpState: PlayerAbilityState
         base.Enter();
 
         StatesManager.InAirState.Jumping.Initiate();
+        IsGroundedBlock = true;
         IsAbilityDone = true;
     }
 
@@ -28,6 +29,7 @@ public class PlayerJumpState: PlayerAbilityState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+        if (!IsActive) { return; }
     }
 
     public override void PhysicsUpdate()

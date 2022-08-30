@@ -24133,7 +24133,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 104.579, y: -17.881, z: -10}
+  m_LocalPosition: {x: 128.62, y: -23.01, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -25419,7 +25419,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.8443936, y: 1}
+    m_SensorSize: {x: 1.5035294, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -25446,7 +25446,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 104.579, y: -17.881}
+  m_AnchoredPosition: {x: 128.62, y: -23.01}
   m_SizeDelta: {x: 960, y: 540}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1412309656
@@ -37055,11 +37055,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 31484021258618762, guid: 9910b7cf424e9134ea5fd433dd4bc562, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 104.579
+      value: 128.62
       objectReference: {fileID: 0}
     - target: {fileID: 31484021258618762, guid: 9910b7cf424e9134ea5fd433dd4bc562, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -17.881
+      value: -23.01
       objectReference: {fileID: 0}
     - target: {fileID: 31484021258618762, guid: 9910b7cf424e9134ea5fd433dd4bc562, type: 3}
       propertyPath: m_LocalPosition.z
@@ -38637,6 +38637,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 4.994
       objectReference: {fileID: 0}
+    - target: {fileID: 8127644274811106469, guid: 9910b7cf424e9134ea5fd433dd4bc562, type: 3}
+      propertyPath: Data
+      value: 
+      objectReference: {fileID: 11400000, guid: a075596a544cf4240950c7dd59045d6f, type: 2}
     - target: {fileID: 8392269462251831021, guid: 9910b7cf424e9134ea5fd433dd4bc562, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.4404481

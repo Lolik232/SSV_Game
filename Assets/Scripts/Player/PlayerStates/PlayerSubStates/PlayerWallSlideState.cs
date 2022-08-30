@@ -1,4 +1,5 @@
 using System;
+
 using Unity.VisualScripting;
 
 using UnityEngine;
@@ -27,9 +28,10 @@ public class PlayerWallSlideState : PlayerTouchingWallState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+        if (!IsActive) { return; }
 
         if (Player.AbilitiesManager.WallClimbAbility.CanGrab && GrabInput && InputY >= 0)
-{
+        {
             StatesManager.StateMachine.ChangeState(StatesManager.WallGrabState);
         }
     }

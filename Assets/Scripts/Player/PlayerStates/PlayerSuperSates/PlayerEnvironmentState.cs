@@ -38,6 +38,8 @@ public abstract class PlayerEnvironmentState : PlayerState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+
+        if (!IsActive) { return; }
     }
 
     public override void PhysicsUpdate()

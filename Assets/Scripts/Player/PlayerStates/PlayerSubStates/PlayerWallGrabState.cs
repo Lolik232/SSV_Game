@@ -26,6 +26,7 @@ public class PlayerWallGrabState : PlayerTouchingWallState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+        if (!IsActive) { return; }
 
         if (Player.AbilitiesManager.WallClimbAbility.CanClimb && InputY > 0)
         {

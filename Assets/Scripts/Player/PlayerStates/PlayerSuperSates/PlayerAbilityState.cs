@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PlayerAbilityState : PlayerState
 {
+    public bool IsGroundedBlock;
     protected bool IsGrounded;
-
     protected bool IsAbilityDone;
 
     public PlayerAbilityState(PlayerStatesManager statesManager, Player player, PlayerData data, string animBoolName) : base(statesManager, player, data, animBoolName)
@@ -31,9 +31,11 @@ public class PlayerAbilityState : PlayerState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+        if (!IsActive) { return; }
+
         if (IsAbilityDone)
         {
-            if (IsGrounded)
+            if (IsGrounded && !IsGroundedBlock)
             {
                 StatesManager.StateMachine.ChangeState(StatesManager.IdleState);
             }

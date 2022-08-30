@@ -22,6 +22,8 @@ public abstract class PlayerGroundedState : PlayerEnvironmentState
     {
         base.LogicUpdate();
 
+        if (!IsActive) { return; }
+
         if (JumpInput && Player.AbilitiesManager.JumpAbility.CanJump)
         {
             StatesManager.StateMachine.ChangeState(StatesManager.JumpState);

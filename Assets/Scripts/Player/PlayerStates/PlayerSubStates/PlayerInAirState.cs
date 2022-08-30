@@ -22,6 +22,7 @@ public class PlayerInAirState : PlayerEnvironmentState
 
     public override void Enter()
     {
+        StatesManager.JumpState.IsGroundedBlock = false;
         base.Enter();
     }
 
@@ -33,6 +34,7 @@ public class PlayerInAirState : PlayerEnvironmentState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+        if (!IsActive) { return; }
 
         CheckIfJumpEnd();
         CheckJumpHold();
@@ -85,7 +87,6 @@ public class PlayerInAirState : PlayerEnvironmentState
         if (IsActive && Jumping && !m_IsJumpInputHold && Velocity.y > 0f)
         {
             OnJumpInputStop();
-            Jumping.Terminate();
         }
     }
 

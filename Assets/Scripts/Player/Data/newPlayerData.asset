@@ -18,8 +18,9 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8
-  climbEnduranceDecreasing: 3
-  grabEnduranceDecreasing: 1
+  baseEndurance: 10
+  baseEnduranceRegeneration: 2
+  size: {x: 0, y: 0}
   moveInputTolerance: 0.5
   groundSlopeTolerance: 0.01
   jumpInputHoldTime: 0.1
@@ -29,7 +30,11 @@ MonoBehaviour:
   jumpCoyoteTime: 0.1
   variableJumpHeightMultiplier: 0.5
   maxDuration: 5
-  enduranceGrabLimit: 1
+  minGrabEndurance: 1
   wallClimbVelocity: 3
-  enduranceClimbLimit: 3
+  minClimbEndurance: 2
   wallSlideVelocity: 2
+  startOffset: {x: 0, y: 0}
+  endOffset: {x: 0, y: 0}
+  climbEnduranceFatigueRate: 3
+  grabEnduranceFatigueRate: 1

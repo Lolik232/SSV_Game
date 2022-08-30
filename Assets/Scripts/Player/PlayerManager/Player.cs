@@ -66,4 +66,14 @@ public class Player : Unit
     {
         StatesManager.LandState.OnLandFinished();
     }
+
+    private void OnHanging()
+    {
+        MoveController.OnHanging();
+    }
+
+    private void OnJumpDone()
+    {
+        AnimationController.OnJumpDone();
+    }
 }

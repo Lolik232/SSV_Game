@@ -28,6 +28,7 @@ public class PlayerLandState : PlayerGroundedState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+        if (!IsActive) { return; }
 
         if (InputX != 0)
         {

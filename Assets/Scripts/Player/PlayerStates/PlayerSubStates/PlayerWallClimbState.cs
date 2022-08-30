@@ -26,6 +26,8 @@ public class PlayerWallClimbState : PlayerTouchingWallState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+        if (!IsActive) { return; }
+
         if (Player.CharacteristicsManager.Endurance.IsEmpty() || InputY != 1)
         {
             StatesManager.StateMachine.ChangeState(StatesManager.WallGrabState);

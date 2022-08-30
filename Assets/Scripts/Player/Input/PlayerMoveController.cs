@@ -98,4 +98,9 @@ public class PlayerMoveController : MoveController
     {
         NeedToHoldVelocity = false;
     }
+
+    public void OnHanging()
+    {
+
+    }
 }
