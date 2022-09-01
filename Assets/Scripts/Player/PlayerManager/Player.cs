@@ -47,6 +47,7 @@ public class Player : Unit
         base.Update();
         StatesManager.StateMachine.CurrentState.LogicUpdate();
         CharacteristicsManager.LogicUpdate();
+        AnimationController.LogicUpdate();
     }
 
     protected override void FixedUpdate()
@@ -67,9 +68,14 @@ public class Player : Unit
         StatesManager.LandState.OnLandFinished();
     }
 
-    private void OnHanging()
+    private void OnLedgeHanging()
     {
-        MoveController.OnHanging();
+        StatesManager.LedgeClimbState.OnLedgeHanging();
+    }
+
+    private void OnLedgeClimbEnd()
+    {
+        StatesManager.LedgeClimbState.OnLedgeClimbEnd();
     }
 
     private void OnJumpDone()

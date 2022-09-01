@@ -1,18 +1,18 @@
 using System;
-
-using Unity.VisualScripting;
-
 using UnityEngine;
 
-public class PlayerWallSlideState : PlayerTouchingWallState
+public class PlayerWallJumpState : PlayerAbilityState
 {
-    public PlayerWallSlideState(PlayerStatesManager statesManager, Player player, PlayerData data, string animBoolName) : base(statesManager, player, data, animBoolName)
+    public TimeDependentAction WallJumpTime { get; private set; }
+    public PlayerWallJumpState(PlayerStatesManager statesManager, Player player, PlayerData data, string animBoolName) : base(statesManager, player, data, animBoolName)
     {
+        WallJumpTime = new TimeDependentAction(data.wallJumpTime);
     }
 
     public override void Enter()
     {
         base.Enter();
+        WallJumpTime.Initiate();
     }
 
     public override void Exit()
@@ -30,9 +30,9 @@ public class PlayerWallSlideState : PlayerTouchingWallState
         base.LogicUpdate();
         if (!IsActive) { return; }
 
-        if (Player.AbilitiesManager.WallClimbAbility.CanWallGrab && GrabInput && InputY >= 0)
+        if (!WallJumpTime)
         {
-            StatesManager.StateMachine.ChangeState(StatesManager.WallGrabState);
+            IsAbilityDone = true;
         }
     }
 

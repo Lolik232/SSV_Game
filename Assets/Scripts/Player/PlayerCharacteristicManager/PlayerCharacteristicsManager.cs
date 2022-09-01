@@ -18,13 +18,19 @@ public class PlayerCharacteristicsManager
 
     public void Initialize()
     {
+        Player.StatesManager.JumpState.EnterEvent += OnJump;
+        Player.StatesManager.WallJumpState.EnterEvent += OnJump;
+
         Player.StatesManager.WallGrabState.EnterEvent += OnWallGrabEnter;
         Player.StatesManager.WallSlideState.EnterEvent += OnWallSlideEnter;
         Player.StatesManager.WallClimbState.EnterEvent += OnWallClimbEnter;
+        Player.StatesManager.LedgeClimbState.IsClimbing.ActiveEvent += OnLedgeClimbStart;
+        Player.StatesManager.LedgeClimbState.EnterEvent += OnLedgeClimbEnter;
 
         Player.StatesManager.WallGrabState.ExitEvent += OnWallGrabExit;
         Player.StatesManager.WallSlideState.ExitEvent += OnWallSlideExit;
         Player.StatesManager.WallClimbState.ExitEvent += OnWallClimbExit;
+        Player.StatesManager.LedgeClimbState.ExitEvent += OnLedgeClimbExit;
     }
 
     public void LogicUpdate()
@@ -41,7 +47,7 @@ public class PlayerCharacteristicsManager
     private void OnWallGrabEnter()
     {
         Endurance.DisableRegeneration();
-        Endurance.FatigueRate = Data.grabEnduranceFatigueRate;
+        Endurance.FatigueRate = Player.AbilitiesManager.WallClimbAbility.WallGrabEnduranceFatigueRate;
     }
 
     private void OnWallGrabExit()
@@ -53,7 +59,7 @@ public class PlayerCharacteristicsManager
     private void OnWallClimbEnter()
     {
         Endurance.DisableRegeneration();
-        Endurance.FatigueRate = Data.climbEnduranceFatigueRate;
+        Endurance.FatigueRate = Player.AbilitiesManager.WallClimbAbility.WallClimbEnduranceFatigueRate;
     }
 
     private void OnWallClimbExit()
@@ -70,5 +76,27 @@ public class PlayerCharacteristicsManager
     private void OnWallSlideExit()
     {
         Endurance.EnableRegeneration();
+    }
+
+    private void OnLedgeClimbEnter()
+    {
+        Endurance.DisableRegeneration();
+        Endurance.FatigueRate = Player.AbilitiesManager.WallClimbAbility.WallGrabEnduranceFatigueRate;
+    }
+
+    private void OnLedgeClimbStart()
+    {
+        Endurance.RemoveValue(Player.AbilitiesManager.WallClimbAbility.LedgeClimbEnduranceCost);
+    }
+
+    private void OnLedgeClimbExit()
+    {
+        Endurance.EnableRegeneration();
+        Endurance.FatigueRate = 0f;
+    }
+
+    private void OnJump()
+    {
+        Endurance.RemoveValue(Player.AbilitiesManager.JumpAbility.JumpEnduranceCost);
     }
 }

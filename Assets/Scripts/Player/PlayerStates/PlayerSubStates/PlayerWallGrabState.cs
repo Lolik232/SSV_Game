@@ -28,7 +28,7 @@ public class PlayerWallGrabState : PlayerTouchingWallState
         base.LogicUpdate();
         if (!IsActive) { return; }
 
-        if (Player.AbilitiesManager.WallClimbAbility.CanClimb && InputY > 0)
+        if (Player.AbilitiesManager.WallClimbAbility.CanWallClimb && InputY > 0)
         {
             StatesManager.StateMachine.ChangeState(StatesManager.WallClimbState);
         }

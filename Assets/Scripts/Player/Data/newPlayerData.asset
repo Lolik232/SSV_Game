@@ -19,22 +19,27 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   baseEndurance: 10
-  baseEnduranceRegeneration: 2
+  baseEnduranceRegeneration: 3
   size: {x: 0, y: 0}
   moveInputTolerance: 0.5
   groundSlopeTolerance: 0.01
   jumpInputHoldTime: 0.1
-  movementVelocity: 10
+  movementVelocity: 14
   amountOfJumps: 1
-  jumpVelocity: 16
+  jumpVelocity: 20
   jumpCoyoteTime: 0.1
   variableJumpHeightMultiplier: 0.5
   maxDuration: 5
-  minGrabEndurance: 1
-  wallClimbVelocity: 3
-  minClimbEndurance: 2
-  wallSlideVelocity: 2
-  startOffset: {x: 0, y: 0}
-  endOffset: {x: 0, y: 0}
-  climbEnduranceFatigueRate: 3
-  grabEnduranceFatigueRate: 1
+  wallClimbVelocity: 5
+  wallJumpVelocity: 25
+  wallJumpTime: 0.4
+  wallJumpAngle: {x: 1, y: 1.5}
+  wallSlideVelocity: 4
+  startOffset: {x: 0.4, y: 1.5}
+  endOffset: {x: 0.4, y: 0}
+  minWallClimbEndurance: 2
+  minWallGrabEndurance: 1
+  wallClimbEnduranceFatigueRate: 3
+  wallGrabEnduranceFatigueRate: 1
+  jumpEnduranceCost: 2
+  ledgeClimbEnduranceCost: 2

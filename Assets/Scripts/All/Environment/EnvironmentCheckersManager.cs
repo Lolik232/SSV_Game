@@ -58,6 +58,10 @@ public class EnvironmentCheckersManager
 
         return workspace;
     }
+    public int DetermineWallJumpDirection()
+    {
+        return WallChecker.IsDetected ? -Unit.MoveController.FacingDirection : Unit.MoveController.FacingDirection;
+    }
 
     public void OnDrawGizmos()
     {

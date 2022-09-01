@@ -64,6 +64,8 @@ public abstract class MoveController
         }
     }
 
+    protected void MoveToPosition(Vector2 position) => Unit.transform.position = position;
+
     protected void SetVelocityZero() => SetVelocity(Vector2.zero);
     protected void SetVelocity(float velocity, Vector2 angle, int direction) => SetVelocity(angle.normalized.x * velocity * direction, angle.normalized.y * velocity);
     protected void SetVelocity(float velocity, Vector2 angle) => SetVelocity(velocity * angle);

@@ -1,5 +1,3 @@
-using System;
-
 using UnityEngine;
 
 public class PlayerAnimationController
@@ -17,6 +15,15 @@ public class PlayerAnimationController
         Player.StatesManager.StateMachine.StateExitEvent += OnStateExit;
 
         Player.StatesManager.JumpState.EnterEvent += OnJump;
+        Player.StatesManager.WallJumpState.EnterEvent += OnJump;
+        Player.StatesManager.LedgeClimbState.IsClimbing.ActiveEvent += OnLedgeClimbStart;
+        Player.StatesManager.LedgeClimbState.IsClimbing.InactiveEvent += OnLedgeClimbEnd;
+    }
+
+    public void LogicUpdate()
+    {
+        Player.Anim.SetFloat("yVelocity", Player.MoveController.CurrentVelocity.y);
+        Player.Anim.SetFloat("xVelocity", Mathf.Abs(Player.MoveController.CurrentVelocity.x));
     }
 
     private void OnStateEnter(PlayerState state)
@@ -37,5 +44,15 @@ public class PlayerAnimationController
     public void OnJumpDone()
     {
         Player.Anim.SetBool("isJumping", false);
+    }
+
+    public void OnLedgeClimbStart()
+    {
+        Player.Anim.SetBool("isClimbingLedge", true);
+    }
+
+    public void OnLedgeClimbEnd()
+    {
+        Player.Anim.SetBool("isClimbingLedge", false);
     }
 }

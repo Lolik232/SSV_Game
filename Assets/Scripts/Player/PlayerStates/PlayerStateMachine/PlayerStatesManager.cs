@@ -19,6 +19,9 @@ public class PlayerStatesManager
     public PlayerWallGrabState WallGrabState { get; private set; }
     public PlayerWallSlideState WallSlideState { get; private set; }
     public PlayerWallClimbState WallClimbState { get; private set; }
+    public PlayerWallJumpState WallJumpState { get; private set; }
+
+    public PlayerLedgeClimbState LedgeClimbState { get; private set; }
 
     public PlayerStatesManager(Player player, PlayerData data)
     {
@@ -33,6 +36,8 @@ public class PlayerStatesManager
         WallGrabState = new PlayerWallGrabState(this, player, data, "wallGrab");
         WallSlideState = new PlayerWallSlideState(this, player, data, "wallSlide");
         WallClimbState = new PlayerWallClimbState(this, player, data, "wallClimb");
+        WallJumpState = new PlayerWallJumpState(this, player, data, "inAir");
+        LedgeClimbState = new PlayerLedgeClimbState(this, player, data, "ledgeClimb");
         StateMachine = new StateMachine(IdleState);
     }
 }

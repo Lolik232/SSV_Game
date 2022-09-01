@@ -30,10 +30,10 @@ public abstract class PlayerGroundedState : PlayerEnvironmentState
         }
         else if (!IsGrounded)
         {
-            StatesManager.InAirState.CoyoteTime.Initiate();
+            StatesManager.InAirState.JumpCoyoteTime.Initiate();
             StatesManager.StateMachine.ChangeState(StatesManager.InAirState);
         }
-        else if (IsTouchingWall && IsTouchingLedge && GrabInput && Player.AbilitiesManager.WallClimbAbility.CanGrab)
+        else if (IsTouchingWall && IsTouchingLedge && GrabInput && Player.AbilitiesManager.WallClimbAbility.CanWallGrab)
         {
             StatesManager.StateMachine.ChangeState(StatesManager.WallGrabState);
         }

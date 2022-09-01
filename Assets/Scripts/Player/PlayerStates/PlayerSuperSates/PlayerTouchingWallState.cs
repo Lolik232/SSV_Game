@@ -26,9 +26,9 @@ public class PlayerTouchingWallState : PlayerEnvironmentState
     {
         base.LogicUpdate();
 
-        if (JumpInput)
+        if (JumpInput && Player.AbilitiesManager.JumpAbility.CanWallJump)
         {
-
+            StatesManager.StateMachine.ChangeState(StatesManager.WallJumpState);
         }
         else if (IsGrounded && !GrabInput)
         {
@@ -36,7 +36,12 @@ public class PlayerTouchingWallState : PlayerEnvironmentState
         }
         else if (!IsTouchingWall || (InputX != Player.MoveController.FacingDirection && !GrabInput))
         {
+            StatesManager.InAirState.WallJumpCoyoteTime.Initiate();
             StatesManager.StateMachine.ChangeState(StatesManager.InAirState);
+        }
+        else if (IsTouchingWall && !IsTouchingLedge && !IsGroundClose)
+        {
+            StatesManager.StateMachine.ChangeState(StatesManager.LedgeClimbState);
         }
     }
 

@@ -5,8 +5,6 @@ using UnityEngine;
 
 public abstract class Unit : MonoBehaviour
 {
-    public Characteristic Endurance { get; protected set; } // TODO: Strength 
-
     public EnvironmentCheckersManager EnvironmentCheckersManager { get; private set; }
     public Rigidbody2D RB { get; private set; }
 

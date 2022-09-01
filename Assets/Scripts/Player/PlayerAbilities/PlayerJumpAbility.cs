@@ -4,13 +4,21 @@ using UnityEngine;
 public class PlayerJumpAbility : PlayerAbility
 {
     public float JumpVelocity { get; private set; }
+
+    public Vector2 WallJumpAngle { get; private set; }
+
+    public float WallJumpVelocity { get; private set; }
+
     public float VariableJumpHeightMultiplier { get; private set; }
 
     public int AmountOfJumpsLeft { get; private set; }
 
     private bool m_CanJump;
 
-    public bool CanJump => AmountOfJumpsLeft > 0 && m_CanJump;
+    public bool CanJump => AmountOfJumpsLeft > 0 && m_CanJump && Player.CharacteristicsManager.Endurance.Current >= JumpEnduranceCost;
+    public bool CanWallJump => Player.CharacteristicsManager.Endurance.Current >= JumpEnduranceCost;
+
+    public float JumpEnduranceCost { get; private set; }
 
     public PlayerJumpAbility(PlayerAbilitiesManager abilitiesManager, Player player, PlayerData data) : base(abilitiesManager, player, data)
     {
@@ -18,16 +26,46 @@ public class PlayerJumpAbility : PlayerAbility
 
         JumpVelocity = data.jumpVelocity;
         VariableJumpHeightMultiplier = data.variableJumpHeightMultiplier;
+        WallJumpAngle = data.wallJumpAngle;
+        WallJumpVelocity = data.wallJumpVelocity;
+        JumpEnduranceCost = data.jumpEnduranceCost;
     }
 
     public override void Initialize()
     {
-        Player.StatesManager.LandState.EnterEvent += ResetAmountOfJumps;
-        Player.StatesManager.IdleState.EnterEvent += ResetAmountOfJumps;
-        Player.StatesManager.MoveState.EnterEvent += ResetAmountOfJumps;
+        Player.StatesManager.LandState.EnterEvent += OnLandEnter;
+        Player.StatesManager.IdleState.EnterEvent += OnIdleEnter;
+        Player.StatesManager.MoveState.EnterEvent += OnMoveEnter;
 
-        Player.StatesManager.InAirState.CoyoteTime.InactiveEvent += BlockJump;
-        Player.StatesManager.JumpState.EnterEvent += DecreaseAmountOfJumpsLeft;
+        Player.StatesManager.InAirState.JumpCoyoteTime.InactiveEvent += OnJumpCoyoteTimeEnd;
+        Player.StatesManager.JumpState.EnterEvent += OnJump;
+        Player.StatesManager.WallJumpState.EnterEvent += OnWallJump;
+    }
+
+    private void OnIdleEnter()
+    {
+        ResetAmountOfJumps();
+    }
+
+    private void OnLandEnter()
+    {
+        ResetAmountOfJumps();
+    }
+
+    private void OnMoveEnter()
+    {
+        ResetAmountOfJumps();
+    }
+
+    private void OnJump()
+    {
+        DecreaseAmountOfJumpsLeft();
+    }
+
+    private void OnWallJump()
+    {
+        ResetAmountOfJumps();
+        DecreaseAmountOfJumpsLeft();
     }
 
     private void ResetAmountOfJumps()
@@ -36,7 +74,7 @@ public class PlayerJumpAbility : PlayerAbility
         AmountOfJumpsLeft = Data.amountOfJumps;
     }
 
-    private void BlockJump()
+    private void OnJumpCoyoteTimeEnd()
     {
         m_CanJump = false;
     }

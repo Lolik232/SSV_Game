@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class PlayerInputHandler : MonoBehaviour
 {
     [SerializeField] private PlayerData m_Data;
-    
+
     public ValueChangingAction<int> NormInputX { get; private set; }
     public ValueChangingAction<int> NormInputY { get; private set; }
 
@@ -33,11 +33,14 @@ public class PlayerInputHandler : MonoBehaviour
     public void Start()
     {
         Player.StatesManager.JumpState.EnterEvent += JumpInput.Terminate;
+        Player.StatesManager.WallJumpState.EnterEvent += JumpInput.Terminate;
     }
 
     public void OnDestroy()
     {
         Player.StatesManager.JumpState.EnterEvent -= JumpInput.Terminate;
+        Player.StatesManager.WallJumpState.EnterEvent -= JumpInput.Terminate;
+
     }
 
     #region Move

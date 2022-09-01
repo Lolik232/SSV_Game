@@ -23,11 +23,14 @@ public class PlayerData : UnitData
 
     [Header("Wall Grab State")]
     public float maxDuration = 5f;
-    public float minGrabEndurance = 1f;
     
     [Header("Wall Climb State")]
     public float wallClimbVelocity = 3f;
-    public float minClimbEndurance = 2f;
+
+    [Header("Wall Jump State")]
+    public float wallJumpVelocity = 20f;
+    public float wallJumpTime = 0.4f;
+    public Vector2 wallJumpAngle = new(1, 2);
 
     [Header("Wall Slide State")]
     public float wallSlideVelocity = 2f;
@@ -37,6 +40,13 @@ public class PlayerData : UnitData
     public Vector2 endOffset;
 
     [Header("Endurance")]
-    public float climbEnduranceFatigueRate = 3f;
-    public float grabEnduranceFatigueRate = 1f;
+    public float minWallClimbEndurance = 2f;
+    public float minWallGrabEndurance = 1f;
+
+    public float wallClimbEnduranceFatigueRate = 3f;
+    public float wallGrabEnduranceFatigueRate = 1f;
+
+    public float jumpEnduranceCost = 2f;
+    public float ledgeClimbEnduranceCost = 2f;
+
 }
