@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: 
+  m_GroupName: Default Local Group
+  m_Data:
+    m_SerializedData: []
+  m_GUID: d40e3ee99b5d30b4081817de5dd26550
+  m_SerializeEntries:
+  - m_GUID: e46872bf4c729b940bb75d3e90a35383
+    m_Address: Assets/Scenes/Level2.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 2cda990e2423bbf4892e6590ba056729
+    m_Address: Assets/Scenes/SampleScene.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 08db377ca0e9af343b85c9e43d0cd15e
+    m_Address: Assets/ScriptableObjects/Channels/SceneManagement/ColdStartupChannel.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 00a55256bc8251942a5e1d8bee5d06ef
+    m_Address: Assets/Scenes/Managers.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: d160d21b4ee59804cabc734a782d9dd7, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 997324a853bc2da46b96615f190ae5ea, type: 2}
+    - {fileID: 11400000, guid: 2c89e05e537dc0b4cb953375869cc03e, type: 2}
