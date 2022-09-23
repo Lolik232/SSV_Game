@@ -56,16 +56,47 @@
     <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\All\States\State.cs" />
     <Compile Include="Assets\Scripts\Player\Data\Data.cs" />
     <Compile Include="Assets\Scripts\Player\Data\UnitData.cs" />
-    <Compile Include="Assets\Scripts\Player\States\PlayerEnvironmentState.cs" />
-    <Compile Include="Assets\Scripts\Player\States\PlayerState.cs" />
     <Compile Include="Assets\Scripts\All\States\StateMachine.cs" />
-    <Compile Include="Assets\Scripts\Player\Input\PlayerInputHandler.cs" />
-    <Compile Include="Assets\Scripts\Player\States\PlayerGroundedState.cs" />
+    <Compile Include="Assets\Scripts\Player\Input\PlayerInputReader.cs" />
     <Compile Include="Assets\Scripts\Player\Player.cs" />
-    <Compile Include="Assets\Scripts\Player\States\PlayerIdleState.cs" />
+    <Compile Include="Assets\Scripts\All\BaseClasses\BaseDescriptionSO.cs" />
+    <Compile Include="Assets\Scripts\SceneManagement\ScriptableObjects\MenuSO.cs" />
+    <Compile Include="Assets\Scripts\All\Events\BoolEventChannelSO.cs" />
+    <Compile Include="Assets\Scripts\SceneManagement\SceneLoader.cs" />
+    <Compile Include="Assets\Scripts\All\Gameplay\PlayerSpawnManager.cs" />
+    <Compile Include="Assets\Scripts\All\Events\LoadEventChannelSO.cs" />
+    <Compile Include="Assets\Scripts\SceneManagement\LocationExit.cs" />
+    <Compile Include="Assets\Scripts\All\Events\VoidEventChannelSO.cs" />
+    <Compile Include="Assets\Scripts\All\Events\IntEventChannelSO.cs" />
+    <Compile Include="Assets\Scripts\All\Interfaces\IPhysicsUpdate.cs" />
+    <Compile Include="Assets\Scripts\All\Events\FadeChannelSO.cs" />
+    <Compile Include="Assets\Scripts\All\Spell\Spell.cs" />
+    <Compile Include="Assets\Scripts\All\Interfaces\ILogicUpdate.cs" />
+    <Compile Include="Assets\Scripts\SceneManagement\ScriptableObjects\ManagersSO.cs" />
+    <Compile Include="Assets\Scripts\All\SpellEffects\ActiveEffects.cs" />
+    <Compile Include="Assets\Scripts\All\SpellEffects\SpellEffectHolder.cs" />
+    <Compile Include="Assets\Scripts\EditorTools\EditorStartup.cs" />
+    <Compile Include="Assets\Scripts\All\Interfaces\ILiveCycle.cs" />
+    <Compile Include="Assets\Scripts\All\SaveSystem\SerializableScriptableObject.cs" />
+    <Compile Include="Assets\Scripts\All\Events\TypedEventChannelSO.cs" />
+    <Compile Include="Assets\Scripts\All\Interfaces\ISpellEffectVisitor.cs" />
+    <Compile Include="Assets\Scripts\SceneManagement\ScriptableObjects\LocationSO.cs" />
+    <Compile Include="Assets\Scripts\All\Spell\SpellHolder.cs" />
+    <Compile Include="Assets\Scripts\All\Interfaces\ISpellEffect.cs" />
+    <Compile Include="Assets\Scripts\SceneManagement\ScriptableObjects\GameSceneSO.cs" />
+    <Compile Include="Assets\Scripts\All\Interfaces\IObject.cs" />
+    <Compile Include="Assets\Scripts\All\Spell\SpellsLiveCycle\TimeLiveCycle.cs" />
+    <Compile Include="Assets\Scripts\All\States\StateSO.cs" />
+    <Compile Include="Assets\Scripts\All\Events\StateChangeEventChannelSO.cs" />
+    <Compile Include="Assets\Scripts\All\States\SuperStateSO.cs" />
+    <Compile Include="Assets\Scripts\All\States\Conditions\ConditionSO.cs" />
+    <Compile Include="Assets\Scripts\All\States\Conditions\PlayerIdleToMoveConditionSO.cs" />
+    <Compile Include="Assets\Scripts\All\States\Conditions\PlayerMoveToIdleCondition.cs" />
+    <Compile Include="Assets\Scripts\All\States\Actions\ActionSO.cs" />
+    <Compile Include="Assets\Scripts\All\States\Actions\PlayerXMoveActionSO.cs" />
+    <Compile Include="Assets\Scripts\All\States\Actions\PlayerStandActionSO.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

@@ -1,18 +1,27 @@
+using All.Events;
+
 using UnityEngine;
+
+[RequireComponent(typeof(Animator))]
 
 public class StateMachine : MonoBehaviour
 {
-    [SerializeField] private State _defaultState;
-    private State _currentState;
+    [SerializeField] private StateSO _defaultState;
+    private StateSO _currentState = null;
+
+    [SerializeField] private StateChangeEventChannelSO _stateChangeListener;
+
+    private Animator _anim;
 
     protected virtual void Awake()
     {
-        _currentState = _defaultState;
+        _anim = GetComponent<Animator>();
+        _stateChangeListener.OnEventRaised += GetTransitionState;
     }
 
     protected virtual void Start()
     {
-        _currentState.OnStateEnter();
+        GetTransitionState(_defaultState);
     }
 
     private void Update()
@@ -25,10 +34,16 @@ public class StateMachine : MonoBehaviour
         _currentState.OnFixedUpdate();
     }
 
-    public void GetTransitionState(State transitionState)
+    private void GetTransitionState(StateSO transitionState)
     {
-        _currentState.OnStateExit();
+        if (_currentState != null)
+        {
+            _currentState.OnStateExit();
+            _anim.SetBool(_currentState.AnimBoolName, false);
+        }
         _currentState = transitionState;
         _currentState.OnStateEnter();
+        _anim.SetBool(_currentState.AnimBoolName, true);
+
     }
 }
