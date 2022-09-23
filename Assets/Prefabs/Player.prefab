@@ -10,11 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 31484021258618762}
   - component: {fileID: 1920291699585250337}
-  - component: {fileID: 1353056767493987491}
   - component: {fileID: 5879672992432325320}
   - component: {fileID: 907170881316087725}
   - component: {fileID: 4705714146389201328}
-  - component: {fileID: 8127644274811106469}
+  - component: {fileID: 3286704870696138778}
+  - component: {fileID: 4867245502010508884}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -52,7 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: a8aea0864b5791447a44e5f7c4bb448c, type: 3}
+  m_Actions: {fileID: -944628639613478452, guid: fa1dd6cab9a44c5409a81eb67fbdbb61, type: 3}
   m_NotificationBehavior: 2
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
@@ -67,7 +67,7 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1353056767493987491}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PlayerInputHandler, Assembly-CSharp
         m_MethodName: OnMoveInput
         m_Mode: 0
@@ -83,7 +83,7 @@ MonoBehaviour:
     m_ActionName: Gameplay/Movement[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1353056767493987491}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PlayerInputHandler, Assembly-CSharp
         m_MethodName: OnJumpInput
         m_Mode: 0
@@ -99,7 +99,7 @@ MonoBehaviour:
     m_ActionName: Gameplay/Jump[/Keyboard/space]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1353056767493987491}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PlayerInputHandler, Assembly-CSharp
         m_MethodName: OnGrabInput
         m_Mode: 0
@@ -126,19 +126,6 @@ MonoBehaviour:
   m_DefaultActionMap: Gameplay
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &1353056767493987491
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 16557013547266712}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f14da5371442f9498775185a268f13d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Data: {fileID: 11400000, guid: a075596a544cf4240950c7dd59045d6f, type: 2}
 --- !u!95 &5879672992432325320
 Animator:
   serializedVersion: 4
@@ -200,13 +187,13 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 4
+  m_GravityScale: 5
   m_Material: {fileID: 6200000, guid: 6601d3cd1fec93444960aabf6f4a1873, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &8127644274811106469
+--- !u!114 &3286704870696138778
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -215,13 +202,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 16557013547266712}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25875d3361b5cf446a48aff2ad5c4602, type: 3}
+  m_Script: {fileID: 11500000, guid: 6d561e23d79938048b31bb5fa10979fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Data: {fileID: 11400000, guid: a075596a544cf4240950c7dd59045d6f, type: 2}
-  m_GroundChecker: {fileID: 4233284729964781069}
-  m_WallChecker: {fileID: 4264563235534962539}
-  m_LedgeChecker: {fileID: 8871013175122695980}
+  _defaultState: {fileID: 0}
+--- !u!114 &4867245502010508884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16557013547266712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a8b3bfda16293546a0ea81988c985a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _idleState: {fileID: 0}
 --- !u!1 &740417143619336526
 GameObject:
   m_ObjectHideFlags: 0

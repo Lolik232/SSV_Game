@@ -1,93 +1,61 @@
 using System;
 
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
-public class PlayerInputHandler : MonoBehaviour
+public class PlayerInputReader : ScriptableObject
 {
-    [SerializeField] private PlayerData m_Data;
+    [SerializeField] private Camera _mainCamera;
 
-    public ValueChangingAction<int> NormInputX { get; private set; }
-    public ValueChangingAction<int> NormInputY { get; private set; }
-
-    public TimeDependentAction JumpInput { get; private set; }
-
-    public TriggerAction JumpInputHold { get; private set; }
-
-    public TriggerAction GrabInput { get; private set; }
-
-    public Player Player { get; private set; }
-
-    private void Awake()
-    {
-        Player = GetComponent<Player>();
-
-        NormInputX = new ValueChangingAction<int>();
-        NormInputY = new ValueChangingAction<int>();
-
-        JumpInput = new TimeDependentAction(m_Data.jumpInputHoldTime);
-        GrabInput = new TriggerAction();
-        JumpInputHold = new TriggerAction();
-    }
-
-    public void Start()
-    {
-        Player.StatesManager.JumpState.EnterEvent += JumpInput.Terminate;
-        Player.StatesManager.WallJumpState.EnterEvent += JumpInput.Terminate;
-    }
-
-    public void OnDestroy()
-    {
-        Player.StatesManager.JumpState.EnterEvent -= JumpInput.Terminate;
-        Player.StatesManager.WallJumpState.EnterEvent -= JumpInput.Terminate;
-
-    }
-
-    #region Move
+    public UnityAction<Vector2Int> MoveEvent = delegate { };
+    public UnityAction GrabEvent = delegate { };
+    public UnityAction GrabCanceledEvent = delegate { };
+    public UnityAction DashEvent = delegate { };
+    public UnityAction JumpEvent = delegate { };
+    public UnityAction JumpCanceledEvent = delegate { };
 
     public void OnMoveInput(InputAction.CallbackContext context)
     {
-        var rawMoveInput = context.ReadValue<Vector2>();
-
-        NormalizeMoveInputX(rawMoveInput.x);
-        NormalizeMoveInputY(rawMoveInput.y);
-    }
-
-    private void NormalizeMoveInputX(float rawMoveInputX) => NormInputX.Value = (Mathf.Abs(rawMoveInputX) > m_Data.moveInputTolerance) ? (int)(rawMoveInputX * Vector2.right).normalized.x : 0;
-    private void NormalizeMoveInputY(float rawMoveInputY) => NormInputY.Value = (Mathf.Abs(rawMoveInputY) > m_Data.moveInputTolerance) ? (int)(rawMoveInputY * Vector2.up).normalized.y : 0;
-
-    #endregion
-
-    #region Jump
-
-    public void OnJumpInput(InputAction.CallbackContext context)
-    {
-        if (context.started)
+        Vector2Int NormalizeMovementInput(Vector2 movementInput)
         {
-            JumpInput.Initiate();
-            JumpInputHold.Initiate();
+            int normInputX = Mathf.Abs(movementInput.x) > 0.5f ? (int)(movementInput * Vector2.right).normalized.x : 0;
+            int normInputY = Mathf.Abs(movementInput.y) > 0.5f ? (int)(movementInput * Vector2.right).normalized.y : 0;
+            return new Vector2Int(normInputX, normInputY);
         }
-        else if (context.canceled)
-        {
-            JumpInputHold.Terminate();
-        }
+
+        MoveEvent.Invoke(NormalizeMovementInput(context.ReadValue<Vector2>()));
     }
-
-    #endregion
-
-    #region Wall Climb/Grab
 
     public void OnGrabInput(InputAction.CallbackContext context)
     {
         if (context.started)
         {
-            GrabInput.Initiate();
+            GrabEvent.Invoke();
         }
         else if (context.canceled)
         {
-            GrabInput.Terminate();
+            GrabCanceledEvent.Invoke();
         }
     }
 
-    #endregion
+    public void OnDashInput(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            DashEvent.Invoke();
+        }
+    }
+
+    public void OnJumpInput(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed)
+        {
+            JumpEvent.Invoke();
+        }
+        else if (context.phase == InputActionPhase.Canceled)
+        {
+            JumpCanceledEvent.Invoke();
+        }
+    }
 }

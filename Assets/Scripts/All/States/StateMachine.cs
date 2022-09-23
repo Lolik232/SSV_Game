@@ -1,38 +1,34 @@
-using System;
-
 using UnityEngine;
-using UnityEngine.InputSystem.LowLevel;
 
-public class StateMachine
+public class StateMachine : MonoBehaviour
 {
-    public PlayerState CurrentState { get; private set; }
+    [SerializeField] private State _defaultState;
+    private State _currentState;
 
-
-    public event Action<PlayerState> StateEnterEvent;
-    public event Action<PlayerState> StateExitEvent;
-
-    public StateMachine(PlayerState initialState = null) => ChangeState(initialState);
-
-    public void ChangeState(PlayerState newState)
+    protected virtual void Awake()
     {
-        if (newState == null) { return; }
-        if (CurrentState != null)
-        {
-            CurrentState.Exit();
-            OnStateExit(CurrentState);
-        }
-        CurrentState = newState;
-        CurrentState.Enter();
-        OnStateEnter(CurrentState);
+        _currentState = _defaultState;
     }
 
-    protected virtual void OnStateEnter(PlayerState state)
+    protected virtual void Start()
     {
-        StateEnterEvent?.Invoke(state);
+        _currentState.OnStateEnter();
     }
 
-    protected virtual void OnStateExit(PlayerState state)
+    private void Update()
     {
-        StateExitEvent?.Invoke(state);
+        _currentState.OnUpdate();
+    }
+
+    private void FixedUpdate()
+    {
+        _currentState.OnFixedUpdate();
+    }
+
+    public void GetTransitionState(State transitionState)
+    {
+        _currentState.OnStateExit();
+        _currentState = transitionState;
+        _currentState.OnStateEnter();
     }
 }
