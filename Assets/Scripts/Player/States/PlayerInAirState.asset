@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c4641650c166954a949057bce526f3b, type: 3}
+  m_Name: PlayerInAirState
+  m_EditorClassIdentifier: 
+  _stateEnterChannel: {fileID: 11400000, guid: 71bf2cff83049444b9c4f43d90a9d8f0, type: 2}
+  _stateExitChannel: {fileID: 11400000, guid: 71bf2cff83049444b9c4f43d90a9d8f0, type: 2}
+  _animBoolName: inAir
+  _subStateEnterChannel: {fileID: 0}
+  _toLandState: {fileID: 11400000, guid: d28e4d7f8e057f947ba8de99faa2fc21, type: 2}

@@ -24,7 +24,7 @@ public class PlayerInputReader : ScriptableObject
 
     public void OnMoveInput(InputAction.CallbackContext context)
     {
-        Vector2Int NormalizeMovementInput(Vector2 movementInput)
+        static Vector2Int NormalizeMovementInput(Vector2 movementInput)
         {
             int normInputX = Mathf.Abs(movementInput.x) > 0.5f ? (int)(movementInput * Vector2.right).normalized.x : 0;
             int normInputY = Mathf.Abs(movementInput.y) > 0.5f ? (int)(movementInput * Vector2.right).normalized.y : 0;

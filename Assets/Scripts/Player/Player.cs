@@ -5,28 +5,43 @@ using All.Events;
 
 using UnityEngine;
 
-[RequireComponent(typeof(StateMachine))]
+[RequireComponent(typeof(StateMachine), typeof(Rigidbody2D))]
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private SuperStateSO _groundedState;
+    [SerializeField] private PlayerGroundedSuperStateSO _groundedState;
     [SerializeField] private SuperStateSO _touchingWallState;
-    [SerializeField] private StateSO _inAirState;
+    [SerializeField] private PlayerInAirStateSO _inAirState;
     [SerializeField] private StateSO _ledgeClimbState;
 
-    [SerializeField] private BoolEventChannelSO _groundedEventWriter;
-    [SerializeField] private BoolEventChannelSO _groundFarEventWriter;
-    [SerializeField] private BoolEventChannelSO _touchingWallEventWriter;
-    [SerializeField] private BoolEventChannelSO _touchingWallBackEventWriter;
-    [SerializeField] private BoolEventChannelSO _touchingLedgeEventWriter;
-
     private Rigidbody2D _rb;
+    private StateMachine _machine;
+    [SerializeField] private PlayerInputReader _inputReader;
 
-    [SerializeField] private IntEventChannelSO _xMoveListener;
+    [SerializeField] private Transform _groundChecker;
+    [SerializeField] private float _groundCheckRadius;
+    [SerializeField] private LayerMask _whatIsGround;
 
     private int _facingDirection;
 
-    private void CheckIfShouldFlip(int direction)
+    private Vector2Int _moveInput;
+    public Vector2Int MoveInput => _moveInput;
+
+    [SerializeField] private int _moveSpeed;
+    public int MoveSpeed => _moveSpeed;
+
+    [SerializeField] private int _inAirMoveSpeed;
+    public int InAirMoveSpeed => _inAirMoveSpeed;
+
+    private void OnMove(Vector2Int value) => _moveInput = value;
+
+    public bool CheckIfGrounded()
+    {
+        return Physics2D.OverlapCircle(_groundChecker.position, _groundCheckRadius, _whatIsGround);
+
+    }
+
+    public void CheckIfShouldFlip(int direction)
     {
         if (_facingDirection != direction && direction != 0)
         {
@@ -35,13 +50,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void OnXMove(int direction)
-    {
-        CheckIfShouldFlip(direction);
-        SetVelocityX(direction * 10);
-    }
-
-    private void SetVelocityX(int xVelocity)
+    public void SetVelocityX(float xVelocity)
     {
         var workspace = new Vector2(xVelocity, _rb.velocity.y);
         _rb.velocity = workspace;
@@ -50,18 +59,24 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
+        _machine = GetComponent<StateMachine>();
     }
 
     private void Start()
     {
         _facingDirection = 1;
-        _xMoveListener.OnEventRaised += OnXMove;
+
+        _inputReader.MoveEvent += OnMove;
+
+        _groundedState.InitializeStateMachine(_machine);
+        _inAirState.InitializeStateMachine(_machine);
+        _groundedState.InitializePlayer(this);
+        _inAirState.InitializePlayer(this);
     }
 
     private void OnDestroy()
     {
-        _xMoveListener.OnEventRaised -= OnXMove;
-
+        _inputReader.MoveEvent -= OnMove;
     }
 
     private void Update()
@@ -71,6 +86,11 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        
+        _groundedState.OnFixedUpdate();
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(_groundChecker.position, _groundCheckRadius);
     }
 }

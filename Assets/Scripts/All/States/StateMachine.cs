@@ -1,22 +1,21 @@
 using All.Events;
 
+using Unity.VisualScripting;
+
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
 
 public class StateMachine : MonoBehaviour
 {
-    [SerializeField] private StateSO _defaultState;
-    private StateSO _currentState = null;
-
-    [SerializeField] private StateChangeEventChannelSO _stateChangeListener;
+    [SerializeField] private SubStateSO _defaultState;
+    private SubStateSO _currentState = null;
 
     private Animator _anim;
 
     protected virtual void Awake()
     {
         _anim = GetComponent<Animator>();
-        _stateChangeListener.OnEventRaised += GetTransitionState;
     }
 
     protected virtual void Start()
@@ -34,7 +33,11 @@ public class StateMachine : MonoBehaviour
         _currentState.OnFixedUpdate();
     }
 
-    private void GetTransitionState(StateSO transitionState)
+    private void OnAnimationFinishTrigger() => _currentState.OnAnimationFinishTrigger();
+
+    private void OnAnimationTrigger() => _currentState.OnAnimationTrigger();
+
+    public void GetTransitionState(SubStateSO transitionState)
     {
         if (_currentState != null)
         {

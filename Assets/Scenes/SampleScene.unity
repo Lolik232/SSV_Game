@@ -37006,7 +37006,7 @@ PrefabInstance:
     - target: {fileID: 3286704870696138778, guid: 9910b7cf424e9134ea5fd433dd4bc562, type: 3}
       propertyPath: _defaultState
       value: 
-      objectReference: {fileID: 11400000, guid: 5ac490ceeb5e17046924d1124852af60, type: 2}
+      objectReference: {fileID: 11400000, guid: a4742b5862d944447b0fad724b154f28, type: 2}
     - target: {fileID: 3286704870696138778, guid: 9910b7cf424e9134ea5fd433dd4bc562, type: 3}
       propertyPath: _stateChangeListener
       value: 
@@ -37018,7 +37018,11 @@ PrefabInstance:
     - target: {fileID: 4867245502010508884, guid: 9910b7cf424e9134ea5fd433dd4bc562, type: 3}
       propertyPath: _groundedState
       value: 
-      objectReference: {fileID: 11400000, guid: 1afd0d7f23d1abe4ca0d2eaca65a1191, type: 2}
+      objectReference: {fileID: 11400000, guid: 5397b3ca08f5a924f9d5f8eceedbcebc, type: 2}
+    - target: {fileID: 4867245502010508884, guid: 9910b7cf424e9134ea5fd433dd4bc562, type: 3}
+      propertyPath: _xMoveListener
+      value: 
+      objectReference: {fileID: 11400000, guid: b93781cf8dcf88f42a6b090ef279af78, type: 2}
     - target: {fileID: 8127644274811106469, guid: 9910b7cf424e9134ea5fd433dd4bc562, type: 3}
       propertyPath: m_InputHandler
       value: 
