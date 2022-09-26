@@ -6,7 +6,6 @@ using UnityEngine;
 public class PlayerMoveStateSO : PlayerSubStateSO
 {
     [SerializeField] private PlayerIdleStateSO _toIdleState;
-    public float moveSpeed;
 
     public override void OnUpdate()
     {

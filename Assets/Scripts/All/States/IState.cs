@@ -5,13 +5,10 @@ using UnityEngine;
 
 public interface IState
 {
-    void InitializeStateMachine(StateMachine stateMachine);
-
     void OnStateEnter();
-
     void OnStateExit();
-
     void OnUpdate();
-
     void OnFixedUpdate();
+    void OnAnimationFinishTrigger();
+    void OnAnimationTrigger();
 }

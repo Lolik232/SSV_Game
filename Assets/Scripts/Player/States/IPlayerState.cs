@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IPlayerState : IState
 {
-    void InitializePlayer(Player player);
+    void Initialize(Player player, StateMachine stateMachine);
 }

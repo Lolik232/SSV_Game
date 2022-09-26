@@ -1,28 +1,32 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using All.Events;
 
 using UnityEngine;
 
 public class SubStateSO : StateSO
 {
-    [SerializeField] private string _animBoolName;
-    public string AnimBoolName => _animBoolName;
-
-    [SerializeField] private VoidEventChannelSO _subStateEnterChannel = default;
-
-    protected override void TryGetTransitionState(SubStateSO transitionState)
-    {
-        StateMachine.GetTransitionState(transitionState);
-    }
+    [SerializeField] private SuperStateSO _superState;
+    public SuperStateSO SuperState => _superState;
 
     public override void OnStateEnter()
     {
+        if (!_superState.IsActive)
+        {
+            _superState.OnStateEnter();
+        }
         base.OnStateEnter();
-        _subStateEnterChannel?.RaiseEvent();
     }
 
-    public virtual void OnAnimationFinishTrigger() { }
+    public override void OnUpdate()
+    {
+        _superState.OnUpdate();
+        base.OnUpdate();
+    }
 
-    public virtual void OnAnimationTrigger() { }
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        _superState.Add(this);
+    }
 }

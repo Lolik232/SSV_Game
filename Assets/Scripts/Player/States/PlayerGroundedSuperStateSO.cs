@@ -4,7 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "PlayerGroundedSuperState", menuName = "State Machine/States/Player/Super States/Grounded")]
 public class PlayerGroundedSuperStateSO : PlayerSuperStateSO
 {
-    private bool _isGrounded;
+    private bool _isGrounded = false;
 
     [SerializeField] private PlayerInAirStateSO _toInAirState;
 
@@ -12,11 +12,6 @@ public class PlayerGroundedSuperStateSO : PlayerSuperStateSO
     {
         base.DoChecks();
         _isGrounded = Player.CheckIfGrounded();
-    }
-
-    protected override void OnDisable()
-    {
-        base.OnDisable();
     }
 
     protected override void OnEnable()

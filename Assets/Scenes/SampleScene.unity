@@ -26033,6 +26033,11 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 6644601186762548945, guid: 49599e2648ada7a4fabc7ebaf3684995, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 49599e2648ada7a4fabc7ebaf3684995, type: 3}
+--- !u!4 &1417806866 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4233284729964781069, guid: 9910b7cf424e9134ea5fd433dd4bc562, type: 3}
+  m_PrefabInstance: {fileID: 1962410987}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1466929026
 GameObject:
   m_ObjectHideFlags: 0
@@ -37006,23 +37011,55 @@ PrefabInstance:
     - target: {fileID: 3286704870696138778, guid: 9910b7cf424e9134ea5fd433dd4bc562, type: 3}
       propertyPath: _defaultState
       value: 
-      objectReference: {fileID: 11400000, guid: a4742b5862d944447b0fad724b154f28, type: 2}
+      objectReference: {fileID: 11400000, guid: e4a73d75491eef54e847c88ab68a03e4, type: 2}
     - target: {fileID: 3286704870696138778, guid: 9910b7cf424e9134ea5fd433dd4bc562, type: 3}
       propertyPath: _stateChangeListener
       value: 
       objectReference: {fileID: 11400000, guid: 75487a906d131134891fcd8ac3af4d8a, type: 2}
+    - target: {fileID: 4233284729964781069, guid: 9910b7cf424e9134ea5fd433dd4bc562, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.05
+      objectReference: {fileID: 0}
     - target: {fileID: 4867245502010508884, guid: 9910b7cf424e9134ea5fd433dd4bc562, type: 3}
       propertyPath: _idleState
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4867245502010508884, guid: 9910b7cf424e9134ea5fd433dd4bc562, type: 3}
+      propertyPath: _moveSpeed
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4867245502010508884, guid: 9910b7cf424e9134ea5fd433dd4bc562, type: 3}
+      propertyPath: _inAirState
+      value: 
+      objectReference: {fileID: 11400000, guid: 490db7eaeaebdb94eb7aee3a32ee2448, type: 2}
+    - target: {fileID: 4867245502010508884, guid: 9910b7cf424e9134ea5fd433dd4bc562, type: 3}
+      propertyPath: _inputReader
+      value: 
+      objectReference: {fileID: 11400000, guid: 65e8862389616104686b04238f8a0641, type: 2}
+    - target: {fileID: 4867245502010508884, guid: 9910b7cf424e9134ea5fd433dd4bc562, type: 3}
+      propertyPath: _groundChecker
+      value: 
+      objectReference: {fileID: 1417806866}
+    - target: {fileID: 4867245502010508884, guid: 9910b7cf424e9134ea5fd433dd4bc562, type: 3}
       propertyPath: _groundedState
       value: 
-      objectReference: {fileID: 11400000, guid: 5397b3ca08f5a924f9d5f8eceedbcebc, type: 2}
+      objectReference: {fileID: 11400000, guid: 217e7b0773e9d1e499b3d40732057afa, type: 2}
     - target: {fileID: 4867245502010508884, guid: 9910b7cf424e9134ea5fd433dd4bc562, type: 3}
       propertyPath: _xMoveListener
       value: 
       objectReference: {fileID: 11400000, guid: b93781cf8dcf88f42a6b090ef279af78, type: 2}
+    - target: {fileID: 4867245502010508884, guid: 9910b7cf424e9134ea5fd433dd4bc562, type: 3}
+      propertyPath: _inAirMoveSpeed
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 4867245502010508884, guid: 9910b7cf424e9134ea5fd433dd4bc562, type: 3}
+      propertyPath: _groundCheckRadius
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4867245502010508884, guid: 9910b7cf424e9134ea5fd433dd4bc562, type: 3}
+      propertyPath: _whatIsGround.m_Bits
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 8127644274811106469, guid: 9910b7cf424e9134ea5fd433dd4bc562, type: 3}
       propertyPath: m_InputHandler
       value: 

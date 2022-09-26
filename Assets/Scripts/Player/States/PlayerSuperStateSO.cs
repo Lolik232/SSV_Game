@@ -8,13 +8,13 @@ public class PlayerSuperStateSO : SuperStateSO, IPlayerState
 {
     protected Player Player { get; private set; }
 
-    public void InitializePlayer(Player player)
+    public void Initialize(Player player, StateMachine stateMachine)
     {
+        Initialize(stateMachine);
         Player = player;
-        foreach (var subState in subStates.Cast<PlayerSubStateSO>())
+        foreach(var subState in subStates.Cast<PlayerSubStateSO>())
         {
-            subState.InitializePlayer(player);
+            subState.Initialize(player, stateMachine);
         }
     }
-
 }

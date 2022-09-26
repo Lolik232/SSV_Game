@@ -8,8 +8,8 @@ using UnityEngine;
 
 public class StateMachine : MonoBehaviour
 {
-    [SerializeField] private SubStateSO _defaultState;
-    private SubStateSO _currentState = null;
+    [SerializeField] private StateSO _defaultState;
+    private StateSO _currentState = null;
 
     private Animator _anim;
 
@@ -37,7 +37,7 @@ public class StateMachine : MonoBehaviour
 
     private void OnAnimationTrigger() => _currentState.OnAnimationTrigger();
 
-    public void GetTransitionState(SubStateSO transitionState)
+    public void GetTransitionState(StateSO transitionState)
     {
         if (_currentState != null)
         {

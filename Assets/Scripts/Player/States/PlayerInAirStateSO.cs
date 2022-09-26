@@ -3,16 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerInAirState", menuName = "State Machine/States/Player/Sub States/In Air")]
-public class PlayerInAirStateSO : PlayerSubStateSO
+public class PlayerInAirStateSO : PlayerStateSO
 {
     private bool _isGrounded;
 
     [SerializeField] private PlayerLandStateSO _toLandState;
-
-    public override void OnStateEnter()
-    {
-        base.OnStateEnter();
-    }
 
     protected override void DoChecks()
     {

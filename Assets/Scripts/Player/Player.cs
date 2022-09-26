@@ -68,10 +68,8 @@ public class Player : MonoBehaviour
 
         _inputReader.MoveEvent += OnMove;
 
-        _groundedState.InitializeStateMachine(_machine);
-        _inAirState.InitializeStateMachine(_machine);
-        _groundedState.InitializePlayer(this);
-        _inAirState.InitializePlayer(this);
+        _groundedState.Initialize(this, _machine);
+        _inAirState.Initialize(this, _machine);
     }
 
     private void OnDestroy()

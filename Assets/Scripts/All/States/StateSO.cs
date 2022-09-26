@@ -9,12 +9,12 @@ using UnityEngine.Events;
 
 public abstract class StateSO : ScriptableObject, IState
 {
+    [SerializeField] private string _animBoolName;
+    public string AnimBoolName => _animBoolName;
+
     protected bool isActive;
     protected float startTime;
 
-    protected List<UnityAction> onStateEnterActions = new();
-    protected List<UnityAction> actions = new();
-    protected List<UnityAction> onStateExitActions = new();
     protected List<TransitionItem> transitions = new();
 
     [SerializeField] private VoidEventChannelSO _stateEnterChannel;
@@ -24,13 +24,15 @@ public abstract class StateSO : ScriptableObject, IState
 
     protected virtual void OnEnable()
     {
+        isActive = false;
+        transitions.Clear();
     }
 
     protected virtual void OnDisable()
     {
     }
 
-    public virtual void InitializeStateMachine(StateMachine stateMachine)
+    protected virtual void Initialize(StateMachine stateMachine)
     {
         StateMachine = stateMachine;
     }
@@ -42,22 +44,12 @@ public abstract class StateSO : ScriptableObject, IState
 
         DoChecks();
 
-        foreach (var action in onStateEnterActions)
-        {
-            action();
-        }
-
         _stateEnterChannel.RaiseEvent();
     }
 
     public virtual void OnStateExit()
     {
         isActive = false;
-
-        foreach (var action in onStateExitActions)
-        {
-            action();
-        }
 
         _stateExitChannel.RaiseEvent();
     }
@@ -73,11 +65,6 @@ public abstract class StateSO : ScriptableObject, IState
                 return;
             }
         }
-
-        foreach (var action in actions)
-        {
-            action();
-        }
     }
 
     public virtual void OnFixedUpdate()
@@ -87,15 +74,19 @@ public abstract class StateSO : ScriptableObject, IState
 
     protected virtual void DoChecks() { }
 
-    protected abstract void TryGetTransitionState(SubStateSO transitionState);
+    protected virtual void TryGetTransitionState(StateSO transitionState) => StateMachine.GetTransitionState(transitionState);
+
+    public virtual void OnAnimationFinishTrigger() { }
+
+    public virtual void OnAnimationTrigger() { }
 }
 
 public struct TransitionItem
 {
-    public SubStateSO toState;
+    public StateSO toState;
     public Func<bool> condition;
 
-    public TransitionItem(SubStateSO toState, Func<bool> condition)
+    public TransitionItem(StateSO toState, Func<bool> condition)
     {
         this.toState = toState;
         this.condition = condition;

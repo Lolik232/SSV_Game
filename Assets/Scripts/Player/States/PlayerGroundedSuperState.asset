@@ -18,5 +18,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e4a73d75491eef54e847c88ab68a03e4, type: 2}
   - {fileID: 11400000, guid: d0d38fe3b05349140ba28dc83ce40cd6, type: 2}
   - {fileID: 11400000, guid: d28e4d7f8e057f947ba8de99faa2fc21, type: 2}
-  _subStateEnterChannel: {fileID: 0}
+  _subStateEnterChannel: {fileID: 11400000, guid: d3630f84e89f1d94180dba1249b33745, type: 2}
   _toInAirState: {fileID: 11400000, guid: 490db7eaeaebdb94eb7aee3a32ee2448, type: 2}

@@ -1,11 +1,9 @@
 fileFormatVersion: 2
-guid: 73ca710cf7b4b4c449ba50f14de403c1
+guid: d6e833a15b00bcd42b1dd522839051dc
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences:
-  - _stateEnterChannel: {fileID: 11400000, guid: 71bf2cff83049444b9c4f43d90a9d8f0, type: 2}
-  - _stateExitChannel: {fileID: 11400000, guid: 691012f85b1a05c4a812e6f4ba4c642c, type: 2}
+  defaultReferences: []
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

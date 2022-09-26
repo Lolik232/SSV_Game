@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7f2ad5d5bf8a9247949ffcb58173e19, type: 3}
   m_Name: PlayerIdleState
   m_EditorClassIdentifier: 
+  _animBoolName: idle
   _stateEnterChannel: {fileID: 11400000, guid: 71bf2cff83049444b9c4f43d90a9d8f0, type: 2}
   _stateExitChannel: {fileID: 11400000, guid: 71bf2cff83049444b9c4f43d90a9d8f0, type: 2}
-  _animBoolName: idle
-  _subStateEnterChannel: {fileID: 0}
+  _superState: {fileID: 11400000, guid: 217e7b0773e9d1e499b3d40732057afa, type: 2}
   _toMoveState: {fileID: 11400000, guid: d0d38fe3b05349140ba28dc83ce40cd6, type: 2}
