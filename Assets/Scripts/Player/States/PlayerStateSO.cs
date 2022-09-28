@@ -4,13 +4,14 @@ using System.Linq;
 
 using UnityEngine;
 
-public class PlayerStateSO : StateSO, IPlayerState
+public class PlayerStateSO : StateSO
 {
     protected Player Player { get; private set; }
 
-    public void Initialize(Player player, StateMachine stateMachine)
+    public void Initialize(Player player, StateMachine stateMachine, Animator animator)
     {
-        Initialize(stateMachine);
+        InitializeMachine(stateMachine);
+        InitializeAnimator(animator);
         Player = player;
     }
 }

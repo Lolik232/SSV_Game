@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 910f68a5751680743966959fe1235be4, type: 3}
+  m_Name: PlayerLandState
+  m_EditorClassIdentifier: 
+  _animBoolName: land
+  _stateEnterChannel: {fileID: 11400000, guid: 71bf2cff83049444b9c4f43d90a9d8f0, type: 2}
+  _stateExitChannel: {fileID: 11400000, guid: 691012f85b1a05c4a812e6f4ba4c642c, type: 2}
+  _superState: {fileID: 11400000, guid: 217e7b0773e9d1e499b3d40732057afa, type: 2}
+  _toMoveState: {fileID: 11400000, guid: d0d38fe3b05349140ba28dc83ce40cd6, type: 2}
+  _toIdleState: {fileID: 11400000, guid: e4a73d75491eef54e847c88ab68a03e4, type: 2}

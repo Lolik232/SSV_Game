@@ -11,27 +11,13 @@ public class StateMachine : MonoBehaviour
     [SerializeField] private StateSO _defaultState;
     private StateSO _currentState = null;
 
-    private Animator _anim;
+    protected virtual void Awake() { }
 
-    protected virtual void Awake()
-    {
-        _anim = GetComponent<Animator>();
-    }
+    protected virtual void Start() => GetTransitionState(_defaultState);
 
-    protected virtual void Start()
-    {
-        GetTransitionState(_defaultState);
-    }
+    private void Update() => _currentState.OnUpdate();
 
-    private void Update()
-    {
-        _currentState.OnUpdate();
-    }
-
-    private void FixedUpdate()
-    {
-        _currentState.OnFixedUpdate();
-    }
+    private void FixedUpdate() => _currentState.OnFixedUpdate();
 
     private void OnAnimationFinishTrigger() => _currentState.OnAnimationFinishTrigger();
 
@@ -42,11 +28,8 @@ public class StateMachine : MonoBehaviour
         if (_currentState != null)
         {
             _currentState.OnStateExit();
-            _anim.SetBool(_currentState.AnimBoolName, false);
         }
         _currentState = transitionState;
         _currentState.OnStateEnter();
-        _anim.SetBool(_currentState.AnimBoolName, true);
-
     }
 }

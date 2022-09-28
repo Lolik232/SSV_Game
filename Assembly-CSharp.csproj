@@ -57,8 +57,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\SceneManagement\ScriptableObjects\LocationSO.cs" />
+    <Compile Include="Assets\Scripts\Player\States\PlayerJumpStateSO.cs" />
     <Compile Include="Assets\Scripts\Player\States\PlayerMoveStateSO.cs" />
     <Compile Include="Assets\Scripts\All\States\StateSO.cs" />
+    <Compile Include="Assets\Scripts\Player\States\PlayerAbilityStateSO.cs" />
     <Compile Include="Assets\Scripts\All\States\SuperStateSO.cs" />
     <Compile Include="Assets\Scripts\Player\States\PlayerLandStateSO.cs" />
     <Compile Include="Assets\Scripts\Player\Data\Data.cs" />
@@ -71,7 +73,6 @@
     <Compile Include="Assets\Scripts\All\Interfaces\ISpellEffect.cs" />
     <Compile Include="Assets\Scripts\All\States\SubStateSO.cs" />
     <Compile Include="Assets\Scripts\All\Interfaces\ILiveCycle.cs" />
-    <Compile Include="Assets\Scripts\All\Events\StateChangeEventChannelSO.cs" />
     <Compile Include="Assets\Scripts\SceneManagement\LocationExit.cs" />
     <Compile Include="Assets\Scripts\SceneManagement\ScriptableObjects\MenuSO.cs" />
     <Compile Include="Assets\Scripts\SceneManagement\ScriptableObjects\ManagersSO.cs" />
@@ -86,7 +87,6 @@
     <Compile Include="Assets\Scripts\Player\Input\PlayerInputReader.cs" />
     <Compile Include="Assets\Scripts\Player\States\PlayerInAirStateSO.cs" />
     <Compile Include="Assets\Scripts\All\Interfaces\IObject.cs" />
-    <Compile Include="Assets\Scripts\Player\States\IPlayerState.cs" />
     <Compile Include="Assets\Scripts\Player\Player.cs" />
     <Compile Include="Assets\Scripts\EditorTools\EditorStartup.cs" />
     <Compile Include="Assets\Scripts\All\Events\BoolEventChannelSO.cs" />
@@ -96,13 +96,15 @@
     <Compile Include="Assets\Scripts\All\Spell\Spell.cs" />
     <Compile Include="Assets\Scripts\Player\States\PlayerStateSO.cs" />
     <Compile Include="Assets\Scripts\All\Interfaces\ILogicUpdate.cs" />
-    <Compile Include="Assets\Scripts\Player\States\PlayerAbilitySuperStateSO.cs" />
     <Compile Include="Assets\Scripts\All\Events\TypedEventChannelSO.cs" />
     <Compile Include="Assets\Scripts\All\Spell\SpellHolder.cs" />
     <Compile Include="Assets\Scripts\All\BaseClasses\BaseDescriptionSO.cs" />
     <Compile Include="Assets\Scripts\All\SpellEffects\SpellEffectHolder.cs" />
     <Compile Include="Assets\Scripts\All\Events\IntEventChannelSO.cs" />
-    <Compile Include="Assets\Scripts\All\States\IState.cs" />
+    <Compile Include="Assets\Scripts\All\States\StateBaseSO.cs" />
+    <Compile Include="Assets\Scripts\Player\States\PlayerTouchingWallSuperStateSO.cs" />
+    <Compile Include="Assets\Scripts\Player\States\PlayerWallGrabStateSO.cs" />
+    <Compile Include="Assets\Scripts\Player\States\PlayerWallSlideStateSO.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

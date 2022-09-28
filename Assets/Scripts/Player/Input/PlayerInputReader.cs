@@ -27,7 +27,7 @@ public class PlayerInputReader : ScriptableObject
         static Vector2Int NormalizeMovementInput(Vector2 movementInput)
         {
             int normInputX = Mathf.Abs(movementInput.x) > 0.5f ? (int)(movementInput * Vector2.right).normalized.x : 0;
-            int normInputY = Mathf.Abs(movementInput.y) > 0.5f ? (int)(movementInput * Vector2.right).normalized.y : 0;
+            int normInputY = Mathf.Abs(movementInput.y) > 0.5f ? (int)(movementInput * Vector2.up).normalized.y : 0;
             return new Vector2Int(normInputX, normInputY);
         }
 
@@ -60,11 +60,11 @@ public class PlayerInputReader : ScriptableObject
 
     public void OnJumpInput(InputAction.CallbackContext context)
     {
-        if (context.phase == InputActionPhase.Performed)
+        if (context.performed)
         {
             JumpEvent.Invoke();
         }
-        else if (context.phase == InputActionPhase.Canceled)
+        else if (context.canceled)
         {
             JumpCanceledEvent.Invoke();
         }

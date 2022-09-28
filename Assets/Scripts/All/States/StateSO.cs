@@ -7,89 +7,23 @@ using All.Events;
 using UnityEngine;
 using UnityEngine.Events;
 
-public abstract class StateSO : ScriptableObject, IState
+public abstract class StateSO : StateBaseSO
 {
     [SerializeField] private string _animBoolName;
-    public string AnimBoolName => _animBoolName;
 
-    protected bool isActive;
-    protected float startTime;
+    private Animator _anim;
 
-    protected List<TransitionItem> transitions = new();
-
-    [SerializeField] private VoidEventChannelSO _stateEnterChannel;
-    [SerializeField] private VoidEventChannelSO _stateExitChannel;
-
-    protected StateMachine StateMachine { get; private set; }
-
-    protected virtual void OnEnable()
+    protected override void OnEnable()
     {
-        isActive = false;
-        transitions.Clear();
+        base.OnEnable();
+        enterActions.Add(() => { _anim.SetBool(_animBoolName, true); });
+        exitActions.Add(() => { _anim.SetBool(_animBoolName, false); });
     }
 
-    protected virtual void OnDisable()
-    {
-    }
+    protected void InitializeAnimator(Animator animator) => _anim = animator;
 
-    protected virtual void Initialize(StateMachine stateMachine)
-    {
-        StateMachine = stateMachine;
-    }
-
-    public virtual void OnStateEnter()
-    {
-        isActive = true;
-        startTime = Time.time;
-
-        DoChecks();
-
-        _stateEnterChannel.RaiseEvent();
-    }
-
-    public virtual void OnStateExit()
-    {
-        isActive = false;
-
-        _stateExitChannel.RaiseEvent();
-    }
-
-    public virtual void OnUpdate()
-    {
-        foreach (var transition in transitions)
-        {
-            if (!isActive) { return; }
-            if (transition.condition())
-            {
-                TryGetTransitionState(transition.toState);
-                return;
-            }
-        }
-    }
-
-    public virtual void OnFixedUpdate()
-    {
-        DoChecks();
-    }
-
-    protected virtual void DoChecks() { }
-
-    protected virtual void TryGetTransitionState(StateSO transitionState) => StateMachine.GetTransitionState(transitionState);
-
-    public virtual void OnAnimationFinishTrigger() { }
-
-    public virtual void OnAnimationTrigger() { }
-}
-
-public struct TransitionItem
-{
-    public StateSO toState;
-    public Func<bool> condition;
-
-    public TransitionItem(StateSO toState, Func<bool> condition)
-    {
-        this.toState = toState;
-        this.condition = condition;
-    }
+    protected void SetBool(string name, bool value) => _anim.SetBool(name, value);
+    protected void SetInteger(string name, int value) => _anim.SetInteger(name, value);
+    protected void SetFloat(string name, float value) => _anim.SetFloat(name, value);
 }
 

@@ -4,17 +4,13 @@ using System.Linq;
 
 using UnityEngine;
 
-public class PlayerSuperStateSO : SuperStateSO, IPlayerState
+public class PlayerSuperStateSO : SuperStateSO
 {
     protected Player Player { get; private set; }
 
     public void Initialize(Player player, StateMachine stateMachine)
     {
-        Initialize(stateMachine);
+        InitializeMachine(stateMachine);
         Player = player;
-        foreach(var subState in subStates.Cast<PlayerSubStateSO>())
-        {
-            subState.Initialize(player, stateMachine);
-        }
     }
 }

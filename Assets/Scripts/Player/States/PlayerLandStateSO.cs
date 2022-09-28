@@ -14,13 +14,6 @@ public class PlayerLandStateSO : PlayerSubStateSO
 
     private bool _isLandFinished;
 
-    public override void OnStateEnter()
-    {
-        base.OnStateEnter();
-        Player.SetVelocityX(0f);
-        _isLandFinished = false;
-    }
-
     public override void OnAnimationFinishTrigger()
     {
         base.OnAnimationFinishTrigger();
@@ -31,6 +24,11 @@ public class PlayerLandStateSO : PlayerSubStateSO
     {
         base.OnEnable();
         transitions.Add(new TransitionItem(_toIdleState, () => _isLandFinished));
-        transitions.Add(new TransitionItem(_toMoveState, () => Player.MoveInput.x != 0));
+        transitions.Add(new TransitionItem(_toMoveState, () => Player.moveInput.x != 0));
+        enterActions.Add(() =>
+        {
+            Player.SetVelocityX(0f);
+            _isLandFinished = false;
+        });
     }
 }
