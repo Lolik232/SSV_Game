@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "PlayerJumpState", menuName = "State Machine/States/Player/Sub States/Jump")]
+[CreateAssetMenu(fileName = "PlayerJumpState", menuName = "State Machine/States/Player/Ability States/Jump")]
 
 public class PlayerJumpStateSO : PlayerAbilityStateSO
 {
@@ -15,8 +15,8 @@ public class PlayerJumpStateSO : PlayerAbilityStateSO
 
         enterActions.Add(() =>
         {
-            OnAbillityDone();
-            BlockIsGroundedTransition();
+            abilityDone = true;
+            isGroundedTransitionBlock = true;
             Player.SetVelocityY(Player.JumpForce);
             Player.jumpInput = false;
             SetBool("isJumping", true);

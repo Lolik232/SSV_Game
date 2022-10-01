@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cea7cf04d4dfa943b8b008f8fce42b7, type: 3}
   m_Name: PlayerMoveState
   m_EditorClassIdentifier: 
-  _animBoolName: move
   _stateEnterChannel: {fileID: 11400000, guid: 71bf2cff83049444b9c4f43d90a9d8f0, type: 2}
   _stateExitChannel: {fileID: 11400000, guid: 691012f85b1a05c4a812e6f4ba4c642c, type: 2}
-  _superState: {fileID: 11400000, guid: 217e7b0773e9d1e499b3d40732057afa, type: 2}
+  _animBoolName: move
+  _toInAirState: {fileID: 11400000, guid: 490db7eaeaebdb94eb7aee3a32ee2448, type: 2}
+  _toJumpState: {fileID: 11400000, guid: fff0558780526b4438beb90b9f60dd3c, type: 2}
+  _toWallGrabState: {fileID: 11400000, guid: 7617914b9bb6c004a834c51363c59b42, type: 2}
   _toIdleState: {fileID: 11400000, guid: e4a73d75491eef54e847c88ab68a03e4, type: 2}

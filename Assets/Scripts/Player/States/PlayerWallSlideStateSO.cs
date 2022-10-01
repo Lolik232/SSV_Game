@@ -4,7 +4,7 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerWallSlideState", menuName = "State Machine/States/Player/Sub States/Wall Slide")]
 
-public class PlayerWallSlideStateSO : PlayerSubStateSO
+public class PlayerWallSlideStateSO : PlayerTouchingWallStateSO
 {
     [SerializeField] private PlayerWallGrabStateSO _toWallGrabState;
 

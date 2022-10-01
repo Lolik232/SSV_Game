@@ -9,13 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7f2ad5d5bf8a9247949ffcb58173e19, type: 3}
-  m_Name: PlayerIdleState
+  m_Script: {fileID: 11500000, guid: cf4086f9a4051264599d070fff00d604, type: 3}
+  m_Name: PlayerWallClimbState
   m_EditorClassIdentifier: 
   _stateEnterChannel: {fileID: 11400000, guid: 71bf2cff83049444b9c4f43d90a9d8f0, type: 2}
-  _stateExitChannel: {fileID: 11400000, guid: 71bf2cff83049444b9c4f43d90a9d8f0, type: 2}
-  _animBoolName: idle
+  _stateExitChannel: {fileID: 11400000, guid: 691012f85b1a05c4a812e6f4ba4c642c, type: 2}
+  _animBoolName: wallClimb
+  _toIdleState: {fileID: 11400000, guid: e4a73d75491eef54e847c88ab68a03e4, type: 2}
   _toInAirState: {fileID: 11400000, guid: 490db7eaeaebdb94eb7aee3a32ee2448, type: 2}
-  _toJumpState: {fileID: 11400000, guid: fff0558780526b4438beb90b9f60dd3c, type: 2}
+  _toWallJumpState: {fileID: 11400000, guid: a3b53490c049359439ae85c3b4fcf2c4, type: 2}
   _toWallGrabState: {fileID: 11400000, guid: 7617914b9bb6c004a834c51363c59b42, type: 2}
-  _toMoveState: {fileID: 11400000, guid: d0d38fe3b05349140ba28dc83ce40cd6, type: 2}

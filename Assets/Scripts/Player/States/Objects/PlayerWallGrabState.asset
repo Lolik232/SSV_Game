@@ -15,4 +15,8 @@ MonoBehaviour:
   _stateEnterChannel: {fileID: 11400000, guid: 71bf2cff83049444b9c4f43d90a9d8f0, type: 2}
   _stateExitChannel: {fileID: 11400000, guid: 691012f85b1a05c4a812e6f4ba4c642c, type: 2}
   _animBoolName: wallGrab
-  _superState: {fileID: 11400000, guid: c0352a6c9ced6fd41aa8e810dec9aac2, type: 2}
+  _toIdleState: {fileID: 11400000, guid: e4a73d75491eef54e847c88ab68a03e4, type: 2}
+  _toInAirState: {fileID: 11400000, guid: 490db7eaeaebdb94eb7aee3a32ee2448, type: 2}
+  _toWallJumpState: {fileID: 11400000, guid: a3b53490c049359439ae85c3b4fcf2c4, type: 2}
+  _toWallSlideState: {fileID: 11400000, guid: b9f4c60c05bda3a4dbdadc3e9460c43b, type: 2}
+  _toWallClimbState: {fileID: 11400000, guid: d02b124ee9fa12c4f947b0ce0f6df895, type: 2}
