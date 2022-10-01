@@ -25429,7 +25429,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.0696203, y: 1}
+    m_SensorSize: {x: 0.7797619, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -37037,6 +37037,14 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4867245502010508884, guid: 9910b7cf424e9134ea5fd433dd4bc562, type: 3}
+      propertyPath: _endLedgeOffset.x
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4867245502010508884, guid: 9910b7cf424e9134ea5fd433dd4bc562, type: 3}
+      propertyPath: _endLedgeOffset.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4867245502010508884, guid: 9910b7cf424e9134ea5fd433dd4bc562, type: 3}
       propertyPath: _abilitySuperState
       value: 
       objectReference: {fileID: 11400000, guid: 5b63b1c6f0d52b84dbf8a6f7e52a7f68, type: 2}
@@ -37050,7 +37058,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4867245502010508884, guid: 9910b7cf424e9134ea5fd433dd4bc562, type: 3}
       propertyPath: _states.Array.size
-      value: 9
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4867245502010508884, guid: 9910b7cf424e9134ea5fd433dd4bc562, type: 3}
       propertyPath: _wallCheckDistance
@@ -37060,6 +37068,10 @@ PrefabInstance:
       propertyPath: _groundedSuperState
       value: 
       objectReference: {fileID: 11400000, guid: 217e7b0773e9d1e499b3d40732057afa, type: 2}
+    - target: {fileID: 4867245502010508884, guid: 9910b7cf424e9134ea5fd433dd4bc562, type: 3}
+      propertyPath: _startLedgeOffset.x
+      value: 0.4
+      objectReference: {fileID: 0}
     - target: {fileID: 4867245502010508884, guid: 9910b7cf424e9134ea5fd433dd4bc562, type: 3}
       propertyPath: _groundCheckDistance
       value: 0.6
@@ -37105,9 +37117,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: b9f4c60c05bda3a4dbdadc3e9460c43b, type: 2}
     - target: {fileID: 4867245502010508884, guid: 9910b7cf424e9134ea5fd433dd4bc562, type: 3}
+      propertyPath: _states.Array.data[9]
+      value: 
+      objectReference: {fileID: 11400000, guid: d053b7ebcf07adc48b4b0b1e890c4909, type: 2}
+    - target: {fileID: 4867245502010508884, guid: 9910b7cf424e9134ea5fd433dd4bc562, type: 3}
       propertyPath: _subStates.Array.size
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 4867245502010508884, guid: 9910b7cf424e9134ea5fd433dd4bc562, type: 3}
+      propertyPath: _states.Array.data[10]
+      value: 
+      objectReference: {fileID: 11400000, guid: a3e0c4c17df249640a3e321f915b07a4, type: 2}
     - target: {fileID: 4867245502010508884, guid: 9910b7cf424e9134ea5fd433dd4bc562, type: 3}
       propertyPath: _superStates.Array.size
       value: 2

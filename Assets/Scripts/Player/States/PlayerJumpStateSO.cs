@@ -19,9 +19,9 @@ public class PlayerJumpStateSO : PlayerAbilityStateSO
             isGroundedTransitionBlock = true;
             Player.SetVelocityY(Player.JumpForce);
             Player.jumpInput = false;
-            SetBool("isJumping", true);
+            SetBool("jump", true);
         });
 
-        exitActions.Add(() => { SetBool("isJumping", false); });
+        exitActions.Add(() => { SetBool("jump", false); });
     }
 }

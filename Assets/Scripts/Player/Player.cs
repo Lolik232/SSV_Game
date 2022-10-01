@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 using All.Events;
 
@@ -13,42 +14,68 @@ using UnityEngineInternal;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private List<PlayerStateSO> _states = new();
-
     private Rigidbody2D _rb;
     private StateMachine _machine;
     private Animator _animator;
-    [SerializeField] private PlayerInputReader _inputReader;
 
+    [Header("States")]
+    [SerializeField] private List<PlayerStateSO> _states = new();
+
+    [Header("Checkers")]
     [SerializeField] private Transform _groundChecker;
-    [SerializeField] private Transform _wallChecker;
-    [SerializeField] private Transform _ledgeChecker;
     [SerializeField] private float _groundCheckRadius;
     [SerializeField] private float _groundCheckDistance;
+    [SerializeField] private Transform _wallChecker;
+    [SerializeField] private Transform _ledgeChecker;
     [SerializeField] private float _wallCheckDistance;
     [SerializeField] private LayerMask _whatIsGround;
 
-    [SerializeField] private int _moveSpeed;
-    public int MoveSpeed => _moveSpeed;
+    [Header("Input")]
+    [SerializeField] private PlayerInputReaderSO _inputReader;
+    [Header("Jump Input")]
+    [SerializeField] private float _jumpInputHoldTime;
+
+    [Header("Parameters")]
     [SerializeField] private Vector2 _rbSize;
     public Vector2 RbSize => _rbSize;
+
+    [Header("Movement")]
+    [SerializeField] private int _moveSpeed;
+    public int MoveSpeed => _moveSpeed;
+
     [SerializeField] private int _inAirMoveSpeed;
     public int InAirMoveSpeed => _inAirMoveSpeed;
+
+    [Header("Jump")]
     [SerializeField] private int _jumpForce;
     public int JumpForce => _jumpForce;
+
     [SerializeField] private float _coyoteTime;
-    public float CoyoteTime => _coyoteTime;
+
+    [Header("Wall Jump")]
     [SerializeField] private int _wallJumpForce;
     public int WallJumpForce => _wallJumpForce;
+
     [SerializeField] private Vector2 _wallJumpAngle;
     public Vector2 WallJumpAngle => _wallJumpAngle;
+
     [SerializeField] private float _wallJumpTime;
     public float WallJumpTime => _wallJumpTime;
-    [SerializeField] private float _jumpInputHoldTime;
+
+    [Header("Touching Wall")]
     [SerializeField] private int _wallSlideSpeed;
     public int WallSlideSpeed => _wallSlideSpeed;
+
     [SerializeField] private int _wallClimbSpeed;
     public int WallClimbSpeed => _wallClimbSpeed;
+
+    [Header("On Ledge")]
+    [SerializeField] private Vector2 _startLedgeOffset;
+    public Vector2 StartLedgeOffset => _startLedgeOffset; 
+
+    [SerializeField] private Vector2 _endLedgeOffset;
+    public Vector2 EndLedgeOffset => _endLedgeOffset;
+
     public Vector2 Velocity => _rb.velocity;
 
     [NonSerialized] public int facingDirection = 1;
@@ -72,6 +99,8 @@ public class Player : MonoBehaviour
 
     [NonSerialized] public Vector2 wallPosition;
     [NonSerialized] public Vector2 cornerPosition;
+    [NonSerialized] public Vector2 ledgeStartPosition;
+    [NonSerialized] public Vector2 ledgeEndPosition;
 
     private void OnMove(Vector2Int value) => moveInput = value;
     private void OnJump()
@@ -115,9 +144,13 @@ public class Player : MonoBehaviour
     }
     private void CheckIfTouchingLedge()
     {
-        RaycastHit2D hit = Physics2D.Raycast(new Vector2(wallPosition.x, _ledgeChecker.position.y), Vector2.down, _ledgeChecker.position.y - _wallChecker.position.y, _whatIsGround);
+        isTouchingLedge = Physics2D.Raycast(_ledgeChecker.position, facingDirection * Vector2.right, _wallCheckDistance, _whatIsGround);
+    }
+
+    private void DeterminCornerPosition()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(new Vector2(wallPosition.x + 0.01f * facingDirection, _ledgeChecker.position.y), Vector2.down, _ledgeChecker.position.y - _wallChecker.position.y, _whatIsGround);
         if (hit) { cornerPosition = new Vector2(wallPosition.x, _ledgeChecker.position.y - hit.distance); }
-        isTouchingLedge = hit;
     }
 
     public void CheckIfShouldFlip(int direction)
@@ -140,6 +173,11 @@ public class Player : MonoBehaviour
     {
         transform.position = holdPosition;
         _rb.velocity = Vector2.zero;
+    }
+
+    public bool CanMoveTo(Vector2 position)
+    {
+        return !Physics2D.OverlapBox(new Vector2(position.x, position.y + 1f), RbSize, 0, _whatIsGround);
     }
 
     private void Awake()
@@ -183,12 +221,19 @@ public class Player : MonoBehaviour
         CheckIfGrounded();
         CheckIfGroundClose();
         CheckIfTouchingWall();
-        CheckIfTouchingWallBack();
         CheckIfTouchingLedge();
+        CheckIfTouchingWallBack();
+        if (isTouchingWall && !isTouchingLedge && !isGroundClose)
+        {
+            DeterminCornerPosition();
+        }
     }
 
     private void OnDrawGizmos()
     {
+        Gizmos.DrawWireCube(new Vector2(transform.position.x, transform.position.y + 1f), RbSize);
+        Gizmos.DrawWireCube(new Vector2(ledgeEndPosition.x, ledgeEndPosition.y + 1f), RbSize);
+        Gizmos.DrawWireCube(new Vector2(ledgeStartPosition.x, ledgeStartPosition.y + 1f), RbSize);
         Gizmos.DrawWireSphere(_groundChecker.position, _groundCheckRadius);
         Gizmos.DrawLine(_groundChecker.position, new Vector2(_groundChecker.position.x, _groundChecker.position.y - _groundCheckDistance));
         Gizmos.DrawLine(_wallChecker.position, new Vector2(_wallChecker.position.x + facingDirection * _wallCheckDistance, _wallChecker.position.y));

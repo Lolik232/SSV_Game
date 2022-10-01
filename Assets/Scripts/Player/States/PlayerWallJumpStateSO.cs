@@ -21,15 +21,15 @@ public class PlayerWallJumpStateSO : PlayerAbilityStateSO
             Player.CheckIfShouldFlip(Player.wallDirection);
             Player.jumpInput = false;
             Player.wallJump = true;
-            SetBool("isJumping", true);
+            SetBool("jump", true);
         });
 
         updateActions.Add(() =>
         {
-            abilityDone = !Player.isTouchingWall && !Player.isTouchingWallBack;
+            abilityDone = Player.isTouchingWall == Player.isTouchingWallBack;
         });
 
-        exitActions.Add(() => { SetBool("isJumping", false); });
+        exitActions.Add(() => { SetBool("jump", false); });
     }
 }
 

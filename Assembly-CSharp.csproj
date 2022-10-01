@@ -83,12 +83,11 @@
     <Compile Include="Assets\Scripts\All\Events\VoidEventChannelSO.cs" />
     <Compile Include="Assets\Scripts\Player\States\PlayerGroundedStateSO.cs" />
     <Compile Include="Assets\Scripts\All\Events\FadeChannelSO.cs" />
-    <Compile Include="Assets\Scripts\Player\Input\PlayerInputReader.cs" />
+    <Compile Include="Assets\Scripts\Player\Input\PlayerInputReaderSO.cs" />
     <Compile Include="Assets\Scripts\Player\States\PlayerInAirStateSO.cs" />
     <Compile Include="Assets\Scripts\All\Interfaces\IObject.cs" />
     <Compile Include="Assets\Scripts\Player\Player.cs" />
     <Compile Include="Assets\Scripts\Player\States\PlayerTouchingWallStateSO.cs" />
-    <Compile Include="Assets\Scripts\EditorTools\EditorStartup.cs" />
     <Compile Include="Assets\Scripts\All\Events\BoolEventChannelSO.cs" />
     <Compile Include="Assets\Scripts\Player\States\PlayerIdleStateSO.cs" />
     <Compile Include="Assets\Scripts\All\Spell\SpellsLiveCycle\TimeLiveCycle.cs" />
@@ -102,6 +101,9 @@
     <Compile Include="Assets\Scripts\All\BaseClasses\BaseDescriptionSO.cs" />
     <Compile Include="Assets\Scripts\All\SpellEffects\SpellEffectHolder.cs" />
     <Compile Include="Assets\Scripts\All\Events\IntEventChannelSO.cs" />
+    <Compile Include="Assets\Scripts\Player\States\PlayerLedgeHoldStateSO.cs" />
+    <Compile Include="Assets\Scripts\Player\States\PlayerLedgeClimbStateSO.cs" />
+    <Compile Include="Assets\Scripts\Player\States\PlayerOnLedgeStateSO.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

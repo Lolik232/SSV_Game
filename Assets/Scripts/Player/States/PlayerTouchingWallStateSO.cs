@@ -8,6 +8,7 @@ public class PlayerTouchingWallStateSO : PlayerStateSO
     [SerializeField] private PlayerIdleStateSO _toIdleState;
     [SerializeField] private PlayerInAirStateSO _toInAirState;
     [SerializeField] private PlayerWallJumpStateSO _toWallJumpState;
+    [SerializeField] private PlayerLedgeHoldStateSO _toLedgeHoldState;
 
     protected override void OnEnable()
     {
@@ -16,6 +17,8 @@ public class PlayerTouchingWallStateSO : PlayerStateSO
         transitions.Add(new TransitionItem(_toWallJumpState, () => !Player.isTouchingWallBack && Player.jumpInput));
         transitions.Add(new TransitionItem(_toIdleState, () => Player.isGrounded && (!Player.grabInput || !Player.isTouchingWall)));
         transitions.Add(new TransitionItem(_toInAirState, () => !Player.isTouchingWall || (Player.moveInput.x != Player.facingDirection && !Player.grabInput)));
+        transitions.Add(new TransitionItem(_toLedgeHoldState, () => Player.isTouchingWall && !Player.isTouchingLedge && !Player.isGroundClose));
+
 
         enterActions.Add(() =>
         {

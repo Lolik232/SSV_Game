@@ -20,3 +20,4 @@ MonoBehaviour:
   _toWallSlideState: {fileID: 11400000, guid: b9f4c60c05bda3a4dbdadc3e9460c43b, type: 2}
   _toJumpState: {fileID: 11400000, guid: fff0558780526b4438beb90b9f60dd3c, type: 2}
   _toWallJumpState: {fileID: 11400000, guid: a3b53490c049359439ae85c3b4fcf2c4, type: 2}
+  _toLedgeHoldState: {fileID: 11400000, guid: a3e0c4c17df249640a3e321f915b07a4, type: 2}
