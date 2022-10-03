@@ -16,8 +16,8 @@ public class PlayerWallGrabStateSO : PlayerTouchingWallStateSO
     {
         base.OnEnable();
 
-        transitions.Add(new TransitionItem(_toWallClimbState, () => Player.moveInput.y > 0f));
-        transitions.Add(new TransitionItem(_toWallSlideState, () => Player.moveInput.y < 0f || !Player.grabInput));
+        transitions.Add(new TransitionItem(_toWallClimbState, () => Player.moveInput.y > 0));
+        transitions.Add(new TransitionItem(_toWallSlideState, () => Player.moveInput.y < 0 || !Player.grabInput));
 
         enterActions.Add(() =>
         {

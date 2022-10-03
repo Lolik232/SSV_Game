@@ -23,5 +23,10 @@ public class PlayerAbilityStateSO : PlayerStateSO
             isGroundedTransitionBlock = false;
             abilityDone = false;
         });
+
+        checks.Add(() =>
+        {
+            Player.CheckIfGrounded();
+        });
     }
 }

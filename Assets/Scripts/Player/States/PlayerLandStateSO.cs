@@ -11,6 +11,7 @@ public class PlayerLandStateSO : PlayerGroundedStateSO
 {
     [SerializeField] private PlayerMoveStateSO _toMoveState;
     [SerializeField] private PlayerIdleStateSO _toIdleState;
+    [SerializeField] private PlayerCrouchIdleStateSO _toCrouchIdleState;
 
     private bool _isLandFinished;
 
@@ -19,6 +20,7 @@ public class PlayerLandStateSO : PlayerGroundedStateSO
         base.OnEnable();
 
         transitions.Add(new TransitionItem(_toIdleState, () => _isLandFinished));
+        transitions.Add(new TransitionItem(_toCrouchIdleState, () => Player.moveInput.y < 0));
         transitions.Add(new TransitionItem(_toMoveState, () => Player.moveInput.x != 0));
 
         enterActions.Add(() =>

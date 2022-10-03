@@ -21,6 +21,7 @@ public class PlayerWallJumpStateSO : PlayerAbilityStateSO
             Player.CheckIfShouldFlip(Player.wallDirection);
             Player.jumpInput = false;
             Player.wallJump = true;
+            Player.jumpStartTime = startTime;
             SetBool("jump", true);
         });
 
@@ -30,6 +31,12 @@ public class PlayerWallJumpStateSO : PlayerAbilityStateSO
         });
 
         exitActions.Add(() => { SetBool("jump", false); });
+
+        checks.Add(() =>
+        {
+            Player.CheckIfTouchingWall();
+            Player.CheckIfTouchingWallBack();
+        });
     }
 }
 

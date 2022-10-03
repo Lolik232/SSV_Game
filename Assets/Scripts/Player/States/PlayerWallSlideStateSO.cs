@@ -12,7 +12,7 @@ public class PlayerWallSlideStateSO : PlayerTouchingWallStateSO
     {
         base.OnEnable();
 
-        transitions.Add(new TransitionItem(_toWallGrabState, () => Player.moveInput.y >= 0f && Player.grabInput));
+        transitions.Add(new TransitionItem(_toWallGrabState, () => Player.moveInput.y >= 0 && Player.grabInput));
 
         updateActions.Add(() => { Player.SetVelocityY(-Player.WallSlideSpeed); });
     }

@@ -80,11 +80,13 @@
     <Compile Include="Assets\Scripts\All\States\StateMachine.cs" />
     <Compile Include="Assets\Scripts\All\Interfaces\IPhysicsUpdate.cs" />
     <Compile Include="Assets\Scripts\All\Interfaces\ISpellEffectVisitor.cs" />
+    <Compile Include="Assets\Scripts\Player\States\PlayerLedgeClimbStateSO.cs" />
     <Compile Include="Assets\Scripts\All\Events\VoidEventChannelSO.cs" />
     <Compile Include="Assets\Scripts\Player\States\PlayerGroundedStateSO.cs" />
     <Compile Include="Assets\Scripts\All\Events\FadeChannelSO.cs" />
     <Compile Include="Assets\Scripts\Player\Input\PlayerInputReaderSO.cs" />
     <Compile Include="Assets\Scripts\Player\States\PlayerInAirStateSO.cs" />
+    <Compile Include="Assets\Scripts\Player\States\PlayerLedgeHoldStateSO.cs" />
     <Compile Include="Assets\Scripts\All\Interfaces\IObject.cs" />
     <Compile Include="Assets\Scripts\Player\Player.cs" />
     <Compile Include="Assets\Scripts\Player\States\PlayerTouchingWallStateSO.cs" />
@@ -92,6 +94,7 @@
     <Compile Include="Assets\Scripts\Player\States\PlayerIdleStateSO.cs" />
     <Compile Include="Assets\Scripts\All\Spell\SpellsLiveCycle\TimeLiveCycle.cs" />
     <Compile Include="Assets\Scripts\All\SaveSystem\SerializableScriptableObject.cs" />
+    <Compile Include="Assets\Scripts\Player\States\PlayerCrouchIdleStateSO.cs" />
     <Compile Include="Assets\Scripts\All\Spell\Spell.cs" />
     <Compile Include="Assets\Scripts\Player\States\PlayerStateSO.cs" />
     <Compile Include="Assets\Scripts\All\Interfaces\ILogicUpdate.cs" />
@@ -101,9 +104,7 @@
     <Compile Include="Assets\Scripts\All\BaseClasses\BaseDescriptionSO.cs" />
     <Compile Include="Assets\Scripts\All\SpellEffects\SpellEffectHolder.cs" />
     <Compile Include="Assets\Scripts\All\Events\IntEventChannelSO.cs" />
-    <Compile Include="Assets\Scripts\Player\States\PlayerLedgeHoldStateSO.cs" />
-    <Compile Include="Assets\Scripts\Player\States\PlayerLedgeClimbStateSO.cs" />
-    <Compile Include="Assets\Scripts\Player\States\PlayerOnLedgeStateSO.cs" />
+    <Compile Include="Assets\Scripts\Player\States\PlayerCrouchMoveStateSO.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

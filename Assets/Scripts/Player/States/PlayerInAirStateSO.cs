@@ -19,9 +19,9 @@ public class PlayerInAirStateSO : PlayerStateSO
 
         transitions.Add(new TransitionItem(_toLandState, () => Player.isGrounded && Player.Velocity.y < 0.01f));
         transitions.Add(new TransitionItem(_toLedgeHoldState, () => Player.isTouchingWall && !Player.isTouchingLedge && !Player.isGroundClose));
-        transitions.Add(new TransitionItem(_toWallJumpState, () => ((Player.isTouchingWall ^ Player.isTouchingWallBack) || Player.wallJumpCoyoteTime) && Player.jumpInput));
         transitions.Add(new TransitionItem(_toJumpState, () => Player.jumpCoyoteTime && Player.jumpInput));
-        transitions.Add(new TransitionItem(_toWallGrabState, () => Player.isTouchingWall && Player.grabInput));
+        transitions.Add(new TransitionItem(_toWallJumpState, () => ((Player.isTouchingWall ^ Player.isTouchingWallBack) || Player.wallJumpCoyoteTime) && Player.jumpInput));
+        transitions.Add(new TransitionItem(_toWallGrabState, () => Player.isTouchingWall && Player.isTouchingLedge && Player.grabInput));
         transitions.Add(new TransitionItem(_toWallSlideState, () => Player.isTouchingWall && Player.moveInput.x == Player.facingDirection && Player.Velocity.y <= 0f));
 
         updateActions.Add(() =>
@@ -33,6 +33,19 @@ public class PlayerInAirStateSO : PlayerStateSO
             }
             SetFloat("xVelocity", Player.Velocity.x);
             SetFloat("yVelocity", Player.Velocity.y);
+        });
+
+        checks.Add(() =>
+        {
+            Player.CheckIfGrounded();
+            Player.CheckIfGroundClose();
+            Player.CheckIfTouchingWall();
+            Player.CheckIfTouchingWallBack();
+            Player.CheckIfTouchingLedge();
+            if (Player.isTouchingWall && !Player.isTouchingLedge && !Player.isGroundClose)
+            {
+                Player.DeterminCornerPosition();
+            }
         });
     }
 }

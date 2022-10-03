@@ -22,9 +22,6 @@ public abstract class StateSO : ScriptableObject
     protected List<UnityAction> animationActions = new();
     protected List<UnityAction> checks = new();
 
-    [SerializeField] private VoidEventChannelSO _stateEnterChannel;
-    [SerializeField] private VoidEventChannelSO _stateExitChannel;
-
     private Animator _anim;
     private StateMachine _machine;
 
@@ -33,8 +30,17 @@ public abstract class StateSO : ScriptableObject
         _isActive = false;
         transitions.Clear();
         updateActions.Clear();
-        enterActions = new List<UnityAction> { () => { _isActive = true; startTime = Time.time; _anim.SetBool(_animBoolName, true); } };
-        exitActions = new List<UnityAction> { () => { _isActive = false; _anim.SetBool(_animBoolName, false); } };
+        enterActions = new List<UnityAction> { () =>
+        {
+            _isActive = true;
+            startTime = Time.time;
+            _anim.SetBool(_animBoolName, true);
+        } };
+        exitActions = new List<UnityAction> { () => 
+        { 
+            _isActive = false; 
+            _anim.SetBool(_animBoolName, false); 
+        } };
         animationFinishActions.Clear();
         animationActions.Clear();
         checks.Clear();
@@ -47,14 +53,12 @@ public abstract class StateSO : ScriptableObject
         if (_isActive) { return; }
         foreach (var action in enterActions) { action(); }
         foreach (var check in checks) { check(); }
-        _stateEnterChannel.RaiseEvent();
     }
 
     public void OnStateExit()
     {
         if (!_isActive) { return; }
         foreach (var action in exitActions) { action(); }
-        _stateExitChannel.RaiseEvent();
     }
 
     public void OnUpdate()
@@ -64,6 +68,7 @@ public abstract class StateSO : ScriptableObject
         {
             if (transition.condition())
             {
+                transition.action?.Invoke();
                 _machine.GetTransitionState(transition.toState);
                 return;
             }
@@ -99,11 +104,12 @@ public struct TransitionItem
 {
     public StateSO toState;
     public Func<bool> condition;
-
-    public TransitionItem(StateSO toState, Func<bool> condition)
+    public UnityAction action;
+    public TransitionItem(StateSO toState, Func<bool> condition, UnityAction action = null)
     {
         this.toState = toState;
         this.condition = condition;
+        this.action = action;
     }
 }
 

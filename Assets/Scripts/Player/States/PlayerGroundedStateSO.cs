@@ -10,13 +10,23 @@ public class PlayerGroundedStateSO : PlayerStateSO
     {
         base.OnEnable();
 
-        transitions.Add(new TransitionItem(_toJumpState, () => Player.jumpInput));
-        transitions.Add(new TransitionItem(_toInAirState, () => !Player.isGrounded));
-        transitions.Add(new TransitionItem(_toWallGrabState, () => Player.isTouchingWall && Player.grabInput));
-
-        exitActions.Add(()=>
+        transitions.Add(new TransitionItem(_toJumpState, () => Player.jumpInput && !Player.isTouchingCeiling));
+        transitions.Add(new TransitionItem(_toInAirState, () => !Player.isGrounded, () =>
         {
-            Player.jumpCoyoteTime = !Player.isGrounded && !Player.jumpInput;
+            if (Player.isTouchingCeiling)
+            {
+                Player.MoveToY(Player.transform.position.y - (Player.StandSize.y - Player.CrouchSize.y));
+            }
+            Player.jumpCoyoteTime = true;
+            Player.coyoteTimeStart = Time.time;
+        }));
+        transitions.Add(new TransitionItem(_toWallGrabState, () => Player.isTouchingWall && Player.isTouchingLedge && !Player.isTouchingCeiling && Player.grabInput));
+
+        checks.Add(() =>
+        {
+            Player.CheckIfGrounded();
+            Player.CheckIfTouchingWall();
+            Player.CheckIfTouchingCeiling();
         });
     }
 }

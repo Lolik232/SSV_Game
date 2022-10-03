@@ -218,7 +218,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a8b3bfda16293546a0ea81988c985a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _idleState: {fileID: 0}
+  _states: []
+  _groundChecker: {fileID: 0}
+  _ceilingChecker: {fileID: 0}
+  _groundCheckRadius: 0
+  _groundCheckDistance: 0
+  _wallChecker: {fileID: 0}
+  _ledgeChecker: {fileID: 0}
+  _wallCheckDistance: 0
+  _whatIsGround:
+    serializedVersion: 2
+    m_Bits: 0
+  _inputReader: {fileID: 0}
+  _jumpInputHoldTime: 0
+  _moveSpeed: 0
+  _crouchMoveSpeed: 0
+  _inAirMoveSpeed: 0
+  _jumpForce: 0
+  _coyoteTime: 0
+  _wallJumpForce: 0
+  _wallJumpAngle: {x: 0, y: 0}
+  _wallJumpTime: 0
+  _wallSlideSpeed: 0
+  _wallClimbSpeed: 0
+  _startLedgeOffset: {x: 0, y: 0}
+  _endLedgeOffset: {x: 0, y: 0}
+  _standOffset: {x: 0, y: 0}
+  _standSize: {x: 0, y: 0}
+  _crouchOffset: {x: 0, y: 0}
+  _crouchSize: {x: 0, y: 0}
 --- !u!1 &740417143619336526
 GameObject:
   m_ObjectHideFlags: 0
@@ -249,6 +277,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5440133661442196936}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1615050422136732083
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3668054668261396430}
+  m_Layer: 6
+  m_Name: CeilingChecker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3668054668261396430
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1615050422136732083}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5440133661442196936}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1699709680403585125
 GameObject:
@@ -365,6 +424,8 @@ Transform:
   - {fileID: 4233284729964781069}
   - {fileID: 4264563235534962539}
   - {fileID: 8871013175122695980}
+  - {fileID: 3668054668261396430}
+  - {fileID: 1062502816353513095}
   m_Father: {fileID: 31484021258618762}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -398,6 +459,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5440133661442196936}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7671044070861701189
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1062502816353513095}
+  m_Layer: 6
+  m_Name: StairChecker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1062502816353513095
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7671044070861701189}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5440133661442196936}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7830743831076806863
 GameObject:
@@ -531,7 +623,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7865728278067164518, guid: 203807e4e054202458777cc82b3e8db2, type: 3}
       propertyPath: m_Bounds.m_Center.y
-      value: -0.000423342
+      value: -0.00042524934
       objectReference: {fileID: 0}
     - target: {fileID: 8277587143324664014, guid: 203807e4e054202458777cc82b3e8db2, type: 3}
       propertyPath: m_Bounds.m_Center.x
