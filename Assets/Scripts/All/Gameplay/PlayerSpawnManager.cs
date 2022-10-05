@@ -10,9 +10,8 @@ namespace All.Gameplay
 
         [Header("Broadcasting")]
         [SerializeField] private VoidEventChannelSO m_onSceneReadyChan = default;
-
+        [SerializeField] private TransformEventChannel m_transformEventChannel = default;
         [SerializeField] private Transform m_defaultSpawnPoint = default;
-
 
         private void Awake()
         {
@@ -35,6 +34,8 @@ namespace All.Gameplay
         {
             Transform spawnLocation = m_defaultSpawnPoint;
             Player playerInstance = Instantiate(m_playerPrefab, spawnLocation.position, spawnLocation.rotation);
+
+            m_transformEventChannel.RaiseEvent(playerInstance.transform);
             
             //TODO: send message to PlayerSpawnedChannel for enable input, UI etc.
         }

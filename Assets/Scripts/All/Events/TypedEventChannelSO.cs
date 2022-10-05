@@ -1,9 +1,11 @@
-﻿using All.BaseClasses;
+﻿using System;
+using All.BaseClasses;
+using All.Interfaces.Channel;
 using UnityEngine.Events;
 
 namespace All.Events
 {
-    public class TypedEventChannelSO<T> : BaseDescriptionSO
+    public class TypedEventChannelSO<T> : BaseDescriptionSO,IReadChannel<T>, IWriteChannel<T>
     {
         public event UnityAction<T> OnEventRaised = default;
 
@@ -13,7 +15,7 @@ namespace All.Events
         }
     }
 
-    public class TypedEventChannelSO<T1, T2> : BaseDescriptionSO
+    public class TypedEventChannelSO<T1, T2> : BaseDescriptionSO,IReadChannel<T1,T2>, IWriteChannel<T1,T2>
     {
         public event UnityAction<T1, T2> OnEventRaised = default;
 
@@ -23,7 +25,7 @@ namespace All.Events
         }
     }
 
-    public class TypedEventChannelSO<T1, T2, T3> : BaseDescriptionSO
+    public class TypedEventChannelSO<T1, T2, T3> : BaseDescriptionSO, IReadChannel<T1,T2,T3>, IWriteChannel<T1,T2,T3>
     {
         public event UnityAction<T1, T2, T3> OnEventRaised = default;
 
@@ -34,7 +36,7 @@ namespace All.Events
     }
 
 
-    public class EventChannelSO : BaseDescriptionSO
+    public class EventChannelSO : BaseDescriptionSO,IReadChannel, IWriteChannel
     {
         public event UnityAction OnEventRaised;
 

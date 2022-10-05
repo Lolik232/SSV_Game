@@ -110,6 +110,11 @@
      <Compile Include="Assets\Scripts\Player\PlayerAbilities\PlayerWallClimbAbility.cs" />
      <Compile Include="Assets\Scripts\All\States\StateMachine.cs" />
      <Compile Include="Assets\Scripts\SceneManagement\ScriptableObjects\ManagersSO.cs" />
+     <Compile Include="Assets\Scripts\All\Interfaces\Channel\IReadChannel.cs" />
+     <Compile Include="Assets\Scripts\All\Interfaces\Channel\IWriteChannel.cs" />
+     <Compile Include="Assets\Scripts\All\Interfaces\Channel\IChannel.cs" />
+     <Compile Include="Assets\Scripts\All\Events\TransformEventChannel.cs" />
+     <Compile Include="Assets\Scripts\Player\Camera\CameraManager.cs" />
      <Reference Include="UnityEngine">
      <HintPath>D:\Unity\UnityIntall\2021.3.8f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
      </Reference>

@@ -78,7 +78,7 @@ namespace SceneManagement
 #endif
         }
 
-
+        
         private void LoadLocation(GameSceneSO scene, bool showLoadingScreen, bool fadeScreen)
         {
             if (m_isLoading) { return; } // if scene just loading
