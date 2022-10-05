@@ -78,4 +78,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_playerPrefab: {fileID: 8127644274811106469, guid: 9910b7cf424e9134ea5fd433dd4bc562, type: 3}
   m_onSceneReadyChan: {fileID: 11400000, guid: c78296a871062f34e9879fa67fe14abd, type: 2}
+  m_transformEventChannel: {fileID: 11400000, guid: 4d7eb21ddd8805749aba73e1ba9b84e0, type: 2}
   m_defaultSpawnPoint: {fileID: 0}
