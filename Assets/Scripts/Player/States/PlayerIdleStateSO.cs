@@ -16,6 +16,9 @@ public class PlayerIdleStateSO : PlayerGroundedStateSO
         transitions.Add(new TransitionItem(_toCrouchIdleState, () => Player.moveInput.y < 0));
         transitions.Add(new TransitionItem(_toMoveState, () => Player.moveInput.x != 0));
 
-        enterActions.Add(() => { Player.SetVelocityZero(); });
+        enterActions.Add(() =>
+        {
+            Player.SetVelocityZero();
+        });
     }
 }

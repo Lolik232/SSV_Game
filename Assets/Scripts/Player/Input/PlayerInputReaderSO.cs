@@ -4,15 +4,20 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
+using static UnityEngine.RuleTile.TilingRuleOutput;
+
 [CreateAssetMenu(fileName = "PlayerInputReader", menuName = "Player/Input/Reader")]
 public class PlayerInputReaderSO : ScriptableObject
 {
+    private PlayerInput _playerInput;
+
     private Camera _mainCamera;
+    private Vector2 _dashInput;
 
     public UnityAction<Vector2Int> MoveEvent = delegate { };
     public UnityAction GrabEvent = delegate { };
     public UnityAction GrabCanceledEvent = delegate { };
-    public UnityAction DashEvent = delegate { };
+    public UnityAction<Vector2> DashEvent = delegate { };
     public UnityAction DashCanceledEvent = delegate { };
     public UnityAction JumpEvent = delegate { };
     public UnityAction JumpCanceledEvent = delegate { };
@@ -20,6 +25,11 @@ public class PlayerInputReaderSO : ScriptableObject
     private void OnEnable()
     {
         _mainCamera = Camera.main;
+    }
+
+    public void InitializePlayerInput(PlayerInput playerInput)
+    {
+        _playerInput = playerInput;
     }
 
     public void OnMoveInput(InputAction.CallbackContext context)
@@ -50,11 +60,19 @@ public class PlayerInputReaderSO : ScriptableObject
     {
         if (context.started)
         {
-            DashEvent.Invoke();
+            DashEvent.Invoke(_dashInput);
         }
         else if (context.canceled)
         {
             DashCanceledEvent.Invoke();
+        }
+    }
+
+    public void OnDashDirectionInput(InputAction.CallbackContext context)
+    {
+        if (_playerInput.currentControlScheme == "Keyboard")
+        {
+            _dashInput = _mainCamera.ScreenToWorldPoint((Vector3)context.ReadValue<Vector2>());
         }
     }
 

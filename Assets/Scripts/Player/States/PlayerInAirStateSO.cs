@@ -12,6 +12,8 @@ public class PlayerInAirStateSO : PlayerStateSO
     [SerializeField] private PlayerJumpStateSO _toJumpState;
     [SerializeField] private PlayerWallJumpStateSO _toWallJumpState;
     [SerializeField] private PlayerLedgeHoldStateSO _toLedgeHoldState;
+    [SerializeField] private PlayerDashStateSO _toDashState;
+
 
     protected override void OnEnable()
     {
@@ -21,12 +23,18 @@ public class PlayerInAirStateSO : PlayerStateSO
         transitions.Add(new TransitionItem(_toLedgeHoldState, () => Player.isTouchingWall && !Player.isTouchingLedge && !Player.isGroundClose));
         transitions.Add(new TransitionItem(_toJumpState, () => Player.jumpCoyoteTime && Player.jumpInput));
         transitions.Add(new TransitionItem(_toWallJumpState, () => ((Player.isTouchingWall ^ Player.isTouchingWallBack) || Player.wallJumpCoyoteTime) && Player.jumpInput));
+        transitions.Add(new TransitionItem(_toDashState, () => Player.dashDirection != Vector2.zero && Player.dashInput && Player.canDash));
         transitions.Add(new TransitionItem(_toWallGrabState, () => Player.isTouchingWall && Player.isTouchingLedge && Player.grabInput));
         transitions.Add(new TransitionItem(_toWallSlideState, () => Player.isTouchingWall && Player.moveInput.x == Player.facingDirection && Player.Velocity.y <= 0f));
 
         updateActions.Add(() =>
         {
             Player.CheckIfShouldFlip(Player.moveInput.x);
+            if (Player.jump && !Player.jumpInputHold && Player.Velocity.y > 0f)
+            {
+                Player.SetVelocityY(Player.Velocity.y * 0.5f);
+                Player.jump = false;
+            }
             if (!Player.wallJump)
             {
                 Player.SetVelocityX(Player.moveInput.x * Player.InAirMoveSpeed);

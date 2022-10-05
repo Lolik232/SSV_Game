@@ -10,6 +10,8 @@ using UnityEngine;
 
 public class PlayerWallJumpStateSO : PlayerAbilityStateSO
 {
+    private float _wallJumpTimeLimit = 0.1f;
+
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -22,21 +24,23 @@ public class PlayerWallJumpStateSO : PlayerAbilityStateSO
             Player.jumpInput = false;
             Player.wallJump = true;
             Player.jumpStartTime = startTime;
-            SetBool("jump", true);
         });
 
         updateActions.Add(() =>
         {
-            abilityDone = Player.isTouchingWall == Player.isTouchingWallBack;
+            abilityDone = (!Player.isTouchingWall && !Player.isTouchingWallBack) || isWallJumpTimeLimitExceeded();
         });
-
-        exitActions.Add(() => { SetBool("jump", false); });
 
         checks.Add(() =>
         {
             Player.CheckIfTouchingWall();
             Player.CheckIfTouchingWallBack();
         });
+    }
+
+    private bool isWallJumpTimeLimitExceeded()
+    {
+        return Time.time >= startTime + _wallJumpTimeLimit;
     }
 }
 

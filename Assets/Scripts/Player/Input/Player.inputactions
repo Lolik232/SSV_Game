@@ -35,7 +35,7 @@
                 {
                     "name": "Dash",
                     "type": "Button",
-                    "id": "1a2f3b3a-c5bf-4b5e-97b7-e261c5106922",
+                    "id": "4ad294ea-429e-437f-b346-31e596a047bb",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -44,7 +44,7 @@
                 {
                     "name": "DashDirection",
                     "type": "Value",
-                    "id": "0c8c1b0a-4d9a-4a58-a658-60166c4b6d22",
+                    "id": "1a2f3b3a-c5bf-4b5e-97b7-e261c5106922",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
@@ -164,45 +164,23 @@
                 },
                 {
                     "name": "",
-                    "id": "7f634e98-5b54-4f41-bb0c-5f04de11c66a",
-                    "path": "<Keyboard>/alt",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "Dash",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "e4a2c7f1-6d38-43b5-836a-5478a871703d",
-                    "path": "<Gamepad>/buttonWest",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "Dash",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "ce3b48ab-b608-44f0-bb63-febb5de4c849",
-                    "path": "<Gamepad>/leftStick",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "DashDirection",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "dc54e0fc-57b1-4833-9cf9-355b7f322d4a",
+                    "id": "3b5ea8fc-773f-4844-8ad1-787c1e540417",
                     "path": "<Mouse>/position",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "DashDirection",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d236801e-9f78-4717-a00c-4c7c58d709e5",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Dash",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -97,6 +97,7 @@
     <Compile Include="Assets\Scripts\Player\States\PlayerCrouchIdleStateSO.cs" />
     <Compile Include="Assets\Scripts\All\Spell\Spell.cs" />
     <Compile Include="Assets\Scripts\Player\States\PlayerStateSO.cs" />
+    <Compile Include="Assets\Scripts\Player\States\PlayerCrouchMoveStateSO.cs" />
     <Compile Include="Assets\Scripts\All\Interfaces\ILogicUpdate.cs" />
     <Compile Include="Assets\Scripts\All\Events\TypedEventChannelSO.cs" />
     <Compile Include="Assets\Scripts\Player\States\PlayerWallGrabStateSO.cs" />
@@ -104,7 +105,7 @@
     <Compile Include="Assets\Scripts\All\BaseClasses\BaseDescriptionSO.cs" />
     <Compile Include="Assets\Scripts\All\SpellEffects\SpellEffectHolder.cs" />
     <Compile Include="Assets\Scripts\All\Events\IntEventChannelSO.cs" />
-    <Compile Include="Assets\Scripts\Player\States\PlayerCrouchMoveStateSO.cs" />
+    <Compile Include="Assets\Scripts\Player\States\PlayerDashStateSO.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

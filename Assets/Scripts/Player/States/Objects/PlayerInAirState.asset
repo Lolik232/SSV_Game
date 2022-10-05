@@ -13,11 +13,10 @@ MonoBehaviour:
   m_Name: PlayerInAirState
   m_EditorClassIdentifier: 
   _animBoolName: inAir
-  _stateEnterChannel: {fileID: 11400000, guid: 71bf2cff83049444b9c4f43d90a9d8f0, type: 2}
-  _stateExitChannel: {fileID: 11400000, guid: 71bf2cff83049444b9c4f43d90a9d8f0, type: 2}
   _toLandState: {fileID: 11400000, guid: d28e4d7f8e057f947ba8de99faa2fc21, type: 2}
   _toWallGrabState: {fileID: 11400000, guid: 7617914b9bb6c004a834c51363c59b42, type: 2}
   _toWallSlideState: {fileID: 11400000, guid: b9f4c60c05bda3a4dbdadc3e9460c43b, type: 2}
   _toJumpState: {fileID: 11400000, guid: fff0558780526b4438beb90b9f60dd3c, type: 2}
   _toWallJumpState: {fileID: 11400000, guid: a3b53490c049359439ae85c3b4fcf2c4, type: 2}
   _toLedgeHoldState: {fileID: 11400000, guid: a3e0c4c17df249640a3e321f915b07a4, type: 2}
+  _toDashState: {fileID: 11400000, guid: 8be183a9e3359a64a8e8a649ffa5cd76, type: 2}

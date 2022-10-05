@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 374ff2730fc8ca943a7544e2d33eb69c, type: 3}
+  m_Name: PlayerDashState
+  m_EditorClassIdentifier: 
+  _animBoolName: inAir
+  _toIdleState: {fileID: 11400000, guid: e4a73d75491eef54e847c88ab68a03e4, type: 2}
+  _toInAirState: {fileID: 11400000, guid: 490db7eaeaebdb94eb7aee3a32ee2448, type: 2}

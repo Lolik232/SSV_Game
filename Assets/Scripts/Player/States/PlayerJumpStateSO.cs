@@ -19,7 +19,7 @@ public class PlayerJumpStateSO : PlayerAbilityStateSO
             isGroundedTransitionBlock = true;
             Player.SetVelocityY(Player.JumpForce);
             Player.jumpInput = false;
+            Player.jump = true; 
         });
-
     }
 }

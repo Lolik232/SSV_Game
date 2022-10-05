@@ -13,10 +13,9 @@ MonoBehaviour:
   m_Name: PlayerCrouchIdleState
   m_EditorClassIdentifier: 
   _animBoolName: crouchIdle
-  _stateEnterChannel: {fileID: 11400000, guid: 71bf2cff83049444b9c4f43d90a9d8f0, type: 2}
-  _stateExitChannel: {fileID: 11400000, guid: 691012f85b1a05c4a812e6f4ba4c642c, type: 2}
   _toInAirState: {fileID: 11400000, guid: 490db7eaeaebdb94eb7aee3a32ee2448, type: 2}
   _toJumpState: {fileID: 11400000, guid: fff0558780526b4438beb90b9f60dd3c, type: 2}
   _toWallGrabState: {fileID: 11400000, guid: 7617914b9bb6c004a834c51363c59b42, type: 2}
+  _toDashState: {fileID: 11400000, guid: 8be183a9e3359a64a8e8a649ffa5cd76, type: 2}
   _toIdleState: {fileID: 11400000, guid: e4a73d75491eef54e847c88ab68a03e4, type: 2}
   _toCrouchMoveState: {fileID: 11400000, guid: 727cac17514e06c42b226ca227fd8d16, type: 2}

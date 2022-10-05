@@ -5,6 +5,8 @@ using System.Linq;
 
 using All.Events;
 
+using Unity.VisualScripting;
+
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -18,6 +20,7 @@ public class Player : MonoBehaviour
     private Rigidbody2D _rb;
     private StateMachine _machine;
     private Animator _animator;
+    private TrailRenderer _tr;
 
     [Header("States")]
     [SerializeField] private List<PlayerStateSO> _states = new();
@@ -66,6 +69,16 @@ public class Player : MonoBehaviour
     [SerializeField] private float _wallJumpTime;
     public float WallJumpTime => _wallJumpTime;
 
+    [Header("Dash")]
+    [SerializeField] private int _dashForce;
+    public int DashForce => _dashForce;
+
+    [SerializeField] private float _dashTime;
+    public float DashTime => _dashTime;
+
+    [SerializeField] private float _dashCooldown;
+    public float DashCooldown => _dashCooldown;
+
     [Header("Touching Wall")]
     [SerializeField] private int _wallSlideSpeed;
     public int WallSlideSpeed => _wallSlideSpeed;
@@ -96,15 +109,22 @@ public class Player : MonoBehaviour
     [NonSerialized] public int facingDirection = 1;
     [NonSerialized] public int wallDirection;
     [NonSerialized] public Vector2Int moveInput;
+    [NonSerialized] public Vector2 dashDirection;
+
+    private float _jumpInputStartTime;
 
     [NonSerialized] public bool jumpInput;
     [NonSerialized] public bool jumpInputHold;
     [NonSerialized] public bool jumpCoyoteTime;
+    [NonSerialized] public bool jump;
     [NonSerialized] public bool wallJump;
+    [NonSerialized] public bool dashInput;
+    [NonSerialized] public bool dash;
+    [NonSerialized] public bool canDash;
     [NonSerialized] public bool wallJumpCoyoteTime;
-    private float _jumpInputStartTime;
     [NonSerialized] public float jumpStartTime;
     [NonSerialized] public float coyoteTimeStart;
+    [NonSerialized] public float dashStartTime;
 
     [NonSerialized] public bool grabInput;
 
@@ -128,6 +148,14 @@ public class Player : MonoBehaviour
         _jumpInputStartTime = Time.time;
     }
     private void OnJumpCanceled() => jumpInputHold = false;
+    private void OnGrab() => grabInput = true;
+    private void OnGrabCanceled() => grabInput = false;
+    private void OnDash(Vector2 direction)
+    {
+        dashInput = true;
+        dashDirection = (direction - (Vector2)transform.position).normalized;
+    }
+    private void OnDashCanceled() => dashInput = false;
     private void CheckJumpInputHoldTime()
     {
         jumpInput = jumpInput && Time.time < _jumpInputStartTime + _jumpInputHoldTime;
@@ -136,13 +164,19 @@ public class Player : MonoBehaviour
     {
         wallJump = wallJump && Time.time < jumpStartTime + _wallJumpTime;
     }
+    private void CheckDashTime()
+    {
+        dash = dash && Time.time < dashStartTime + _dashTime;
+    }
+    private void CheckDashCooldown()
+    {
+        canDash = Time.time >= dashStartTime + _dashTime + _dashCooldown;
+    }
     private void CheckCoyoteTime()
     {
         jumpCoyoteTime = jumpCoyoteTime && Time.time < coyoteTimeStart + _coyoteTime;
         wallJumpCoyoteTime = wallJumpCoyoteTime && Time.time < coyoteTimeStart + _coyoteTime;
     }
-    private void OnGrab() => grabInput = true;
-    private void OnGrabCanceled() => grabInput = false;
 
     public void CheckIfGrounded()
     {
@@ -196,6 +230,7 @@ public class Player : MonoBehaviour
     public void SetVelocity(float velocity, Vector2 angle, int direction) => _rb.velocity = new Vector2(angle.normalized.x * velocity * direction, angle.normalized.y * velocity);
     public void SetVelocityX(float xVelocity) => _rb.velocity = new Vector2(xVelocity, _rb.velocity.y);
     public void SetVelocityY(float yVelocity) => _rb.velocity = new Vector2(_rb.velocity.x, yVelocity);
+    public void SetVelocity(Vector2 veloity) => _rb.velocity = veloity;
     public void SetVelocityZero() => _rb.velocity = Vector2.zero;
 
     public void MoveToX(float x) => transform.position = new Vector2(x, transform.position.y);
@@ -218,12 +253,24 @@ public class Player : MonoBehaviour
         _collider.offset = _crouchOffset;
     }
 
+    public void EnableTrail()
+    {
+        _tr.emitting = true;
+    }
+
+    public void DisableTrail()
+    {
+        _tr.emitting = false;
+    }
+
     private void Awake()
     {
+        _tr = GetComponent<TrailRenderer>();
         _rb = GetComponent<Rigidbody2D>();
         _collider = GetComponent<BoxCollider2D>();
         _machine = GetComponent<StateMachine>();
         _animator = GetComponent<Animator>();
+        _inputReader.InitializePlayerInput(GetComponent<PlayerInput>());
     }
 
     private void Start()
@@ -237,6 +284,8 @@ public class Player : MonoBehaviour
         _inputReader.JumpCanceledEvent += OnJumpCanceled;
         _inputReader.GrabEvent += OnGrab;
         _inputReader.GrabCanceledEvent += OnGrabCanceled;
+        _inputReader.DashEvent += OnDash;
+        _inputReader.DashCanceledEvent += OnDashCanceled;
 
         foreach (var state in _states) { state.Initialize(this, _machine, _animator); }
     }
@@ -248,12 +297,16 @@ public class Player : MonoBehaviour
         _inputReader.JumpCanceledEvent -= OnJumpCanceled;
         _inputReader.GrabEvent -= OnGrab;
         _inputReader.GrabCanceledEvent -= OnGrabCanceled;
+        _inputReader.DashEvent -= OnDash;
+        _inputReader.DashCanceledEvent -= OnDashCanceled;
     }
 
     private void Update()
     {
         CheckJumpInputHoldTime();
         CheckWallJumpTime();
+        CheckDashTime();
+        CheckDashCooldown();
         CheckCoyoteTime();
     }
 
