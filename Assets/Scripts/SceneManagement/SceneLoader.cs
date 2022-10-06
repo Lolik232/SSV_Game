@@ -132,7 +132,8 @@ namespace SceneManagement
             if (m_showLoadingScreen) { m_toggleLoadingScreenChan.RaiseEvent(true); }
 
             m_loadingOperationHandle = m_sceneToLoad.sceneReference.LoadSceneAsync(LoadSceneMode.Additive, true, 0);
-
+            // m_loadingOperationHandle.
+            // m_loadingOperationHandle.PercentComplete
             m_loadingOperationHandle.Completed += OnNewSceneLoaded;
         }
 

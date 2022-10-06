@@ -45,12 +45,15 @@ namespace EditorTools
 
         private void OnNotifyChannelLoad(AsyncOperationHandle<LoadEventChannelSO> obj)
         {
-            if (m_thisScene != null) { obj.Result.RaiseEvent(m_thisScene); } else
+            if (m_thisScene != null)
+            {
+                obj.Result.RaiseEvent(m_thisScene);
+            }
+            else
             {
                 m_onReadySceneChannel.RaiseEvent();
             }
         }
-
 #endif
     }
 }
