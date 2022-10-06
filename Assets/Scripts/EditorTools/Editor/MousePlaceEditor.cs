@@ -34,9 +34,7 @@ public class MousePlaceEditor : Editor
         mousePos = sceneView.camera.ScreenToWorldPoint(mousePos);
 
         m_mousePlace.UpdateTargeting(mousePos);
-
-
-        Debug.Log(currentGUIEvent.type);
+ 
 
         switch (currentGUIEvent.type)
         {
