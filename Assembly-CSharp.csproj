@@ -117,6 +117,7 @@
      <Compile Include="Assets\Scripts\Player\PlayerAbilities\PlayerWallClimbAbility.cs" />
      <Compile Include="Assets\Scripts\All\States\StateMachine.cs" />
      <Compile Include="Assets\Scripts\EditorTools\MousePlace.cs" />
+     <Compile Include="Assets\Scripts\Player\Camera\CameraPivotManager.cs" />
      <Reference Include="UnityEngine">
      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.11f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
      </Reference>
