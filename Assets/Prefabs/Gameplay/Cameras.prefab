@@ -50,7 +50,7 @@ MonoBehaviour:
   m_mainCamera: {fileID: 6542917770757014784}
   m_virtualCamera: {fileID: 6542917769921796196}
   m_cameraShakeChannel: {fileID: 11400000, guid: 89c416766b548c940bcd7c40c85a6b54, type: 2}
-  m_targetChannel: {fileID: 11400000, guid: 4d7eb21ddd8805749aba73e1ba9b84e0, type: 2}
+  m_targetChannel: {fileID: 11400000, guid: 79f75a6533d9f8d40b5a744008499bfe, type: 2}
   m_impulseSource: {fileID: 0}
   m_target: {fileID: 0}
 --- !u!1 &6542917769668827800
@@ -239,7 +239,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 2.1213872, y: 1}
+    m_SensorSize: {x: 1.8130562, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
