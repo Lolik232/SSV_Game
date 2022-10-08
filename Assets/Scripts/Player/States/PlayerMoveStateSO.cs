@@ -6,9 +6,11 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "PlayerMoveState", menuName = "State Machine/States/Player/Sub States/Move")]
 public class PlayerMoveStateSO : PlayerGroundedStateSO
 {
+    [Header("State Transitions")]
     [SerializeField] private PlayerIdleStateSO _toIdleState;
     [SerializeField] private PlayerCrouchMoveStateSO _toCrouchMoveState;
     [SerializeField] private PlayerLedgeClimbStateSO _toLedgeClimbState;
+
 
     protected override void OnEnable()
     {
@@ -32,7 +34,7 @@ public class PlayerMoveStateSO : PlayerGroundedStateSO
 
         checks.Add(() =>
         {
-            Player.CheckIfTouchingLedge();
+            Player.CheckIfTouchingWallBack();
             if (Player.isTouchingWall && !Player.isTouchingLedge)
             {
                 Player.DeterminCornerPosition();

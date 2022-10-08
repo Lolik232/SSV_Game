@@ -6,14 +6,15 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "PlayerInAirState", menuName = "State Machine/States/Player/States/In Air")]
 public class PlayerInAirStateSO : PlayerStateSO
 {
+    [Header("State Transitions")]
     [SerializeField] private PlayerLandStateSO _toLandState;
     [SerializeField] private PlayerWallGrabStateSO _toWallGrabState;
     [SerializeField] private PlayerWallSlideStateSO _toWallSlideState;
-    [SerializeField] private PlayerJumpStateSO _toJumpState;
-    [SerializeField] private PlayerWallJumpStateSO _toWallJumpState;
     [SerializeField] private PlayerLedgeHoldStateSO _toLedgeHoldState;
-    [SerializeField] private PlayerDashStateSO _toDashState;
 
+    [Header("Dependent Abilities")]
+    [SerializeField] private PlayerJumpAbilitySO _jumpAbility;
+    [SerializeField] private PlayerWallJumpAbilitySO _wallJumpAbility;
 
     protected override void OnEnable()
     {
@@ -21,23 +22,23 @@ public class PlayerInAirStateSO : PlayerStateSO
 
         transitions.Add(new TransitionItem(_toLandState, () => Player.isGrounded && Player.Velocity.y < 0.01f));
         transitions.Add(new TransitionItem(_toLedgeHoldState, () => Player.isTouchingWall && !Player.isTouchingLedge && !Player.isGroundClose));
-        transitions.Add(new TransitionItem(_toJumpState, () => Player.jumpCoyoteTime && Player.jumpInput));
-        transitions.Add(new TransitionItem(_toWallJumpState, () => ((Player.isTouchingWall ^ Player.isTouchingWallBack) || Player.wallJumpCoyoteTime) && Player.jumpInput));
-        transitions.Add(new TransitionItem(_toDashState, () => Player.dashDirection != Vector2.zero && Player.dashInput && Player.canDash));
         transitions.Add(new TransitionItem(_toWallGrabState, () => Player.isTouchingWall && Player.isTouchingLedge && Player.grabInput));
         transitions.Add(new TransitionItem(_toWallSlideState, () => Player.isTouchingWall && Player.moveInput.x == Player.facingDirection && Player.Velocity.y <= 0f));
 
         updateActions.Add(() =>
         {
-            Player.CheckIfShouldFlip(Player.moveInput.x);
-            if (Player.jump && !Player.jumpInputHold && Player.Velocity.y > 0f)
+            _jumpAbility.SetAble(_jumpAbility.CoyoteTime);
+            _wallJumpAbility.SetAble((Player.isTouchingWall ^ Player.isTouchingWallBack) || _wallJumpAbility.CoyoteTime);
+
+            if (_jumpAbility.IsActive && !Player.jumpInputHold && Player.Velocity.y > 0f)
             {
                 Player.SetVelocityY(Player.Velocity.y * 0.5f);
-                Player.jump = false;
+                _jumpAbility.Terminate();
             }
-            if (!Player.wallJump)
+            if (!_wallJumpAbility.IsActive)
             {
                 Player.SetVelocityX(Player.moveInput.x * Player.InAirMoveSpeed);
+                Player.CheckIfShouldFlip(Player.moveInput.x);
             }
             SetFloat("xVelocity", Player.Velocity.x);
             SetFloat("yVelocity", Player.Velocity.y);

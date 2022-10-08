@@ -25,6 +25,9 @@ public class Player : MonoBehaviour
     [Header("States")]
     [SerializeField] private List<PlayerStateSO> _states = new();
 
+    [Header("Abilities")]
+    [SerializeField] private List<PlayerAbilitySO> _abilities = new();
+
     [Header("Checkers")]
     [SerializeField] private Transform _groundChecker;
     [SerializeField] private Transform _ceilingChecker;
@@ -33,7 +36,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform _wallChecker;
     [SerializeField] private Transform _ledgeChecker;
     [SerializeField] private float _wallCheckDistance;
-    [SerializeField] private LayerMask _whatIsGround;
+    [SerializeField] private List<LayerMask> _whatIsTarget;
 
     [Header("Input")]
     [SerializeField] private PlayerInputReaderSO _inputReader;
@@ -41,7 +44,13 @@ public class Player : MonoBehaviour
     [SerializeField] private float _jumpInputHoldTime;
 
     [Header("Parameters")]
+    [SerializeField] private Vector2 _standOffset;
+    [SerializeField] private Vector2 _standSize;
+    public Vector2 StandSize => _standSize;
 
+    [SerializeField] private Vector2 _crouchOffset;
+    [SerializeField] private Vector2 _crouchSize;
+    public Vector2 CrouchSize => _crouchSize;
 
     [Header("Movement")]
     [SerializeField] private int _moveSpeed;
@@ -52,32 +61,6 @@ public class Player : MonoBehaviour
 
     [SerializeField] private int _inAirMoveSpeed;
     public int InAirMoveSpeed => _inAirMoveSpeed;
-
-    [Header("Jump")]
-    [SerializeField] private int _jumpForce;
-    public int JumpForce => _jumpForce;
-
-    [SerializeField] private float _coyoteTime;
-
-    [Header("Wall Jump")]
-    [SerializeField] private int _wallJumpForce;
-    public int WallJumpForce => _wallJumpForce;
-
-    [SerializeField] private Vector2 _wallJumpAngle;
-    public Vector2 WallJumpAngle => _wallJumpAngle;
-
-    [SerializeField] private float _wallJumpTime;
-    public float WallJumpTime => _wallJumpTime;
-
-    [Header("Dash")]
-    [SerializeField] private int _dashForce;
-    public int DashForce => _dashForce;
-
-    [SerializeField] private float _dashTime;
-    public float DashTime => _dashTime;
-
-    [SerializeField] private float _dashCooldown;
-    public float DashCooldown => _dashCooldown;
 
     [Header("Touching Wall")]
     [SerializeField] private int _wallSlideSpeed;
@@ -93,40 +76,27 @@ public class Player : MonoBehaviour
     [SerializeField] private Vector2 _endLedgeOffset;
     public Vector2 EndLedgeOffset => _endLedgeOffset;
 
-    [Header("Crouch")]
-    [SerializeField] private Vector2 _standOffset;
-    [SerializeField] private Vector2 _standSize;
-    public Vector2 StandSize => _standSize;
-
-    [SerializeField] private Vector2 _crouchOffset;
-    [SerializeField] private Vector2 _crouchSize;
-    public Vector2 CrouchSize => _crouchSize;
-
     public Vector2 Velocity => _rb.velocity;
+    public Vector2 Position => transform.position;
     public Vector2 Size => _collider.size;
     public Vector2 Offset => _collider.offset;
 
     [NonSerialized] public int facingDirection = 1;
     [NonSerialized] public int wallDirection;
+
     [NonSerialized] public Vector2Int moveInput;
-    [NonSerialized] public Vector2 dashDirection;
 
     private float _jumpInputStartTime;
-
     [NonSerialized] public bool jumpInput;
     [NonSerialized] public bool jumpInputHold;
-    [NonSerialized] public bool jumpCoyoteTime;
-    [NonSerialized] public bool jump;
-    [NonSerialized] public bool wallJump;
-    [NonSerialized] public bool dashInput;
-    [NonSerialized] public bool dash;
-    [NonSerialized] public bool canDash;
-    [NonSerialized] public bool wallJumpCoyoteTime;
-    [NonSerialized] public float jumpStartTime;
-    [NonSerialized] public float coyoteTimeStart;
-    [NonSerialized] public float dashStartTime;
 
     [NonSerialized] public bool grabInput;
+
+    [NonSerialized] public bool dashInput;
+    [NonSerialized] public Vector2 dashDirection;
+
+    [NonSerialized] public bool abilityInput;
+    [NonSerialized] public Vector2 abilityDirection;
 
     [NonSerialized] public bool isGrounded;
     [NonSerialized] public bool isGroundClose;
@@ -150,72 +120,97 @@ public class Player : MonoBehaviour
     private void OnJumpCanceled() => jumpInputHold = false;
     private void OnGrab() => grabInput = true;
     private void OnGrabCanceled() => grabInput = false;
+
     private void OnDash(Vector2 direction)
     {
         dashInput = true;
         dashDirection = (direction - (Vector2)transform.position).normalized;
     }
     private void OnDashCanceled() => dashInput = false;
-    private void CheckJumpInputHoldTime()
+
+    private void OnAbility(Vector2 direction)
     {
-        jumpInput = jumpInput && Time.time < _jumpInputStartTime + _jumpInputHoldTime;
+        abilityInput = true;
+        abilityDirection = (direction - (Vector2)transform.position).normalized;
     }
-    private void CheckWallJumpTime()
-    {
-        wallJump = wallJump && Time.time < jumpStartTime + _wallJumpTime;
-    }
-    private void CheckDashTime()
-    {
-        dash = dash && Time.time < dashStartTime + _dashTime;
-    }
-    private void CheckDashCooldown()
-    {
-        canDash = Time.time >= dashStartTime + _dashTime + _dashCooldown;
-    }
-    private void CheckCoyoteTime()
-    {
-        jumpCoyoteTime = jumpCoyoteTime && Time.time < coyoteTimeStart + _coyoteTime;
-        wallJumpCoyoteTime = wallJumpCoyoteTime && Time.time < coyoteTimeStart + _coyoteTime;
-    }
+    private void OnAbilityCanceled() => abilityInput = false;
+
+    private void CheckJumpInputHoldTime() => jumpInput &= Time.time < _jumpInputStartTime + _jumpInputHoldTime;
 
     public void CheckIfGrounded()
     {
-        isGrounded = Physics2D.OverlapCircle(_groundChecker.position, _groundCheckRadius, _whatIsGround);
+        foreach (var target in _whatIsTarget)
+        {
+            isGrounded = Physics2D.OverlapCircle(_groundChecker.position, _groundCheckRadius, target);
+            return;
+        }
     }
     public void CheckIfGroundClose()
     {
-        isGroundClose = Physics2D.Raycast(_groundChecker.position, Vector2.down, _groundCheckDistance, _whatIsGround);
+        foreach (var target in _whatIsTarget)
+        {
+            isGroundClose = Physics2D.Raycast(_groundChecker.position, Vector2.down, _groundCheckDistance, target);
+            return;
+        }
     }
 
     public void CheckIfTouchingCeiling()
     {
-        isTouchingCeiling = Physics2D.OverlapCircle(_ceilingChecker.position, _groundCheckRadius, _whatIsGround);
+        foreach (var target in _whatIsTarget)
+        {
+            isTouchingCeiling = Physics2D.OverlapCircle(_ceilingChecker.position, _groundCheckRadius, target);
+            return;
+        }
     }
     public void CheckIfTouchingWall()
     {
-        RaycastHit2D hit = Physics2D.Raycast(_wallChecker.position, facingDirection * Vector2.right, _wallCheckDistance, _whatIsGround);
-        if (hit) { wallPosition = new Vector2(_wallChecker.position.x + facingDirection * hit.distance, _wallChecker.position.y); }
-        wallDirection = hit ? -facingDirection : facingDirection;
-        isTouchingWall = hit;
+        foreach (var target in _whatIsTarget)
+        {
+            RaycastHit2D hit = Physics2D.Raycast(_wallChecker.position, facingDirection * Vector2.right, _wallCheckDistance, target);
+            if (hit) { wallPosition = new Vector2(_wallChecker.position.x + facingDirection * hit.distance, _wallChecker.position.y); }
+            wallDirection = hit ? -facingDirection : facingDirection;
+            isTouchingWall = hit;
+            return;
+        }
     }
     public void CheckIfTouchingWallBack()
     {
-        isTouchingWallBack = Physics2D.Raycast(_wallChecker.position, facingDirection * Vector2.left, _wallCheckDistance, _whatIsGround);
+        foreach (var target in _whatIsTarget)
+        {
+            isTouchingWallBack = Physics2D.Raycast(_wallChecker.position, facingDirection * Vector2.left, _wallCheckDistance, target);
+            return;
+        }
     }
     public void CheckIfTouchingLedge()
     {
-        isTouchingLedge = Physics2D.Raycast(_ledgeChecker.position, facingDirection * Vector2.right, _wallCheckDistance, _whatIsGround);
+        foreach (var target in _whatIsTarget)
+        {
+            isTouchingLedge = Physics2D.Raycast(_ledgeChecker.position, facingDirection * Vector2.right, _wallCheckDistance, target);
+            return;
+        }
     }
 
     public void DeterminCornerPosition()
     {
-        RaycastHit2D hit = Physics2D.Raycast(new Vector2(wallPosition.x + 0.01f * facingDirection, _ledgeChecker.position.y), Vector2.down, _ledgeChecker.position.y - _wallChecker.position.y, _whatIsGround);
-        if (hit) { cornerPosition = new Vector2(wallPosition.x, _ledgeChecker.position.y - hit.distance); }
+        foreach (var target in _whatIsTarget)
+        {
+            RaycastHit2D hit = Physics2D.Raycast(new Vector2(wallPosition.x + 0.01f * facingDirection, _ledgeChecker.position.y), Vector2.down, _ledgeChecker.position.y - _wallChecker.position.y, target);
+            if (hit)
+            {
+                cornerPosition = new Vector2(wallPosition.x, _ledgeChecker.position.y - hit.distance);
+                return;
+            }
+
+        }
     }
 
     public void CheckIfTouchingCeilingWhenClimb()
     {
-        isTouchingCeiling = Physics2D.Raycast(ledgeEndPosition, Vector2.up, _standSize.y, _whatIsGround);
+        foreach (var target in _whatIsTarget)
+        {
+            isTouchingCeiling = Physics2D.Raycast(ledgeEndPosition, Vector2.up, _standSize.y, target);
+            return;
+        }
     }
 
     public void CheckIfShouldFlip(int direction)
@@ -241,27 +236,20 @@ public class Player : MonoBehaviour
         _rb.velocity = Vector2.zero;
     }
 
-    public void SetColiderStandSize()
+    public void Stand()
     {
         _collider.size = _standSize;
         _collider.offset = _standOffset;
     }
 
-    public void SetColiderCrouchSize()
+    public void Crouch()
     {
         _collider.size = _crouchSize;
         _collider.offset = _crouchOffset;
     }
 
-    public void EnableTrail()
-    {
-        _tr.emitting = true;
-    }
-
-    public void DisableTrail()
-    {
-        _tr.emitting = false;
-    }
+    public void EnableTrail() => _tr.emitting = true;
+    public void DisableTrail() => _tr.emitting = false;
 
     private void Awake()
     {
@@ -275,9 +263,8 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+        Stand();
         facingDirection = 1;
-
-        SetColiderStandSize();
 
         _inputReader.MoveEvent += OnMove;
         _inputReader.JumpEvent += OnJump;
@@ -286,8 +273,11 @@ public class Player : MonoBehaviour
         _inputReader.GrabCanceledEvent += OnGrabCanceled;
         _inputReader.DashEvent += OnDash;
         _inputReader.DashCanceledEvent += OnDashCanceled;
+        _inputReader.AbilityEvent += OnAbility;
+        _inputReader.AbilityCanceledEvent += OnAbilityCanceled;
 
         foreach (var state in _states) { state.Initialize(this, _machine, _animator); }
+        foreach (var ability in _abilities) { ability.Initialize(this, _machine); }
     }
 
     private void OnDestroy()
@@ -299,15 +289,18 @@ public class Player : MonoBehaviour
         _inputReader.GrabCanceledEvent -= OnGrabCanceled;
         _inputReader.DashEvent -= OnDash;
         _inputReader.DashCanceledEvent -= OnDashCanceled;
+        _inputReader.AbilityEvent -= OnAbility;
+        _inputReader.AbilityCanceledEvent -= OnAbilityCanceled;
     }
 
     private void Update()
     {
         CheckJumpInputHoldTime();
-        CheckWallJumpTime();
-        CheckDashTime();
-        CheckDashCooldown();
-        CheckCoyoteTime();
+        foreach (var ability in _abilities)
+        {
+            ability.TryUseAbility();
+            ability.OnUpdate();
+        }
     }
 
     private void OnDrawGizmos()

@@ -12,12 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf2472cd99974df4f882645a5faafcc3, type: 3}
   m_Name: PlayerWallGrabState
   m_EditorClassIdentifier: 
-  _animBoolName: wallGrab
-  _stateEnterChannel: {fileID: 11400000, guid: 71bf2cff83049444b9c4f43d90a9d8f0, type: 2}
-  _stateExitChannel: {fileID: 11400000, guid: 691012f85b1a05c4a812e6f4ba4c642c, type: 2}
+  _animBoolNames:
+  - wallGrab
+  _animTriggerNames: []
   _toIdleState: {fileID: 11400000, guid: e4a73d75491eef54e847c88ab68a03e4, type: 2}
   _toInAirState: {fileID: 11400000, guid: 490db7eaeaebdb94eb7aee3a32ee2448, type: 2}
-  _toWallJumpState: {fileID: 11400000, guid: a3b53490c049359439ae85c3b4fcf2c4, type: 2}
   _toLedgeHoldState: {fileID: 11400000, guid: a3e0c4c17df249640a3e321f915b07a4, type: 2}
+  _dashAbility: {fileID: 11400000, guid: f099f390b43105b4f92b85f1e8494dc1, type: 2}
+  _jumpAbility: {fileID: 11400000, guid: 39983b7066119fd42ad942ed7d5eed01, type: 2}
+  _wallJumpAbility: {fileID: 11400000, guid: 29b560b1852e4594d9cf188e2e83282f, type: 2}
   _toWallSlideState: {fileID: 11400000, guid: b9f4c60c05bda3a4dbdadc3e9460c43b, type: 2}
   _toWallClimbState: {fileID: 11400000, guid: d02b124ee9fa12c4f947b0ce0f6df895, type: 2}

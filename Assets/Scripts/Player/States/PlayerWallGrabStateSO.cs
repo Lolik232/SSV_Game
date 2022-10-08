@@ -9,6 +9,7 @@ public class PlayerWallGrabStateSO : PlayerTouchingWallStateSO
 {
     private Vector2 _holdPosition;
 
+    [Header("State Transitions")]
     [SerializeField] private PlayerWallSlideStateSO _toWallSlideState;
     [SerializeField] private PlayerWallClimbStateSO _toWallClimbState;
 

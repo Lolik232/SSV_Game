@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class PlayerCrouchMoveStateSO : PlayerGroundedStateSO
 {
+    [Header("State Transitions")]
     [SerializeField] private PlayerMoveStateSO _toMoveState;
     [SerializeField] private PlayerCrouchIdleStateSO _toCrouchIdleState;
 
@@ -19,7 +20,7 @@ public class PlayerCrouchMoveStateSO : PlayerGroundedStateSO
 
         enterActions.Add(() =>
         {
-            Player.SetColiderCrouchSize();
+            Player.Crouch();
         });
 
         updateActions.Add(() =>
@@ -30,7 +31,7 @@ public class PlayerCrouchMoveStateSO : PlayerGroundedStateSO
 
         exitActions.Add(() =>
         {
-            Player.SetColiderStandSize();
+            Player.Stand();
         });
     }
 }

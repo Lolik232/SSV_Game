@@ -9,8 +9,10 @@ public class PlayerLedgeClimbStateSO : PlayerStateSO
 {
     private bool _isAnimationFinished;
 
+    [Header("State Transitions")]
     [SerializeField] private PlayerIdleStateSO _toIdleState;
     [SerializeField] private PlayerCrouchIdleStateSO _toCrouchIdleState;
+
 
     protected override void OnEnable()
     {

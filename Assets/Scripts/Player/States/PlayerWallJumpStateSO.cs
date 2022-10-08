@@ -10,7 +10,8 @@ using UnityEngine;
 
 public class PlayerWallJumpStateSO : PlayerAbilityStateSO
 {
-    private float _wallJumpTimeLimit = 0.1f;
+    [Header("Connected Ability")]
+    [SerializeField] private PlayerWallJumpAbilitySO _wallJumpAbility;
 
     protected override void OnEnable()
     {
@@ -19,16 +20,13 @@ public class PlayerWallJumpStateSO : PlayerAbilityStateSO
         enterActions.Add(() =>
         {
             isGroundedTransitionBlock = true;
-            Player.SetVelocity(Player.WallJumpForce, Player.WallJumpAngle, Player.wallDirection);
+            Player.SetVelocity(_wallJumpAbility.Force, _wallJumpAbility.Angle, Player.wallDirection);
             Player.CheckIfShouldFlip(Player.wallDirection);
-            Player.jumpInput = false;
-            Player.wallJump = true;
-            Player.jumpStartTime = startTime;
         });
 
         updateActions.Add(() =>
         {
-            abilityDone = (!Player.isTouchingWall && !Player.isTouchingWallBack) || isWallJumpTimeLimitExceeded();
+            abilityDone = Player.isTouchingWall == Player.isTouchingWallBack || _wallJumpAbility.NeedHardExit();
         });
 
         checks.Add(() =>
@@ -37,10 +35,4 @@ public class PlayerWallJumpStateSO : PlayerAbilityStateSO
             Player.CheckIfTouchingWallBack();
         });
     }
-
-    private bool isWallJumpTimeLimitExceeded()
-    {
-        return Time.time >= startTime + _wallJumpTimeLimit;
-    }
 }
-

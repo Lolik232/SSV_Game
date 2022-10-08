@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class PlayerWallSlideStateSO : PlayerTouchingWallStateSO
 {
+    [Header("State Transitions")]
     [SerializeField] private PlayerWallGrabStateSO _toWallGrabState;
 
     protected override void OnEnable()

@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 570b7aca312241344884d863e9eae8d9, type: 3}
   m_Name: PlayerLedgeHoldState
   m_EditorClassIdentifier: 
-  _animBoolName: ledgeHold
-  _stateEnterChannel: {fileID: 11400000, guid: 71bf2cff83049444b9c4f43d90a9d8f0, type: 2}
-  _stateExitChannel: {fileID: 11400000, guid: 691012f85b1a05c4a812e6f4ba4c642c, type: 2}
-  _toWallJumpState: {fileID: 11400000, guid: a3b53490c049359439ae85c3b4fcf2c4, type: 2}
+  _animBoolNames:
+  - ledgeHold
+  _animTriggerNames: []
   _toInAirState: {fileID: 11400000, guid: 490db7eaeaebdb94eb7aee3a32ee2448, type: 2}
   _toLedgeClimbState: {fileID: 11400000, guid: d053b7ebcf07adc48b4b0b1e890c4909, type: 2}
+  _jumpAbility: {fileID: 11400000, guid: 39983b7066119fd42ad942ed7d5eed01, type: 2}
+  _wallJumpAbility: {fileID: 11400000, guid: 29b560b1852e4594d9cf188e2e83282f, type: 2}

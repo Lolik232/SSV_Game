@@ -9,6 +9,9 @@ using UnityEngine;
 
 public class PlayerJumpStateSO : PlayerAbilityStateSO
 {
+    [Header("Connected Ability")]
+    [SerializeField] private PlayerJumpAbilitySO _jumpAbility;
+
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -17,9 +20,7 @@ public class PlayerJumpStateSO : PlayerAbilityStateSO
         {
             abilityDone = true;
             isGroundedTransitionBlock = true;
-            Player.SetVelocityY(Player.JumpForce);
-            Player.jumpInput = false;
-            Player.jump = true; 
+            Player.SetVelocityY(_jumpAbility.Force);
         });
     }
 }

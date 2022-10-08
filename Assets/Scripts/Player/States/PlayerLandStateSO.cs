@@ -9,6 +9,7 @@ using UnityEngine;
 
 public class PlayerLandStateSO : PlayerGroundedStateSO
 {
+    [Header("State Transitions")]
     [SerializeField] private PlayerMoveStateSO _toMoveState;
     [SerializeField] private PlayerIdleStateSO _toIdleState;
     [SerializeField] private PlayerCrouchIdleStateSO _toCrouchIdleState;

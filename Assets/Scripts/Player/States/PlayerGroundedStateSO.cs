@@ -2,33 +2,38 @@ using UnityEngine;
 
 public class PlayerGroundedStateSO : PlayerStateSO
 {
+    [Header("Super State Transitions")]
     [SerializeField] private PlayerInAirStateSO _toInAirState;
-    [SerializeField] private PlayerJumpStateSO _toJumpState;
     [SerializeField] private PlayerWallGrabStateSO _toWallGrabState;
-    [SerializeField] private PlayerDashStateSO _toDashState;
+
+    [Header("Dependent Abilities")]
+    [SerializeField] private PlayerDashAbilitySO _dashAbility;
+    [SerializeField] private PlayerJumpAbilitySO _jumpAbility;
 
     protected override void OnEnable()
     {
         base.OnEnable();
-
-        transitions.Add(new TransitionItem(_toJumpState, () => Player.jumpInput && !Player.isTouchingCeiling));
-        transitions.Add(new TransitionItem(_toDashState, () => Player.dashDirection != Vector2.zero && Player.dashInput && Player.canDash));
         transitions.Add(new TransitionItem(_toInAirState, () => !Player.isGrounded, () =>
         {
             if (Player.isTouchingCeiling)
             {
                 Player.MoveToY(Player.transform.position.y - (Player.StandSize.y - Player.CrouchSize.y));
             }
-            Player.jumpCoyoteTime = true;
-            Player.coyoteTimeStart = Time.time;
+            _jumpAbility.StartCoyoteTime();
         }));
         transitions.Add(new TransitionItem(_toWallGrabState, () => Player.isTouchingWall && Player.isTouchingLedge && !Player.isTouchingCeiling && Player.grabInput));
 
+        enterActions.Add(() =>
+        {
+            _dashAbility.Unlock();
+            _jumpAbility.Unlock();
+        });
 
         checks.Add(() =>
         {
             Player.CheckIfGrounded();
             Player.CheckIfTouchingWall();
+            Player.CheckIfTouchingLedge();
             Player.CheckIfTouchingCeiling();
         });
     }

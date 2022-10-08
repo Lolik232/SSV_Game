@@ -4,15 +4,20 @@ using System.Collections.Generic;
 using All.BaseClasses;
 using All.Events;
 
+using TMPro.EditorUtilities;
+
 using UnityEngine;
 using UnityEngine.Events;
 
 public abstract class StateSO : ScriptableObject
 {
-    [SerializeField] private string _animBoolName;
 
     private bool _isActive;
     protected float startTime;
+
+    [Header("Animator")]
+    [SerializeField] private List<string> _animBoolNames;
+    [SerializeField] private List<string> _animTriggerNames;
 
     protected List<TransitionItem> transitions = new();
     protected List<UnityAction> updateActions = new();
@@ -28,18 +33,21 @@ public abstract class StateSO : ScriptableObject
     protected virtual void OnEnable()
     {
         _isActive = false;
+        startTime = 0f;
+
         transitions.Clear();
         updateActions.Clear();
         enterActions = new List<UnityAction> { () =>
         {
             _isActive = true;
             startTime = Time.time;
-            _anim.SetBool(_animBoolName, true);
+            foreach (var name in _animBoolNames) { _anim.SetBool(name, true); }
+            foreach (var name in _animTriggerNames) { _anim.SetTrigger(name); }
         } };
-        exitActions = new List<UnityAction> { () => 
-        { 
-            _isActive = false; 
-            _anim.SetBool(_animBoolName, false); 
+        exitActions = new List<UnityAction> { () =>
+        {
+            _isActive = false;
+            foreach (var name in _animBoolNames) { _anim.SetBool(name, false); }
         } };
         animationFinishActions.Clear();
         animationActions.Clear();
@@ -51,21 +59,30 @@ public abstract class StateSO : ScriptableObject
     public void OnStateEnter()
     {
         if (_isActive) { return; }
-        foreach (var action in enterActions) { action(); }
-        foreach (var check in checks) { check(); }
+        foreach (var action in enterActions)
+        {
+            action();
+        }
+        foreach (var check in checks)
+        {
+            check();
+        }
     }
 
     public void OnStateExit()
     {
         if (!_isActive) { return; }
-        foreach (var action in exitActions) { action(); }
+        foreach (var action in exitActions)
+        {
+            action();
+        }
     }
 
     public void OnUpdate()
     {
-        if (!_isActive) { return; }
         foreach (var transition in transitions)
         {
+            if (!_isActive) { return; }
             if (transition.condition())
             {
                 transition.action?.Invoke();
@@ -73,30 +90,41 @@ public abstract class StateSO : ScriptableObject
                 return;
             }
         }
-        foreach (var action in updateActions) { action(); }
+        foreach (var action in updateActions)
+        {
+            if (!_isActive) { return; }
+            action();
+        }
     }
 
     public void OnFixedUpdate()
     {
-        if (!_isActive) { return; }
-        foreach (var check in checks) { check(); }
+        foreach (var check in checks)
+        {
+            if (!_isActive) { return; }
+            check();
+        }
     }
 
     public void OnAnimationFinishTrigger()
     {
-        if (!_isActive) { return; }
-        foreach (var action in animationFinishActions) { action(); }
+        foreach (var action in animationFinishActions)
+        {
+            if (!_isActive) { return; }
+            action();
+        }
     }
 
     public void OnAnimationTrigger()
     {
-        if (!_isActive) { return; }
-        foreach (var action in animationFinishActions) { action(); }
+        foreach (var action in animationFinishActions)
+        {
+            if (!_isActive) { return; }
+            action();
+        }
     }
     protected void InitializeAnimator(Animator animator) => _anim = animator;
 
-    protected void SetBool(string name, bool value) => _anim.SetBool(name, value);
-    protected void SetInteger(string name, int value) => _anim.SetInteger(name, value);
     protected void SetFloat(string name, float value) => _anim.SetFloat(name, value);
 }
 
@@ -112,4 +140,3 @@ public struct TransitionItem
         this.action = action;
     }
 }
-

@@ -12,13 +12,15 @@ public class PlayerInputReaderSO : ScriptableObject
     private PlayerInput _playerInput;
 
     private Camera _mainCamera;
-    private Vector2 _dashInput;
+    private Vector2 _inputDirection;
 
     public UnityAction<Vector2Int> MoveEvent = delegate { };
     public UnityAction GrabEvent = delegate { };
     public UnityAction GrabCanceledEvent = delegate { };
     public UnityAction<Vector2> DashEvent = delegate { };
     public UnityAction DashCanceledEvent = delegate { };
+    public UnityAction<Vector2> AbilityEvent = delegate { };
+    public UnityAction AbilityCanceledEvent = delegate { };
     public UnityAction JumpEvent = delegate { };
     public UnityAction JumpCanceledEvent = delegate { };
 
@@ -34,19 +36,12 @@ public class PlayerInputReaderSO : ScriptableObject
 
     public void OnMoveInput(InputAction.CallbackContext context)
     {
-        static Vector2Int NormalizeMovementInput(Vector2 movementInput)
-        {
-            int normInputX = Mathf.Abs(movementInput.x) > 0.5f ? (int)(movementInput * Vector2.right).normalized.x : 0;
-            int normInputY = Mathf.Abs(movementInput.y) > 0.5f ? (int)(movementInput * Vector2.up).normalized.y : 0;
-            return new Vector2Int(normInputX, normInputY);
-        }
-
-        MoveEvent.Invoke(NormalizeMovementInput(context.ReadValue<Vector2>()));
+        MoveEvent.Invoke(Vector2Int.RoundToInt(context.ReadValue<Vector2>()));
     }
 
     public void OnGrabInput(InputAction.CallbackContext context)
     {
-        if (context.started)
+        if (context.performed)
         {
             GrabEvent.Invoke();
         }
@@ -58,9 +53,9 @@ public class PlayerInputReaderSO : ScriptableObject
 
     public void OnDashInput(InputAction.CallbackContext context)
     {
-        if (context.started)
+        if (context.performed)
         {
-            DashEvent.Invoke(_dashInput);
+            DashEvent.Invoke(_inputDirection);
         }
         else if (context.canceled)
         {
@@ -68,11 +63,23 @@ public class PlayerInputReaderSO : ScriptableObject
         }
     }
 
-    public void OnDashDirectionInput(InputAction.CallbackContext context)
+    public void OnAbilityInput(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            AbilityEvent.Invoke(_inputDirection);
+        }
+        else if (context.canceled)
+        {
+            AbilityCanceledEvent.Invoke();
+        }
+    }
+
+    public void OnDirectionInput(InputAction.CallbackContext context)
     {
         if (_playerInput.currentControlScheme == "Keyboard")
         {
-            _dashInput = _mainCamera.ScreenToWorldPoint((Vector3)context.ReadValue<Vector2>());
+            _inputDirection = _mainCamera.ScreenToWorldPoint((Vector3)context.ReadValue<Vector2>());
         }
     }
 

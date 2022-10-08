@@ -9,14 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9cea7cf04d4dfa943b8b008f8fce42b7, type: 3}
-  m_Name: PlayerMoveState
+  m_Script: {fileID: 11500000, guid: 910f68a5751680743966959fe1235be4, type: 3}
+  m_Name: PlayerLandState
   m_EditorClassIdentifier: 
-  _animBoolName: move
+  _animBoolNames:
+  - land
+  _animTriggerNames: []
   _toInAirState: {fileID: 11400000, guid: 490db7eaeaebdb94eb7aee3a32ee2448, type: 2}
-  _toJumpState: {fileID: 11400000, guid: fff0558780526b4438beb90b9f60dd3c, type: 2}
   _toWallGrabState: {fileID: 11400000, guid: 7617914b9bb6c004a834c51363c59b42, type: 2}
-  _toDashState: {fileID: 11400000, guid: 8be183a9e3359a64a8e8a649ffa5cd76, type: 2}
+  _dashAbility: {fileID: 11400000, guid: f099f390b43105b4f92b85f1e8494dc1, type: 2}
+  _jumpAbility: {fileID: 11400000, guid: 39983b7066119fd42ad942ed7d5eed01, type: 2}
+  _toMoveState: {fileID: 11400000, guid: d0d38fe3b05349140ba28dc83ce40cd6, type: 2}
   _toIdleState: {fileID: 11400000, guid: e4a73d75491eef54e847c88ab68a03e4, type: 2}
-  _toCrouchMoveState: {fileID: 11400000, guid: 727cac17514e06c42b226ca227fd8d16, type: 2}
-  _toLedgeClimbState: {fileID: 11400000, guid: d053b7ebcf07adc48b4b0b1e890c4909, type: 2}
+  _toCrouchIdleState: {fileID: 11400000, guid: a5af3b9b15e226341a29cd54e412d8df, type: 2}

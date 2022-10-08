@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 374ff2730fc8ca943a7544e2d33eb69c, type: 3}
   m_Name: PlayerDashState
   m_EditorClassIdentifier: 
-  _animBoolName: inAir
+  _animBoolNames:
+  - inAir
+  _animTriggerNames: []
   _toIdleState: {fileID: 11400000, guid: e4a73d75491eef54e847c88ab68a03e4, type: 2}
   _toInAirState: {fileID: 11400000, guid: 490db7eaeaebdb94eb7aee3a32ee2448, type: 2}
+  _dashAbility: {fileID: 11400000, guid: f099f390b43105b4f92b85f1e8494dc1, type: 2}

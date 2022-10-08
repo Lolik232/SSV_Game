@@ -35,6 +35,24 @@
                 {
                     "name": "Dash",
                     "type": "Button",
+                    "id": "ef50c3db-59e0-47e6-b9e8-7dbab383aaa6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Atack",
+                    "type": "Button",
+                    "id": "5f60d7ad-25cd-4461-89c2-9bc61c9c9f52",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Ability",
+                    "type": "Button",
                     "id": "4ad294ea-429e-437f-b346-31e596a047bb",
                     "expectedControlType": "Button",
                     "processors": "",
@@ -42,7 +60,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "DashDirection",
+                    "name": "Direction",
                     "type": "Value",
                     "id": "1a2f3b3a-c5bf-4b5e-97b7-e261c5106922",
                     "expectedControlType": "Vector2",
@@ -52,17 +70,6 @@
                 }
             ],
             "bindings": [
-                {
-                    "name": "",
-                    "id": "f46d6685-a68a-4d76-a859-d8f543509817",
-                    "path": "<Gamepad>/leftStick",
-                    "interactions": "",
-                    "processors": "StickDeadzone",
-                    "groups": "Gamepad",
-                    "action": "Movement",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
                 {
                     "name": "WASD",
                     "id": "a0a7b561-ebe9-4833-8025-717abf9ce866",
@@ -120,17 +127,6 @@
                 },
                 {
                     "name": "",
-                    "id": "f961f164-1430-4a22-8c8f-6f41c381d799",
-                    "path": "<Gamepad>/buttonSouth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "Jump",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "2d2e10d8-43dc-4bc9-a987-5ec4bc40c979",
                     "path": "<Keyboard>/space",
                     "interactions": "",
@@ -143,21 +139,10 @@
                 {
                     "name": "",
                     "id": "ce2c3236-d0c6-4941-a432-ac0874834a39",
-                    "path": "<Keyboard>/ctrl",
+                    "path": "<Keyboard>/shift",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "Grab",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "1295f1e6-f51a-43e3-b5a7-ac2ed70935d3",
-                    "path": "<Gamepad>/rightTrigger",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
                     "action": "Grab",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -169,7 +154,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "DashDirection",
+                    "action": "Direction",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -180,7 +165,29 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
+                    "action": "Ability",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4e75ee98-e544-4a89-a906-12e3c41b2649",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
                     "action": "Dash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a000261d-1d4d-4383-a1cf-74e06a3aaa35",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Atack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

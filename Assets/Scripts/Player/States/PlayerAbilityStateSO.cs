@@ -8,6 +8,7 @@ public class PlayerAbilityStateSO : PlayerStateSO
     protected bool isGroundedTransitionBlock;
     protected bool abilityDone;
 
+    [Header("Super State Transitions")]
     [SerializeField] private PlayerIdleStateSO _toIdleState;
     [SerializeField] private PlayerInAirStateSO _toInAirState;
 

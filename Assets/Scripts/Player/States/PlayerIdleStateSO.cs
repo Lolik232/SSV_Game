@@ -6,6 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "PlayerIdleState", menuName = "State Machine/States/Player/Sub States/Idle")]
 public class PlayerIdleStateSO : PlayerGroundedStateSO
 {
+    [Header("State Transitions")]
     [SerializeField] private PlayerMoveStateSO _toMoveState;
     [SerializeField] private PlayerCrouchIdleStateSO _toCrouchIdleState;
 
