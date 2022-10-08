@@ -1,27 +1,44 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.AddressableAssets.Build.Layout;
+using All.Events;
 using UnityEngine;
 
-[RequireComponent(typeof(Collider2D))]
 public class CameraPivot : MonoBehaviour
 {
-    private Transform m_currentPivot = default;
-    [SerializeField] private CameraSystem m_cameraSystem = default;
+    [Header("Broadcasting")]
+    [SerializeField] private TransformEventChannel m_cameraTargetEnterChannel = null;
+    [SerializeField] private TransformEventChannel m_cameraTargetExitChannel = null;
 
-    private void OnTriggerEnter2D(Collider2D col)
+
+    private Transform m_currentPivotTransform = default;
+
+    private void Awake()
     {
-        if (col.TryGetComponent(out CameraManager cameraSystem)) { m_cameraSystem.EnterPivot(m_currentPivot); }
+        m_currentPivotTransform = GetComponent<Transform>();
     }
 
-    private void OnTriggerStay2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.TryGetComponent(out CameraManager cameraSystem)) { m_cameraSystem.EnterPivot(m_currentPivot); }
+        if (other.GetComponent<Player>() != null)
+        {
+            m_cameraTargetEnterChannel.RaiseEvent(m_currentPivotTransform);
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.GetComponent<Player>() != null)
+        {
+            m_cameraTargetEnterChannel.RaiseEvent(m_currentPivotTransform);
+        }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.TryGetComponent(out CameraManager cameraSystem)) { m_cameraSystem.EnterPivot(m_currentPivot); }
+        if (other.GetComponent<Player>() != null)
+        {
+            m_cameraTargetExitChannel.RaiseEvent(m_currentPivotTransform);
+        }
     }
 }
