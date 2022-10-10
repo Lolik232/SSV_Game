@@ -12,13 +12,15 @@ public class PlayerInputReaderSO : ScriptableObject
     private PlayerInput _playerInput;
 
     private Camera _mainCamera;
-    private Vector2 _inputDirection;
+    private Vector2 _inputPoint;
 
     public UnityAction<Vector2Int> MoveEvent = delegate { };
     public UnityAction GrabEvent = delegate { };
     public UnityAction GrabCanceledEvent = delegate { };
     public UnityAction<Vector2> DashEvent = delegate { };
     public UnityAction DashCanceledEvent = delegate { };
+    public UnityAction<Vector2> AttackEvent = delegate { };
+    public UnityAction AttackCanceledEvent = delegate { };
     public UnityAction<Vector2> AbilityEvent = delegate { };
     public UnityAction AbilityCanceledEvent = delegate { };
     public UnityAction JumpEvent = delegate { };
@@ -55,7 +57,7 @@ public class PlayerInputReaderSO : ScriptableObject
     {
         if (context.performed)
         {
-            DashEvent.Invoke(_inputDirection);
+            DashEvent.Invoke(_mainCamera.ScreenToWorldPoint(_inputPoint));
         }
         else if (context.canceled)
         {
@@ -63,11 +65,23 @@ public class PlayerInputReaderSO : ScriptableObject
         }
     }
 
+    public void OnAttackInput(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            AttackEvent.Invoke(_mainCamera.ScreenToWorldPoint(_inputPoint));
+        }
+        else if (context.canceled)
+        {
+            AttackCanceledEvent.Invoke();
+        }
+    }
+
     public void OnAbilityInput(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
-            AbilityEvent.Invoke(_inputDirection);
+            AbilityEvent.Invoke(_mainCamera.ScreenToWorldPoint(_inputPoint));
         }
         else if (context.canceled)
         {
@@ -79,7 +93,7 @@ public class PlayerInputReaderSO : ScriptableObject
     {
         if (_playerInput.currentControlScheme == "Keyboard")
         {
-            _inputDirection = _mainCamera.ScreenToWorldPoint((Vector3)context.ReadValue<Vector2>());
+            _inputPoint = context.ReadValue<Vector2>();
         }
     }
 

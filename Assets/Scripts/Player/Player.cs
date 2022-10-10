@@ -16,11 +16,13 @@ using UnityEngineInternal;
 
 public class Player : MonoBehaviour
 {
-    private BoxCollider2D _collider;
-    private Rigidbody2D _rb;
-    private StateMachine _machine;
-    private Animator _animator;
-    private TrailRenderer _tr;
+    [SerializeField] private GameObject _weaponBase;
+    public Weapon Weapon { get; private set; }
+    public BoxCollider2D Collider { get; private set; }
+    public Rigidbody2D Rb { get; private set; }
+    public StateMachine Machine { get; private set; }
+    public Animator Anim { get; private set; }
+    public TrailRenderer Tr { get; private set; }
 
     [Header("States")]
     [SerializeField] private List<PlayerStateSO> _states = new();
@@ -36,6 +38,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform _wallChecker;
     [SerializeField] private Transform _ledgeChecker;
     [SerializeField] private float _wallCheckDistance;
+    [SerializeField] private float _wallCloseCheckDistance;
     [SerializeField] private List<LayerMask> _whatIsTarget;
 
     [Header("Input")]
@@ -76,11 +79,6 @@ public class Player : MonoBehaviour
     [SerializeField] private Vector2 _endLedgeOffset;
     public Vector2 EndLedgeOffset => _endLedgeOffset;
 
-    public Vector2 Velocity => _rb.velocity;
-    public Vector2 Position => transform.position;
-    public Vector2 Size => _collider.size;
-    public Vector2 Offset => _collider.offset;
-
     [NonSerialized] public int facingDirection = 1;
     [NonSerialized] public int wallDirection;
 
@@ -95,14 +93,21 @@ public class Player : MonoBehaviour
     [NonSerialized] public bool dashInput;
     [NonSerialized] public Vector2 dashDirection;
 
+    [NonSerialized] public bool attackInput;
+    [NonSerialized] public Vector2 attackDirection;
+    [NonSerialized] public Vector2 attackPoint;
+
     [NonSerialized] public bool abilityInput;
     [NonSerialized] public Vector2 abilityDirection;
+    [NonSerialized] public Vector2 abilityPoint;
 
     [NonSerialized] public bool isGrounded;
     [NonSerialized] public bool isGroundClose;
     [NonSerialized] public bool isTouchingCeiling;
+    [NonSerialized] public bool isTouchingCeilingWhenClimb;
     [NonSerialized] public bool isTouchingWall;
     [NonSerialized] public bool isTouchingWallBack;
+    [NonSerialized] public bool isClampedBetweenWalls;
     [NonSerialized] public bool isTouchingLedge;
 
     [NonSerialized] public Vector2 wallPosition;
@@ -121,17 +126,26 @@ public class Player : MonoBehaviour
     private void OnGrab() => grabInput = true;
     private void OnGrabCanceled() => grabInput = false;
 
-    private void OnDash(Vector2 direction)
+    private void OnDash(Vector2 point)
     {
         dashInput = true;
-        dashDirection = (direction - (Vector2)transform.position).normalized;
+        dashDirection = (point - (Vector2)transform.position).normalized;
     }
     private void OnDashCanceled() => dashInput = false;
 
-    private void OnAbility(Vector2 direction)
+    private void OnAttack(Vector2 point)
+    {
+        attackInput = true;
+        attackDirection = (point - (Vector2)transform.position).normalized;
+        attackPoint = point;
+    }
+    private void OnAttackCanceled() => attackInput = false;
+
+    private void OnAbility(Vector2 point)
     {
         abilityInput = true;
-        abilityDirection = (direction - (Vector2)transform.position).normalized;
+        abilityDirection = (point - (Vector2)transform.position).normalized;
+        abilityPoint = point;
     }
     private void OnAbilityCanceled() => abilityInput = false;
 
@@ -142,7 +156,10 @@ public class Player : MonoBehaviour
         foreach (var target in _whatIsTarget)
         {
             isGrounded = Physics2D.OverlapCircle(_groundChecker.position, _groundCheckRadius, target);
-            return;
+            if (isGrounded)
+            {
+                return;
+            }
         }
     }
     public void CheckIfGroundClose()
@@ -150,7 +167,10 @@ public class Player : MonoBehaviour
         foreach (var target in _whatIsTarget)
         {
             isGroundClose = Physics2D.Raycast(_groundChecker.position, Vector2.down, _groundCheckDistance, target);
-            return;
+            if (isGroundClose)
+            {
+                return;
+            }
         }
     }
 
@@ -159,7 +179,10 @@ public class Player : MonoBehaviour
         foreach (var target in _whatIsTarget)
         {
             isTouchingCeiling = Physics2D.OverlapCircle(_ceilingChecker.position, _groundCheckRadius, target);
-            return;
+            if (isTouchingCeiling)
+            {
+                return;
+            }
         }
     }
     public void CheckIfTouchingWall()
@@ -167,10 +190,13 @@ public class Player : MonoBehaviour
         foreach (var target in _whatIsTarget)
         {
             RaycastHit2D hit = Physics2D.Raycast(_wallChecker.position, facingDirection * Vector2.right, _wallCheckDistance, target);
-            if (hit) { wallPosition = new Vector2(_wallChecker.position.x + facingDirection * hit.distance, _wallChecker.position.y); }
             wallDirection = hit ? -facingDirection : facingDirection;
             isTouchingWall = hit;
-            return;
+            if (isTouchingWall)
+            {
+                wallPosition = new Vector2(_wallChecker.position.x + facingDirection * hit.distance, _wallChecker.position.y);
+                return;
+            }
         }
     }
     public void CheckIfTouchingWallBack()
@@ -178,7 +204,24 @@ public class Player : MonoBehaviour
         foreach (var target in _whatIsTarget)
         {
             isTouchingWallBack = Physics2D.Raycast(_wallChecker.position, facingDirection * Vector2.left, _wallCheckDistance, target);
-            return;
+            if (isTouchingWallBack)
+            {
+                return;
+            }
+        }
+    }
+    public void CheckIfClampedBetweenWalls()
+    {
+        foreach (var target in _whatIsTarget)
+        {
+            isClampedBetweenWalls = Physics2D.Raycast(_wallChecker.position, Vector2.right, _wallCloseCheckDistance, target) &&
+                                    Physics2D.Raycast(_wallChecker.position, Vector2.left, _wallCloseCheckDistance, target) ||
+                                    Physics2D.Raycast(_ledgeChecker.position, Vector2.right, _wallCloseCheckDistance, target) &&
+                                    Physics2D.Raycast(_ledgeChecker.position, Vector2.left, _wallCloseCheckDistance, target);
+            if (isClampedBetweenWalls)
+            {
+                return;
+            }
         }
     }
     public void CheckIfTouchingLedge()
@@ -208,8 +251,11 @@ public class Player : MonoBehaviour
     {
         foreach (var target in _whatIsTarget)
         {
-            isTouchingCeiling = Physics2D.Raycast(ledgeEndPosition, Vector2.up, _standSize.y, target);
-            return;
+            isTouchingCeilingWhenClimb = Physics2D.Raycast(ledgeEndPosition, Vector2.up, _standSize.y, target);
+            if (isTouchingCeilingWhenClimb)
+            {
+                return;
+            }
         }
     }
 
@@ -222,43 +268,57 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void SetVelocity(float velocity, Vector2 angle, int direction) => _rb.velocity = new Vector2(angle.normalized.x * velocity * direction, angle.normalized.y * velocity);
-    public void SetVelocityX(float xVelocity) => _rb.velocity = new Vector2(xVelocity, _rb.velocity.y);
-    public void SetVelocityY(float yVelocity) => _rb.velocity = new Vector2(_rb.velocity.x, yVelocity);
-    public void SetVelocity(Vector2 veloity) => _rb.velocity = veloity;
-    public void SetVelocityZero() => _rb.velocity = Vector2.zero;
+    public void DoChecks()
+    {
+        CheckIfGrounded();
+        CheckIfGroundClose();
+        CheckIfTouchingWall();
+        CheckIfTouchingWallBack();
+        CheckIfTouchingCeiling();
+        CheckIfTouchingCeilingWhenClimb();
+        CheckIfTouchingLedge();
+        CheckIfClampedBetweenWalls();
+        if (isTouchingWall && !isTouchingLedge)
+        {
+            DeterminCornerPosition();
+        }
+    }
+
+    public void SetVelocity(float velocity, Vector2 angle, int direction) => Rb.velocity = new Vector2(angle.normalized.x * velocity * direction, angle.normalized.y * velocity);
+    public void SetVelocityX(float xVelocity) => Rb.velocity = new Vector2(xVelocity, Rb.velocity.y);
+    public void SetVelocityY(float yVelocity) => Rb.velocity = new Vector2(Rb.velocity.x, yVelocity);
+    public void SetVelocity(Vector2 velocity) => Rb.velocity = velocity;
+    public void SetVelocityZero() => Rb.velocity = Vector2.zero;
 
     public void MoveToX(float x) => transform.position = new Vector2(x, transform.position.y);
     public void MoveToY(float y) => transform.position = new Vector2(transform.position.x, y);
     public void HoldPosition(Vector2 holdPosition)
     {
         transform.position = holdPosition;
-        _rb.velocity = Vector2.zero;
+        Rb.velocity = Vector2.zero;
     }
 
     public void Stand()
     {
-        _collider.size = _standSize;
-        _collider.offset = _standOffset;
+        Collider.size = _standSize;
+        Collider.offset = _standOffset;
     }
 
     public void Crouch()
     {
-        _collider.size = _crouchSize;
-        _collider.offset = _crouchOffset;
+        Collider.size = _crouchSize;
+        Collider.offset = _crouchOffset;
     }
-
-    public void EnableTrail() => _tr.emitting = true;
-    public void DisableTrail() => _tr.emitting = false;
 
     private void Awake()
     {
-        _tr = GetComponent<TrailRenderer>();
-        _rb = GetComponent<Rigidbody2D>();
-        _collider = GetComponent<BoxCollider2D>();
-        _machine = GetComponent<StateMachine>();
-        _animator = GetComponent<Animator>();
+        Tr = GetComponent<TrailRenderer>();
+        Rb = GetComponent<Rigidbody2D>();
+        Collider = GetComponent<BoxCollider2D>();
+        Machine = GetComponent<StateMachine>();
+        Anim = GetComponent<Animator>();
         _inputReader.InitializePlayerInput(GetComponent<PlayerInput>());
+        Weapon = _weaponBase.GetComponent<Weapon>();
     }
 
     private void Start()
@@ -273,11 +333,13 @@ public class Player : MonoBehaviour
         _inputReader.GrabCanceledEvent += OnGrabCanceled;
         _inputReader.DashEvent += OnDash;
         _inputReader.DashCanceledEvent += OnDashCanceled;
+        _inputReader.AttackEvent += OnAttack;
+        _inputReader.AttackCanceledEvent += OnAttackCanceled;
         _inputReader.AbilityEvent += OnAbility;
         _inputReader.AbilityCanceledEvent += OnAbilityCanceled;
 
-        foreach (var state in _states) { state.Initialize(this, _machine, _animator); }
-        foreach (var ability in _abilities) { ability.Initialize(this, _machine); }
+        foreach (var state in _states) { state.Initialize(this); }
+        foreach (var ability in _abilities) { ability.Initialize(this); }
     }
 
     private void OnDestroy()
@@ -289,6 +351,8 @@ public class Player : MonoBehaviour
         _inputReader.GrabCanceledEvent -= OnGrabCanceled;
         _inputReader.DashEvent -= OnDash;
         _inputReader.DashCanceledEvent -= OnDashCanceled;
+        _inputReader.AttackEvent -= OnAttack;
+        _inputReader.AttackCanceledEvent -= OnAttackCanceled;
         _inputReader.AbilityEvent -= OnAbility;
         _inputReader.AbilityCanceledEvent -= OnAbilityCanceled;
     }
@@ -296,29 +360,40 @@ public class Player : MonoBehaviour
     private void Update()
     {
         CheckJumpInputHoldTime();
+        bool abilityUsed = false;
         foreach (var ability in _abilities)
         {
-            ability.TryUseAbility();
+            if (!abilityUsed)
+            {
+                abilityUsed |= ability.TryUseAbility();
+            }
             ability.OnUpdate();
         }
     }
 
     private void OnDrawGizmos()
     {
-        if (_collider != null)
+        if (Collider != null)
         {
-            Gizmos.DrawWireCube(new Vector2(transform.position.x, transform.position.y + _collider.offset.y), _collider.size);
-            Gizmos.DrawWireCube(new Vector2(ledgeEndPosition.x, ledgeEndPosition.y + _collider.offset.y), _collider.size);
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireCube(new Vector2(transform.position.x, transform.position.y + Collider.offset.y), Collider.size);
 
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireCube(new Vector2(ledgeEndPosition.x, ledgeEndPosition.y + Collider.offset.y), Collider.size);
+            Gizmos.DrawWireCube(new Vector2(ledgeStartPosition.x, ledgeStartPosition.y + Collider.offset.y), Collider.size);
+            Gizmos.color = Color.red;
             Gizmos.DrawLine(ledgeEndPosition, new Vector2(ledgeEndPosition.x, ledgeEndPosition.y + _standSize.y));
-            Gizmos.DrawWireCube(new Vector2(ledgeStartPosition.x, ledgeStartPosition.y + _collider.offset.y), _collider.size);
         }
 
+        Gizmos.color = Color.white;
+        Gizmos.DrawLine(new Vector2(_wallChecker.position.x - _wallCloseCheckDistance, _wallChecker.position.y), new Vector2(_wallChecker.position.x + _wallCloseCheckDistance, _wallChecker.position.y));
+        Gizmos.DrawLine(new Vector2(_ledgeChecker.position.x - _wallCloseCheckDistance, _ledgeChecker.position.y), new Vector2(_ledgeChecker.position.x + _wallCloseCheckDistance, _ledgeChecker.position.y));
+        Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(_groundChecker.position, _groundCheckRadius);
         Gizmos.DrawWireSphere(_ceilingChecker.position, _groundCheckRadius);
         Gizmos.DrawLine(_groundChecker.position, new Vector2(_groundChecker.position.x, _groundChecker.position.y - _groundCheckDistance));
-        Gizmos.DrawLine(_wallChecker.position, new Vector2(_wallChecker.position.x + facingDirection * _wallCheckDistance, _wallChecker.position.y));
-        Gizmos.DrawLine(_wallChecker.position, new Vector2(_wallChecker.position.x - facingDirection * _wallCheckDistance, _wallChecker.position.y));
+        Gizmos.DrawLine(new Vector2(_wallChecker.position.x - _wallCheckDistance, _wallChecker.position.y), new Vector2(_wallChecker.position.x + _wallCheckDistance, _wallChecker.position.y));
         Gizmos.DrawLine(_ledgeChecker.position, new Vector2(_ledgeChecker.position.x + facingDirection * _wallCheckDistance, _ledgeChecker.position.y));
+        
     }
 }

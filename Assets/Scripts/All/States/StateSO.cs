@@ -11,7 +11,7 @@ using UnityEngine.Events;
 
 public abstract class StateSO : ScriptableObject
 {
-
+    private int _animIndex;
     private bool _isActive;
     protected float startTime;
 
@@ -24,15 +24,16 @@ public abstract class StateSO : ScriptableObject
     protected List<UnityAction> enterActions = new();
     protected List<UnityAction> exitActions = new();
     protected List<UnityAction> animationFinishActions = new();
-    protected List<UnityAction> animationActions = new();
+    protected List<UnityAction<int>> animationActions = new();
     protected List<UnityAction> checks = new();
 
-    private Animator _anim;
+    protected Animator Anim { get; private set; }
     private StateMachine _machine;
 
     protected virtual void OnEnable()
     {
         _isActive = false;
+        _animIndex = 0;
         startTime = 0f;
 
         transitions.Clear();
@@ -41,13 +42,13 @@ public abstract class StateSO : ScriptableObject
         {
             _isActive = true;
             startTime = Time.time;
-            foreach (var name in _animBoolNames) { _anim.SetBool(name, true); }
-            foreach (var name in _animTriggerNames) { _anim.SetTrigger(name); }
+            foreach (var name in _animBoolNames) { Anim.SetBool(name, true); }
+            foreach (var name in _animTriggerNames) { Anim.SetTrigger(name); }
         } };
         exitActions = new List<UnityAction> { () =>
         {
             _isActive = false;
-            foreach (var name in _animBoolNames) { _anim.SetBool(name, false); }
+            foreach (var name in _animBoolNames) { Anim.SetBool(name, false); }
         } };
         animationFinishActions.Clear();
         animationActions.Clear();
@@ -113,19 +114,19 @@ public abstract class StateSO : ScriptableObject
             if (!_isActive) { return; }
             action();
         }
+        _animIndex = 0;
     }
 
     public void OnAnimationTrigger()
     {
-        foreach (var action in animationFinishActions)
+        foreach (var action in animationActions)
         {
             if (!_isActive) { return; }
-            action();
+            action(_animIndex);
         }
+        _animIndex++;
     }
-    protected void InitializeAnimator(Animator animator) => _anim = animator;
-
-    protected void SetFloat(string name, float value) => _anim.SetFloat(name, value);
+    protected void InitializeAnimator(Animator animator) => Anim = animator;
 }
 
 public struct TransitionItem
