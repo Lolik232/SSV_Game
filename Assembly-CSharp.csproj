@@ -41,83 +41,84 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\SceneManagement\ScriptableObjects\LocationSO.cs" />
-     <Compile Include="Assets\Scripts\All\Environment\BarrierChecker.cs" />
-     <Compile Include="Assets\Scripts\Player\PlayerAbilities\PlayerJumpAbility.cs" />
-     <Compile Include="Assets\Scripts\All\Unit\Unit.cs" />
      <Compile Include="Assets\Scripts\Player\Input\PlayerMoveController.cs" />
      <Compile Include="Assets\Scripts\All\Actions\TimeDependentAction.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSubStates\PlayerWallJumpState.cs" />
-     <Compile Include="Assets\Scripts\All\Interfaces\Channel\IReadChannel.cs" />
-     <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerStateMachine\PlayerStatesManager.cs" />
      <Compile Include="Assets\Scripts\All\Actions\ValueChangingAction.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerCharacteristicManager\PlayerCharacteristicsManager.cs" />
      <Compile Include="Assets\Scripts\All\Characteristics\Parameter.cs" />
      <Compile Include="Assets\Scripts\All\SpellEffects\ActiveEffects.cs" />
+     <Compile Include="Assets\Scripts\All\Data\UnitData.cs" />
+     <Compile Include="Assets\Scripts\EditorTools\MousePlace.cs" />
+     <Compile Include="Assets\Scripts\All\Interfaces\Channel\IChannel.cs" />
+     <Compile Include="Assets\Scripts\SceneManagement\ScriptableObjects\MenuSO.cs" />
+     <Compile Include="Assets\Scripts\All\Events\LoadEventChannelSO.cs" />
+     <Compile Include="Assets\Scripts\All\Events\VoidEventChannelSO.cs" />
+     <Compile Include="Assets\Scripts\All\Events\FadeChannelSO.cs" />
+     <Compile Include="Assets\Scripts\All\Environment\GroundChecker.cs" />
+     <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSubStates\PlayerWallGrabState.cs" />
+     <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSubStates\PlayerLedgeClimbState.cs" />
+     <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSubStates\PlayerLandState.cs" />
+     <Compile Include="Assets\Animation\Animation Controllers\Player\PlayerAnimationController.cs" />
+     <Compile Include="Assets\Scripts\All\Events\TransformEventChannel.cs" />
+     <Compile Include="Assets\Scripts\Player\Data\PlayerData.cs" />
+     <Compile Include="Assets\Scripts\Player\PlayerManager\Player.cs" />
+     <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSubStates\PlayerInAirState.cs" />
+     <Compile Include="Assets\Scripts\All\SaveSystem\SerializableScriptableObject.cs" />
+     <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSubStates\PlayerIdleState.cs" />
+     <Compile Include="Assets\Scripts\All\Events\TypedEventChannelSO.cs" />
+     <Compile Include="Assets\Scripts\All\BaseClasses\BaseDescriptionSO.cs" />
+     <Compile Include="Assets\Scripts\All\SpellEffects\SpellEffectHolder.cs" />
+     <Compile Include="Assets\Scripts\SceneManagement\Camera\RoomCam.cs" />
+     <Compile Include="Assets\Scripts\Player\PlayerAbilities\PlayerWallClimbAbility.cs" />
+     <Compile Include="Assets\Scripts\All\States\StateMachine.cs" />
+     <Compile Include="Assets\Scripts\SceneManagement\ScriptableObjects\LocationSO.cs" />
+     <Compile Include="Assets\Scripts\All\Environment\BarrierChecker.cs" />
+     <Compile Include="Assets\Scripts\Player\PlayerAbilities\PlayerJumpAbility.cs" />
+     <Compile Include="Assets\Scripts\All\Unit\Unit.cs" />
+     <Compile Include="Assets\Scripts\All\Interfaces\Channel\IReadChannel.cs" />
+     <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerStateMachine\PlayerStatesManager.cs" />
+     <Compile Include="Assets\Scripts\Player\Camera\CameraPivot.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerStats\PlayerStatsDescriptor.cs" />
      <Compile Include="Assets\Scripts\All\Gameplay\PlayerSpawnManager.cs" />
      <Compile Include="Assets\Scripts\SceneManagement\SceneLoader.cs" />
-     <Compile Include="Assets\Scripts\All\Data\UnitData.cs" />
      <Compile Include="Assets\Scripts\SceneManagement\ScriptableObjects\GameSceneSO.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSuperSates\PlayerGroundedState.cs" />
      <Compile Include="Assets\Scripts\All\Interfaces\ISpellEffect.cs" />
      <Compile Include="Assets\Scripts\All\Interfaces\ILiveCycle.cs" />
      <Compile Include="Assets\Scripts\SceneManagement\LocationExit.cs" />
-     <Compile Include="Assets\Scripts\EditorTools\MousePlace.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSubStates\PlayerJumpState.cs" />
-     <Compile Include="Assets\Scripts\All\Interfaces\Channel\IChannel.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerAbilities\PlayerAbilitiesManager.cs" />
-     <Compile Include="Assets\Scripts\SceneManagement\ScriptableObjects\MenuSO.cs" />
      <Compile Include="Assets\Scripts\SceneManagement\ScriptableObjects\ManagersSO.cs" />
-     <Compile Include="Assets\Scripts\All\Events\LoadEventChannelSO.cs" />
      <Compile Include="Assets\Scripts\All\Actions\TriggerAction.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSuperSates\PlayerAbilityState.cs" />
      <Compile Include="Assets\Scripts\All\Interfaces\IPhysicsUpdate.cs" />
      <Compile Include="Assets\Scripts\All\Interfaces\ISpellEffectVisitor.cs" />
-     <Compile Include="Assets\Scripts\All\Events\VoidEventChannelSO.cs" />
-     <Compile Include="Assets\Scripts\All\Events\FadeChannelSO.cs" />
-     <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSubStates\PlayerWallGrabState.cs" />
-     <Compile Include="Assets\Scripts\All\Environment\GroundChecker.cs" />
      <Compile Include="Assets\Scripts\All\Movement\MoveController.cs" />
-     <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSubStates\PlayerLedgeClimbState.cs" />
-     <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSubStates\PlayerLandState.cs" />
      <Compile Include="Assets\Scripts\Player\Camera\CameraManager.cs" />
-     <Compile Include="Assets\Animation\Animation Controllers\Player\PlayerAnimationController.cs" />
      <Compile Include="Assets\Scripts\All\Interfaces\IObject.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSuperSates\PlayerTouchingWallState.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerStateMachine\PlayerState.cs" />
      <Compile Include="Assets\Scripts\All\Environment\EnvironmentCheckersManager.cs" />
-     <Compile Include="Assets\Scripts\All\Events\TransformEventChannel.cs" />
      <Compile Include="Assets\Scripts\EditorTools\EditorStartup.cs" />
      <Compile Include="Assets\Scripts\Player\Input\PlayerInputHandler.cs" />
-     <Compile Include="Assets\Scripts\Player\Data\PlayerData.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSubStates\PlayerWallClimbState.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerStateMachine\IPlayerState.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSuperSates\PlayerEnvironmentState.cs" />
-     <Compile Include="Assets\Scripts\Player\PlayerManager\Player.cs" />
      <Compile Include="Assets\Scripts\All\Events\BoolEventChannelSO.cs" />
-     <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSubStates\PlayerInAirState.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSubStates\PlayerWallSlideState.cs" />
      <Compile Include="Assets\Scripts\All\Spell\SpellsLiveCycle\TimeLiveCycle.cs" />
-     <Compile Include="Assets\Scripts\All\SaveSystem\SerializableScriptableObject.cs" />
      <Compile Include="Assets\Scripts\All\Spell\Spell.cs" />
-     <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSubStates\PlayerIdleState.cs" />
      <Compile Include="Assets\Scripts\All\Actions\CoroutineManager.cs" />
      <Compile Include="Assets\Scripts\All\Characteristics\Characteristic.cs" />
      <Compile Include="Assets\Scripts\All\Interfaces\ILogicUpdate.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerAbilities\PlayerAbility.cs" />
      <Compile Include="Assets\Scripts\All\Interfaces\Channel\IWriteChannel.cs" />
-     <Compile Include="Assets\Scripts\All\Events\TypedEventChannelSO.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerStates\PlayerSubStates\PlayerMoveState.cs" />
      <Compile Include="Assets\Scripts\All\Environment\EnvironmentChecker.cs" />
      <Compile Include="Assets\Scripts\All\Spell\SpellHolder.cs" />
-     <Compile Include="Assets\Scripts\All\BaseClasses\BaseDescriptionSO.cs" />
-     <Compile Include="Assets\Scripts\All\SpellEffects\SpellEffectHolder.cs" />
-     <Compile Include="Assets\Scripts\All\Events\IntEventChannelSO.cs" />
-     <Compile Include="Assets\Scripts\Player\PlayerAbilities\PlayerWallClimbAbility.cs" />
-     <Compile Include="Assets\Scripts\All\States\StateMachine.cs" />
-     <Compile Include="Assets\Scripts\Player\Camera\CameraPivot.cs" />
      <Compile Include="Assets\Scripts\Player\Camera\CameraPivotAttacher.cs" />
+     <Compile Include="Assets\Scripts\All\Events\IntEventChannelSO.cs" />
      <Reference Include="UnityEngine">
      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.11f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
      </Reference>
@@ -362,19 +363,19 @@
      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.11f1\Editor\Data\Managed\UnityEngine\UnityEditor.UnityConnectModule.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Burst.Unsafe">
-     <HintPath>C:\Users\vladv\source\repos\unity\SSV_Game\Library\PackageCache\com.unity.burst@1.6.6\Unity.Burst.Unsafe.dll</HintPath>
+     <HintPath>C:\Users\vladv\source\repos\unity\SSV_Game\Library\PackageCache\com.unity.burst@1.7.3\Unity.Burst.Unsafe.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Burst.Cecil.Mdb">
-     <HintPath>C:\Users\vladv\source\repos\unity\SSV_Game\Library\PackageCache\com.unity.burst@1.6.6\Unity.Burst.CodeGen\Unity.Burst.Cecil.Mdb.dll</HintPath>
+     <HintPath>C:\Users\vladv\source\repos\unity\SSV_Game\Library\PackageCache\com.unity.burst@1.7.3\Unity.Burst.CodeGen\Unity.Burst.Cecil.Mdb.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Burst.Cecil.Pdb">
-     <HintPath>C:\Users\vladv\source\repos\unity\SSV_Game\Library\PackageCache\com.unity.burst@1.6.6\Unity.Burst.CodeGen\Unity.Burst.Cecil.Pdb.dll</HintPath>
+     <HintPath>C:\Users\vladv\source\repos\unity\SSV_Game\Library\PackageCache\com.unity.burst@1.7.3\Unity.Burst.CodeGen\Unity.Burst.Cecil.Pdb.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Burst.Cecil">
-     <HintPath>C:\Users\vladv\source\repos\unity\SSV_Game\Library\PackageCache\com.unity.burst@1.6.6\Unity.Burst.CodeGen\Unity.Burst.Cecil.dll</HintPath>
+     <HintPath>C:\Users\vladv\source\repos\unity\SSV_Game\Library\PackageCache\com.unity.burst@1.7.3\Unity.Burst.CodeGen\Unity.Burst.Cecil.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Burst.Cecil.Rocks">
-     <HintPath>C:\Users\vladv\source\repos\unity\SSV_Game\Library\PackageCache\com.unity.burst@1.6.6\Unity.Burst.CodeGen\Unity.Burst.Cecil.Rocks.dll</HintPath>
+     <HintPath>C:\Users\vladv\source\repos\unity\SSV_Game\Library\PackageCache\com.unity.burst@1.7.3\Unity.Burst.CodeGen\Unity.Burst.Cecil.Rocks.dll</HintPath>
      </Reference>
      <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
      <HintPath>C:\Users\vladv\source\repos\unity\SSV_Game\Library\PackageCache\com.unity.visualscripting@1.7.8\Runtime\VisualScripting.Flow\Dependencies\NCalc\Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
@@ -760,6 +761,9 @@
      <Reference Include="Unity.2D.PixelPerfect">
      <HintPath>C:\Users\vladv\source\repos\unity\SSV_Game\Library\ScriptAssemblies\Unity.2D.PixelPerfect.dll</HintPath>
      </Reference>
+     <Reference Include="Unity.RenderPipelines.Universal.Shaders">
+     <HintPath>C:\Users\vladv\source\repos\unity\SSV_Game\Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Shaders.dll</HintPath>
+     </Reference>
      <Reference Include="UnityEditor.CacheServer">
      <HintPath>C:\Users\vladv\source\repos\unity\SSV_Game\Library\ScriptAssemblies\UnityEditor.CacheServer.dll</HintPath>
      </Reference>
@@ -774,6 +778,9 @@
      </Reference>
      <Reference Include="Unity.VisualScripting.State.Editor">
      <HintPath>C:\Users\vladv\source\repos\unity\SSV_Game\Library\ScriptAssemblies\Unity.VisualScripting.State.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Searcher.Editor">
+     <HintPath>C:\Users\vladv\source\repos\unity\SSV_Game\Library\ScriptAssemblies\Unity.Searcher.Editor.dll</HintPath>
      </Reference>
      <Reference Include="Unity.2D.IK.Editor">
      <HintPath>C:\Users\vladv\source\repos\unity\SSV_Game\Library\ScriptAssemblies\Unity.2D.IK.Editor.dll</HintPath>
@@ -790,11 +797,17 @@
      <Reference Include="Unity.Rider.Editor">
      <HintPath>C:\Users\vladv\source\repos\unity\SSV_Game\Library\ScriptAssemblies\Unity.Rider.Editor.dll</HintPath>
      </Reference>
+     <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
+     <HintPath>C:\Users\vladv\source\repos\unity\SSV_Game\Library\ScriptAssemblies\Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
+     </Reference>
      <Reference Include="UnityEngine.UI">
      <HintPath>C:\Users\vladv\source\repos\unity\SSV_Game\Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
      </Reference>
      <Reference Include="Unity.2D.IK.Runtime">
      <HintPath>C:\Users\vladv\source\repos\unity\SSV_Game\Library\ScriptAssemblies\Unity.2D.IK.Runtime.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.ShaderGraph.Editor">
+     <HintPath>C:\Users\vladv\source\repos\unity\SSV_Game\Library\ScriptAssemblies\Unity.ShaderGraph.Editor.dll</HintPath>
      </Reference>
      <Reference Include="Cinemachine">
      <HintPath>C:\Users\vladv\source\repos\unity\SSV_Game\Library\ScriptAssemblies\Cinemachine.dll</HintPath>
@@ -804,6 +817,9 @@
      </Reference>
      <Reference Include="com.unity.cinemachine.editor">
      <HintPath>C:\Users\vladv\source\repos\unity\SSV_Game\Library\ScriptAssemblies\com.unity.cinemachine.editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.RenderPipeline.Universal.ShaderLibrary">
+     <HintPath>C:\Users\vladv\source\repos\unity\SSV_Game\Library\ScriptAssemblies\Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Mathematics.Editor">
      <HintPath>C:\Users\vladv\source\repos\unity\SSV_Game\Library\ScriptAssemblies\Unity.Mathematics.Editor.dll</HintPath>
@@ -825,6 +841,12 @@
      </Reference>
      <Reference Include="Unity.2D.Tilemap.Editor">
      <HintPath>C:\Users\vladv\source\repos\unity\SSV_Game\Library\ScriptAssemblies\Unity.2D.Tilemap.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.RenderPipelines.Universal.Runtime">
+     <HintPath>C:\Users\vladv\source\repos\unity\SSV_Game\Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
+     </Reference>
+     <Reference Include="PPv2URPConverters">
+     <HintPath>C:\Users\vladv\source\repos\unity\SSV_Game\Library\ScriptAssemblies\PPv2URPConverters.dll</HintPath>
      </Reference>
      <Reference Include="Unity.VisualStudio.Editor">
      <HintPath>C:\Users\vladv\source\repos\unity\SSV_Game\Library\ScriptAssemblies\Unity.VisualStudio.Editor.dll</HintPath>
@@ -849,6 +871,9 @@
      </Reference>
      <Reference Include="Unity.InternalAPIEditorBridge.001">
      <HintPath>C:\Users\vladv\source\repos\unity\SSV_Game\Library\ScriptAssemblies\Unity.InternalAPIEditorBridge.001.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.RenderPipelines.Core.Runtime">
+     <HintPath>C:\Users\vladv\source\repos\unity\SSV_Game\Library\ScriptAssemblies\Unity.RenderPipelines.Core.Runtime.dll</HintPath>
      </Reference>
      <Reference Include="Unity.ResourceManager">
      <HintPath>C:\Users\vladv\source\repos\unity\SSV_Game\Library\ScriptAssemblies\Unity.ResourceManager.dll</HintPath>
@@ -877,6 +902,9 @@
      <Reference Include="Unity.Burst">
      <HintPath>C:\Users\vladv\source\repos\unity\SSV_Game\Library\ScriptAssemblies\Unity.Burst.dll</HintPath>
      </Reference>
+     <Reference Include="Unity.RenderPipelines.Universal.Editor">
+     <HintPath>C:\Users\vladv\source\repos\unity\SSV_Game\Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Editor.dll</HintPath>
+     </Reference>
      <Reference Include="Unity.VisualScripting.Shared.Editor">
      <HintPath>C:\Users\vladv\source\repos\unity\SSV_Game\Library\ScriptAssemblies\Unity.VisualScripting.Shared.Editor.dll</HintPath>
      </Reference>
@@ -892,6 +920,9 @@
      <Reference Include="Unity.Timeline.Editor">
      <HintPath>C:\Users\vladv\source\repos\unity\SSV_Game\Library\ScriptAssemblies\Unity.Timeline.Editor.dll</HintPath>
      </Reference>
+     <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
+     <HintPath>C:\Users\vladv\source\repos\unity\SSV_Game\Library\ScriptAssemblies\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
+     </Reference>
      <Reference Include="Unity.2D.Common.Runtime">
      <HintPath>C:\Users\vladv\source\repos\unity\SSV_Game\Library\ScriptAssemblies\Unity.2D.Common.Runtime.dll</HintPath>
      </Reference>
@@ -903,6 +934,9 @@
      </Reference>
      <Reference Include="Unity.ScriptableBuildPipeline.Editor">
      <HintPath>C:\Users\vladv\source\repos\unity\SSV_Game\Library\ScriptAssemblies\Unity.ScriptableBuildPipeline.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.RenderPipelines.Core.Editor">
+     <HintPath>C:\Users\vladv\source\repos\unity\SSV_Game\Library\ScriptAssemblies\Unity.RenderPipelines.Core.Editor.dll</HintPath>
      </Reference>
      <Reference Include="Unity.2D.SpriteShape.Runtime">
      <HintPath>C:\Users\vladv\source\repos\unity\SSV_Game\Library\ScriptAssemblies\Unity.2D.SpriteShape.Runtime.dll</HintPath>

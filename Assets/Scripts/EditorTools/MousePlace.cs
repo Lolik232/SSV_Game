@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -11,9 +12,9 @@ using UnityEditor;
 public class MousePlace : MonoBehaviour
 {
     [SerializeField] private bool m_isTargeting = false;
-    public bool IsTargeting { get => m_isTargeting; private set => m_isTargeting = value; }
-    
-    [SerializeField]private Vector2 m_targetPosition;
+    public                   bool IsTargeting { get => m_isTargeting; private set => m_isTargeting = value; }
+
+    [SerializeField] private Vector3 m_targetPosition;
 
     private void OnDrawGizmos()
     {
@@ -26,13 +27,14 @@ public class MousePlace : MonoBehaviour
 
     public void BeginTargeting()
     {
-        IsTargeting = true;
+        IsTargeting      = true;
         m_targetPosition = transform.position;
     }
 
     public void UpdateTargeting(Vector2 spawnPosition)
     {
-        m_targetPosition = spawnPosition;
+        m_targetPosition.x = spawnPosition.x;
+        m_targetPosition.y = spawnPosition.y;
     }
 
     public void EndTargeting()
@@ -46,7 +48,7 @@ public class MousePlace : MonoBehaviour
 
     public void Cancel()
     {
-        IsTargeting = false;
+        IsTargeting      = false;
         m_targetPosition = transform.position;
     }
 }
