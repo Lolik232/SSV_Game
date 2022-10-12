@@ -15,6 +15,7 @@ public class PlayerInAirStateSO : PlayerStateSO
     [Header("Dependent Abilities")]
     [SerializeField] private PlayerJumpAbilitySO _jumpAbility;
     [SerializeField] private PlayerWallJumpAbilitySO _wallJumpAbility;
+    [SerializeField] private PlayerDashAbilitySO _dashAbility;
 
     protected override void OnEnable()
     {
@@ -27,19 +28,22 @@ public class PlayerInAirStateSO : PlayerStateSO
 
         updateActions.Add(() =>
         {
-            _jumpAbility.SetAble(_jumpAbility.CoyoteTime);
-            _wallJumpAbility.SetAble(Player.isTouchingWall || Player.isTouchingWallBack || _wallJumpAbility.CoyoteTime);
+            if (!_jumpAbility.CoyoteTime)
+            {
+                _jumpAbility.SetZeroAmountOfUsages();
+            }
+            if (Player.isTouchingWall || Player.isTouchingWallBack)
+            {
+                _wallJumpAbility.RestoreAmountOfUsages();
+            }
+            else if (!_wallJumpAbility.CoyoteTime)
+            {
+                _wallJumpAbility.SetZeroAmountOfUsages();
+            }
 
-            if (_jumpAbility.isActive && !Player.jumpInputHold && Player.Rb.velocity.y > 0f)
-            {
-                Player.SetVelocityY(Player.Rb.velocity.y * 0.5f);
-                _jumpAbility.Terminate();
-            }
-            if (!_wallJumpAbility.isActive)
-            {
-                Player.SetVelocityX(Player.moveInput.x * Player.InAirMoveSpeed);
-                Player.CheckIfShouldFlip(Player.moveInput.x);
-            }
+            Player.TrySetVelocityX(Player.moveInput.x * Player.InAirMoveSpeed);
+            Player.CheckIfShouldFlip(Player.moveInput.x);
+
             Anim.SetFloat("xVelocity", Player.Rb.velocity.x);
             Anim.SetFloat("yVelocity", Player.Rb.velocity.y);
         });

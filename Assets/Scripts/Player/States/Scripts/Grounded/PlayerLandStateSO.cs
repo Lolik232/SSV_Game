@@ -26,7 +26,7 @@ public class PlayerLandStateSO : PlayerGroundedStateSO
 
         enterActions.Add(() =>
         {
-            Player.SetVelocityX(0f);
+            Player.TrySetVelocityX(0f);
             _isLandFinished = false;
         });
 

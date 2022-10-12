@@ -12,9 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f0d5b5c048574a42ac913fe1c1109fd, type: 3}
   m_Name: PayerWallJumpAbility
   m_EditorClassIdentifier: 
-  _connectedState: {fileID: 11400000, guid: a3b53490c049359439ae85c3b4fcf2c4, type: 2}
+  _animBoolNames:
+  - jump
+  _blockedAbilities: []
   duration: 0.4
-  _cooldown: 0
+  cooldown: 0.1
+  _maxAmountOfUsages: 1
   _force: 20
   _angle: {x: 1, y: 1.2}
   _coyoteTime: 0.1

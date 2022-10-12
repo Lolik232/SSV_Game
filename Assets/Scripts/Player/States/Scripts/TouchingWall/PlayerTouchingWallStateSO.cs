@@ -20,10 +20,13 @@ public class PlayerTouchingWallStateSO : PlayerStateSO
         base.OnEnable();
 
         transitions.Add(new TransitionItem(_toIdleState, () => Player.isGrounded && (!Player.grabInput || Player.moveInput.y < 0f || !Player.isTouchingWall)));
-        transitions.Add(new TransitionItem(_toInAirState, () => !Player.isTouchingWall || (Player.moveInput.x != Player.facingDirection && !Player.grabInput),
+        transitions.Add(new TransitionItem(_toInAirState, () => !Player.isTouchingWall || _wallJumpAbility.isActive || (Player.moveInput.x != Player.facingDirection && !Player.grabInput),
             () =>
             {
-                _wallJumpAbility.StartCoyoteTime();
+                if (!_wallJumpAbility.isActive)
+                {
+                    _wallJumpAbility.StartCoyoteTime();
+                }
             }));
         transitions.Add(new TransitionItem(_toLedgeHoldState, () => Player.isTouchingWall && !Player.isTouchingLedge && !Player.isGroundClose));
 
@@ -31,16 +34,15 @@ public class PlayerTouchingWallStateSO : PlayerStateSO
         enterActions.Add(() =>
         {
             Player.MoveToX(Player.wallPosition.x + Player.wallDirection * (Player.Collider.size.x / 2 + 0.02f));
-            _dashAbility.Cache();
             _dashAbility.Block();
             _jumpAbility.Block();
-            _wallJumpAbility.Unlock();
+            _wallJumpAbility.RestoreAmountOfUsages();
         });
 
         exitActions.Add(() =>
         {
-            _dashAbility.Restore();
-            _wallJumpAbility.Block();
+            _dashAbility.Unlock();
+            _jumpAbility.Unlock();
         });
     }
 }

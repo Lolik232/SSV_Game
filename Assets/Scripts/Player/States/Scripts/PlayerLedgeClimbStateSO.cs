@@ -27,11 +27,10 @@ public class PlayerLedgeClimbStateSO : PlayerStateSO
 
         enterActions.Add(() =>
         {
-            _dashAbility.Cache();
             _dashAbility.Block();
             _jumpAbility.Block();
             _wallJumpAbility.Block();
-            Player.SetVelocityZero();
+            Player.TrySetVelocityZero();
             _isAnimationFinished = false;    
         });
 
@@ -42,7 +41,9 @@ public class PlayerLedgeClimbStateSO : PlayerStateSO
 
         exitActions.Add(() =>
         {
-            _dashAbility.Restore();
+            _dashAbility.Unlock();
+            _jumpAbility.Unlock();
+            _wallJumpAbility.Unlock();
             Player.transform.position = Player.ledgeEndPosition;
         });
 

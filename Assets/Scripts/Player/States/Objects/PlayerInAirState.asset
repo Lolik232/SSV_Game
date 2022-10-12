@@ -21,3 +21,4 @@ MonoBehaviour:
   _toLedgeHoldState: {fileID: 11400000, guid: a3e0c4c17df249640a3e321f915b07a4, type: 2}
   _jumpAbility: {fileID: 11400000, guid: 39983b7066119fd42ad942ed7d5eed01, type: 2}
   _wallJumpAbility: {fileID: 11400000, guid: 29b560b1852e4594d9cf188e2e83282f, type: 2}
+  _dashAbility: {fileID: 11400000, guid: f099f390b43105b4f92b85f1e8494dc1, type: 2}

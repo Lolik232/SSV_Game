@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b272741665a7398449fca638640bc8bb, type: 3}
   m_Name: PayerAttackAbility
   m_EditorClassIdentifier: 
-  _connectedState: {fileID: 11400000, guid: e264f9cf389b1e34dbaab145b652860e, type: 2}
+  _connectedState: {fileID: 11400000, guid: 8be183a9e3359a64a8e8a649ffa5cd76, type: 2}
   duration: 1
-  _cooldown: 1.5
-  _slashAngle: 0.3
+  _cooldown: 0.2

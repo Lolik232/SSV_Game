@@ -7,12 +7,9 @@ using UnityEngine;
 public class PlayerWallJumpAbilitySO : PlayerAbilitySO
 {
     [SerializeField] private int _force;
-    public int Force => _force;
-
     [SerializeField] private Vector2 _angle;
-    public Vector2 Angle => _angle;
-
     [SerializeField] private float _coyoteTime;
+
     private float _startCoyoteTime;
     public bool CoyoteTime => Time.time < _startCoyoteTime + _coyoteTime;
 
@@ -23,16 +20,19 @@ public class PlayerWallJumpAbilitySO : PlayerAbilitySO
     {
         base.OnEnable();
 
-        conditions.Add(() => Player.jumpInput && !Player.isClampedBetweenWalls && (Player.isTouchingWall || Player.isTouchingWallBack));
+        useConditions.Add(() => Player.jumpInput && !Player.isClampedBetweenWalls && (Player.isTouchingWall || Player.isTouchingWallBack));
+        terminateConditions.Add(() => Mathf.Abs(Player.Rb.velocity.x) <= 0.01f);
 
         useActions.Add(() =>
         {
+            Player.HoldVelocity(_force, _angle, Player.wallDirection);
+            Player.CheckIfShouldFlip(Player.wallDirection);
             Player.jumpInput = false;
         });
 
-        updateActions.Add(() =>
+        terminateActions.Add(() =>
         {
-            isActive &= Time.time < startTime + duration;
+            Player.ReleaseVelocity();
         });
     }
 

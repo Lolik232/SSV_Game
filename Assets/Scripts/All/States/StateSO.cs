@@ -55,6 +55,7 @@ public abstract class StateSO : ScriptableObject
         checks.Clear();
     }
 
+    protected void InitializeAnimator(Animator animator) => Anim = animator;
     protected void InitializeMachine(StateMachine stateMachine) => _machine = stateMachine;
 
     public void OnStateEnter()
@@ -79,7 +80,7 @@ public abstract class StateSO : ScriptableObject
         }
     }
 
-    public void OnUpdate()
+    public void OnStateUpdate()
     {
         foreach (var transition in transitions)
         {
@@ -126,7 +127,7 @@ public abstract class StateSO : ScriptableObject
         }
         _animIndex++;
     }
-    protected void InitializeAnimator(Animator animator) => Anim = animator;
+
 }
 
 public struct TransitionItem

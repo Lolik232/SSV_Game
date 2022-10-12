@@ -6,18 +6,15 @@ using UnityEngine;
 
 public class PlayerAttackAbilitySO : PlayerAbilitySO
 {
-    [SerializeField] private float _slashAngle;
-    public float SlashAngle => _slashAngle;
 
     protected override void OnEnable()
     {
         base.OnEnable();
 
-        conditions.Add(() => Player.attackInput);
+        useConditions.Add(() => Player.attackInput);
 
         useActions.Add(() =>
         {
-            isAble = true;
             Player.attackInput = false;
         });
     }

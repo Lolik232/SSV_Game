@@ -29,7 +29,7 @@ public class PlayerMoveStateSO : PlayerGroundedStateSO
         updateActions.Add(() =>
         {
             Player.CheckIfShouldFlip(Player.moveInput.x);
-            Player.SetVelocityX(Player.moveInput.x * Player.MoveSpeed);
+            Player.TrySetVelocityX(Player.moveInput.x * Player.MoveSpeed);
         });
     }
 }

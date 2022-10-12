@@ -12,8 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73f60fc10955a11428aff294041cfbf5, type: 3}
   m_Name: PayerJumpAbility
   m_EditorClassIdentifier: 
-  _connectedState: {fileID: 11400000, guid: fff0558780526b4438beb90b9f60dd3c, type: 2}
+  _animBoolNames:
+  - jump
+  _blockedAbilities: []
   duration: 0
-  _cooldown: 0
-  _force: 15
+  cooldown: 0
+  _maxAmountOfUsages: 1
+  _force: 17
   _coyoteTime: 0.1

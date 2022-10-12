@@ -23,14 +23,13 @@ public class PlayerLedgeHoldStateSO : PlayerStateSO
         base.OnEnable();
 
         transitions.Add(new TransitionItem(_toLedgeClimbState, () => _isHanging && (Player.moveInput.x == Player.facingDirection || Player.moveInput.y == 1)));
-        transitions.Add(new TransitionItem(_toInAirState, () => _isHanging && (Player.moveInput.x == -Player.facingDirection || Player.moveInput.y == -1)));
+        transitions.Add(new TransitionItem(_toInAirState, () => _isHanging && (_wallJumpAbility.isActive || Player.moveInput.x == -Player.facingDirection || Player.moveInput.y == -1)));
 
         enterActions.Add(() =>
         {
             _isHanging = false;
-            _dashAbility.Cache();
             _dashAbility.Block();
-            _jumpAbility.Block();
+            _jumpAbility.SetZeroAmountOfUsages();
             _wallJumpAbility.Block();
             Player.ledgeStartPosition = new Vector2(Player.cornerPosition.x + Player.wallDirection * (Player.StartLedgeOffset.x + 0.02f),
                                                     Player.cornerPosition.y - Player.StartLedgeOffset.y - 0.02f);
@@ -46,14 +45,14 @@ public class PlayerLedgeHoldStateSO : PlayerStateSO
 
         exitActions.Add(() =>
         {
-            _dashAbility.Restore();
-            _wallJumpAbility.Block();
+            _dashAbility.Unlock();
         });
 
         animationFinishActions.Add(() =>
         {
             _isHanging = true;
             _wallJumpAbility.Unlock();
+            _wallJumpAbility.RestoreAmountOfUsages();
         });
     }
 }

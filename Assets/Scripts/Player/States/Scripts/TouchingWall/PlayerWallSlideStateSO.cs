@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using static UnityEngine.RuleTile.TilingRuleOutput;
+
 [CreateAssetMenu(fileName = "PlayerWallSlideState", menuName = "Player/States/Touching Wall/Wall Slide")]
 
 public class PlayerWallSlideStateSO : PlayerTouchingWallStateSO
@@ -15,6 +17,16 @@ public class PlayerWallSlideStateSO : PlayerTouchingWallStateSO
 
         transitions.Add(new TransitionItem(_toWallGrabState, () => Player.moveInput.y >= 0 && Player.grabInput));
 
-        updateActions.Add(() => { Player.SetVelocityY(-Player.WallSlideSpeed); });
+        enterActions.Add(() =>
+        {
+            Player.transform.Rotate(0f, 180f, 0f);
+        });
+
+        updateActions.Add(() => { Player.TrySetVelocityY(-Player.WallSlideSpeed); });
+
+        exitActions.Add(() =>
+        {
+            Player.transform.Rotate(0f, 180f, 0f);
+        });
     }
 }

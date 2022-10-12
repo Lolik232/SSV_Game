@@ -7,23 +7,38 @@ using UnityEngine;
 
 public class PlayerDashAbilitySO : PlayerAbilitySO
 {
+    private float _cachedGravity;
+
     [SerializeField] private int _force;
-    public int Force => _force;
+
+    [SerializeField] private float _minProportion;
 
     protected override void OnEnable()
     {
         base.OnEnable();
 
-        conditions.Add(() => Player.dashInput && Player.dashDirection != Vector2.zero);
+        useConditions.Add(() => Player.dashInput && Player.dashDirection != Vector2.zero && !Player.isTouchingCeiling);
+        terminateConditions.Add(() => Player.Rb.velocity.magnitude <= _force * _minProportion);
 
         useActions.Add(() =>
         {
+            _cachedGravity = Player.Rb.gravityScale;
+            Player.Rb.gravityScale = 0f;
+            Player.CheckIfShouldFlip(Player.dashDirection.x >= 0 ? 1 : -1);
+            Player.HoldVelocity(_force * Player.dashDirection);
+            Player.Tr.emitting = true;
             Player.dashInput = false;
         });
 
-        updateActions.Add(() =>
+        terminateActions.Add(() =>
         {
-            isActive &= Time.time < startTime + duration;
+            Player.Rb.gravityScale = _cachedGravity;
+            Player.ReleaseVelocity();
+            Player.Tr.emitting = false;
+            if (Player.Rb.velocity.y > 0f)
+            {
+                Player.TrySetVelocityY(Player.Rb.velocity.y * 0.1f);
+            }
         });
     }
 }

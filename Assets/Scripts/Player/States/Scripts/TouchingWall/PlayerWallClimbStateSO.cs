@@ -15,6 +15,6 @@ public class PlayerWallClimbStateSO : PlayerTouchingWallStateSO
 
         transitions.Add(new TransitionItem(_toWallGrabState, () => Player.moveInput.y < 1));
 
-        updateActions.Add(() => { Player.SetVelocityY(Player.WallClimbSpeed); });
+        updateActions.Add(() => { Player.TrySetVelocityY(Player.WallClimbSpeed); });
     }
 }

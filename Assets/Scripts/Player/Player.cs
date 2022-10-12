@@ -16,6 +16,9 @@ using UnityEngineInternal;
 
 public class Player : MonoBehaviour
 {
+    private bool _isVelocityHeld;
+    private Vector2 _cachedVelocity;
+
     [SerializeField] private GameObject _weaponBase;
     public Weapon Weapon { get; private set; }
     public BoxCollider2D Collider { get; private set; }
@@ -54,6 +57,8 @@ public class Player : MonoBehaviour
     [SerializeField] private Vector2 _crouchOffset;
     [SerializeField] private Vector2 _crouchSize;
     public Vector2 CrouchSize => _crouchSize;
+
+    public Vector2 Center => (Vector2)transform.position + Collider.offset;
 
     [Header("Movement")]
     [SerializeField] private int _moveSpeed;
@@ -129,14 +134,14 @@ public class Player : MonoBehaviour
     private void OnDash(Vector2 point)
     {
         dashInput = true;
-        dashDirection = (point - (Vector2)transform.position).normalized;
+        dashDirection = (point - Center).normalized;
     }
     private void OnDashCanceled() => dashInput = false;
 
     private void OnAttack(Vector2 point)
     {
         attackInput = true;
-        attackDirection = (point - (Vector2)transform.position).normalized;
+        attackDirection = (point - Center).normalized;
         attackPoint = point;
     }
     private void OnAttackCanceled() => attackInput = false;
@@ -144,7 +149,7 @@ public class Player : MonoBehaviour
     private void OnAbility(Vector2 point)
     {
         abilityInput = true;
-        abilityDirection = (point - (Vector2)transform.position).normalized;
+        abilityDirection = (point - Center).normalized;
         abilityPoint = point;
     }
     private void OnAbilityCanceled() => abilityInput = false;
@@ -229,7 +234,10 @@ public class Player : MonoBehaviour
         foreach (var target in _whatIsTarget)
         {
             isTouchingLedge = Physics2D.Raycast(_ledgeChecker.position, facingDirection * Vector2.right, _wallCheckDistance, target);
-            return;
+            if (isTouchingLedge)
+            {
+                return;
+            }
         }
     }
 
@@ -284,14 +292,69 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void SetVelocity(float velocity, Vector2 angle, int direction) => Rb.velocity = new Vector2(angle.normalized.x * velocity * direction, angle.normalized.y * velocity);
-    public void SetVelocityX(float xVelocity) => Rb.velocity = new Vector2(xVelocity, Rb.velocity.y);
-    public void SetVelocityY(float yVelocity) => Rb.velocity = new Vector2(Rb.velocity.x, yVelocity);
-    public void SetVelocity(Vector2 velocity) => Rb.velocity = velocity;
-    public void SetVelocityZero() => Rb.velocity = Vector2.zero;
+    public void TrySetVelocity(float velocity, Vector2 angle, int direction)
+    {
+        TrySetVelocity(new Vector2(angle.normalized.x * velocity * direction, angle.normalized.y * velocity));
+    }
+    public void TrySetVelocityX(float xVelocity)
+    {
+        TrySetVelocity(new Vector2(xVelocity, Rb.velocity.y));
+    }
+    public void TrySetVelocityY(float yVelocity)
+    {
+        TrySetVelocity(new Vector2(Rb.velocity.x, yVelocity));
+    }
+    public void TrySetVelocityZero()
+    {
+        TrySetVelocity(Vector2.zero);
+    }
+    public void TrySetVelocity(Vector2 velocity)
+    {
+        _cachedVelocity = velocity;
+        if (!_isVelocityHeld)
+        {
+            Rb.velocity = _cachedVelocity;
+        }
+    }
 
-    public void MoveToX(float x) => transform.position = new Vector2(x, transform.position.y);
-    public void MoveToY(float y) => transform.position = new Vector2(transform.position.x, y);
+
+    public void HoldVelocity(float velocity, Vector2 angle, int direction)
+    {
+        HoldVelocity(new Vector2(angle.normalized.x * velocity * direction, angle.normalized.y * velocity));
+    }
+
+    public void HoldVelocityX(float xVelocity)
+    {
+        HoldVelocity(new Vector2(xVelocity, Rb.velocity.y));
+    }
+
+    public void HoldVelocityY(float yVelocity)
+    {
+        HoldVelocity(new Vector2(Rb.velocity.x, yVelocity));
+    }
+
+    public void HoldVelocity(Vector2 velocity)
+    {
+        Rb.velocity = velocity;
+        _isVelocityHeld = true;
+    }
+
+    public void ReleaseVelocity()
+    {
+        Rb.velocity = _cachedVelocity;
+        _isVelocityHeld = false;
+    }
+
+    public void MoveToX(float x)
+    {
+        transform.position = new Vector2(x, transform.position.y);
+    }
+
+    public void MoveToY(float y)
+    {
+        transform.position = new Vector2(transform.position.x, y);
+    }
+
     public void HoldPosition(Vector2 holdPosition)
     {
         transform.position = holdPosition;
@@ -359,6 +422,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        Weapon.OnUpdate();
         CheckJumpInputHoldTime();
         bool abilityUsed = false;
         foreach (var ability in _abilities)
@@ -394,6 +458,6 @@ public class Player : MonoBehaviour
         Gizmos.DrawLine(_groundChecker.position, new Vector2(_groundChecker.position.x, _groundChecker.position.y - _groundCheckDistance));
         Gizmos.DrawLine(new Vector2(_wallChecker.position.x - _wallCheckDistance, _wallChecker.position.y), new Vector2(_wallChecker.position.x + _wallCheckDistance, _wallChecker.position.y));
         Gizmos.DrawLine(_ledgeChecker.position, new Vector2(_ledgeChecker.position.x + facingDirection * _wallCheckDistance, _ledgeChecker.position.y));
-        
+
     }
 }

@@ -19,7 +19,7 @@ public class PlayerIdleStateSO : PlayerGroundedStateSO
 
         enterActions.Add(() =>
         {
-            Player.SetVelocityZero();
+            Player.TrySetVelocityZero();
         });
     }
 }

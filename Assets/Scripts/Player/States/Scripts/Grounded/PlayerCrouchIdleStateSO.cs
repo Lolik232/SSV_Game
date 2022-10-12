@@ -20,7 +20,7 @@ public class PlayerCrouchIdleStateSO : PlayerGroundedStateSO
 
         enterActions.Add(() =>
         {
-            Player.SetVelocityZero();
+            Player.TrySetVelocityZero();
             Player.Crouch();
         });
 

@@ -12,7 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ad6500806d502541adb15fc07a15712, type: 3}
   m_Name: PayerDashAbility
   m_EditorClassIdentifier: 
-  _connectedState: {fileID: 11400000, guid: 8be183a9e3359a64a8e8a649ffa5cd76, type: 2}
+  _animBoolNames:
+  - dash
+  _blockedAbilities:
+  - {fileID: 11400000, guid: 39983b7066119fd42ad942ed7d5eed01, type: 2}
+  - {fileID: 11400000, guid: 29b560b1852e4594d9cf188e2e83282f, type: 2}
   duration: 0.3
-  _cooldown: 1.6
-  _force: 25
+  cooldown: 1.6
+  _maxAmountOfUsages: 1
+  _force: 30
+  _minProportion: 0.5

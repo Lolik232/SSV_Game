@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PayerJumpAbility", menuName = "Player/Abilities/Jump")]
@@ -7,11 +8,9 @@ using UnityEngine;
 public class PlayerJumpAbilitySO : PlayerAbilitySO
 {
     [SerializeField] private int _force;
-    public int Force => _force;
-
     [SerializeField] private float _coyoteTime;
 
-     private float _startCoyoteTime;
+    private float _startCoyoteTime;
 
     public bool CoyoteTime => Time.time < _startCoyoteTime + _coyoteTime;
 
@@ -19,16 +18,21 @@ public class PlayerJumpAbilitySO : PlayerAbilitySO
     {
         base.OnEnable();
 
-        conditions.Add(() => Player.jumpInput && !Player.isTouchingCeiling);
+        useConditions.Add(() => Player.jumpInput && !Player.isTouchingCeiling);
+        terminateConditions.Add(() => Player.Rb.velocity.y < 0f || !Player.jumpInputHold);
 
         useActions.Add(() =>
         {
             Player.jumpInput = false;
+            Player.TrySetVelocityY(_force);
         });
 
-        updateActions.Add(() =>
+        terminateActions.Add(()=>
         {
-            isActive &= Player.Rb.velocity.y > 0f;
+            if (Player.Rb.velocity.y > 0f)
+            {
+                Player.TrySetVelocityY(Player.Rb.velocity.y * 0.5f);
+            }
         });
     }
 
