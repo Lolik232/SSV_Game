@@ -33,7 +33,7 @@ ScriptedImporter:
     spriteMeshType: 1
     alignment: 0
     spritePivot: {x: 0.5, y: 0.5}
-    spritePixelsToUnits: 200
+    spritePixelsToUnits: 300
     spriteBorder: {x: 0, y: 0, z: 0, w: 0}
     spriteGenerateFallbackPhysicsShape: 0
     generateCubemap: 6
@@ -47,7 +47,7 @@ ScriptedImporter:
     flipbookRows: 0
     flipbookColumns: 0
     ignorePngGamma: 0
-    filterMode: 1
+    filterMode: 2
     aniso: 1
     mipBias: 0
     wrapU: 0
@@ -93,16 +93,16 @@ ScriptedImporter:
   rigSpriteImportData:
   - name: Arrow
     originalName: 
-    pivot: {x: -0.5, y: 0.5}
-    alignment: 9
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 5
-      y: 5
-      width: 197
-      height: 100
-    spriteID: c34832c877923284f919de904bb2b50b
+      x: 4
+      y: 4
+      width: 594
+      height: 306
+    spriteID: 36de13cadfb09974f8f04b3880f57e86
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -111,7 +111,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 2, y: -2}
+    uvTransform: {x: 4, y: 4}
   characterData:
     bones: []
     parts: []
@@ -179,18 +179,8 @@ ScriptedImporter:
     spriteName: Arrow
     isGroup: 0
     parentIndex: -1
-    spriteID: 9591657ade84270489b156893162b4f5
-    layerID: 0
-    mosaicPosition: {x: 4, y: 4}
-    flatten: 0
-    isImported: 0
-    isVisible: 0
-  - name: Arrow
-    spriteName: Arrow
-    isGroup: 0
-    parentIndex: -1
-    spriteID: c34832c877923284f919de904bb2b50b
-    layerID: 22446553
+    spriteID: 36de13cadfb09974f8f04b3880f57e86
+    layerID: 2
     mosaicPosition: {x: 4, y: 4}
     flatten: 0
     isImported: 1

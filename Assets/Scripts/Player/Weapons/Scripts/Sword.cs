@@ -1,36 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
-
-using UnityEditor;
-
 using UnityEngine;
-
-using UnityEngineInternal;
 
 public class Sword : Weapon
 {
-    [SerializeField] private float _maxAttackDistance;
+	[SerializeField] private float _maxAttackDistance;
 
-    private Vector2 _attackPoint;
+	private Vector2 _attackPoint;
 
-    protected override void Start()
-    {
-        base.Start();
+	protected override void Start()
+	{
+		base.Start();
 
-        enterActions.Add(() =>
-        {
-            Vector2 maxAttackVector = Player.attackDirection * _maxAttackDistance;
-            Vector2 attackVector = Player.attackPoint - Player.Center;
-            if (attackVector.magnitude > maxAttackVector.magnitude)
-            {
-                attackVector = maxAttackVector;
-            }
-            transform.position = attackVector + Player.Center;
-        });
-    }
+		enterActions.Add(() =>
+		{
+			Vector2 maxAttackVector = Player.attackDirection * _maxAttackDistance;
+			Vector2 attackVector = Player.attackPoint - Player.Center;
+			if (attackVector.magnitude > maxAttackVector.magnitude)
+			{
+				attackVector = maxAttackVector;
+			}
+			transform.position = attackVector + Player.Center;
+		});
+	}
 
-    protected override void OnDrawGizmos()
-    {
-        base.OnDrawGizmos();
-    }
+	protected override void OnDrawGizmos()
+	{
+		base.OnDrawGizmos();
+	}
 }

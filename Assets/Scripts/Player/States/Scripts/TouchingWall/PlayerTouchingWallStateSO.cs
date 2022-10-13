@@ -1,48 +1,36 @@
-using System.Collections;
-using System.Collections.Generic;
-
-using UnityEngine;
-
 public class PlayerTouchingWallStateSO : PlayerStateSO
 {
-    [Header("Super State Transitions")]
-    [SerializeField] private PlayerIdleStateSO _toIdleState;
-    [SerializeField] private PlayerInAirStateSO _toInAirState;
-    [SerializeField] private PlayerLedgeHoldStateSO _toLedgeHoldState;
+	protected override void OnEnable()
+	{
+		base.OnEnable();
 
-    [Header("Dependent Abilities")]
-    [SerializeField] private PlayerDashAbilitySO _dashAbility;
-    [SerializeField] private PlayerJumpAbilitySO _jumpAbility;
-    [SerializeField] private PlayerWallJumpAbilitySO _wallJumpAbility;
+		bool IdleCondition() => Player.isGrounded && 
+														(!Player.grabInput || Player.moveInput.y < 0f);
 
-    protected override void OnEnable()
-    {
-        base.OnEnable();
+		bool InAirCondition() => !Player.isTouchingWall ||
+														 (abilities.wallJump.isActive && !abilities.wallJump.outOfWall) || 
+														 (Player.moveInput.x != Player.facingDirection && !Player.grabInput);
 
-        transitions.Add(new TransitionItem(_toIdleState, () => Player.isGrounded && (!Player.grabInput || Player.moveInput.y < 0f || !Player.isTouchingWall)));
-        transitions.Add(new TransitionItem(_toInAirState, () => !Player.isTouchingWall || _wallJumpAbility.isActive || (Player.moveInput.x != Player.facingDirection && !Player.grabInput),
-            () =>
-            {
-                if (!_wallJumpAbility.isActive)
-                {
-                    _wallJumpAbility.StartCoyoteTime();
-                }
-            }));
-        transitions.Add(new TransitionItem(_toLedgeHoldState, () => Player.isTouchingWall && !Player.isTouchingLedge && !Player.isGroundClose));
+		bool LedgeGrabCondition() => Player.isTouchingWall && 
+																 !Player.isTouchingLedge && 
+																 !Player.isGroundClose;
 
+		void IdleActions()
+		{
+			if (!abilities.wallJump.isActive)
+			{
+				abilities.wallJump.StartCoyoteTime();
+			}
+		}
 
-        enterActions.Add(() =>
-        {
-            Player.MoveToX(Player.wallPosition.x + Player.wallDirection * (Player.Collider.size.x / 2 + 0.02f));
-            _dashAbility.Block();
-            _jumpAbility.Block();
-            _wallJumpAbility.RestoreAmountOfUsages();
-        });
+		transitions.Add(new TransitionItem(states.idle, IdleCondition));
+		transitions.Add(new TransitionItem(states.inAir, InAirCondition, IdleActions));
+		transitions.Add(new TransitionItem(states.ledgeGrab, LedgeGrabCondition));
 
-        exitActions.Add(() =>
-        {
-            _dashAbility.Unlock();
-            _jumpAbility.Unlock();
-        });
-    }
+		enterActions.Add(() =>
+		{
+			Player.MoveToX(Player.wallPosition.x + Player.wallDirection * (Player.Collider.size.x / 2 + 0.02f));
+			abilities.wallJump.RestoreAmountOfUsages();
+		});
+	}
 }

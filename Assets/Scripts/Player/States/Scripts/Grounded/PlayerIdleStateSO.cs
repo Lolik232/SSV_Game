@@ -1,25 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
-
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerIdleState", menuName = "Player/States/Grounded/Idle")]
 public class PlayerIdleStateSO : PlayerGroundedStateSO
 {
-    [Header("State Transitions")]
-    [SerializeField] private PlayerMoveStateSO _toMoveState;
-    [SerializeField] private PlayerCrouchIdleStateSO _toCrouchIdleState;
+	protected override void OnEnable()
+	{
+		base.OnEnable();
 
-    protected override void OnEnable()
-    {
-        base.OnEnable();
+		bool CrouchIdleCondition() => Player.moveInput.y < 0;
 
-        transitions.Add(new TransitionItem(_toCrouchIdleState, () => Player.moveInput.y < 0));
-        transitions.Add(new TransitionItem(_toMoveState, () => Player.moveInput.x != 0));
+		bool MoveCondition() => Player.moveInput.x != 0;
 
-        enterActions.Add(() =>
-        {
-            Player.TrySetVelocityZero();
-        });
-    }
+		transitions.Add(new TransitionItem(states.crouchIdle, CrouchIdleCondition));
+		transitions.Add(new TransitionItem(states.move, MoveCondition));
+
+		enterActions.Add(() =>
+		{
+			Player.TrySetVelocityZero();
+		});
+	}
 }

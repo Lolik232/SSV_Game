@@ -1,20 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerWallClimbState", menuName = "Player/States/Touching Wall/Wall Climb")]
 
 public class PlayerWallClimbStateSO : PlayerTouchingWallStateSO
 {
-    [Header("State Transitions")]
-    [SerializeField] private PlayerWallGrabStateSO _toWallGrabState;
+	protected override void OnEnable()
+	{
+		base.OnEnable();
 
-    protected override void OnEnable()
-    {
-        base.OnEnable();
+		bool WallClimbCondition() => Player.moveInput.y < 1;
 
-        transitions.Add(new TransitionItem(_toWallGrabState, () => Player.moveInput.y < 1));
+		transitions.Add(new TransitionItem(states.wallGrab, WallClimbCondition));
 
-        updateActions.Add(() => { Player.TrySetVelocityY(Player.WallClimbSpeed); });
-    }
+		updateActions.Add(() =>
+		{
+			Player.TrySetVelocityY(Player.WallClimbSpeed);
+		});
+	}
 }

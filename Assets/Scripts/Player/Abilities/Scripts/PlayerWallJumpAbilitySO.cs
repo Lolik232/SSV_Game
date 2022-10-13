@@ -1,40 +1,61 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
+
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PayerWallJumpAbility", menuName = "Player/Abilities/Wall Jump")]
 
 public class PlayerWallJumpAbilitySO : PlayerAbilitySO
 {
-    [SerializeField] private int _force;
-    [SerializeField] private Vector2 _angle;
-    [SerializeField] private float _coyoteTime;
+	[SerializeField] private int _force;
+	[SerializeField] private Vector2 _angle;
+	[SerializeField] private float _coyoteTime;
 
-    private float _startCoyoteTime;
-    public bool CoyoteTime => Time.time < _startCoyoteTime + _coyoteTime;
+	[NonSerialized] public bool outOfWall;
 
-    [SerializeField] private float _wallExitTime;
-    public bool NeedHardExit() => Time.time > startTime + _wallExitTime;
+	private float _startCoyoteTime;
+	public bool CoyoteTime => Time.time < _startCoyoteTime + _coyoteTime;
 
-    protected override void OnEnable()
-    {
-        base.OnEnable();
+	[SerializeField] private float _wallExitTime;
+	public bool NeedHardExit() => Time.time > startTime + _wallExitTime;
 
-        useConditions.Add(() => Player.jumpInput && !Player.isClampedBetweenWalls && (Player.isTouchingWall || Player.isTouchingWallBack));
-        terminateConditions.Add(() => Mathf.Abs(Player.Rb.velocity.x) <= 0.01f);
+	protected override void OnEnable()
+	{
+		base.OnEnable();
 
-        useActions.Add(() =>
-        {
-            Player.HoldVelocity(_force, _angle, Player.wallDirection);
-            Player.CheckIfShouldFlip(Player.wallDirection);
-            Player.jumpInput = false;
-        });
+		useConditions.Add(() =>
+		{
+			return Player.jumpInput &&
+						 !Player.isClampedBetweenWalls &&
+						 (Player.isTouchingWall || Player.isTouchingWallBack);
+		});
 
-        terminateActions.Add(() =>
-        {
-            Player.ReleaseVelocity();
-        });
-    }
+		terminateConditions.Add(() =>
+		{
+			return Mathf.Abs(Player.Rb.velocity.x) <= 0.01f && 
+						 outOfWall;
+		});
 
-    public void StartCoyoteTime() => _startCoyoteTime = Time.time;
+		useActions.Add(() =>
+		{
+			outOfWall = false;
+			Player.HoldVelocity(_force, _angle, Player.wallDirection);
+			Player.CheckIfShouldFlip(Player.wallDirection);
+			Player.jumpInput = false;
+		});
+
+		updateActions.Add(() =>
+		{
+			if (!Player.isTouchingWall)
+			{
+				outOfWall = true;
+			}
+		});
+
+		terminateActions.Add(() =>
+		{
+			Player.ReleaseVelocity();
+		});
+	}
+
+	public void StartCoyoteTime() => _startCoyoteTime = Time.time;
 }

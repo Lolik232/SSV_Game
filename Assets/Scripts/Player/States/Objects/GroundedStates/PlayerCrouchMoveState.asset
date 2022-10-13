@@ -15,9 +15,6 @@ MonoBehaviour:
   _animBoolNames:
   - crouchMove
   _animTriggerNames: []
-  _toInAirState: {fileID: 11400000, guid: 490db7eaeaebdb94eb7aee3a32ee2448, type: 2}
-  _toWallGrabState: {fileID: 11400000, guid: 7617914b9bb6c004a834c51363c59b42, type: 2}
-  _dashAbility: {fileID: 11400000, guid: f099f390b43105b4f92b85f1e8494dc1, type: 2}
-  _jumpAbility: {fileID: 11400000, guid: 39983b7066119fd42ad942ed7d5eed01, type: 2}
-  _toMoveState: {fileID: 11400000, guid: d0d38fe3b05349140ba28dc83ce40cd6, type: 2}
-  _toCrouchIdleState: {fileID: 11400000, guid: a5af3b9b15e226341a29cd54e412d8df, type: 2}
+  _blockedAbilities: []
+  states: {fileID: 11400000, guid: 9c603ec4709b5f74bb3d72e0af3766ca, type: 2}
+  abilities: {fileID: 11400000, guid: 0917e0108459ae84c8d98c687dd1da49, type: 2}

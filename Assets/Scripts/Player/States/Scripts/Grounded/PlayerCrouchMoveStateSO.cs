@@ -1,37 +1,35 @@
-using System.Collections;
-using System.Collections.Generic;
-
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerCrouchMoveState", menuName = "Player/States/Grounded/Crouch Move")]
 
 public class PlayerCrouchMoveStateSO : PlayerGroundedStateSO
 {
-    [Header("State Transitions")]
-    [SerializeField] private PlayerMoveStateSO _toMoveState;
-    [SerializeField] private PlayerCrouchIdleStateSO _toCrouchIdleState;
+	protected override void OnEnable()
+	{
+		base.OnEnable();
 
-    protected override void OnEnable()
-    {
-        base.OnEnable();
+		bool MoveCondition() => Player.moveInput.y > -1 &&
+														!Player.isTouchingCeiling;
 
-        transitions.Add(new TransitionItem(_toMoveState, () => Player.moveInput.y > -1 && !Player.isTouchingCeiling));
-        transitions.Add(new TransitionItem(_toCrouchIdleState, () => Player.moveInput.x == 0));
+		bool CrouchIdleCondition() => Player.moveInput.x == 0;
 
-        enterActions.Add(() =>
-        {
-            Player.Crouch();
-        });
+		transitions.Add(new TransitionItem(states.move, MoveCondition));
+		transitions.Add(new TransitionItem(states.crouchIdle, CrouchIdleCondition));
 
-        updateActions.Add(() =>
-        {
-            Player.CheckIfShouldFlip(Player.moveInput.x);
-            Player.TrySetVelocityX(Player.moveInput.x * Player.CrouchMoveSpeed);
-        });
+		enterActions.Add(() =>
+		{
+			Player.Crouch();
+		});
 
-        exitActions.Add(() =>
-        {
-            Player.Stand();
-        });
-    }
+		updateActions.Add(() =>
+		{
+			Player.CheckIfShouldFlip(Player.moveInput.x);
+			Player.TrySetVelocityX(Player.moveInput.x * Player.CrouchMoveSpeed);
+		});
+
+		exitActions.Add(() =>
+		{
+			Player.Stand();
+		});
+	}
 }

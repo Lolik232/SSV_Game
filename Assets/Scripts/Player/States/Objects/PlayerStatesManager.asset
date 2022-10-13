@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ac8c697130466b4e9402c4faa26bbef, type: 3}
+  m_Name: PlayerStatesManager
+  m_EditorClassIdentifier: 
+  idle: {fileID: 11400000, guid: e4a73d75491eef54e847c88ab68a03e4, type: 2}
+  move: {fileID: 11400000, guid: d0d38fe3b05349140ba28dc83ce40cd6, type: 2}
+  crouchIdle: {fileID: 11400000, guid: a5af3b9b15e226341a29cd54e412d8df, type: 2}
+  crouchMove: {fileID: 11400000, guid: 727cac17514e06c42b226ca227fd8d16, type: 2}
+  land: {fileID: 11400000, guid: d28e4d7f8e057f947ba8de99faa2fc21, type: 2}
+  wallGrab: {fileID: 11400000, guid: 7617914b9bb6c004a834c51363c59b42, type: 2}
+  wallSlide: {fileID: 11400000, guid: b9f4c60c05bda3a4dbdadc3e9460c43b, type: 2}
+  wallClimb: {fileID: 11400000, guid: d02b124ee9fa12c4f947b0ce0f6df895, type: 2}
+  ledgeGrab: {fileID: 11400000, guid: 928408281917347468e21ea281056d32, type: 2}
+  ledgeHold: {fileID: 11400000, guid: a3e0c4c17df249640a3e321f915b07a4, type: 2}
+  ledgeClimb: {fileID: 11400000, guid: d053b7ebcf07adc48b4b0b1e890c4909, type: 2}
+  inAir: {fileID: 11400000, guid: 490db7eaeaebdb94eb7aee3a32ee2448, type: 2}

@@ -47,7 +47,7 @@ ScriptedImporter:
     flipbookRows: 0
     flipbookColumns: 0
     ignorePngGamma: 0
-    filterMode: 1
+    filterMode: 2
     aniso: 1
     mipBias: 0
     wrapU: 0
@@ -365,9 +365,9 @@ ScriptedImporter:
     spriteBone:
     - name: Hand1_
       guid: 325af04c5cebe524b900e7190066749e
-      position: {x: 133.81226, y: 315.87625, z: 0}
-      rotation: {x: 0, y: 0, z: 0.70778257, w: -0.70643044}
-      length: 283.70737
+      position: {x: 128.08386, y: 264.3193, z: 0}
+      rotation: {x: 0, y: 0, z: 0.6991656, w: -0.7149598}
+      length: 232.2079
       parentId: -1
       color:
         serializedVersion: 2
@@ -726,8 +726,8 @@ ScriptedImporter:
     - name: Shoulder1_
       guid: 65169d331343aad489d2be24b4ea5947
       position: {x: 124.3734, y: 194.02942, z: 0}
-      rotation: {x: 0, y: 0, z: 0.88285357, w: -0.46964845}
-      length: 131.62697
+      rotation: {x: 0, y: 0, z: 0.8492498, w: -0.52799135}
+      length: 179.20534
       parentId: -1
       color:
         serializedVersion: 2
@@ -1030,7 +1030,7 @@ ScriptedImporter:
     spriteBone:
     - name: Head_
       guid: 9a4024a35a52c1c4ab1e4f8dfc9e93a2
-      position: {x: 282.91214, y: 144.08734, z: 0}
+      position: {x: 282.91214, y: 144.0874, z: 0}
       rotation: {x: 0, y: 0, z: 0.69975513, w: 0.7143829}
       length: 301.7326
       parentId: -1
@@ -1533,7 +1533,7 @@ ScriptedImporter:
     spriteBone:
     - name: Head_
       guid: 9a4024a35a52c1c4ab1e4f8dfc9e93a2
-      position: {x: 262.91214, y: 116.08734, z: 0}
+      position: {x: 262.91214, y: 116.0874, z: 0}
       rotation: {x: 0, y: 0, z: 0.69975513, w: 0.7143829}
       length: 301.7326
       parentId: -1
@@ -1894,8 +1894,8 @@ ScriptedImporter:
     - name: Leg1_
       guid: ff08f8adaadaf33458207982d30f9404
       position: {x: 97.35657, y: 178.85242, z: 0}
-      rotation: {x: 0, y: 0, z: 0.75774026, w: -0.65255636}
-      length: 155.40802
+      rotation: {x: 0, y: 0, z: 0.7577401, w: -0.6525565}
+      length: 155.40807
       parentId: -1
       color:
         serializedVersion: 2
@@ -2211,7 +2211,7 @@ ScriptedImporter:
       guid: 2752404fa8ed3a147ac79ec169c90142
       position: {x: 54.303253, y: 140.1637, z: 0}
       rotation: {x: 0, y: 0, z: 0.7071066, w: -0.70710707}
-      length: 110.65578
+      length: 110.655754
       parentId: -1
       color:
         serializedVersion: 2
@@ -2527,7 +2527,7 @@ ScriptedImporter:
       guid: 0921574e32f36034588dcfd372573da9
       position: {x: 131.78702, y: 63.604736, z: 0}
       rotation: {x: 0, y: 0, z: 0.7156571, w: 0.6984519}
-      length: 282.56622
+      length: 282.56628
       parentId: -1
       color:
         serializedVersion: 2
@@ -3224,8 +3224,8 @@ ScriptedImporter:
     - name: Leg2_
       guid: 6586345dca83efd488a086dc0b708d5c
       position: {x: 64.95932, y: 177.68433, z: 0}
-      rotation: {x: 0, y: 0, z: -0.6241675, w: 0.78129065}
-      length: 152.6364
+      rotation: {x: 0, y: 0, z: -0.62416744, w: 0.7812906}
+      length: 152.63644
       parentId: -1
       color:
         serializedVersion: 2
@@ -3530,7 +3530,7 @@ ScriptedImporter:
       guid: a58c95c209891b04a96aa6023fcd75b9
       position: {x: 56.666046, y: 141.81616, z: 0}
       rotation: {x: 0, y: 0, z: -0.70677704, w: 0.70743644}
-      length: 112.402336
+      length: 112.40231
       parentId: -1
       color:
         serializedVersion: 2
@@ -3844,9 +3844,9 @@ ScriptedImporter:
     spriteBone:
     - name: Hand2_
       guid: fb8fcc18d662b6545a19936fe2672697
-      position: {x: 75.66162, y: 310.85504, z: 0}
-      rotation: {x: 0, y: 0, z: -0.5556558, w: 0.8314125}
-      length: 283.0867
+      position: {x: 95.7113, y: 269.32275, z: 0}
+      rotation: {x: 0, y: 0, z: -0.5602765, w: 0.8283057}
+      length: 237.05826
       parentId: -1
       color:
         serializedVersion: 2
@@ -4216,8 +4216,8 @@ ScriptedImporter:
     - name: Shoulder2_
       guid: b9d0972606b1dc248bfcf8cde6031f56
       position: {x: 62.59796, y: 213.36328, z: 0}
-      rotation: {x: 0, y: 0, z: -0.58798283, w: 0.8088735}
-      length: 129.84372
+      rotation: {x: 0, y: 0, z: -0.57348114, w: 0.8192188}
+      length: 175.64745
       parentId: -1
       color:
         serializedVersion: 2

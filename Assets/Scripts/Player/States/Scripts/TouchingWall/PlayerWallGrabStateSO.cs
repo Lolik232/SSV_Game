@@ -1,33 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
-
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerWallGrabState", menuName = "Player/States/Touching Wall/Wall Grab")]
 
 public class PlayerWallGrabStateSO : PlayerTouchingWallStateSO
 {
-    private Vector2 _holdPosition;
+	private Vector2 _holdPosition;
 
-    [Header("State Transitions")]
-    [SerializeField] private PlayerWallSlideStateSO _toWallSlideState;
-    [SerializeField] private PlayerWallClimbStateSO _toWallClimbState;
+	protected override void OnEnable()
+	{
+		base.OnEnable();
 
-    protected override void OnEnable()
-    {
-        base.OnEnable();
+		bool WallClimbCondition() => Player.moveInput.y > 0;
 
-        transitions.Add(new TransitionItem(_toWallClimbState, () => Player.moveInput.y > 0));
-        transitions.Add(new TransitionItem(_toWallSlideState, () => Player.moveInput.y < 0 || !Player.grabInput));
+		bool WallSlideCondition() => Player.moveInput.y < 0 || 
+																 !Player.grabInput;
 
-        enterActions.Add(() =>
-        {
-            _holdPosition = Player.transform.position;
-            Player.HoldPosition(_holdPosition);
-        });
+		transitions.Add(new TransitionItem(states.wallClimb, WallClimbCondition));
+		transitions.Add(new TransitionItem(states.wallSlide, WallSlideCondition));
 
-        updateActions.Add(() => { 
-            Player.HoldPosition(_holdPosition); 
-        });
-    }
+		enterActions.Add(() =>
+		{
+			_holdPosition = Player.transform.position;
+			Player.HoldPosition(_holdPosition);
+		});
+
+		updateActions.Add(() =>
+		{
+			Player.HoldPosition(_holdPosition);
+		});
+	}
 }

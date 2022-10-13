@@ -1,7 +1,7 @@
 ﻿namespace All.Interfaces
 {
-    public interface IPhysicsUpdate
-    {
-        void PhysicsUpdate();
-    }
+	public interface IPhysicsUpdate
+	{
+		void PhysicsUpdate();
+	}
 }

@@ -1,35 +1,34 @@
-using All.Events;
-
-using Unity.VisualScripting;
-
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
 
 public class StateMachine : MonoBehaviour
 {
-    [SerializeField] private StateSO _defaultState;
-    private StateSO _currentState = null;
+	[SerializeField] private StateSO _defaultState;
+	private StateSO _currentState = null;
 
-    protected virtual void Awake() { }
+	protected virtual void Awake()
+	{
+	}
 
-    protected virtual void Start() => GetTransitionState(_defaultState);
+	protected virtual void Start() => GetTransitionState(_defaultState);
 
-    private void Update() => _currentState.OnStateUpdate();
+	private void Update() => _currentState.OnStateUpdate();
 
-    private void FixedUpdate() => _currentState.OnFixedUpdate();
+	private void FixedUpdate() => _currentState.OnFixedUpdate();
 
-    private void OnAnimationFinishTrigger() => _currentState.OnAnimationFinishTrigger();
+	private void OnAnimationFinishTrigger() => _currentState.OnAnimationFinishTrigger();
 
-    private void OnAnimationTrigger() => _currentState.OnAnimationTrigger();
+	private void OnAnimationTrigger() => _currentState.OnAnimationTrigger();
 
-    public void GetTransitionState(StateSO transitionState)
-    {
-        if (_currentState != null)
-        {
-            _currentState.OnStateExit();
-        }
-        _currentState = transitionState;
-        _currentState.OnStateEnter();
-    }
+	public void GetTransitionState(StateSO transitionState)
+	{
+		if (_currentState != null)
+		{
+			_currentState.OnStateExit();
+		}
+
+		_currentState = transitionState;
+		_currentState.OnStateEnter();
+	}
 }

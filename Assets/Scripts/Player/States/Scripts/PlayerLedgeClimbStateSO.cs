@@ -1,55 +1,45 @@
-using System.Collections;
-using System.Collections.Generic;
-
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerLedgeClimbState", menuName = "Player/States/Ledge Climb")]
 
 public class PlayerLedgeClimbStateSO : PlayerStateSO
 {
-    private bool _isAnimationFinished;
+	private bool _climbFinished;
 
-    [Header("State Transitions")]
-    [SerializeField] private PlayerIdleStateSO _toIdleState;
-    [SerializeField] private PlayerCrouchIdleStateSO _toCrouchIdleState;
+	protected override void OnEnable()
+	{
+		base.OnEnable();
 
-    [Header("Dependent Abilities")]
-    [SerializeField] private PlayerJumpAbilitySO _jumpAbility;
-    [SerializeField] private PlayerWallJumpAbilitySO _wallJumpAbility;
-    [SerializeField] private PlayerDashAbilitySO _dashAbility;
+		bool IdleCondition() => _climbFinished && 
+													  !Player.isTouchingCeilingWhenClimb;
 
-    protected override void OnEnable()
-    {
-        base.OnEnable();
+		bool CrouchIdleCondition() => _climbFinished && 
+																	Player.isTouchingCeilingWhenClimb;
 
-        transitions.Add(new TransitionItem(_toIdleState, () => _isAnimationFinished && !Player.isTouchingCeilingWhenClimb));
-        transitions.Add(new TransitionItem(_toCrouchIdleState, () => _isAnimationFinished && Player.isTouchingCeilingWhenClimb));
+		transitions.Add(new TransitionItem(states.idle, IdleCondition));
+		transitions.Add(new TransitionItem(states.crouchIdle, CrouchIdleCondition));
 
-        enterActions.Add(() =>
-        {
-            _dashAbility.Block();
-            _jumpAbility.Block();
-            _wallJumpAbility.Block();
-            Player.TrySetVelocityZero();
-            _isAnimationFinished = false;    
-        });
+		enterActions.Add(() =>
+		{
+			_climbFinished = false;
+			Player.isClimbingLedge = true;
+			Player.HoldPosition(Player.ledgeStartPosition);
+		});
 
-        updateActions.Add(()=>
-        {
-            Player.HoldPosition(Player.ledgeStartPosition);
-        });
+		updateActions.Add(() =>
+		{
+			Player.HoldPosition(Player.ledgeStartPosition);
+		});
 
-        exitActions.Add(() =>
-        {
-            _dashAbility.Unlock();
-            _jumpAbility.Unlock();
-            _wallJumpAbility.Unlock();
-            Player.transform.position = Player.ledgeEndPosition;
-        });
+		exitActions.Add(() =>
+		{
+			Player.isClimbingLedge = false;
+			Player.transform.position = Player.ledgeEndPosition;
+		});
 
-        animationFinishActions.Add(() =>
-        {
-            _isAnimationFinished = true;
-        });
-    }
+		animationFinishActions.Add(() =>
+		{
+			_climbFinished = true;
+		});
+	}
 }

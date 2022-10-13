@@ -1,7 +1,7 @@
 ﻿namespace All.Interfaces
 {
-    public interface ILogicUpdate
-    {
-        void LogicUpdate();
-    }
+	public interface ILogicUpdate
+	{
+		void LogicUpdate();
+	}
 }

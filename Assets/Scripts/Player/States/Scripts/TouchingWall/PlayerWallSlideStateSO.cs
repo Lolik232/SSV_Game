@@ -1,32 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
-using static UnityEngine.RuleTile.TilingRuleOutput;
 
 [CreateAssetMenu(fileName = "PlayerWallSlideState", menuName = "Player/States/Touching Wall/Wall Slide")]
 
 public class PlayerWallSlideStateSO : PlayerTouchingWallStateSO
 {
-    [Header("State Transitions")]
-    [SerializeField] private PlayerWallGrabStateSO _toWallGrabState;
+	protected override void OnEnable()
+	{
+		base.OnEnable();
 
-    protected override void OnEnable()
-    {
-        base.OnEnable();
+		bool WallGrabCondition() => Player.moveInput.y >= 0 && 
+																Player.grabInput;
 
-        transitions.Add(new TransitionItem(_toWallGrabState, () => Player.moveInput.y >= 0 && Player.grabInput));
+		transitions.Add(new TransitionItem(states.wallGrab, WallGrabCondition));
 
-        enterActions.Add(() =>
-        {
-            Player.transform.Rotate(0f, 180f, 0f);
-        });
+		enterActions.Add(() =>
+		{
+			Player.transform.Rotate(0f, 180f, 0f);
+		});
 
-        updateActions.Add(() => { Player.TrySetVelocityY(-Player.WallSlideSpeed); });
+		updateActions.Add(() => { Player.TrySetVelocityY(-Player.WallSlideSpeed); });
 
-        exitActions.Add(() =>
-        {
-            Player.transform.Rotate(0f, 180f, 0f);
-        });
-    }
+		exitActions.Add(() =>
+		{
+			Player.transform.Rotate(0f, 180f, 0f);
+		});
+	}
 }

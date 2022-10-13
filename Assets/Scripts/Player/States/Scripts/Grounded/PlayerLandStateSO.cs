@@ -1,37 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
-
-using All.Events;
-
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerLandState", menuName = "Player/States/Grounded/Land")]
 
 public class PlayerLandStateSO : PlayerGroundedStateSO
 {
-    [Header("State Transitions")]
-    [SerializeField] private PlayerMoveStateSO _toMoveState;
-    [SerializeField] private PlayerIdleStateSO _toIdleState;
-    [SerializeField] private PlayerCrouchIdleStateSO _toCrouchIdleState;
+	private bool _isLandFinished;
 
-    private bool _isLandFinished;
+	protected override void OnEnable()
+	{
+		base.OnEnable();
 
-    protected override void OnEnable()
-    {
-        base.OnEnable();
+		bool IdleCondition() => _isLandFinished;
+		bool CrouchIdleCondition() => Player.moveInput.y < 0;
+		bool MoveCondition() => Player.moveInput.x != 0;
 
-        transitions.Add(new TransitionItem(_toIdleState, () => _isLandFinished));
-        transitions.Add(new TransitionItem(_toCrouchIdleState, () => Player.moveInput.y < 0));
-        transitions.Add(new TransitionItem(_toMoveState, () => Player.moveInput.x != 0));
+		transitions.Add(new TransitionItem(states.idle, IdleCondition));
+		transitions.Add(new TransitionItem(states.crouchIdle, CrouchIdleCondition));
+		transitions.Add(new TransitionItem(states.move, MoveCondition));
 
-        enterActions.Add(() =>
-        {
-            Player.TrySetVelocityX(0f);
-            _isLandFinished = false;
-        });
+		enterActions.Add(() =>
+		{
+			Player.TrySetVelocityZero();
+			_isLandFinished = false;
+		});
 
-        animationFinishActions.Add(() => { 
-            _isLandFinished = true; 
-        });
-    }
+		animationFinishActions.Add(() =>
+		{
+			_isLandFinished = true;
+		});
+	}
 }

@@ -1,51 +1,55 @@
-using System.Collections;
-using System.Collections.Generic;
-
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerInAirState", menuName = "Player/States/In Air")]
 public class PlayerInAirStateSO : PlayerStateSO
 {
-    [Header("State Transitions")]
-    [SerializeField] private PlayerLandStateSO _toLandState;
-    [SerializeField] private PlayerWallGrabStateSO _toWallGrabState;
-    [SerializeField] private PlayerWallSlideStateSO _toWallSlideState;
-    [SerializeField] private PlayerLedgeHoldStateSO _toLedgeHoldState;
+	protected override void OnEnable()
+	{
+		base.OnEnable();
 
-    [Header("Dependent Abilities")]
-    [SerializeField] private PlayerJumpAbilitySO _jumpAbility;
-    [SerializeField] private PlayerWallJumpAbilitySO _wallJumpAbility;
-    [SerializeField] private PlayerDashAbilitySO _dashAbility;
+		bool LandCondition() => Player.isGrounded && 
+													  Player.Rb.velocity.y < 0.01f;
 
-    protected override void OnEnable()
-    {
-        base.OnEnable();
+		bool LedgeGrabCondition() => Player.isTouchingWall && 
+																 !Player.isTouchingLedge && 
+																 !Player.isGroundClose;
 
-        transitions.Add(new TransitionItem(_toLandState, () => Player.isGrounded && Player.Rb.velocity.y < 0.01f));
-        transitions.Add(new TransitionItem(_toLedgeHoldState, () => Player.isTouchingWall && !Player.isTouchingLedge && !Player.isGroundClose));
-        transitions.Add(new TransitionItem(_toWallGrabState, () => Player.isTouchingWall && Player.isTouchingLedge && Player.grabInput));
-        transitions.Add(new TransitionItem(_toWallSlideState, () => Player.isTouchingWall && Player.moveInput.x == Player.facingDirection && Player.Rb.velocity.y <= 0f));
+		bool WallGrabCondition() => (!abilities.wallJump.isActive || abilities.wallJump.outOfWall) && 
+																Player.isTouchingWall &&
+																Player.isTouchingLedge &&
+																Player.grabInput;
 
-        updateActions.Add(() =>
-        {
-            if (!_jumpAbility.CoyoteTime)
-            {
-                _jumpAbility.SetZeroAmountOfUsages();
-            }
-            if (Player.isTouchingWall || Player.isTouchingWallBack)
-            {
-                _wallJumpAbility.RestoreAmountOfUsages();
-            }
-            else if (!_wallJumpAbility.CoyoteTime)
-            {
-                _wallJumpAbility.SetZeroAmountOfUsages();
-            }
+		bool WallSlideCondition() => (!abilities.wallJump.isActive || abilities.wallJump.outOfWall) && 
+																 Player.isTouchingWall && 
+																 Player.moveInput.x == Player.facingDirection && 
+																 Player.Rb.velocity.y <= 0f;
 
-            Player.TrySetVelocityX(Player.moveInput.x * Player.InAirMoveSpeed);
-            Player.CheckIfShouldFlip(Player.moveInput.x);
+		transitions.Add(new TransitionItem(states.land, LandCondition));
+		transitions.Add(new TransitionItem(states.ledgeGrab, LedgeGrabCondition));
+		transitions.Add(new TransitionItem(states.wallGrab, WallGrabCondition));
+		transitions.Add(new TransitionItem(states.wallSlide, WallSlideCondition));
 
-            Anim.SetFloat("xVelocity", Player.Rb.velocity.x);
-            Anim.SetFloat("yVelocity", Player.Rb.velocity.y);
-        });
-    }
+		updateActions.Add(() =>
+		{
+			if (!abilities.jump.CoyoteTime)
+			{
+				abilities.jump.SetAmountOfUsagesToZero();
+			}
+
+			if (Player.isTouchingWall || Player.isTouchingWallBack)
+			{
+				abilities.wallJump.RestoreAmountOfUsages();
+			}
+			else if (!abilities.wallJump.CoyoteTime)
+			{
+				abilities.wallJump.SetAmountOfUsagesToZero();
+			}
+
+			Player.TrySetVelocityX(Player.moveInput.x * Player.InAirMoveSpeed);
+			Player.CheckIfShouldFlip(Player.moveInput.x);
+
+			Anim.SetFloat("xVelocity", Player.Rb.velocity.x);
+			Anim.SetFloat("yVelocity", Player.Rb.velocity.y);
+		});
+	}
 }
