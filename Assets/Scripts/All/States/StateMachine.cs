@@ -11,11 +11,20 @@ public class StateMachine : MonoBehaviour
 	{
 	}
 
-	protected virtual void Start() => GetTransitionState(_defaultState);
+	protected virtual void Start()
+	{
+		GetTransitionState(_defaultState);
+	}
 
-	private void Update() => _currentState.OnStateUpdate();
+	private void Update()
+	{
+		_currentState.OnStateUpdate();
+	}
 
-	private void FixedUpdate() => _currentState.OnFixedUpdate();
+	private void FixedUpdate()
+	{
+		_currentState.OnFixedUpdate();
+	}
 
 	private void OnAnimationFinishTrigger() => _currentState.OnAnimationFinishTrigger();
 

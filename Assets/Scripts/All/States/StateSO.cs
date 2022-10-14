@@ -6,38 +6,45 @@ using UnityEngine.Events;
 
 public abstract class StateSO : ScriptableObject
 {
-	private int _animIndex;
 	private bool _isActive;
+	private int _animIndex;
+	private int _amountOfBlocks;
+
 	protected float startTime;
 
-	[Header("Animator")]
-	[SerializeField] private List<string> _animBoolNames;
-	[SerializeField] private List<string> _animTriggerNames;
+	[SerializeField] private List<string> _animBoolNames = new();
+	[SerializeField] private List<string> _animTriggerNames = new();
 	[SerializeField] private List<AbilitySO> _blockedAbilities = new();
+	[SerializeField] private StateSO _defaultState;
 
 	protected List<TransitionItem> transitions = new();
-	protected List<UnityAction> updateActions = new();
 	protected List<UnityAction> enterActions = new();
 	protected List<UnityAction> exitActions = new();
+	protected List<UnityAction> updateActions = new();
+	protected List<UnityAction> checks = new();
 	protected List<UnityAction> animationFinishActions = new();
 	protected List<UnityAction<int>> animationActions = new();
-	protected List<UnityAction> checks = new();
 
-	protected Animator Anim
-	{
-		get; private set;
-	}
+	protected Animator anim;
 
 	private StateMachine _machine;
+
+	public bool IsAble => _amountOfBlocks == 0;
 
 	protected virtual void OnEnable()
 	{
 		_isActive = false;
+
 		_animIndex = 0;
 		startTime = 0f;
+		_amountOfBlocks = 0;
 
 		transitions.Clear();
 		updateActions.Clear();
+		animationFinishActions.Clear();
+		animationActions.Clear();
+		checks.Clear();
+
 		enterActions = new List<UnityAction> { () =>
 			{
 				_isActive = true;
@@ -50,12 +57,12 @@ public abstract class StateSO : ScriptableObject
 
 				foreach (var name in _animBoolNames)
 				{
-						Anim.SetBool(name, true);
+						anim.SetBool(name, true);
 				}
 
 				foreach (var name in _animTriggerNames)
 				{
-						Anim.SetTrigger(name);
+						anim.SetTrigger(name);
 				}
 			}};
 		exitActions = new List<UnityAction> { () =>
@@ -68,15 +75,12 @@ public abstract class StateSO : ScriptableObject
 
 				foreach (var name in _animBoolNames)
 				{
-						Anim.SetBool(name, false);
+						anim.SetBool(name, false);
 				}
 			}};
-		animationFinishActions.Clear();
-		animationActions.Clear();
-		checks.Clear();
 	}
 
-	protected void InitializeAnimator(Animator animator) => Anim = animator;
+	protected void InitializeAnimator(Animator animator) => anim = animator;
 	protected void InitializeMachine(StateMachine stateMachine) => _machine = stateMachine;
 
 	public void OnStateEnter()
@@ -112,6 +116,12 @@ public abstract class StateSO : ScriptableObject
 
 	public void OnStateUpdate()
 	{
+		if (_defaultState != null && !IsAble)
+		{
+			_machine.GetTransitionState(_defaultState);
+			return;
+		}
+
 		foreach (var transition in transitions)
 		{
 			if (!_isActive)
@@ -119,7 +129,7 @@ public abstract class StateSO : ScriptableObject
 				return;
 			}
 
-			if (transition.condition())
+			if (transition.toState.IsAble && transition.condition())
 			{
 				transition.action?.Invoke();
 				_machine.GetTransitionState(transition.toState);
@@ -179,6 +189,15 @@ public abstract class StateSO : ScriptableObject
 		}
 
 		_animIndex++;
+	}
+
+	public void Block() => _amountOfBlocks++;
+	public void Unlock()
+	{
+		if (_amountOfBlocks > 0)
+		{
+			_amountOfBlocks--;
+		}
 	}
 }
 

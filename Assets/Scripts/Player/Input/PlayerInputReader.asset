@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9528030cb9e203143b5cb3d28b2f646d, type: 3}
   m_Name: PlayerInputReader
   m_EditorClassIdentifier: 
-  _mainCamera: {fileID: 0}
+  _jumpInputHoldTime: 0.1
+  _dashInputPressTime: 0.5

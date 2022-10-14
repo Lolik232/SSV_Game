@@ -1,51 +1,65 @@
+using System;
+
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 [CreateAssetMenu(fileName = "PlayerInputReader", menuName = "Player/Input/Reader")]
 public class PlayerInputReaderSO : ScriptableObject
 {
+	[SerializeField] private float _jumpInputHoldTime;
+	[SerializeField] private float _dashInputPressTime;
+
 	private PlayerInput _playerInput;
 	private Camera _mainCamera;
 
-	private Vector2 _inputPoint;
+	private float _jumpInputStartTime;
+	private float _dashInputStartTime;
 
-	public UnityAction<Vector2Int> MoveEvent = delegate { };
-	public UnityAction JumpEvent = delegate { };
-	public UnityAction GrabEvent = delegate { };
-	public UnityAction<Vector2> DashEvent = delegate { };
-	public UnityAction<Vector2> AttackEvent = delegate { };
-	public UnityAction<Vector2> AbilityEvent = delegate { };
-	public UnityAction JumpCanceledEvent = delegate { };
-	public UnityAction GrabCanceledEvent = delegate { };
-	public UnityAction DashCanceledEvent = delegate { };
-	public UnityAction AttackCanceledEvent = delegate { };
-	public UnityAction AbilityCanceledEvent = delegate { };
+	private Vector2 _mouseInputPosition;
+
+	[NonSerialized] public bool jumpInput;
+	[NonSerialized] public bool grabInput;
+	[NonSerialized] public bool dashInput;
+	[NonSerialized] public bool attackInput;
+	[NonSerialized] public bool abilityInput;
+
+	[NonSerialized] public bool jumpInputHold;
+
+	[NonSerialized] public Vector2Int moveInput;
+
+	[NonSerialized] public Vector2 mouseInputPosition;
+	[NonSerialized] public Vector2 mouseInputDirection;
+	[NonSerialized] public float mouseInputDistance;
 
 	private void OnEnable()
 	{
 		_mainCamera = Camera.main;
 	}
 
-	public void InitializePlayerInput(PlayerInput playerInput)
+	public void OnUpdate()
 	{
-		_playerInput = playerInput;
+		mouseInputPosition = _mainCamera.ScreenToWorldPoint(_mouseInputPosition);
+
+		jumpInput &= Time.time < _jumpInputStartTime + _jumpInputHoldTime;
+		dashInput &= Time.time < _dashInputStartTime + _dashInputPressTime;
 	}
+
+	public void InitializePlayerInput(PlayerInput playerInput) => _playerInput = playerInput;
 
 	public void OnMoveInput(InputAction.CallbackContext context)
 	{
-		MoveEvent.Invoke(Vector2Int.RoundToInt(context.ReadValue<Vector2>()));
+		moveInput = Vector2Int.RoundToInt(context.ReadValue<Vector2>());
 	}
 
 	public void OnGrabInput(InputAction.CallbackContext context)
 	{
 		if (context.performed)
 		{
-			GrabEvent.Invoke();
+			grabInput = true;
 		}
 		else if (context.canceled)
 		{
-			GrabCanceledEvent.Invoke();
+			grabInput = false;
 		}
 	}
 
@@ -53,11 +67,12 @@ public class PlayerInputReaderSO : ScriptableObject
 	{
 		if (context.performed)
 		{
-			DashEvent.Invoke(_mainCamera.ScreenToWorldPoint(_inputPoint));
+			dashInput = true;
+			_dashInputStartTime = Time.time;
 		}
 		else if (context.canceled)
 		{
-			DashCanceledEvent.Invoke();
+			dashInput = false;
 		}
 	}
 
@@ -65,11 +80,11 @@ public class PlayerInputReaderSO : ScriptableObject
 	{
 		if (context.performed)
 		{
-			AttackEvent.Invoke(_mainCamera.ScreenToWorldPoint(_inputPoint));
+			attackInput = true;
 		}
 		else if (context.canceled)
 		{
-			AttackCanceledEvent.Invoke();
+			attackInput = false;
 		}
 	}
 
@@ -77,11 +92,11 @@ public class PlayerInputReaderSO : ScriptableObject
 	{
 		if (context.performed)
 		{
-			AbilityEvent.Invoke(_mainCamera.ScreenToWorldPoint(_inputPoint));
+			abilityInput = true;
 		}
 		else if (context.canceled)
 		{
-			AbilityCanceledEvent.Invoke();
+			abilityInput = false;
 		}
 	}
 
@@ -89,7 +104,7 @@ public class PlayerInputReaderSO : ScriptableObject
 	{
 		if (_playerInput.currentControlScheme == "Keyboard")
 		{
-			_inputPoint = context.ReadValue<Vector2>();
+			_mouseInputPosition = context.ReadValue<Vector2>();
 		}
 	}
 
@@ -97,11 +112,13 @@ public class PlayerInputReaderSO : ScriptableObject
 	{
 		if (context.performed)
 		{
-			JumpEvent.Invoke();
+			jumpInput = true;
+			jumpInputHold = true;
+			_jumpInputStartTime = Time.time;
 		}
 		else if (context.canceled)
 		{
-			JumpCanceledEvent.Invoke();
+			jumpInputHold = false;
 		}
 	}
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 using UnityEngine;
@@ -6,10 +7,7 @@ using UnityEngine;
 
 public class PlayerAbilitiesManagerSO : ScriptableObject
 {
-	public List<PlayerAbilitySO> Abilities
-	{
-		get; private set;
-	}
+	[NonSerialized] public List<PlayerAbilitySO> abilities;
 
 	public PlayerAttackAbilitySO attack;
 	public PlayerDashAbilitySO dash;
@@ -18,7 +16,7 @@ public class PlayerAbilitiesManagerSO : ScriptableObject
 
 	private void OnEnable()
 	{
-		Abilities = new List<PlayerAbilitySO>
+		abilities = new List<PlayerAbilitySO>
 		{
 				attack,
 				dash,
@@ -29,7 +27,7 @@ public class PlayerAbilitiesManagerSO : ScriptableObject
 
 	public void Initialize(Player player)
 	{
-		foreach (var ability in Abilities)
+		foreach (var ability in abilities)
 		{
 			ability.Initialize(player);
 		}

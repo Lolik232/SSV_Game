@@ -9,11 +9,17 @@ public class PlayerAttackAbilitySO : PlayerAbilitySO
 	{
 		base.OnEnable();
 
-		useConditions.Add(() => Player.attackInput);
+		useConditions.Add(() => inputReader.attackInput);
 
 		useActions.Add(() =>
 		{
-			Player.attackInput = false;
+			inputReader.attackInput = false;
+			player.weapon.OnEnter();
+		});
+
+		terminateActions.Add(() =>
+		{
+			player.weapon.OnExit();
 		});
 	}
 }

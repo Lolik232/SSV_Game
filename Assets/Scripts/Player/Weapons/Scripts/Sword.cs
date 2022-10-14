@@ -3,8 +3,9 @@ using UnityEngine;
 public class Sword : Weapon
 {
 	[SerializeField] private float _maxAttackDistance;
+	[SerializeField] private float _attackAngle;
 
-	private Vector2 _attackPoint;
+	private Vector2 _attackPosition;
 
 	protected override void Start()
 	{
@@ -12,18 +13,22 @@ public class Sword : Weapon
 
 		enterActions.Add(() =>
 		{
-			Vector2 maxAttackVector = Player.attackDirection * _maxAttackDistance;
-			Vector2 attackVector = Player.attackPoint - Player.Center;
+			Vector2 maxAttackVector = inputReader.mouseInputDirection * _maxAttackDistance;
+			Vector2 attackVector = inputReader.mouseInputPosition - player.Center;
 			if (attackVector.magnitude > maxAttackVector.magnitude)
 			{
 				attackVector = maxAttackVector;
 			}
-			transform.position = attackVector + Player.Center;
+
+			_attackPosition = attackVector + player.Center;
 		});
 	}
 
 	protected override void OnDrawGizmos()
 	{
 		base.OnDrawGizmos();
+
+		Gizmos.color = Color.blue;
+		Gizmos.DrawWireSphere(_attackPosition, _attackAngle);
 	}
 }

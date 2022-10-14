@@ -7,49 +7,49 @@ public class PlayerInAirStateSO : PlayerStateSO
 	{
 		base.OnEnable();
 
-		bool LandCondition() => Player.isGrounded && 
-													  Player.Rb.velocity.y < 0.01f;
+		bool LandCondition() => player.isGrounded &&
+														player.rb.velocity.y < 0.01f;
 
-		bool LedgeGrabCondition() => Player.isTouchingWall && 
-																 !Player.isTouchingLedge && 
-																 !Player.isGroundClose;
+		bool LedgeGrabCondition() => player.isTouchingWall &&
+																 !player.isTouchingLedge &&
+																 !player.isGroundClose;
 
-		bool WallGrabCondition() => (!abilities.wallJump.isActive || abilities.wallJump.outOfWall) && 
-																Player.isTouchingWall &&
-																Player.isTouchingLedge &&
-																Player.grabInput;
+		bool WallGrabCondition() => player.isTouchingWall &&
+																player.isTouchingLedge &&
+																inputReader.grabInput;
 
-		bool WallSlideCondition() => (!abilities.wallJump.isActive || abilities.wallJump.outOfWall) && 
-																 Player.isTouchingWall && 
-																 Player.moveInput.x == Player.facingDirection && 
-																 Player.Rb.velocity.y <= 0f;
+		bool WallSlideCondition() => player.isTouchingWall &&
+																 inputReader.moveInput.x == player.facingDirection &&
+																 player.rb.velocity.y <= 0f;
+
+		void LedgeGrabAction() => player.DetermineLedgePosition();
 
 		transitions.Add(new TransitionItem(states.land, LandCondition));
-		transitions.Add(new TransitionItem(states.ledgeGrab, LedgeGrabCondition));
+		transitions.Add(new TransitionItem(states.ledgeGrab, LedgeGrabCondition, LedgeGrabAction));
 		transitions.Add(new TransitionItem(states.wallGrab, WallGrabCondition));
 		transitions.Add(new TransitionItem(states.wallSlide, WallSlideCondition));
 
 		updateActions.Add(() =>
 		{
-			if (!abilities.jump.CoyoteTime)
+			if (!abilities.jump.IsCoyoteTime())
 			{
 				abilities.jump.SetAmountOfUsagesToZero();
 			}
 
-			if (Player.isTouchingWall || Player.isTouchingWallBack)
+			if (player.isTouchingWall || player.isTouchingWallBack)
 			{
 				abilities.wallJump.RestoreAmountOfUsages();
 			}
-			else if (!abilities.wallJump.CoyoteTime)
+			else if (!abilities.wallJump.IsCoyoteTime())
 			{
 				abilities.wallJump.SetAmountOfUsagesToZero();
 			}
 
-			Player.TrySetVelocityX(Player.moveInput.x * Player.InAirMoveSpeed);
-			Player.CheckIfShouldFlip(Player.moveInput.x);
+			player.TrySetVelocityX(inputReader.moveInput.x * player.InAirMoveSpeed);
+			player.CheckIfShouldFlip(inputReader.moveInput.x);
 
-			Anim.SetFloat("xVelocity", Player.Rb.velocity.x);
-			Anim.SetFloat("yVelocity", Player.Rb.velocity.y);
+			anim.SetFloat("xVelocity", player.rb.velocity.x);
+			anim.SetFloat("yVelocity", player.rb.velocity.y);
 		});
 	}
 }

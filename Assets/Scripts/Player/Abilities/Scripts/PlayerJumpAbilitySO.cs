@@ -5,10 +5,10 @@ using UnityEngine;
 public class PlayerJumpAbilitySO : PlayerAbilitySO
 {
 	[SerializeField] private int _force;
+
 	[SerializeField] private float _coyoteTime;
 
 	private float _startCoyoteTime;
-	public bool CoyoteTime => Time.time < _startCoyoteTime + _coyoteTime;
 
 	protected override void OnEnable()
 	{
@@ -16,30 +16,32 @@ public class PlayerJumpAbilitySO : PlayerAbilitySO
 
 		useConditions.Add(() =>
 		{
-			return Player.jumpInput && 
-						 !Player.isTouchingCeiling;
+			return inputReader.jumpInput &&
+						 !player.isTouchingCeiling;
 		});
 
 		terminateConditions.Add(() =>
 		{
-			return Player.Rb.velocity.y < 0f || 
-						 !Player.jumpInputHold;
+			return player.rb.velocity.y < 0f ||
+						 !inputReader.jumpInputHold;
 		});
 
 		useActions.Add(() =>
 		{
-			Player.jumpInput = false;
-			Player.TrySetVelocityY(_force);
+			inputReader.jumpInput = false;
+			player.TrySetVelocityY(_force);
 		});
 
 		terminateActions.Add(() =>
 		{
-			if (Player.Rb.velocity.y > 0f)
+			if (player.rb.velocity.y > 0f)
 			{
-				Player.TrySetVelocityY(Player.Rb.velocity.y * 0.5f);
+				player.TrySetVelocityY(player.rb.velocity.y * 0.5f);
 			}
 		});
 	}
+
+	public bool IsCoyoteTime() => Time.time < _startCoyoteTime + _coyoteTime;
 
 	public void StartCoyoteTime() => _startCoyoteTime = Time.time;
 }

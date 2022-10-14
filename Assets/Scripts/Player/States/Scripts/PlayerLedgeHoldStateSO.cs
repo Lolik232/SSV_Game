@@ -8,12 +8,11 @@ public class PlayerLedgeHoldStateSO : PlayerStateSO
 	{
 		base.OnEnable();
 
-		bool LedgeClimbCondition() => Player.moveInput.x == Player.facingDirection ||
-																	Player.moveInput.y == 1;
+		bool LedgeClimbCondition() => inputReader.moveInput.x == player.facingDirection ||
+																	inputReader.moveInput.y == 1;
 
-		bool InAirCondition() => abilities.wallJump.isActive ||
-														 Player.moveInput.x == -Player.facingDirection ||
-														 Player.moveInput.y == -1;
+		bool InAirCondition() => inputReader.moveInput.x == -player.facingDirection ||
+														 inputReader.moveInput.y == -1;
 
 		transitions.Add(new TransitionItem(states.ledgeClimb, LedgeClimbCondition));
 		transitions.Add(new TransitionItem(states.inAir, InAirCondition));
@@ -21,17 +20,12 @@ public class PlayerLedgeHoldStateSO : PlayerStateSO
 		enterActions.Add(() =>
 		{
 			abilities.wallJump.RestoreAmountOfUsages();
-			Player.HoldPosition(Player.ledgeStartPosition);
+			player.HoldPosition(player.ledgeStartPosition);
 		});
 
 		updateActions.Add(() =>
 		{
-			Player.HoldPosition(Player.ledgeStartPosition);
-		});
-
-		exitActions.Add(() =>
-		{
-			Player.isHanging = false;
+			player.HoldPosition(player.ledgeStartPosition);
 		});
 	}
 }

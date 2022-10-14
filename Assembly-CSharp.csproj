@@ -74,12 +74,15 @@
     <Compile Include="Assets\Scripts\All\Events\FadeChannelSO.cs" />
     <Compile Include="Assets\Scripts\Player\States\Scripts\PlayerInAirStateSO.cs" />
     <Compile Include="Assets\Scripts\Player\Player.cs" />
+    <Compile Include="Assets\Scripts\Player\States\Scripts\PlayerStatesManagerSO.cs" />
+    <Compile Include="Assets\Scripts\Player\Input\PlayerInputReaderOwner.cs" />
     <Compile Include="Assets\Scripts\Player\States\Scripts\Grounded\PlayerIdleStateSO.cs" />
     <Compile Include="Assets\Scripts\All\SaveSystem\SerializableScriptableObject.cs" />
     <Compile Include="Assets\Scripts\Player\States\Scripts\Grounded\PlayerCrouchMoveStateSO.cs" />
     <Compile Include="Assets\Scripts\All\Events\TypedEventChannelSO.cs" />
     <Compile Include="Assets\Scripts\All\BaseClasses\BaseDescriptionSO.cs" />
     <Compile Include="Assets\Scripts\All\SpellEffects\SpellEffectHolder.cs" />
+    <Compile Include="Assets\Scripts\Player\States\Scripts\PlayerLedgeGrabStateSO.cs" />
     <Compile Include="Assets\Scripts\SceneManagement\ScriptableObjects\LocationSO.cs" />
     <Compile Include="Assets\Scripts\All\Gameplay\PlayerSpawnManager.cs" />
     <Compile Include="Assets\Scripts\SceneManagement\SceneLoader.cs" />
@@ -95,6 +98,7 @@
     <Compile Include="Assets\Scripts\Player\States\Scripts\PlayerLedgeHoldStateSO.cs" />
     <Compile Include="Assets\Scripts\All\Interfaces\IObject.cs" />
     <Compile Include="Assets\Scripts\Player\Abilities\Scripts\AbilitySO.cs" />
+    <Compile Include="Assets\Scripts\Player\Abilities\Scripts\PlayerAbilitiesManagerSO.cs" />
     <Compile Include="Assets\Scripts\Player\States\Scripts\TouchingWall\PlayerTouchingWallStateSO.cs" />
     <Compile Include="Assets\Scripts\All\Events\BoolEventChannelSO.cs" />
     <Compile Include="Assets\Scripts\All\Spell\SpellsLiveCycle\TimeLiveCycle.cs" />
@@ -108,9 +112,6 @@
     <Compile Include="Assets\Scripts\Player\Abilities\Scripts\PlayerAttackAbilitySO.cs" />
     <Compile Include="Assets\Scripts\All\Spell\SpellHolder.cs" />
     <Compile Include="Assets\Scripts\All\Events\IntEventChannelSO.cs" />
-    <Compile Include="Assets\Scripts\Player\States\Scripts\PlayerStatesManagerSO.cs" />
-    <Compile Include="Assets\Scripts\Player\Abilities\Scripts\PlayerAbilitiesManagerSO.cs" />
-    <Compile Include="Assets\Scripts\Player\States\Scripts\PlayerLedgeGrabStateSO.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

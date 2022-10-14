@@ -10,11 +10,11 @@ public class PlayerLedgeClimbStateSO : PlayerStateSO
 	{
 		base.OnEnable();
 
-		bool IdleCondition() => _climbFinished && 
-													  !Player.isTouchingCeilingWhenClimb;
+		bool IdleCondition() => _climbFinished &&
+														!player.isTouchingCeilingWhenClimb;
 
-		bool CrouchIdleCondition() => _climbFinished && 
-																	Player.isTouchingCeilingWhenClimb;
+		bool CrouchIdleCondition() => _climbFinished &&
+																	player.isTouchingCeilingWhenClimb;
 
 		transitions.Add(new TransitionItem(states.idle, IdleCondition));
 		transitions.Add(new TransitionItem(states.crouchIdle, CrouchIdleCondition));
@@ -22,19 +22,17 @@ public class PlayerLedgeClimbStateSO : PlayerStateSO
 		enterActions.Add(() =>
 		{
 			_climbFinished = false;
-			Player.isClimbingLedge = true;
-			Player.HoldPosition(Player.ledgeStartPosition);
+			player.HoldPosition(player.ledgeStartPosition);
 		});
 
 		updateActions.Add(() =>
 		{
-			Player.HoldPosition(Player.ledgeStartPosition);
+			player.HoldPosition(player.ledgeStartPosition);
 		});
 
 		exitActions.Add(() =>
 		{
-			Player.isClimbingLedge = false;
-			Player.transform.position = Player.ledgeEndPosition;
+			player.transform.position = player.ledgeEndPosition;
 		});
 
 		animationFinishActions.Add(() =>

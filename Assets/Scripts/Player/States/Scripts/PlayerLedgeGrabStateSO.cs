@@ -17,14 +17,13 @@ public class PlayerLedgeGrabStateSO : PlayerStateSO
 		enterActions.Add(() =>
 		{
 			_grabFinish = false;
-			Player.isHanging = true;
 			abilities.jump.SetAmountOfUsagesToZero();
-			Player.HoldPosition(Player.ledgeStartPosition);
+			player.HoldPosition(player.ledgeStartPosition);
 		});
 
 		updateActions.Add(() =>
 		{
-			Player.HoldPosition(Player.ledgeStartPosition);
+			player.HoldPosition(player.ledgeStartPosition);
 		});
 
 		animationFinishActions.Add(() =>

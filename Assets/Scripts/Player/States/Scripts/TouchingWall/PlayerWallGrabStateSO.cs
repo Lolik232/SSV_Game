@@ -10,23 +10,23 @@ public class PlayerWallGrabStateSO : PlayerTouchingWallStateSO
 	{
 		base.OnEnable();
 
-		bool WallClimbCondition() => Player.moveInput.y > 0;
+		bool WallClimbCondition() => inputReader.moveInput.y > 0;
 
-		bool WallSlideCondition() => Player.moveInput.y < 0 || 
-																 !Player.grabInput;
+		bool WallSlideCondition() => inputReader.moveInput.y < 0 ||
+																 !inputReader.grabInput;
 
 		transitions.Add(new TransitionItem(states.wallClimb, WallClimbCondition));
 		transitions.Add(new TransitionItem(states.wallSlide, WallSlideCondition));
 
 		enterActions.Add(() =>
 		{
-			_holdPosition = Player.transform.position;
-			Player.HoldPosition(_holdPosition);
+			_holdPosition = player.transform.position;
+			player.HoldPosition(_holdPosition);
 		});
 
 		updateActions.Add(() =>
 		{
-			Player.HoldPosition(_holdPosition);
+			player.HoldPosition(_holdPosition);
 		});
 	}
 }

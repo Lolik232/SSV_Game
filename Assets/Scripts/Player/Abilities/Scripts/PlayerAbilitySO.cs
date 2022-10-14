@@ -1,13 +1,12 @@
 public class PlayerAbilitySO : AbilitySO
 {
-	protected Player Player
-	{
-		get; private set;
-	}
+	protected PlayerInputReaderSO inputReader;
+	protected Player player;
 
 	public void Initialize(Player player)
 	{
-		InitializeAnimator(player.Anim);
-		Player = player;
+		InitializeAnimator(player.anim);
+		this.player = player;
+		inputReader = player.inputReader;
 	}
 }

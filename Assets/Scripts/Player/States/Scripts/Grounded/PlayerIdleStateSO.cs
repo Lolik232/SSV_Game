@@ -7,16 +7,16 @@ public class PlayerIdleStateSO : PlayerGroundedStateSO
 	{
 		base.OnEnable();
 
-		bool CrouchIdleCondition() => Player.moveInput.y < 0;
+		bool CrouchIdleCondition() => inputReader.moveInput.y < 0;
 
-		bool MoveCondition() => Player.moveInput.x != 0;
+		bool MoveCondition() => inputReader.moveInput.x != 0;
 
 		transitions.Add(new TransitionItem(states.crouchIdle, CrouchIdleCondition));
 		transitions.Add(new TransitionItem(states.move, MoveCondition));
 
 		enterActions.Add(() =>
 		{
-			Player.TrySetVelocityZero();
+			player.TrySetVelocityZero();
 		});
 	}
 }

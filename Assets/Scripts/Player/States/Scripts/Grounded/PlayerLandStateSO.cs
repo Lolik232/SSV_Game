@@ -11,8 +11,8 @@ public class PlayerLandStateSO : PlayerGroundedStateSO
 		base.OnEnable();
 
 		bool IdleCondition() => _isLandFinished;
-		bool CrouchIdleCondition() => Player.moveInput.y < 0;
-		bool MoveCondition() => Player.moveInput.x != 0;
+		bool CrouchIdleCondition() => inputReader.moveInput.y < 0;
+		bool MoveCondition() => inputReader.moveInput.x != 0;
 
 		transitions.Add(new TransitionItem(states.idle, IdleCondition));
 		transitions.Add(new TransitionItem(states.crouchIdle, CrouchIdleCondition));
@@ -20,7 +20,7 @@ public class PlayerLandStateSO : PlayerGroundedStateSO
 
 		enterActions.Add(() =>
 		{
-			Player.TrySetVelocityZero();
+			player.TrySetVelocityZero();
 			_isLandFinished = false;
 		});
 

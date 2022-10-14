@@ -4,46 +4,52 @@ using UnityEngine;
 
 public class PlayerDashAbilitySO : PlayerAbilitySO
 {
-	private float _cachedGravity;
-
-	[SerializeField] private int _force;
-
+	[SerializeField] private int _dashForce;
 	[SerializeField] private float _minProportion;
+
+	private float _cachedGravity;
+	private Vector2 _dashDirection;
 
 	protected override void OnEnable()
 	{
 		base.OnEnable();
 
+		beforeUseActions.Add(() =>
+		{
+			_dashDirection = inputReader.mouseInputDirection;
+		});
+
 		useConditions.Add(() =>
 		{
-			return Player.dashInput && 
-						 Player.dashDirection != Vector2.zero && 
-						 !Player.isTouchingCeiling;
+			return inputReader.dashInput &&
+						 _dashDirection != Vector2.zero &&
+						 !player.isTouchingCeiling;
 		});
 
 		terminateConditions.Add(() =>
 		{
-			return Player.Rb.velocity.magnitude <= _force * _minProportion;
+			return player.rb.velocity.magnitude <= _dashForce * _minProportion;
 		});
 
 		useActions.Add(() =>
 		{
-			_cachedGravity = Player.Rb.gravityScale;
-			Player.Rb.gravityScale = 0f;
-			Player.CheckIfShouldFlip(Player.dashDirection.x >= 0 ? 1 : -1);
-			Player.HoldVelocity(_force * Player.dashDirection);
-			Player.Tr.emitting = true;
-			Player.dashInput = false;
+			_cachedGravity = player.rb.gravityScale;
+			player.rb.gravityScale = 0f;
+			player.CheckIfShouldFlip(_dashDirection.x >= 0 ? 1 : -1);
+			player.HoldVelocity(_dashForce * _dashDirection);
+			player.tr.emitting = true;
+			inputReader.dashInput = false;
 		});
 
 		terminateActions.Add(() =>
 		{
-			Player.Rb.gravityScale = _cachedGravity;
-			Player.ReleaseVelocity();
-			Player.Tr.emitting = false;
-			if (Player.Rb.velocity.y > 0f)
+			player.rb.gravityScale = _cachedGravity;
+			player.ReleaseVelocity();
+			player.tr.emitting = false;
+			player.tr.Clear();
+			if (player.rb.velocity.y > 0f)
 			{
-				Player.TrySetVelocityY(Player.Rb.velocity.y * 0.1f);
+				player.TrySetVelocityY(player.rb.velocity.y * 0.1f);
 			}
 		});
 	}

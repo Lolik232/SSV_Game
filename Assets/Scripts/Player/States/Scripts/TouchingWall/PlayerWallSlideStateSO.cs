@@ -8,21 +8,24 @@ public class PlayerWallSlideStateSO : PlayerTouchingWallStateSO
 	{
 		base.OnEnable();
 
-		bool WallGrabCondition() => Player.moveInput.y >= 0 && 
-																Player.grabInput;
+		bool WallGrabCondition() => inputReader.moveInput.y >= 0 &&
+																inputReader.grabInput;
 
 		transitions.Add(new TransitionItem(states.wallGrab, WallGrabCondition));
 
 		enterActions.Add(() =>
 		{
-			Player.transform.Rotate(0f, 180f, 0f);
+			player.transform.Rotate(0f, 180f, 0f);
 		});
 
-		updateActions.Add(() => { Player.TrySetVelocityY(-Player.WallSlideSpeed); });
+		updateActions.Add(() =>
+		{
+			player.TrySetVelocityY(-player.WallSlideSpeed);
+		});
 
 		exitActions.Add(() =>
 		{
-			Player.transform.Rotate(0f, 180f, 0f);
+			player.transform.Rotate(0f, 180f, 0f);
 		});
 	}
 }

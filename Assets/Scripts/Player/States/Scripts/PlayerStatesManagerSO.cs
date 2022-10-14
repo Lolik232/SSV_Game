@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 using UnityEngine;
@@ -5,10 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "PlayerStatesManager", menuName = "Player/States/States Manager")]
 public class PlayerStatesManagerSO : ScriptableObject
 {
-	public List<PlayerStateSO> States
-	{
-		get; private set;
-	}
+	[NonSerialized] public List<PlayerStateSO> states;
 
 	[Header("Grouded")]
 	public PlayerIdleStateSO idle;
@@ -30,7 +28,7 @@ public class PlayerStatesManagerSO : ScriptableObject
 
 	private void OnEnable()
 	{
-		States = new List<PlayerStateSO>
+		states = new List<PlayerStateSO>
 			{
 				idle,
 				move,
@@ -51,7 +49,7 @@ public class PlayerStatesManagerSO : ScriptableObject
 
 	public void Initialize(Player player)
 	{
-		foreach (var state in States)
+		foreach (var state in states)
 		{
 			state.Initialize(player);
 		}

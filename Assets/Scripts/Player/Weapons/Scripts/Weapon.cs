@@ -6,27 +6,16 @@ using UnityEngine.Events;
 public class Weapon : MonoBehaviour
 {
 	[SerializeField] private string _weaponName;
-	[SerializeField] private GameObject _baseOrigin;
+	[SerializeField] private GameObject _base;
+
+	protected PlayerInputReaderSO inputReader;
 
 	private bool _isActive;
 	protected bool needExit;
 
-	protected SpriteRenderer Sr
-	{
-		get; private set;
-	}
-	protected Animator BaseAnim
-	{
-		get; private set;
-	}
-	protected Animator Anim
-	{
-		get; private set;
-	}
-	protected Player Player
-	{
-		get; private set;
-	}
+	protected Animator baseAnim;
+	protected Animator anim;
+	protected Player player;
 
 	protected List<UnityAction> updateActions = new();
 	protected List<UnityAction> enterActions = new();
@@ -34,10 +23,10 @@ public class Weapon : MonoBehaviour
 
 	protected virtual void Awake()
 	{
-		Player = _baseOrigin.GetComponent<Player>();
-		BaseAnim = _baseOrigin.GetComponent<Animator>();
-		Anim = GetComponentInChildren<Animator>();
-		Sr = GetComponentInChildren<SpriteRenderer>();
+		player = _base.GetComponent<Player>();
+		baseAnim = _base.GetComponent<Animator>();
+		inputReader = _base.GetComponent<PlayerInputReaderOwner>().inputReader;
+		anim = GetComponentInChildren<Animator>();
 	}
 
 	protected virtual void Start()
@@ -47,18 +36,18 @@ public class Weapon : MonoBehaviour
 
 		updateActions.Clear();
 		enterActions = new List<UnityAction> { ()=>
-				{
-						BaseAnim.SetBool(_weaponName, true);
-						Anim.SetBool("attack", true);
-						_isActive = true;
-						needExit = false;
-				} };
+			{
+					baseAnim.SetBool(_weaponName, true);
+					anim.SetBool("attack", true);
+					_isActive = true;
+					needExit = false;
+			} };
 		exitActions = new List<UnityAction> { ()=>
-				{
-						BaseAnim.SetBool(_weaponName, false);
-						Anim.SetBool("attack", false);
-						_isActive = false;
-				} };
+			{
+					baseAnim.SetBool(_weaponName, false);
+					anim.SetBool("attack", false);
+					_isActive = false;
+			} };
 	}
 
 	public void OnEnter()
@@ -67,6 +56,7 @@ public class Weapon : MonoBehaviour
 		{
 			return;
 		}
+
 		foreach (var action in enterActions)
 		{
 			action();
@@ -79,13 +69,14 @@ public class Weapon : MonoBehaviour
 		{
 			return;
 		}
+
 		foreach (var action in exitActions)
 		{
 			action();
 		}
 	}
 
-	public void OnUpdate()
+	public void Update()
 	{
 		foreach (var action in updateActions)
 		{
@@ -93,6 +84,7 @@ public class Weapon : MonoBehaviour
 			{
 				return;
 			}
+
 			action();
 			if (needExit)
 			{

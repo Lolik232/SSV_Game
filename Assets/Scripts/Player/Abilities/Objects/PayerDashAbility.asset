@@ -12,13 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ad6500806d502541adb15fc07a15712, type: 3}
   m_Name: PayerDashAbility
   m_EditorClassIdentifier: 
+  _duration: 0.2
+  _cooldown: 1.6
+  _maxAmountOfUsages: 1
   _animBoolNames:
   - dash
   _blockedAbilities:
   - {fileID: 11400000, guid: 39983b7066119fd42ad942ed7d5eed01, type: 2}
   - {fileID: 11400000, guid: 29b560b1852e4594d9cf188e2e83282f, type: 2}
-  duration: 0.3
-  cooldown: 1.6
-  _maxAmountOfUsages: 1
-  _force: 30
-  _minProportion: 0.5
+  _blockedStates:
+  - {fileID: 11400000, guid: e4a73d75491eef54e847c88ab68a03e4, type: 2}
+  - {fileID: 11400000, guid: d0d38fe3b05349140ba28dc83ce40cd6, type: 2}
+  - {fileID: 11400000, guid: d28e4d7f8e057f947ba8de99faa2fc21, type: 2}
+  - {fileID: 11400000, guid: a5af3b9b15e226341a29cd54e412d8df, type: 2}
+  - {fileID: 11400000, guid: 727cac17514e06c42b226ca227fd8d16, type: 2}
+  _dashForce: 30
+  _minProportion: 0.3

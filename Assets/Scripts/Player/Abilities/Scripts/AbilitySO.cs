@@ -6,94 +6,113 @@ using UnityEngine.Events;
 
 public class AbilitySO : ScriptableObject
 {
-	[SerializeField] private List<string> _animBoolNames = new();
-
-	[SerializeField] private List<AbilitySO> _blockedAbilities = new();
-
-	[Header("Parameters")]
-	[SerializeField] protected float duration;
-	[SerializeField] protected float cooldown;
+	[SerializeField] private float _duration;
+	[SerializeField] private float _cooldown;
 	[SerializeField] private int _maxAmountOfUsages;
 
-	protected float startTime;
-	protected float endTime;
+	[SerializeField] private List<string> _animBoolNames = new();
+	[SerializeField] private List<AbilitySO> _blockedAbilities = new();
+	[SerializeField] private List<StateSO> _blockedStates = new();
 
-	protected int amountOfUsagesLeft;
-
-	private int _amountOfBlocks;
-	protected bool IsAble => _amountOfBlocks == 0;
-	[NonSerialized] public bool isActive;
-
+	protected List<UnityAction> beforeUseActions = new();
 	protected List<UnityAction> useActions = new();
 	protected List<UnityAction> terminateActions = new();
 	protected List<UnityAction> updateActions = new();
 	protected List<Func<bool>> useConditions = new();
 	protected List<Func<bool>> terminateConditions = new();
 
-	protected Animator Anim
-	{
-		get; private set;
-	}
+	protected float startTime;
+	protected float endTime;
+	protected int amountOfUsagesLeft;
+
+	private int _amountOfBlocks;
+
+	protected Animator anim;
+
+	[NonSerialized] public bool isActive;
+
+	protected bool IsAble => _amountOfBlocks == 0;
 
 	protected virtual void OnEnable()
 	{
-		_amountOfBlocks = 0;
 		isActive = false;
+
 		amountOfUsagesLeft = _maxAmountOfUsages;
+
 		startTime = 0f;
 		endTime = 0f;
+		_amountOfBlocks = 0;
 
+		beforeUseActions.Clear();
+		updateActions.Clear();
 		useActions = new List<UnityAction> { () =>
 		{
-				isActive = true;
-				amountOfUsagesLeft--;
-				foreach (var ability in _blockedAbilities)
-				{
-						ability.Terminate();
-						ability.Block();
-				}
+			isActive = true;
+			amountOfUsagesLeft--;
+			foreach (var ability in _blockedAbilities)
+			{
+					ability.Terminate();
+					ability.Block();
+			}
 
-				foreach (var name in _animBoolNames)
-				{
-						Anim.SetBool(name, true);
-				}
+			foreach (var state in _blockedStates)
+			{
+					state.Block();
+			}
 
-				startTime = Time.time;
+			foreach (var name in _animBoolNames)
+			{
+					anim.SetBool(name, true);
+			}
+
+			startTime = Time.time;
 		}};
 		terminateActions = new List<UnityAction> { () =>
 		{
-				isActive = false;
-				foreach (var ability in _blockedAbilities)
-				{
-						ability.Unlock();
-				}
+			isActive = false;
 
-				foreach (var name in _animBoolNames)
-				{
-						Anim.SetBool(name, false);
-				}
+			foreach (var ability in _blockedAbilities)
+			{
+					ability.Unlock();
+			}
 
-				endTime = Time.time;
+			foreach (var state in _blockedStates)
+			{
+					state.Unlock();
+			}
+
+			foreach (var name in _animBoolNames)
+			{
+					anim.SetBool(name, false);
+			}
+
+			endTime = Time.time;
 		}};
-		updateActions.Clear();
-		useConditions = new List<Func<bool>> { () => 
+
+		useConditions = new List<Func<bool>> { () =>
 		{
-			return IsAble && 
-			       !isActive &&
+			return IsAble &&
+						 !isActive &&
 						 (_maxAmountOfUsages == 0 || amountOfUsagesLeft > 0) &&
-						 Time.time > endTime + cooldown;
+						 Time.time > endTime + _cooldown;
 		}};
+
 		terminateConditions = new List<Func<bool>> { () =>
 		{
-			return !isActive || 
-						 (duration != 0 && Time.time > startTime + duration); 
+			return !isActive ||
+						 (_duration != 0 && Time.time > startTime + _duration);
 		}};
 	}
 
-	protected void InitializeAnimator(Animator animator) => Anim = animator;
+	protected void InitializeAnimator(Animator animator) => anim = animator;
 
 	public bool TryUseAbility()
 	{
+		foreach (var action in beforeUseActions)
+		{
+			action();
+		}
+
 		bool canUse = true;
 		foreach (var condition in useConditions)
 		{

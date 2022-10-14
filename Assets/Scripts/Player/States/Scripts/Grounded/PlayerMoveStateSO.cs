@@ -7,22 +7,24 @@ public class PlayerMoveStateSO : PlayerGroundedStateSO
 	{
 		base.OnEnable();
 
-		bool IdleCondition() => Player.moveInput.x == 0;
+		bool IdleCondition() => inputReader.moveInput.x == 0;
 
-		bool CrouchMoveCondition() => Player.moveInput.y < 0;
+		bool CrouchMoveCondition() => inputReader.moveInput.y < 0;
 
-		bool LedgeClimbCondition() => Player.isTouchingWall && 
-																	!Player.isTouchingLedge &&
-																	Player.moveInput.x == -Player.wallDirection;
+		bool LedgeClimbCondition() => player.isTouchingWall &&
+																	!player.isTouchingLedge &&
+																	inputReader.moveInput.x == -player.wallDirection;
+
+		void LedgeClimbAction() => player.DetermineLedgePosition();
 
 		transitions.Add(new TransitionItem(states.idle, IdleCondition));
 		transitions.Add(new TransitionItem(states.crouchMove, CrouchMoveCondition));
-		transitions.Add(new TransitionItem(states.ledgeClimb, LedgeClimbCondition));
+		transitions.Add(new TransitionItem(states.ledgeClimb, LedgeClimbCondition, LedgeClimbAction));
 
 		updateActions.Add(() =>
 		{
-			Player.CheckIfShouldFlip(Player.moveInput.x);
-			Player.TrySetVelocityX(Player.moveInput.x * Player.MoveSpeed);
+			player.CheckIfShouldFlip(inputReader.moveInput.x);
+			player.TrySetVelocityX(inputReader.moveInput.x * player.MoveSpeed);
 		});
 	}
 }

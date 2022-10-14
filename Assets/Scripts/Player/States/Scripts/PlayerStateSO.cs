@@ -4,16 +4,16 @@ public class PlayerStateSO : StateSO
 {
 	[SerializeField] protected PlayerStatesManagerSO states;
 	[SerializeField] protected PlayerAbilitiesManagerSO abilities;
-	protected Player Player
-	{
-		get; private set;
-	}
+	protected PlayerInputReaderSO inputReader;
+
+	protected Player player;
 
 	public void Initialize(Player player)
 	{
-		InitializeMachine(player.Machine);
-		InitializeAnimator(player.Anim);
-		Player = player;
+		InitializeMachine(player.sm);
+		InitializeAnimator(player.anim);
+		this.player = player;
+		inputReader = player.inputReader;
 	}
 
 	protected override void OnEnable()
@@ -22,7 +22,7 @@ public class PlayerStateSO : StateSO
 
 		checks.Add(() =>
 		{
-			Player.DoChecks();
+			player.DoChecks();
 		});
 	}
 }
