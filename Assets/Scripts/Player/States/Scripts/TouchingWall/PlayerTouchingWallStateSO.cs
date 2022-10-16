@@ -32,6 +32,7 @@ public class PlayerTouchingWallStateSO : PlayerStateSO
 		{
 			player.MoveToX(player.wallPosition.x + player.wallDirection * (player.col.size.x / 2 + 0.02f));
 			abilities.wallJump.RestoreAmountOfUsages();
+			abilities.jump.SetAmountOfUsagesToZero();
 		});
 	}
 }

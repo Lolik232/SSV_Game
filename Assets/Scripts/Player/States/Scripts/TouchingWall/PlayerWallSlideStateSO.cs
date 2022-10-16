@@ -20,7 +20,7 @@ public class PlayerWallSlideStateSO : PlayerTouchingWallStateSO
 
 		updateActions.Add(() =>
 		{
-			player.TrySetVelocityY(-player.WallSlideSpeed);
+			player.TrySetVelocityY(-parameters.wallSlideSpeed);
 		});
 
 		exitActions.Add(() =>

@@ -31432,7 +31432,6 @@ Transform:
   m_Children:
   - {fileID: 1843768742}
   - {fileID: 5135331857558673278}
-  - {fileID: 7322659654305749930}
   m_Father: {fileID: 2133022133}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -31476,21 +31475,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5135331857558673278}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &1154133058168726676
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8395709408833827631}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.8, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7322659654305749930}
-  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1677854724812223452
 PrefabInstance:
@@ -32723,7 +32707,7 @@ MonoBehaviour:
   _weaponName: sword
   _base: {fileID: 16557014377659059}
   _maxAttackDistance: 2
-  _attackAngle: 0.3
+  _attackAngle: 0.7
 --- !u!1 &3238070781506481730
 GameObject:
   m_ObjectHideFlags: 0
@@ -32735,22 +32719,6 @@ GameObject:
   - component: {fileID: 5135331857558673278}
   m_Layer: 6
   m_Name: Weapons
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &3263988292839314799
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7322659654305749930}
-  m_Layer: 6
-  m_Name: Checkers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32769,22 +32737,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _defaultState: {fileID: 11400000, guid: e4a73d75491eef54e847c88ab68a03e4, type: 2}
---- !u!1 &3384174423049310961
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6126241666812778844}
-  m_Layer: 6
-  m_Name: Ground
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &3726055781202244389
 GameObject:
   m_ObjectHideFlags: 0
@@ -32826,22 +32778,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!1 &4840523323291740568
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8885962836533275435}
-  m_Layer: 6
-  m_Name: Ledge
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!114 &4867245502891527807
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32857,15 +32793,13 @@ MonoBehaviour:
   _weaponBase: {fileID: 3726055781202244389}
   _statesManager: {fileID: 11400000, guid: 9c603ec4709b5f74bb3d72e0af3766ca, type: 2}
   _abilitiesManager: {fileID: 11400000, guid: 0917e0108459ae84c8d98c687dd1da49, type: 2}
-  _groundChecker: {fileID: 6126241666812778844}
-  _ceilingChecker: {fileID: 5022250819756123658}
-  _wallChecker: {fileID: 1154133058168726676}
-  _ledgeChecker: {fileID: 8885962836533275435}
-  _groundCheckRadius: 0.25
-  _groundCheckDistance: 0.4
-  _wallCheckDistance: 0.5
-  _ledgeCheckDistance: 0.6
-  _wallCloseCheckDistance: 0.8
+  _groundCheckDistance: 0.2
+  _wallCheckDistance: 0.2
+  _ledgeCheckDistance: 0.25
+  _groundCloseCheckDistance: 0.8
+  _wallCloseCheckDistance: 0.6
+  _wallCheckerHeight: 0.8
+  _ledgeCheckerHeight: 1.55
   _whatIsTarget:
   - serializedVersion: 2
     m_Bits: 8
@@ -32873,28 +32807,21 @@ MonoBehaviour:
   _standSize: {x: 0.5, y: 1.95}
   _crouchOffset: {x: 0, y: 0.475}
   _crouchSize: {x: 0.5, y: 0.95}
-  _moveSpeed: 10
-  _crouchMoveSpeed: 5
-  _inAirMoveSpeed: 15
-  _wallSlideSpeed: 4
-  _wallClimbSpeed: 6
-  _startLedgeOffset: {x: 0.25, y: 1.8}
-  _endLedgeOffset: {x: 0.25, y: 0}
---- !u!4 &5022250819756123658
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5828890042406573645}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7322659654305749930}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  moveSpeed:
+    _min: 0
+    _max: 10
+  crouchMoveSpeed:
+    _min: 0
+    _max: 6
+  inAirMoveSpeed:
+    _min: 0
+    _max: 15
+  wallSlideSpeed:
+    _min: 0
+    _max: 4
+  wallClimbSpeed:
+    _min: 0
+    _max: 5
 --- !u!4 &5135331857558673278
 Transform:
   m_ObjectHideFlags: 0
@@ -32911,22 +32838,6 @@ Transform:
   m_Father: {fileID: 31484019941789601}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &5828890042406573645
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5022250819756123658}
-  m_Layer: 6
-  m_Name: Ceiling
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!95 &5879672991182277347
 Animator:
   serializedVersion: 4
@@ -32960,68 +32871,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputReader: {fileID: 11400000, guid: 65e8862389616104686b04238f8a0641, type: 2}
---- !u!4 &6126241666812778844
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3384174423049310961}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7322659654305749930}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &7322659654305749930
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3263988292839314799}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 5022250819756123658}
-  - {fileID: 6126241666812778844}
-  - {fileID: 1154133058168726676}
-  - {fileID: 8885962836533275435}
-  m_Father: {fileID: 31484019941789601}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &8395709408833827631
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1154133058168726676}
-  m_Layer: 6
-  m_Name: Wall
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8885962836533275435
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4840523323291740568}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.8, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7322659654305749930}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

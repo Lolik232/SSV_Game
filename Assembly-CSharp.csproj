@@ -61,6 +61,7 @@
     <Compile Include="Assets\Scripts\All\States\StateSO.cs" />
     <Compile Include="Assets\Scripts\Player\States\Scripts\Grounded\PlayerLandStateSO.cs" />
     <Compile Include="Assets\Scripts\All\SpellEffects\ActiveEffects.cs" />
+    <Compile Include="Assets\Scripts\Player\Parameters\Scripts\Parameter.cs" />
     <Compile Include="Assets\Scripts\Player\Weapons\Scripts\Sword.cs" />
     <Compile Include="Assets\Scripts\Player\Weapons\Scripts\Weapon.cs" />
     <Compile Include="Assets\Scripts\Player\States\Scripts\TouchingWall\PlayerWallClimbStateSO.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="Assets\Scripts\Player\Abilities\Scripts\PlayerAttackAbilitySO.cs" />
     <Compile Include="Assets\Scripts\All\Spell\SpellHolder.cs" />
     <Compile Include="Assets\Scripts\All\Events\IntEventChannelSO.cs" />
+    <Compile Include="Assets\Scripts\Player\Parameters\Scripts\PlayerParametersManagerSO.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

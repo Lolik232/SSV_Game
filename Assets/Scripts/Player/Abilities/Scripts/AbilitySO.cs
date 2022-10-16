@@ -6,8 +6,8 @@ using UnityEngine.Events;
 
 public class AbilitySO : ScriptableObject
 {
-	[SerializeField] private float _duration;
-	[SerializeField] private float _cooldown;
+	[SerializeField] protected Parameter duration;
+	[SerializeField] protected Parameter cooldown;
 	[SerializeField] private int _maxAmountOfUsages;
 
 	[SerializeField] private List<string> _animBoolNames = new();
@@ -42,6 +42,9 @@ public class AbilitySO : ScriptableObject
 		startTime = 0f;
 		endTime = 0f;
 		_amountOfBlocks = 0;
+
+		duration.Set(duration.Max);
+		cooldown.Set(cooldown.Max);
 
 		beforeUseActions.Clear();
 		updateActions.Clear();
@@ -94,13 +97,13 @@ public class AbilitySO : ScriptableObject
 			return IsAble &&
 						 !isActive &&
 						 (_maxAmountOfUsages == 0 || amountOfUsagesLeft > 0) &&
-						 Time.time > endTime + _cooldown;
+						 Time.time > endTime + cooldown;
 		}};
 
 		terminateConditions = new List<Func<bool>> { () =>
 		{
 			return !isActive ||
-						 (_duration != 0 && Time.time > startTime + _duration);
+						 (duration.Max != 0 && Time.time > startTime + duration);
 		}};
 	}
 

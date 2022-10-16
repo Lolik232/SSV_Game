@@ -1,3 +1,5 @@
+using System;
+
 using UnityEngine;
 
 public class Sword : Weapon
@@ -6,6 +8,8 @@ public class Sword : Weapon
 	[SerializeField] private float _attackAngle;
 
 	private Vector2 _attackPosition;
+
+	[NonSerialized] public bool isFlipBlocked;
 
 	protected override void Start()
 	{
@@ -19,8 +23,9 @@ public class Sword : Weapon
 			{
 				attackVector = maxAttackVector;
 			}
-
 			_attackPosition = attackVector + player.Center;
+
+			player.CheckIfShouldFlip(attackVector.x >= 0 ? 1 : -1);
 		});
 	}
 

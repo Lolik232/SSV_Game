@@ -29,27 +29,37 @@ public class PlayerInAirStateSO : PlayerStateSO
 		transitions.Add(new TransitionItem(states.wallGrab, WallGrabCondition));
 		transitions.Add(new TransitionItem(states.wallSlide, WallSlideCondition));
 
+		enterActions.Add(()=>
+		{
+			CheckForJumps();
+		});
+
 		updateActions.Add(() =>
 		{
-			if (!abilities.jump.IsCoyoteTime())
-			{
-				abilities.jump.SetAmountOfUsagesToZero();
-			}
+			CheckForJumps();
 
-			if (player.isTouchingWall || player.isTouchingWallBack)
-			{
-				abilities.wallJump.RestoreAmountOfUsages();
-			}
-			else if (!abilities.wallJump.IsCoyoteTime())
-			{
-				abilities.wallJump.SetAmountOfUsagesToZero();
-			}
-
-			player.TrySetVelocityX(inputReader.moveInput.x * player.InAirMoveSpeed);
+			player.TrySetVelocityX(inputReader.moveInput.x * parameters.inAirMoveSpeed);
 			player.CheckIfShouldFlip(inputReader.moveInput.x);
 
 			anim.SetFloat("xVelocity", player.rb.velocity.x);
 			anim.SetFloat("yVelocity", player.rb.velocity.y);
 		});
+	}
+
+	private void CheckForJumps()
+	{
+		if (!abilities.jump.IsCoyoteTime())
+		{
+			abilities.jump.SetAmountOfUsagesToZero();
+		}
+
+		if (player.isTouchingWall || player.isTouchingWallBack)
+		{
+			abilities.wallJump.RestoreAmountOfUsages();
+		}
+		else if (!abilities.wallJump.IsCoyoteTime())
+		{
+			abilities.wallJump.SetAmountOfUsagesToZero();
+		}
 	}
 }

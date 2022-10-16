@@ -24,7 +24,7 @@ public class PlayerCrouchMoveStateSO : PlayerGroundedStateSO
 		updateActions.Add(() =>
 		{
 			player.CheckIfShouldFlip(inputReader.moveInput.x);
-			player.TrySetVelocityX(inputReader.moveInput.x * player.CrouchMoveSpeed);
+			player.TrySetVelocityX(inputReader.moveInput.x * parameters.crouchMoveSpeed);
 		});
 
 		exitActions.Add(() =>

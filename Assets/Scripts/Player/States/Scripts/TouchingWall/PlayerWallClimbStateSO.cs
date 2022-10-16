@@ -14,7 +14,7 @@ public class PlayerWallClimbStateSO : PlayerTouchingWallStateSO
 
 		updateActions.Add(() =>
 		{
-			player.TrySetVelocityY(player.WallClimbSpeed);
+			player.TrySetVelocityY(parameters.wallClimbSpeed);
 		});
 	}
 }

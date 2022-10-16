@@ -8,47 +8,36 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+	private const float CHECK_OFFSET = 0.02f;
+	private const float UNIT_SIZE = 1f;
+
 	//TODO: удалить _weaponBase нахуй
 	[SerializeField] private GameObject _weaponBase;
 
 	[SerializeField] private PlayerStatesManagerSO _statesManager;
 	[SerializeField] private PlayerAbilitiesManagerSO _abilitiesManager;
+	[SerializeField] private PlayerParametersManagerSO _parametersManager;
 
-	[Header("Checkers")]
-	[SerializeField] private Transform _groundChecker;
-	[SerializeField] private Transform _ceilingChecker;
-	[SerializeField] private Transform _wallChecker;
-	[SerializeField] private Transform _ledgeChecker;
-
-	[SerializeField] private float _groundCheckRadius;
 	[SerializeField] private float _groundCheckDistance;
 	[SerializeField] private float _wallCheckDistance;
 	[SerializeField] private float _ledgeCheckDistance;
+	[SerializeField] private float _groundCloseCheckDistance;
 	[SerializeField] private float _wallCloseCheckDistance;
+
+	[SerializeField] private float _wallCheckerHeight;
+	[SerializeField] private float _ledgeCheckerHeight;
 
 	[SerializeField] private List<LayerMask> _whatIsTarget;
 
-	[Header("Parameters")]
 	[SerializeField] private Vector2 _standOffset;
 	[SerializeField] private Vector2 _standSize;
-
 	[SerializeField] private Vector2 _crouchOffset;
 	[SerializeField] private Vector2 _crouchSize;
 
-	[Header("Movement")]
-	[SerializeField] private int _moveSpeed;
-	[SerializeField] private int _crouchMoveSpeed;
-	[SerializeField] private int _inAirMoveSpeed;
-
-	[Header("Touching Wall")]
-	[SerializeField] private int _wallSlideSpeed;
-	[SerializeField] private int _wallClimbSpeed;
-
-	[Header("On Ledge")]
-	[SerializeField] private Vector2 _startLedgeOffset;
-	[SerializeField] private Vector2 _endLedgeOffset;
 	[NonSerialized] public int facingDirection = 1;
 	[NonSerialized] public int wallDirection;
+
+	[NonSerialized] public bool isStanding;
 
 	[NonSerialized] public bool isGrounded;
 	[NonSerialized] public bool isGroundClose;
@@ -63,11 +52,10 @@ public class Player : MonoBehaviour
 	[NonSerialized] public Vector2 ledgeStartPosition;
 	[NonSerialized] public Vector2 ledgeEndPosition;
 
-	[NonSerialized] public PlayerInputReaderSO inputReader;
 	[NonSerialized] public Weapon weapon;
 	[NonSerialized] public BoxCollider2D col;
 	[NonSerialized] public Rigidbody2D rb;
-	[NonSerialized] public StateMachine sm;
+	[NonSerialized] public StateMachine machine;
 	[NonSerialized] public Animator anim;
 	[NonSerialized] public TrailRenderer tr;
 
@@ -75,33 +63,53 @@ public class Player : MonoBehaviour
 	private Vector2 _cachedVelocity;
 	private Vector2 _cornerPosition;
 
-	public int MoveSpeed => _moveSpeed;
-	public int CrouchMoveSpeed => _crouchMoveSpeed;
-	public int InAirMoveSpeed => _inAirMoveSpeed;
-	public int WallSlideSpeed => _wallSlideSpeed;
-	public int WallClimbSpeed => _wallClimbSpeed;
-	public Vector2 StandSize => _standSize;
-	public Vector2 CrouchSize => _crouchSize;
-	public Vector2 Center => (Vector2)transform.position + col.offset;
-	private Vector2 CornerCheckerPosition => new(_ledgeChecker.position.x + _ledgeCheckDistance * facingDirection, _ledgeChecker.position.y);
+	public Vector2 Position => transform.position;
 
+	public Vector2 Size => col.size;
+
+	public Vector2 StandSize => _standSize;
+
+	public Vector2 CrouchSize => _crouchSize;
+
+	public Vector2 Center => (Vector2)transform.position + col.offset;
+
+	public Vector2 StandCenter => (Vector2)transform.position + _standOffset;
+
+	public Vector2 CrouchCenter => (Vector2)transform.position + _crouchOffset;
+
+	public Vector2 CheckerOffset => new(Size.x / 2 - CHECK_OFFSET, Size.y / 2 - CHECK_OFFSET);
+
+	public Vector2 StartLedgeOffset => new(Size.x / 2 + CHECK_OFFSET, UNIT_SIZE * _ledgeCheckerHeight + CHECK_OFFSET);
+
+	public Vector2 EndLedgeOffset => new(Size.x / 2 + CHECK_OFFSET, CHECK_OFFSET);
+
+	private Vector2 GroundCheckerPosition => new(Center.x, Center.y - CheckerOffset.y);
+
+	private Vector2 WallCheckerPosition => new(Center.x + facingDirection * CheckerOffset.x, Position.y + UNIT_SIZE * _wallCheckerHeight);
+
+	private Vector2 WallBackCheckerPosition => new(Center.x - facingDirection * CheckerOffset.x, Position.y + UNIT_SIZE * _wallCheckerHeight);
+
+	private Vector2 CeilingCheckerPosition => new(Center.x, Center.y + CheckerOffset.y);
+
+	private Vector2 LedgeCheckerPosition => new(Center.x + facingDirection * CheckerOffset.x, Position.y + UNIT_SIZE * _ledgeCheckerHeight);
+
+	private Vector2 CornerCheckerPosition => new(LedgeCheckerPosition.x + facingDirection * _ledgeCheckDistance, LedgeCheckerPosition.y);
 
 	private void Awake()
 	{
 		tr = GetComponent<TrailRenderer>();
 		rb = GetComponent<Rigidbody2D>();
 		col = GetComponent<BoxCollider2D>();
-		sm = GetComponent<StateMachine>();
+		machine = GetComponent<StateMachine>();
 		anim = GetComponent<Animator>();
-		inputReader = GetComponent<PlayerInputReaderOwner>().inputReader;
 		weapon = _weaponBase.GetComponent<Weapon>();
 	}
 
 	private void Start()
 	{
 		Stand();
-		facingDirection = 1;
 
+		_parametersManager.Initialize();
 		_statesManager.Initialize(this);
 		_abilitiesManager.Initialize(this);
 	}
@@ -126,18 +134,19 @@ public class Player : MonoBehaviour
 	{
 		foreach (var target in _whatIsTarget)
 		{
-			isGrounded = Physics2D.OverlapCircle(_groundChecker.position, _groundCheckRadius, target);
+			isGrounded = Physics2D.OverlapBox(GroundCheckerPosition, new Vector2(CheckerOffset.x * 2, _groundCheckDistance), 0, target);
 			if (isGrounded)
 			{
 				return;
 			}
 		}
 	}
+
 	public void CheckIfGroundClose()
 	{
 		foreach (var target in _whatIsTarget)
 		{
-			isGroundClose = Physics2D.Raycast(_groundChecker.position, Vector2.down, _groundCheckDistance, target);
+			isGroundClose = Physics2D.Raycast(GroundCheckerPosition, Vector2.down, _groundCheckDistance, target);
 			if (isGroundClose)
 			{
 				return;
@@ -149,7 +158,7 @@ public class Player : MonoBehaviour
 	{
 		foreach (var target in _whatIsTarget)
 		{
-			isTouchingCeiling = Physics2D.OverlapCircle(_ceilingChecker.position, _groundCheckRadius, target);
+			isTouchingCeiling = Physics2D.OverlapBox(CeilingCheckerPosition, new Vector2(CheckerOffset.x * 2, _groundCheckDistance), 0, target);
 			if (isTouchingCeiling)
 			{
 				return;
@@ -160,12 +169,12 @@ public class Player : MonoBehaviour
 	{
 		foreach (var target in _whatIsTarget)
 		{
-			RaycastHit2D hit = Physics2D.Raycast(_wallChecker.position, facingDirection * Vector2.right, _wallCheckDistance, target);
+			RaycastHit2D hit = Physics2D.Raycast(WallCheckerPosition, facingDirection * Vector2.right, _wallCheckDistance, target);
 			wallDirection = hit ? -facingDirection : facingDirection;
 			isTouchingWall = hit;
 			if (isTouchingWall)
 			{
-				wallPosition.Set(_wallChecker.position.x + facingDirection * hit.distance, _wallChecker.position.y);
+				wallPosition.Set(WallCheckerPosition.x + facingDirection * hit.distance, WallCheckerPosition.y);
 				return;
 			}
 		}
@@ -174,7 +183,7 @@ public class Player : MonoBehaviour
 	{
 		foreach (var target in _whatIsTarget)
 		{
-			isTouchingWallBack = Physics2D.Raycast(_wallChecker.position, facingDirection * Vector2.left, _wallCheckDistance, target);
+			isTouchingWallBack = Physics2D.Raycast(WallBackCheckerPosition, facingDirection * Vector2.left, _wallCheckDistance, target);
 			if (isTouchingWallBack)
 			{
 				return;
@@ -186,10 +195,10 @@ public class Player : MonoBehaviour
 	{
 		foreach (var target in _whatIsTarget)
 		{
-			isClampedBetweenWalls = Physics2D.Raycast(_wallChecker.position, Vector2.right, _wallCloseCheckDistance, target) &&
-															Physics2D.Raycast(_wallChecker.position, Vector2.left, _wallCloseCheckDistance, target) ||
-															Physics2D.Raycast(_ledgeChecker.position, Vector2.right, _wallCloseCheckDistance, target) &&
-															Physics2D.Raycast(_ledgeChecker.position, Vector2.left, _wallCloseCheckDistance, target);
+			isClampedBetweenWalls = Physics2D.Raycast(WallBackCheckerPosition, facingDirection * Vector2.left, _wallCloseCheckDistance, target) &&
+															Physics2D.Raycast(WallCheckerPosition, facingDirection * Vector2.right, _wallCloseCheckDistance, target) ||
+															Physics2D.Raycast(new Vector2(WallBackCheckerPosition.x, LedgeCheckerPosition.y), facingDirection * Vector2.left, _wallCloseCheckDistance, target) &&
+															Physics2D.Raycast(new Vector2(WallCheckerPosition.x, LedgeCheckerPosition.y), facingDirection * Vector2.right, _wallCloseCheckDistance, target);
 			if (isClampedBetweenWalls)
 			{
 				return;
@@ -201,7 +210,7 @@ public class Player : MonoBehaviour
 	{
 		foreach (var target in _whatIsTarget)
 		{
-			isTouchingLedge = Physics2D.Raycast(_ledgeChecker.position, facingDirection * Vector2.right, _ledgeCheckDistance, target);
+			isTouchingLedge = Physics2D.Raycast(LedgeCheckerPosition, facingDirection * Vector2.right, _ledgeCheckDistance, target);
 			if (isTouchingLedge)
 			{
 				return;
@@ -213,7 +222,7 @@ public class Player : MonoBehaviour
 	{
 		foreach (var target in _whatIsTarget)
 		{
-			isTouchingCeilingWhenClimb = Physics2D.Raycast(ledgeEndPosition, Vector2.up, _standSize.y, target);
+			isTouchingCeilingWhenClimb = Physics2D.Raycast(new Vector2(ledgeEndPosition.x, ledgeEndPosition.y + UNIT_SIZE - _groundCheckDistance / 2), Vector2.up, _groundCheckDistance, target);
 			if (isTouchingCeilingWhenClimb)
 			{
 				return;
@@ -234,10 +243,10 @@ public class Player : MonoBehaviour
 	{
 		foreach (var target in _whatIsTarget)
 		{
-			RaycastHit2D hit = Physics2D.Raycast(CornerCheckerPosition, Vector2.down, _ledgeChecker.position.y - _wallChecker.position.y + 0.02f, target);
+			RaycastHit2D hit = Physics2D.Raycast(CornerCheckerPosition, Vector2.down, LedgeCheckerPosition.y - WallBackCheckerPosition.y + CHECK_OFFSET, target);
 			if (hit)
 			{
-				_cornerPosition.Set(wallPosition.x, _ledgeChecker.position.y - hit.distance);
+				_cornerPosition.Set(wallPosition.x, LedgeCheckerPosition.y - hit.distance);
 				return;
 			}
 		}
@@ -245,10 +254,10 @@ public class Player : MonoBehaviour
 
 	public void DetermineLedgePosition()
 	{
-		ledgeStartPosition.Set(_cornerPosition.x + wallDirection * (_startLedgeOffset.x + 0.02f),
-													 _cornerPosition.y - _startLedgeOffset.y - 0.02f);
-		ledgeEndPosition.Set(_cornerPosition.x - wallDirection * _endLedgeOffset.x,
-												 _cornerPosition.y + _endLedgeOffset.y + 0.02f);
+		ledgeStartPosition.Set(_cornerPosition.x + wallDirection * StartLedgeOffset.x,
+													 _cornerPosition.y - StartLedgeOffset.y);
+		ledgeEndPosition.Set(_cornerPosition.x - wallDirection * EndLedgeOffset.x,
+												 _cornerPosition.y + EndLedgeOffset.y);
 	}
 
 	public void DoChecks()
@@ -272,18 +281,22 @@ public class Player : MonoBehaviour
 	{
 		TrySetVelocity(new Vector2(angle.normalized.x * velocity * direction, angle.normalized.y * velocity));
 	}
+
 	public void TrySetVelocityX(float xVelocity)
 	{
 		TrySetVelocity(new Vector2(xVelocity, rb.velocity.y));
 	}
+
 	public void TrySetVelocityY(float yVelocity)
 	{
 		TrySetVelocity(new Vector2(rb.velocity.x, yVelocity));
 	}
+
 	public void TrySetVelocityZero()
 	{
 		TrySetVelocity(Vector2.zero);
 	}
+
 	public void TrySetVelocity(Vector2 velocity)
 	{
 		_cachedVelocity = velocity;
@@ -338,12 +351,14 @@ public class Player : MonoBehaviour
 
 	public void Stand()
 	{
+		isStanding = true;
 		col.size = _standSize;
 		col.offset = _standOffset;
 	}
 
 	public void Crouch()
 	{
+		isStanding = false;
 		col.size = _crouchSize;
 		col.offset = _crouchOffset;
 	}
@@ -360,19 +375,23 @@ public class Player : MonoBehaviour
 			Gizmos.DrawWireCube(new Vector2(ledgeStartPosition.x, ledgeStartPosition.y + col.offset.y), col.size);
 
 			Gizmos.color = Color.red;
-			Gizmos.DrawLine(ledgeEndPosition, new Vector2(ledgeEndPosition.x, ledgeEndPosition.y + _standSize.y));
+			Gizmos.DrawLine(new Vector2(ledgeEndPosition.x, ledgeEndPosition.y + UNIT_SIZE - _groundCheckDistance / 2), 
+											new Vector2(ledgeEndPosition.x, ledgeEndPosition.y + UNIT_SIZE + _groundCheckDistance / 2));
+
+			Gizmos.color = Color.white;
+			Gizmos.DrawLine(new Vector2(WallBackCheckerPosition.x - facingDirection * _wallCloseCheckDistance, WallBackCheckerPosition.y),
+											new Vector2(WallCheckerPosition.x + facingDirection * _wallCloseCheckDistance, WallCheckerPosition.y));
+			Gizmos.DrawLine(new Vector2(WallBackCheckerPosition.x - facingDirection * _wallCloseCheckDistance, LedgeCheckerPosition.y),
+											new Vector2(WallCheckerPosition.x + facingDirection * _wallCloseCheckDistance, LedgeCheckerPosition.y));
+			Gizmos.DrawLine(GroundCheckerPosition, new Vector2(GroundCheckerPosition.x, GroundCheckerPosition.y - _groundCloseCheckDistance));
+
+			Gizmos.color = Color.red;
+			Gizmos.DrawWireCube(GroundCheckerPosition, new Vector2(CheckerOffset.x * 2, _groundCheckDistance * 2));
+			Gizmos.DrawWireCube(CeilingCheckerPosition, new Vector2(CheckerOffset.x * 2, _groundCheckDistance * 2));
+			Gizmos.DrawLine(new Vector2(WallBackCheckerPosition.x - facingDirection * _wallCheckDistance, WallBackCheckerPosition.y), WallBackCheckerPosition);
+			Gizmos.DrawLine(WallCheckerPosition, new Vector2(WallCheckerPosition.x + facingDirection * _wallCheckDistance, WallCheckerPosition.y));
+			Gizmos.DrawLine(LedgeCheckerPosition, new Vector2(LedgeCheckerPosition.x + facingDirection * _ledgeCheckDistance, LedgeCheckerPosition.y));
+			Gizmos.DrawLine(CornerCheckerPosition, new Vector2(CornerCheckerPosition.x, WallCheckerPosition.y - CHECK_OFFSET));
 		}
-
-		Gizmos.color = Color.white;
-		Gizmos.DrawLine(new Vector2(_wallChecker.position.x - _wallCloseCheckDistance, _wallChecker.position.y), new Vector2(_wallChecker.position.x + _wallCloseCheckDistance, _wallChecker.position.y));
-		Gizmos.DrawLine(new Vector2(_ledgeChecker.position.x - _wallCloseCheckDistance, _ledgeChecker.position.y), new Vector2(_ledgeChecker.position.x + _wallCloseCheckDistance, _ledgeChecker.position.y));
-		Gizmos.DrawLine(_groundChecker.position, new Vector2(_groundChecker.position.x, _groundChecker.position.y - _groundCheckDistance));
-
-		Gizmos.color = Color.red;
-		Gizmos.DrawWireSphere(_groundChecker.position, _groundCheckRadius);
-		Gizmos.DrawWireSphere(_ceilingChecker.position, _groundCheckRadius);
-		Gizmos.DrawLine(new Vector2(_wallChecker.position.x - _wallCheckDistance, _wallChecker.position.y), new Vector2(_wallChecker.position.x + _wallCheckDistance, _wallChecker.position.y));
-		Gizmos.DrawLine(_ledgeChecker.position, new Vector2(_ledgeChecker.position.x + facingDirection * _ledgeCheckDistance, _ledgeChecker.position.y));
-		Gizmos.DrawLine(CornerCheckerPosition, new Vector2(CornerCheckerPosition.x, _wallChecker.position.y - 0.02f));
 	}
 }

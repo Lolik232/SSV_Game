@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PlayerWallJumpAbilitySO : PlayerAbilitySO
 {
-	[SerializeField] private int _force;
-
 	[SerializeField] private float _coyoteTime;
 	[SerializeField] private float _wallExitTime;
 
@@ -30,6 +28,7 @@ public class PlayerWallJumpAbilitySO : PlayerAbilitySO
 		{
 			return inputReader.jumpInput &&
 						 !player.isClampedBetweenWalls &&
+						 !player.isTouchingCeiling &&
 						 (player.isTouchingWall || player.isTouchingWallBack);
 		});
 
@@ -42,7 +41,7 @@ public class PlayerWallJumpAbilitySO : PlayerAbilitySO
 		useActions.Add(() =>
 		{
 			_outOfWall = false;
-			player.HoldVelocity(_force, _angle, _jumpDirection);
+			player.HoldVelocity(parameters.wallJumpForce, _angle, _jumpDirection);
 			player.CheckIfShouldFlip(_jumpDirection);
 			inputReader.jumpInput = false;
 		});

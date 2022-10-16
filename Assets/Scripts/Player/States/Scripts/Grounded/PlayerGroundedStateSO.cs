@@ -14,7 +14,7 @@ public class PlayerGroundedStateSO : PlayerStateSO
 
 		void InAirActions()
 		{
-			if (player.isTouchingCeiling)
+			if (player.isTouchingCeiling && !player.isStanding)
 			{
 				player.MoveToY(player.transform.position.y - (player.StandSize.y - player.CrouchSize.y));
 			}

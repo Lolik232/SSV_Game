@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PlayerJumpAbilitySO : PlayerAbilitySO
 {
-	[SerializeField] private int _force;
-
 	[SerializeField] private float _coyoteTime;
 
 	private float _startCoyoteTime;
@@ -29,7 +27,7 @@ public class PlayerJumpAbilitySO : PlayerAbilitySO
 		useActions.Add(() =>
 		{
 			inputReader.jumpInput = false;
-			player.TrySetVelocityY(_force);
+			player.TrySetVelocityY(parameters.jumpForce);
 		});
 
 		terminateActions.Add(() =>
