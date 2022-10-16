@@ -7,6 +7,7 @@ public class Weapon : MonoBehaviour
 {
 	[SerializeField] private string _weaponName;
 	[SerializeField] private GameObject _base;
+	[SerializeField] private GameObject _hit;
 
 	protected PlayerInputReaderSO inputReader;
 
@@ -18,6 +19,8 @@ public class Weapon : MonoBehaviour
 
 	protected Animator baseAnim;
 	protected Animator anim;
+	protected Transform hitPos;
+	protected SpriteRenderer hitSr;
 	protected Player player;
 
 	protected List<UnityAction> updateActions = new();
@@ -30,6 +33,8 @@ public class Weapon : MonoBehaviour
 		baseAnim = _base.GetComponent<Animator>();
 		inputReader = _base.GetComponent<PlayerInputReaderOwner>().inputReader;
 		anim = GetComponentInChildren<Animator>();
+		hitPos = _hit.GetComponent<Transform>();
+		hitSr = _hit.GetComponent<SpriteRenderer>();
 	}
 
 	protected virtual void Start()

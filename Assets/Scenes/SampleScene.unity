@@ -32793,13 +32793,14 @@ MonoBehaviour:
   _weaponBase: {fileID: 3726055781202244389}
   _statesManager: {fileID: 11400000, guid: 9c603ec4709b5f74bb3d72e0af3766ca, type: 2}
   _abilitiesManager: {fileID: 11400000, guid: 0917e0108459ae84c8d98c687dd1da49, type: 2}
+  _parametersManager: {fileID: 11400000, guid: 4162b27446d9dd24589dac8069397f3d, type: 2}
   _groundCheckDistance: 0.2
   _wallCheckDistance: 0.2
   _ledgeCheckDistance: 0.25
   _groundCloseCheckDistance: 0.8
   _wallCloseCheckDistance: 0.6
   _wallCheckerHeight: 0.8
-  _ledgeCheckerHeight: 1.55
+  _ledgeCheckerHeight: 1.8
   _whatIsTarget:
   - serializedVersion: 2
     m_Bits: 8
@@ -32807,21 +32808,6 @@ MonoBehaviour:
   _standSize: {x: 0.5, y: 1.95}
   _crouchOffset: {x: 0, y: 0.475}
   _crouchSize: {x: 0.5, y: 0.95}
-  moveSpeed:
-    _min: 0
-    _max: 10
-  crouchMoveSpeed:
-    _min: 0
-    _max: 6
-  inAirMoveSpeed:
-    _min: 0
-    _max: 15
-  wallSlideSpeed:
-    _min: 0
-    _max: 4
-  wallClimbSpeed:
-    _min: 0
-    _max: 5
 --- !u!4 &5135331857558673278
 Transform:
   m_ObjectHideFlags: 0

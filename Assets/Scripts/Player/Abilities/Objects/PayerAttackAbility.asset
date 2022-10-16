@@ -12,10 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b272741665a7398449fca638640bc8bb, type: 3}
   m_Name: PayerAttackAbility
   m_EditorClassIdentifier: 
-  _duration: 0
-  _cooldown: 0.2
+  duration:
+    _min: 0
+    _max: 0
+  cooldown:
+    _min: 0
+    _max: 0.3
   _maxAmountOfUsages: 0
   _animBoolNames:
   - attack
   _blockedAbilities: []
   _blockedStates: []
+  inputReader: {fileID: 11400000, guid: 65e8862389616104686b04238f8a0641, type: 2}
+  parameters: {fileID: 11400000, guid: 4162b27446d9dd24589dac8069397f3d, type: 2}

@@ -19,3 +19,5 @@ MonoBehaviour:
   _defaultState: {fileID: 11400000, guid: 490db7eaeaebdb94eb7aee3a32ee2448, type: 2}
   states: {fileID: 11400000, guid: 9c603ec4709b5f74bb3d72e0af3766ca, type: 2}
   abilities: {fileID: 11400000, guid: 0917e0108459ae84c8d98c687dd1da49, type: 2}
+  parameters: {fileID: 11400000, guid: 4162b27446d9dd24589dac8069397f3d, type: 2}
+  inputReader: {fileID: 11400000, guid: 65e8862389616104686b04238f8a0641, type: 2}

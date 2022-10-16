@@ -12,8 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73f60fc10955a11428aff294041cfbf5, type: 3}
   m_Name: PayerJumpAbility
   m_EditorClassIdentifier: 
-  _duration: 0.4
-  _cooldown: 0
+  duration:
+    _min: 0
+    _max: 0.4
+  cooldown:
+    _min: 0
+    _max: 0
   _maxAmountOfUsages: 1
   _animBoolNames:
   - jump
@@ -24,5 +28,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a5af3b9b15e226341a29cd54e412d8df, type: 2}
   - {fileID: 11400000, guid: 727cac17514e06c42b226ca227fd8d16, type: 2}
   - {fileID: 11400000, guid: d28e4d7f8e057f947ba8de99faa2fc21, type: 2}
-  _force: 17
+  inputReader: {fileID: 11400000, guid: 65e8862389616104686b04238f8a0641, type: 2}
+  parameters: {fileID: 11400000, guid: 4162b27446d9dd24589dac8069397f3d, type: 2}
   _coyoteTime: 0.1

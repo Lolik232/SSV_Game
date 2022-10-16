@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SwordShine
-  m_Shader: {fileID: -6465566751694194690, guid: fc6fdaef522768e4fbf8228c2444ea6e, type: 3}
+  m_Name: SwordHit
+  m_Shader: {fileID: -6465566751694194690, guid: af6e2805d277d2f4ea8d2e57e09c1747, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4

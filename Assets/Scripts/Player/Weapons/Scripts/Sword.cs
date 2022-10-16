@@ -29,6 +29,14 @@ public class Sword : Weapon
 					player.CheckIfShouldFlip(attackVector.x >= 0 ? 1 : -1);
 				}
 			}
+
+			hitPos.position = _attackPosition;
+			hitSr.enabled = true;
+		});
+
+		exitActions.Add(() =>
+		{
+			hitSr.enabled = false;
 		});
 	}
 
