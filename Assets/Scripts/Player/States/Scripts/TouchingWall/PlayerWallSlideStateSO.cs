@@ -16,6 +16,7 @@ public class PlayerWallSlideStateSO : PlayerTouchingWallStateSO
 		enterActions.Add(() =>
 		{
 			player.transform.Rotate(0f, 180f, 0f);
+			abilities.attack.HoldDirection(player.wallDirection);
 		});
 
 		updateActions.Add(() =>
@@ -25,6 +26,7 @@ public class PlayerWallSlideStateSO : PlayerTouchingWallStateSO
 
 		exitActions.Add(() =>
 		{
+			abilities.attack.ReleaseDirection();
 			player.transform.Rotate(0f, 180f, 0f);
 		});
 	}

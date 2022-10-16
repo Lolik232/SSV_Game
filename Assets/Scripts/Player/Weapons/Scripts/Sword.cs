@@ -9,25 +9,30 @@ public class Sword : Weapon
 
 	private Vector2 _attackPosition;
 
-	[NonSerialized] public bool isFlipBlocked;
-
 	protected override void Start()
 	{
 		base.Start();
 
 		enterActions.Add(() =>
 		{
-			Vector2 maxAttackVector = inputReader.mouseInputDirection * _maxAttackDistance;
-			Vector2 attackVector = inputReader.mouseInputPosition - player.Center;
-			if (attackVector.magnitude > maxAttackVector.magnitude)
-			{
-				attackVector = maxAttackVector;
-			}
-			_attackPosition = attackVector + player.Center;
+			Vector2 attackVector = inputReader.mouseInputDirection * ((inputReader.mouseInputDistance > _maxAttackDistance && _maxAttackDistance != 0) ? _maxAttackDistance : inputReader.mouseInputDistance);
 
-			player.CheckIfShouldFlip(attackVector.x >= 0 ? 1 : -1);
+			if (isDirectionHoldOn && attackVector.x >= 0 != heldDirection >= 0)
+			{
+				_attackPosition = attackVector * Vector2.up + player.Center;
+			}
+			else
+			{
+				_attackPosition = attackVector + player.Center;
+				if (!isDirectionHoldOn)
+				{
+					player.CheckIfShouldFlip(attackVector.x >= 0 ? 1 : -1);
+				}
+			}
 		});
 	}
+
+
 
 	protected override void OnDrawGizmos()
 	{

@@ -22,4 +22,14 @@ public class PlayerAttackAbilitySO : PlayerAbilitySO
 			player.weapon.OnExit();
 		});
 	}
+
+	public void HoldDirection(int direction)
+	{
+		player.weapon.HoldDirection(direction);
+	}
+
+	public void ReleaseDirection()
+	{
+		player.weapon.ReleaseDirection();
+	}
 }

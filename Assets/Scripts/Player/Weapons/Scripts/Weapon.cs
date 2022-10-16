@@ -11,7 +11,10 @@ public class Weapon : MonoBehaviour
 	protected PlayerInputReaderSO inputReader;
 
 	private bool _isActive;
+
 	protected bool needExit;
+	protected bool isDirectionHoldOn;
+	protected int heldDirection;
 
 	protected Animator baseAnim;
 	protected Animator anim;
@@ -91,6 +94,17 @@ public class Weapon : MonoBehaviour
 				OnExit();
 			}
 		}
+	}
+
+	public void HoldDirection(int direction)
+	{
+		isDirectionHoldOn = true;
+		heldDirection = direction;
+	}
+
+	public void ReleaseDirection()
+	{
+		isDirectionHoldOn = false;
 	}
 
 	protected virtual void OnDrawGizmos()
