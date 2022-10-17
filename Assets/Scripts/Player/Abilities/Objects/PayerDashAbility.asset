@@ -33,3 +33,4 @@ MonoBehaviour:
   inputReader: {fileID: 11400000, guid: 65e8862389616104686b04238f8a0641, type: 2}
   parameters: {fileID: 11400000, guid: 4162b27446d9dd24589dac8069397f3d, type: 2}
   _minProportion: 0.5
+  _dashGravity: 2

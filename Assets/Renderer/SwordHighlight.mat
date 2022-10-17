@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SwordDissolve
+  m_Name: SwordHighlight
   m_Shader: {fileID: -6465566751694194690, guid: c4ff45b18662098498d1df578a7c3607, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -38,10 +38,11 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Fade: 0.524
+    - _Fade: 0.5
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Scale: 10
+    - _Scale: 1
+    - _Speed: 10
     m_Colors:
     - _Color: {r: 47.937256, g: 10.541177, b: 0, a: 1}
   m_BuildTextureStacks: []

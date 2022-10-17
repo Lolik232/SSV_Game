@@ -20,10 +20,12 @@ public class PlayerStatesManagerSO : ScriptableObject
 	public PlayerWallSlideStateSO wallSlide;
 	public PlayerWallClimbStateSO wallClimb;
 
-	[Header("Free")]
+	[Header("On Ledge")]
 	public PlayerLedgeGrabStateSO ledgeGrab;
 	public PlayerLedgeHoldStateSO ledgeHold;
 	public PlayerLedgeClimbStateSO ledgeClimb;
+
+	[Header("In Air")]
 	public PlayerInAirStateSO inAir;
 
 	private void OnEnable()
@@ -43,6 +45,7 @@ public class PlayerStatesManagerSO : ScriptableObject
 				ledgeGrab,
 				ledgeHold,
 				ledgeClimb,
+
 				inAir
 			};
 	}

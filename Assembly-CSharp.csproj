@@ -69,7 +69,7 @@
     <Compile Include="Assets\Scripts\All\Events\LoadEventChannelSO.cs" />
     <Compile Include="Assets\Scripts\All\States\StateMachine.cs" />
     <Compile Include="Assets\Scripts\Player\Abilities\Scripts\PlayerJumpAbilitySO.cs" />
-    <Compile Include="Assets\Scripts\Player\States\Scripts\PlayerLedgeClimbStateSO.cs" />
+    <Compile Include="Assets\Scripts\Player\States\Scripts\OnLedge\PlayerLedgeClimbStateSO.cs" />
     <Compile Include="Assets\Scripts\All\Events\VoidEventChannelSO.cs" />
     <Compile Include="Assets\Scripts\Player\States\Scripts\Grounded\PlayerGroundedStateSO.cs" />
     <Compile Include="Assets\Scripts\All\Events\FadeChannelSO.cs" />
@@ -83,8 +83,9 @@
     <Compile Include="Assets\Scripts\All\Events\TypedEventChannelSO.cs" />
     <Compile Include="Assets\Scripts\All\BaseClasses\BaseDescriptionSO.cs" />
     <Compile Include="Assets\Scripts\All\SpellEffects\SpellEffectHolder.cs" />
-    <Compile Include="Assets\Scripts\Player\States\Scripts\PlayerLedgeGrabStateSO.cs" />
+    <Compile Include="Assets\Scripts\Player\States\Scripts\OnLedge\PlayerLedgeGrabStateSO.cs" />
     <Compile Include="Assets\Scripts\SceneManagement\ScriptableObjects\LocationSO.cs" />
+    <Compile Include="Assets\Scripts\Player\Parameters\Scripts\PlayerParametersManagerSO.cs" />
     <Compile Include="Assets\Scripts\All\Gameplay\PlayerSpawnManager.cs" />
     <Compile Include="Assets\Scripts\SceneManagement\SceneLoader.cs" />
     <Compile Include="Assets\Scripts\SceneManagement\ScriptableObjects\GameSceneSO.cs" />
@@ -96,7 +97,7 @@
     <Compile Include="Assets\Scripts\All\Interfaces\IPhysicsUpdate.cs" />
     <Compile Include="Assets\Scripts\All\Interfaces\ISpellEffectVisitor.cs" />
     <Compile Include="Assets\Scripts\Player\Input\PlayerInputReaderSO.cs" />
-    <Compile Include="Assets\Scripts\Player\States\Scripts\PlayerLedgeHoldStateSO.cs" />
+    <Compile Include="Assets\Scripts\Player\States\Scripts\OnLedge\PlayerLedgeHoldStateSO.cs" />
     <Compile Include="Assets\Scripts\All\Interfaces\IObject.cs" />
     <Compile Include="Assets\Scripts\Player\Abilities\Scripts\AbilitySO.cs" />
     <Compile Include="Assets\Scripts\Player\Abilities\Scripts\PlayerAbilitiesManagerSO.cs" />
@@ -113,7 +114,9 @@
     <Compile Include="Assets\Scripts\Player\Abilities\Scripts\PlayerAttackAbilitySO.cs" />
     <Compile Include="Assets\Scripts\All\Spell\SpellHolder.cs" />
     <Compile Include="Assets\Scripts\All\Events\IntEventChannelSO.cs" />
-    <Compile Include="Assets\Scripts\Player\Parameters\Scripts\PlayerParametersManagerSO.cs" />
+    <Compile Include="Assets\Scripts\Player\Parameters\Scripts\Blocker.cs" />
+    <Compile Include="Assets\Scripts\Player\Parameters\Scripts\Cacher.cs" />
+    <Compile Include="Assets\Scripts\Player\States\Scripts\OnLedge\PlayerOnLedgeStateSO.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

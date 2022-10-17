@@ -24,6 +24,7 @@ public class PlayerInputReaderSO : ScriptableObject
 	[NonSerialized] public bool abilityInput;
 
 	[NonSerialized] public bool jumpInputHold;
+	[NonSerialized] public bool dashInputHold;
 
 	[NonSerialized] public Vector2Int moveInput;
 
@@ -68,11 +69,13 @@ public class PlayerInputReaderSO : ScriptableObject
 		if (context.performed)
 		{
 			dashInput = true;
+			dashInputHold = true;
 			_dashInputStartTime = Time.time;
 		}
 		else if (context.canceled)
 		{
 			dashInput = false;
+			dashInputHold = false;
 		}
 	}
 

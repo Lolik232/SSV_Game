@@ -8,7 +8,6 @@ public abstract class StateSO : ScriptableObject
 {
 	private bool _isActive;
 	private int _animIndex;
-	private int _amountOfBlocks;
 
 	protected float startTime;
 
@@ -29,7 +28,7 @@ public abstract class StateSO : ScriptableObject
 
 	private StateMachine _machine;
 
-	public bool IsAble => _amountOfBlocks == 0;
+	public Blocker blocker = new();
 
 	protected virtual void OnEnable()
 	{
@@ -37,7 +36,6 @@ public abstract class StateSO : ScriptableObject
 
 		_animIndex = 0;
 		startTime = 0f;
-		_amountOfBlocks = 0;
 
 		transitions.Clear();
 		updateActions.Clear();
@@ -52,7 +50,7 @@ public abstract class StateSO : ScriptableObject
 				foreach (var ability in _blockedAbilities)
 				{
 						ability.Terminate();
-						ability.Block();
+						ability.blocker.AddBlock();
 				}
 
 				foreach (var name in _animBoolNames)
@@ -70,7 +68,7 @@ public abstract class StateSO : ScriptableObject
 				_isActive = false;
 				foreach (var ability in _blockedAbilities)
 				{
-						ability.Unlock();
+						ability.blocker.RemoveBlock();
 				}
 
 				foreach (var name in _animBoolNames)
@@ -116,7 +114,7 @@ public abstract class StateSO : ScriptableObject
 
 	public void OnStateUpdate()
 	{
-		if (_defaultState != null && !IsAble)
+		if (_defaultState != null && blocker.IsLocked)
 		{
 			_machine.GetTransitionState(_defaultState);
 			return;
@@ -129,7 +127,7 @@ public abstract class StateSO : ScriptableObject
 				return;
 			}
 
-			if (transition.toState.IsAble && transition.condition())
+			if (!transition.toState.blocker.IsLocked && transition.condition())
 			{
 				transition.action?.Invoke();
 				_machine.GetTransitionState(transition.toState);
@@ -189,15 +187,6 @@ public abstract class StateSO : ScriptableObject
 		}
 
 		_animIndex++;
-	}
-
-	public void Block() => _amountOfBlocks++;
-	public void Unlock()
-	{
-		if (_amountOfBlocks > 0)
-		{
-			_amountOfBlocks--;
-		}
 	}
 }
 

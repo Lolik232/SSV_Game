@@ -29,7 +29,7 @@ MonoBehaviour:
     _max: 5
   dashForce:
     _min: 0
-    _max: 20
+    _max: 30
   jumpForce:
     _min: 0
     _max: 17

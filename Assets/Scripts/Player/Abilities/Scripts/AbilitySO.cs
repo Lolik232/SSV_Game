@@ -24,14 +24,11 @@ public class AbilitySO : ScriptableObject
 	protected float startTime;
 	protected float endTime;
 	protected int amountOfUsagesLeft;
-
-	private int _amountOfBlocks;
+	public Blocker blocker = new();
 
 	protected Animator anim;
 
 	[NonSerialized] public bool isActive;
-
-	protected bool IsAble => _amountOfBlocks == 0;
 
 	protected virtual void OnEnable()
 	{
@@ -41,7 +38,6 @@ public class AbilitySO : ScriptableObject
 
 		startTime = 0f;
 		endTime = 0f;
-		_amountOfBlocks = 0;
 
 		duration.Set(duration.Max);
 		cooldown.Set(cooldown.Max);
@@ -55,12 +51,12 @@ public class AbilitySO : ScriptableObject
 			foreach (var ability in _blockedAbilities)
 			{
 					ability.Terminate();
-					ability.Block();
+					ability.blocker.AddBlock();
 			}
 
 			foreach (var state in _blockedStates)
 			{
-					state.Block();
+				state.blocker.AddBlock();
 			}
 
 			foreach (var name in _animBoolNames)
@@ -76,12 +72,12 @@ public class AbilitySO : ScriptableObject
 
 			foreach (var ability in _blockedAbilities)
 			{
-					ability.Unlock();
+					ability.blocker.RemoveBlock();
 			}
 
 			foreach (var state in _blockedStates)
 			{
-					state.Unlock();
+					state.blocker.RemoveBlock();
 			}
 
 			foreach (var name in _animBoolNames)
@@ -94,7 +90,7 @@ public class AbilitySO : ScriptableObject
 
 		useConditions = new List<Func<bool>> { () =>
 		{
-			return IsAble &&
+			return !blocker.IsLocked &&
 						 !isActive &&
 						 (_maxAmountOfUsages == 0 || amountOfUsagesLeft > 0) &&
 						 Time.time > endTime + cooldown;
@@ -180,14 +176,6 @@ public class AbilitySO : ScriptableObject
 		if (amountOfUsagesLeft > 0)
 		{
 			amountOfUsagesLeft--;
-		}
-	}
-	public void Block() => _amountOfBlocks++;
-	public void Unlock()
-	{
-		if (_amountOfBlocks > 0)
-		{
-			_amountOfBlocks--;
 		}
 	}
 }

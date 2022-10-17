@@ -1,5 +1,3 @@
-using System;
-
 using UnityEngine;
 
 public class Sword : Weapon
@@ -30,17 +28,14 @@ public class Sword : Weapon
 				}
 			}
 
-			hitPos.position = _attackPosition;
-			hitSr.enabled = true;
+			HoldHitPosition(_attackPosition);
 		});
 
-		exitActions.Add(() =>
+		alwaysUpdateActions.Add(() =>
 		{
-			hitSr.enabled = false;
+			HoldHitPosition(_attackPosition);
 		});
 	}
-
-
 
 	protected override void OnDrawGizmos()
 	{

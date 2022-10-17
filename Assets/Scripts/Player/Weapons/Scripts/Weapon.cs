@@ -19,10 +19,9 @@ public class Weapon : MonoBehaviour
 
 	protected Animator baseAnim;
 	protected Animator anim;
-	protected Transform hitPos;
-	protected SpriteRenderer hitSr;
 	protected Player player;
 
+	protected List<UnityAction> alwaysUpdateActions = new();
 	protected List<UnityAction> updateActions = new();
 	protected List<UnityAction> enterActions = new();
 	protected List<UnityAction> exitActions = new();
@@ -32,9 +31,7 @@ public class Weapon : MonoBehaviour
 		player = _base.GetComponent<Player>();
 		baseAnim = _base.GetComponent<Animator>();
 		inputReader = _base.GetComponent<PlayerInputReaderOwner>().inputReader;
-		anim = GetComponentInChildren<Animator>();
-		hitPos = _hit.GetComponent<Transform>();
-		hitSr = _hit.GetComponent<SpriteRenderer>();
+		anim = GetComponent<Animator>();
 	}
 
 	protected virtual void Start()
@@ -43,6 +40,7 @@ public class Weapon : MonoBehaviour
 		needExit = false;
 
 		updateActions.Clear();
+		alwaysUpdateActions.Clear();
 		enterActions = new List<UnityAction> { ()=>
 			{
 					baseAnim.SetBool(_weaponName, true);
@@ -101,6 +99,14 @@ public class Weapon : MonoBehaviour
 		}
 	}
 
+	public void LateUpdate()
+	{
+		foreach (var action in alwaysUpdateActions)
+		{
+			action();
+		}
+	}
+
 	public void HoldDirection(int direction)
 	{
 		isDirectionHoldOn = true;
@@ -110,6 +116,11 @@ public class Weapon : MonoBehaviour
 	public void ReleaseDirection()
 	{
 		isDirectionHoldOn = false;
+	}
+
+	public void HoldHitPosition(Vector2 position)
+	{
+		_hit.transform.position = position;
 	}
 
 	protected virtual void OnDrawGizmos()

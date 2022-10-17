@@ -15,6 +15,8 @@ public class PlayerWallJumpAbilitySO : PlayerAbilitySO
 
 	private int _jumpDirection;
 
+	private int _velocityId;
+
 	protected override void OnEnable()
 	{
 		base.OnEnable();
@@ -41,7 +43,7 @@ public class PlayerWallJumpAbilitySO : PlayerAbilitySO
 		useActions.Add(() =>
 		{
 			_outOfWall = false;
-			player.HoldVelocity(parameters.wallJumpForce, _angle, _jumpDirection);
+			_velocityId = player.HoldVelocity(parameters.wallJumpForce, _angle, _jumpDirection);
 			player.CheckIfShouldFlip(_jumpDirection);
 			inputReader.jumpInput = false;
 		});
@@ -56,7 +58,7 @@ public class PlayerWallJumpAbilitySO : PlayerAbilitySO
 
 		terminateActions.Add(() =>
 		{
-			player.ReleaseVelocity();
+			player.ReleaseVelocity(_velocityId);
 		});
 	}
 

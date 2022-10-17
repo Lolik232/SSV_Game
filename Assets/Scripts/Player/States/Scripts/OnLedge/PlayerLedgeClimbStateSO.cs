@@ -1,8 +1,10 @@
+using System;
+
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerLedgeClimbState", menuName = "Player/States/Ledge Climb")]
 
-public class PlayerLedgeClimbStateSO : PlayerStateSO
+public class PlayerLedgeClimbStateSO : PlayerOnLedgeStateSO
 {
 	private bool _climbFinished;
 
@@ -22,17 +24,15 @@ public class PlayerLedgeClimbStateSO : PlayerStateSO
 		enterActions.Add(() =>
 		{
 			_climbFinished = false;
-			player.HoldPosition(player.ledgeStartPosition);
-		});
-
-		updateActions.Add(() =>
-		{
-			player.HoldPosition(player.ledgeStartPosition);
+			Tuple<int, int> ids =  player.HoldPosition(player.ledgeStartPosition);
+			gravityId = ids.Item1;
+			velocityId = ids.Item2;
 		});
 
 		exitActions.Add(() =>
 		{
 			player.transform.position = player.ledgeEndPosition;
+			player.ReleasePosition(gravityId, velocityId);
 		});
 
 		animationFinishActions.Add(() =>

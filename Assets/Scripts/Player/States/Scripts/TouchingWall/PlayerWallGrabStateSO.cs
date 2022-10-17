@@ -1,10 +1,13 @@
+using System;
+
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerWallGrabState", menuName = "Player/States/Touching Wall/Wall Grab")]
 
 public class PlayerWallGrabStateSO : PlayerTouchingWallStateSO
 {
-	private Vector2 _holdPosition;
+	private int _gravityId;
+	private int _velocityId;
 
 	protected override void OnEnable()
 	{
@@ -20,13 +23,14 @@ public class PlayerWallGrabStateSO : PlayerTouchingWallStateSO
 
 		enterActions.Add(() =>
 		{
-			_holdPosition = player.transform.position;
-			player.HoldPosition(_holdPosition);
+			Tuple<int, int> ids = player.HoldPosition(player.Position);
+			_gravityId = ids.Item1;
+			_velocityId = ids.Item2;
 		});
 
-		updateActions.Add(() =>
+		exitActions.Add(() =>
 		{
-			player.HoldPosition(_holdPosition);
+			player.ReleasePosition(_gravityId, _velocityId);
 		});
 	}
 }

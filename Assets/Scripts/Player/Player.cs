@@ -59,8 +59,11 @@ public class Player : MonoBehaviour
 	[NonSerialized] public Animator anim;
 	[NonSerialized] public TrailRenderer tr;
 
-	private bool _isVelocityHeldOn;
-	private Vector2 _cachedVelocity;
+	private Vector2 _cachedPosition;
+	private readonly Blocker _positionBlocker = new();
+	private Cacher<Vector2> _velocity;
+	private Cacher<float> _gravity;
+
 	private Vector2 _cornerPosition;
 
 	public Vector2 Position => transform.position;
@@ -71,11 +74,11 @@ public class Player : MonoBehaviour
 
 	public Vector2 CrouchSize => _crouchSize;
 
-	public Vector2 Center => (Vector2)transform.position + col.offset;
+	public Vector2 Center => (Vector2)Position + col.offset;
 
-	public Vector2 StandCenter => (Vector2)transform.position + _standOffset;
+	public Vector2 StandCenter => (Vector2)Position + _standOffset;
 
-	public Vector2 CrouchCenter => (Vector2)transform.position + _crouchOffset;
+	public Vector2 CrouchCenter => (Vector2)Position + _crouchOffset;
 
 	public Vector2 CheckerOffset => new(Size.x / 2 - CHECK_OFFSET, Size.y / 2 - CHECK_OFFSET);
 
@@ -103,19 +106,26 @@ public class Player : MonoBehaviour
 		machine = GetComponent<StateMachine>();
 		anim = GetComponent<Animator>();
 		weapon = _weaponBase.GetComponent<Weapon>();
-	}
-
-	private void Start()
-	{
-		Stand();
 
 		_parametersManager.Initialize();
 		_statesManager.Initialize(this);
 		_abilitiesManager.Initialize(this);
 	}
 
+	private void Start()
+	{
+		Stand();
+		_gravity = new Cacher<float>(rb.gravityScale);
+		_velocity = new Cacher<Vector2>(rb.velocity);
+	}
+
 	private void Update()
 	{
+		if (_positionBlocker.IsLocked)
+		{
+			transform.position = _cachedPosition;
+		}
+
 		bool abilityUsed = false;
 		foreach (var ability in _abilitiesManager.abilities)
 		{
@@ -299,38 +309,68 @@ public class Player : MonoBehaviour
 
 	public void TrySetVelocity(Vector2 velocity)
 	{
-		_cachedVelocity = velocity;
-		if (!_isVelocityHeldOn)
+		if (_velocity.TrySet(velocity))
 		{
-			rb.velocity = _cachedVelocity;
+			rb.velocity = _velocity;
 		}
 	}
 
-	public void HoldVelocity(float velocity, Vector2 angle, int direction)
+	public void TrySetGravity(float gravity)
 	{
-		HoldVelocity(new Vector2(angle.normalized.x * velocity * direction, angle.normalized.y * velocity));
+		if (_gravity.TrySet(gravity))
+		{
+			rb.gravityScale = _gravity;
+		}
 	}
 
-	public void HoldVelocityX(float xVelocity)
+	public int HoldVelocity(float velocity, Vector2 angle, int direction)
 	{
-		HoldVelocity(new Vector2(xVelocity, rb.velocity.y));
+		return HoldVelocity(new Vector2(angle.normalized.x * velocity * direction, angle.normalized.y * velocity));
 	}
 
-	public void HoldVelocityY(float yVelocity)
+	public int HoldVelocity(Vector2 velocity)
 	{
-		HoldVelocity(new Vector2(rb.velocity.x, yVelocity));
+		int id = _velocity.Hold(velocity);
+		rb.velocity = _velocity;
+		return id;
 	}
 
-	public void HoldVelocity(Vector2 velocity)
+	public void ReleaseVelocity(int id)
 	{
-		rb.velocity = velocity;
-		_isVelocityHeldOn = true;
+		_velocity.Release(id);
+		rb.velocity = _velocity;
 	}
 
-	public void ReleaseVelocity()
+	public int HoldGravity(float gravity)
 	{
-		rb.velocity = _cachedVelocity;
-		_isVelocityHeldOn = false;
+		int id = _gravity.Hold(gravity);
+		rb.gravityScale = _gravity;
+		return id;
+	}
+
+	public void ReleaseGravity(int id)
+	{
+		_gravity.Release(id);
+		rb.gravityScale = _gravity;
+	}
+
+	public Tuple<int, int> HoldPosition(Vector2 holdPosition)
+	{
+		int gravityId = HoldGravity(0f);
+		int velocityId = HoldVelocity(Vector2.zero);
+		_cachedPosition = holdPosition;
+		transform.position = _cachedPosition;
+		_positionBlocker.AddBlock();
+
+		return new(gravityId, velocityId);
+	}
+
+	public void ReleasePosition(int gravityId, int velocityId)
+	{
+		ReleaseGravity(gravityId);
+		TrySetVelocity(Vector2.zero);
+		ReleaseVelocity(velocityId);
+		_positionBlocker.RemoveBlock();
 	}
 
 	public void MoveToX(float x)
@@ -341,12 +381,6 @@ public class Player : MonoBehaviour
 	public void MoveToY(float y)
 	{
 		transform.position = new Vector2(transform.position.x, y);
-	}
-
-	public void HoldPosition(Vector2 holdPosition)
-	{
-		transform.position = holdPosition;
-		rb.velocity = Vector2.zero;
 	}
 
 	public void Stand()
@@ -375,7 +409,7 @@ public class Player : MonoBehaviour
 			Gizmos.DrawWireCube(new Vector2(ledgeStartPosition.x, ledgeStartPosition.y + col.offset.y), col.size);
 
 			Gizmos.color = Color.red;
-			Gizmos.DrawLine(new Vector2(ledgeEndPosition.x, ledgeEndPosition.y + UNIT_SIZE - _groundCheckDistance / 2), 
+			Gizmos.DrawLine(new Vector2(ledgeEndPosition.x, ledgeEndPosition.y + UNIT_SIZE - _groundCheckDistance / 2),
 											new Vector2(ledgeEndPosition.x, ledgeEndPosition.y + UNIT_SIZE + _groundCheckDistance / 2));
 
 			Gizmos.color = Color.white;

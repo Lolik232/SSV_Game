@@ -1,8 +1,10 @@
+using System;
+
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerLedgeGrabState", menuName = "Player/States/Ledge Grab")]
 
-public class PlayerLedgeGrabStateSO : PlayerStateSO
+public class PlayerLedgeGrabStateSO : PlayerOnLedgeStateSO
 {
 	private bool _grabFinish;
 
@@ -18,12 +20,9 @@ public class PlayerLedgeGrabStateSO : PlayerStateSO
 		{
 			_grabFinish = false;
 			abilities.jump.SetAmountOfUsagesToZero();
-			player.HoldPosition(player.ledgeStartPosition);
-		});
-
-		updateActions.Add(() =>
-		{
-			player.HoldPosition(player.ledgeStartPosition);
+			Tuple<int, int> ids =  player.HoldPosition(player.ledgeStartPosition);
+			gravityId = ids.Item1;
+			velocityId = ids.Item2;
 		});
 
 		animationFinishActions.Add(() =>

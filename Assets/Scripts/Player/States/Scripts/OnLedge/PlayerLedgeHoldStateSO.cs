@@ -2,7 +2,7 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerLedgeHoldState", menuName = "Player/States/Ledge Hold")]
 
-public class PlayerLedgeHoldStateSO : PlayerStateSO
+public class PlayerLedgeHoldStateSO : PlayerOnLedgeStateSO
 {
 	protected override void OnEnable()
 	{
@@ -20,12 +20,11 @@ public class PlayerLedgeHoldStateSO : PlayerStateSO
 		enterActions.Add(() =>
 		{
 			abilities.wallJump.RestoreAmountOfUsages();
-			player.HoldPosition(player.ledgeStartPosition);
 		});
 
-		updateActions.Add(() =>
+		exitActions.Add(() =>
 		{
-			player.HoldPosition(player.ledgeStartPosition);
+			player.ReleasePosition(gravityId, velocityId);
 		});
 	}
 }

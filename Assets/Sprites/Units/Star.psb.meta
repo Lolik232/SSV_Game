@@ -47,7 +47,7 @@ ScriptedImporter:
     flipbookRows: 0
     flipbookColumns: 0
     ignorePngGamma: 0
-    filterMode: 2
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 0
@@ -91,18 +91,18 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   mosaicSpriteImportData: []
   rigSpriteImportData:
-  - name: "\u0421\u043B\u043E\u0439 1"
+  - name: Star
     originalName: 
-    pivot: {x: 0.49107194, y: 0.42294583}
-    alignment: 9
+    pivot: {x: 0, y: 0}
+    alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 914
-      height: 938
-    spriteID: 565b431c88c958542b79f1a9790531e3
+      width: 799
+      height: 822
+    spriteID: 20c73f43718b7934b96a44ac489eff0e
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -131,7 +131,7 @@ ScriptedImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     forceMaximumCompressionQuality_BC6H_BC7: 0
     crunchedCompression: 0
@@ -175,11 +175,11 @@ ScriptedImporter:
   resliceFromLayer: 0
   mosaicPSDLayers: []
   rigPSDLayers:
-  - name: "\u0421\u043B\u043E\u0439 1"
-    spriteName: "\u0421\u043B\u043E\u0439 1"
+  - name: Star
+    spriteName: Star
     isGroup: 0
     parentIndex: -1
-    spriteID: 565b431c88c958542b79f1a9790531e3
+    spriteID: 20c73f43718b7934b96a44ac489eff0e
     layerID: 2
     mosaicPosition: {x: 4, y: 4}
     flatten: 0

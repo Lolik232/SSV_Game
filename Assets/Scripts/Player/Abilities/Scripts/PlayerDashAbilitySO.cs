@@ -5,9 +5,12 @@ using UnityEngine;
 public class PlayerDashAbilitySO : PlayerAbilitySO
 {
 	[SerializeField] private float _minProportion;
+	[SerializeField] private float _dashGravity;
 
-	private float _cachedGravity;
 	private Vector2 _dashDirection;
+
+	private int _gravityId;
+	private int _velocityId;
 
 	protected override void OnEnable()
 	{
@@ -28,23 +31,22 @@ public class PlayerDashAbilitySO : PlayerAbilitySO
 		terminateConditions.Add(() =>
 		{
 			return player.rb.velocity.magnitude <= parameters.dashForce * _minProportion ||
-						 (!inputReader.dashInput && Time.time > startTime + duration * _minProportion);
+						 (!inputReader.dashInputHold && Time.time > startTime + duration * _minProportion);
 		});
 
 		useActions.Add(() =>
 		{
-			_cachedGravity = player.rb.gravityScale;
-			player.rb.gravityScale = 0f;
+			_gravityId = player.HoldGravity(_dashGravity);
+			_velocityId = player.HoldVelocity(parameters.dashForce * _dashDirection);
 			player.CheckIfShouldFlip(_dashDirection.x >= 0 ? 1 : -1);
-			player.HoldVelocity(parameters.dashForce * _dashDirection);
 			player.tr.emitting = true;
 		});
 
 		terminateActions.Add(() =>
 		{
 			inputReader.dashInput = false;
-			player.rb.gravityScale = _cachedGravity;
-			player.ReleaseVelocity();
+			player.ReleaseGravity(_gravityId);
+			player.ReleaseVelocity(_velocityId);
 			player.tr.emitting = false;
 			player.tr.Clear();
 			if (player.rb.velocity.y > 0f)

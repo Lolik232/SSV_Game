@@ -29,7 +29,7 @@ public class PlayerInAirStateSO : PlayerStateSO
 		transitions.Add(new TransitionItem(states.wallGrab, WallGrabCondition));
 		transitions.Add(new TransitionItem(states.wallSlide, WallSlideCondition));
 
-		enterActions.Add(()=>
+		enterActions.Add(() =>
 		{
 			CheckForJumps();
 		});
