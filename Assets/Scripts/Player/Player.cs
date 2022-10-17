@@ -61,8 +61,8 @@ public class Player : MonoBehaviour
 
 	private Vector2 _cachedPosition;
 	private readonly Blocker _positionBlocker = new();
-	private Cacher<Vector2> _velocity;
-	private Cacher<float> _gravity;
+	private Cacher<Vector2> _velocity = new();
+	private Cacher<float> _gravity = new();
 
 	private Vector2 _cornerPosition;
 
@@ -74,11 +74,11 @@ public class Player : MonoBehaviour
 
 	public Vector2 CrouchSize => _crouchSize;
 
-	public Vector2 Center => (Vector2)Position + col.offset;
+	public Vector2 Center => Position + col.offset;
 
-	public Vector2 StandCenter => (Vector2)Position + _standOffset;
+	public Vector2 StandCenter => Position + _standOffset;
 
-	public Vector2 CrouchCenter => (Vector2)Position + _crouchOffset;
+	public Vector2 CrouchCenter => Position + _crouchOffset;
 
 	public Vector2 CheckerOffset => new(Size.x / 2 - CHECK_OFFSET, Size.y / 2 - CHECK_OFFSET);
 
@@ -115,8 +115,8 @@ public class Player : MonoBehaviour
 	private void Start()
 	{
 		Stand();
-		_gravity = new Cacher<float>(rb.gravityScale);
-		_velocity = new Cacher<Vector2>(rb.velocity);
+		_gravity.Set(rb.gravityScale);
+		_velocity.Set(rb.velocity);
 	}
 
 	private void Update()

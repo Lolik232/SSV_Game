@@ -21,10 +21,13 @@ public class Weapon : MonoBehaviour
 	protected Animator anim;
 	protected Player player;
 
-	protected List<UnityAction> alwaysUpdateActions = new();
+	protected List<UnityAction> lateUpdateActions = new();
 	protected List<UnityAction> updateActions = new();
 	protected List<UnityAction> enterActions = new();
 	protected List<UnityAction> exitActions = new();
+
+	private Vector2 _cachedHitPosition;
+	private readonly Blocker _hitPositionBlocker = new();
 
 	protected virtual void Awake()
 	{
@@ -40,15 +43,26 @@ public class Weapon : MonoBehaviour
 		needExit = false;
 
 		updateActions.Clear();
-		alwaysUpdateActions.Clear();
-		enterActions = new List<UnityAction> { ()=>
+		lateUpdateActions = new List<UnityAction>
+		{
+			()=>
+			{
+				if (_hitPositionBlocker.IsLocked)
+				{
+					_hit.transform.position = _cachedHitPosition;
+				}
+			}
+		};
+		enterActions = new List<UnityAction>
+		{ ()=>
 			{
 					baseAnim.SetBool(_weaponName, true);
 					anim.SetBool("attack", true);
 					_isActive = true;
 					needExit = false;
 			} };
-		exitActions = new List<UnityAction> { ()=>
+		exitActions = new List<UnityAction>
+		{ ()=>
 			{
 					baseAnim.SetBool(_weaponName, false);
 					anim.SetBool("attack", false);
@@ -101,7 +115,7 @@ public class Weapon : MonoBehaviour
 
 	public void LateUpdate()
 	{
-		foreach (var action in alwaysUpdateActions)
+		foreach (var action in lateUpdateActions)
 		{
 			action();
 		}
@@ -118,9 +132,11 @@ public class Weapon : MonoBehaviour
 		isDirectionHoldOn = false;
 	}
 
-	public void HoldHitPosition(Vector2 position)
+	public void HoldHitPosition(Vector2 holdPosition)
 	{
-		_hit.transform.position = position;
+		_cachedHitPosition = holdPosition;
+		_hit.transform.position = _cachedHitPosition;
+		_hitPositionBlocker.AddBlock();
 	}
 
 	protected virtual void OnDrawGizmos()

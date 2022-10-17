@@ -14,8 +14,9 @@ public class Cacher<T>
 
 	private int _lastId;
 
-	public Cacher(T value)
+	public void Set(T value)
 	{
+		_savedValue = value;
 		_value = value;
 	}
 

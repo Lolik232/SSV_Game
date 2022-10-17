@@ -30,11 +30,6 @@ public class Sword : Weapon
 
 			HoldHitPosition(_attackPosition);
 		});
-
-		alwaysUpdateActions.Add(() =>
-		{
-			HoldHitPosition(_attackPosition);
-		});
 	}
 
 	protected override void OnDrawGizmos()
