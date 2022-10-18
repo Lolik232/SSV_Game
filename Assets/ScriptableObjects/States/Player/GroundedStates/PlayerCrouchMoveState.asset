@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16ff3c3cc88dab6409bb124021c28d55, type: 3}
+  m_Name: PlayerCrouchMoveState
+  m_EditorClassIdentifier: 
+  _animBoolNames:
+  - crouchMove
+  _animTriggerNames: []
+  _blockedAbilities: []
+  _defaultState: {fileID: 11400000, guid: 490db7eaeaebdb94eb7aee3a32ee2448, type: 2}
+  states: {fileID: 11400000, guid: 9c603ec4709b5f74bb3d72e0af3766ca, type: 2}
+  abilities: {fileID: 11400000, guid: 0917e0108459ae84c8d98c687dd1da49, type: 2}
+  parameters: {fileID: 11400000, guid: 4162b27446d9dd24589dac8069397f3d, type: 2}
+  inputReader: {fileID: 11400000, guid: 65e8862389616104686b04238f8a0641, type: 2}

@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 4c8ebba6dace480478ea80adc6340382
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - _stateEnterChannel: {fileID: 11400000, guid: c36ead26c9f9cfa41abcaa05ae4e70dd, type: 2}
+  - _stateExitChannel: {fileID: 11400000, guid: 11d91bc816dd025429d753a185a997ad, type: 2}
+  - _subStateEnterChannel: {fileID: 11400000, guid: d3630f84e89f1d94180dba1249b33745, type: 2}
+  - _inputReader: {fileID: 11400000, guid: 65e8862389616104686b04238f8a0641, type: 2}
+  - _toInAirState: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
