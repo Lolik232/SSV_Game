@@ -10,7 +10,7 @@ public class PlayerInputReaderSO : ScriptableObject
 	[SerializeField] private float _dashInputPressTime;
 
 	private PlayerInput _playerInput;
-	private Camera _mainCamera;
+	private Camera      _mainCamera;
 
 	private float _jumpInputStartTime;
 	private float _dashInputStartTime;
@@ -30,12 +30,12 @@ public class PlayerInputReaderSO : ScriptableObject
 
 	[NonSerialized] public Vector2 mouseInputPosition;
 	[NonSerialized] public Vector2 mouseInputDirection;
-	[NonSerialized] public float mouseInputDistance;
+	[NonSerialized] public float   mouseInputDistance;
 
-	private void OnEnable()
-	{
-		_mainCamera = Camera.main;
-	}
+	// private void OnEnable()
+	// {
+	// 	_mainCamera = Camera.main;
+	// }
 
 	public void OnUpdate()
 	{
@@ -46,6 +46,8 @@ public class PlayerInputReaderSO : ScriptableObject
 	}
 
 	public void InitializePlayerInput(PlayerInput playerInput) => _playerInput = playerInput;
+
+	public void InitializePlayerCamera(Camera camera) => _mainCamera = camera;
 
 	public void OnMoveInput(InputAction.CallbackContext context)
 	{
@@ -68,13 +70,13 @@ public class PlayerInputReaderSO : ScriptableObject
 	{
 		if (context.performed)
 		{
-			dashInput = true;
-			dashInputHold = true;
+			dashInput           = true;
+			dashInputHold       = true;
 			_dashInputStartTime = Time.time;
 		}
 		else if (context.canceled)
 		{
-			dashInput = false;
+			dashInput     = false;
 			dashInputHold = false;
 		}
 	}
@@ -115,8 +117,8 @@ public class PlayerInputReaderSO : ScriptableObject
 	{
 		if (context.performed)
 		{
-			jumpInput = true;
-			jumpInputHold = true;
+			jumpInput           = true;
+			jumpInputHold       = true;
 			_jumpInputStartTime = Time.time;
 		}
 		else if (context.canceled)
