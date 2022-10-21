@@ -23,8 +23,6 @@ MonoBehaviour:
   - attack
   _blockedAbilities: []
   _blockedStates:
-  - blockedState: {fileID: 11400000, guid: d053b7ebcf07adc48b4b0b1e890c4909, type: 2}
-    transitionState: {fileID: 0}
   - blockedState: {fileID: 11400000, guid: 7617914b9bb6c004a834c51363c59b42, type: 2}
     transitionState: {fileID: 11400000, guid: b9f4c60c05bda3a4dbdadc3e9460c43b, type: 2}
   - blockedState: {fileID: 11400000, guid: d02b124ee9fa12c4f947b0ce0f6df895, type: 2}
@@ -32,6 +30,6 @@ MonoBehaviour:
   - blockedState: {fileID: 11400000, guid: a3e0c4c17df249640a3e321f915b07a4, type: 2}
     transitionState: {fileID: 11400000, guid: b9f4c60c05bda3a4dbdadc3e9460c43b, type: 2}
   - blockedState: {fileID: 11400000, guid: 928408281917347468e21ea281056d32, type: 2}
-    transitionState: {fileID: 0}
+    transitionState: {fileID: 11400000, guid: b9f4c60c05bda3a4dbdadc3e9460c43b, type: 2}
   data: {fileID: 11400000, guid: 61c99a593f8f1a74fb3575845de2cf40, type: 2}
   _inventory: {fileID: 11400000, guid: 22bd3417d03a2ac45a42b9324c95f88c, type: 2}

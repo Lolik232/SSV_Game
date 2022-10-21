@@ -29,14 +29,14 @@ public class PlayerCheckersManagerSO : ScriptableObject
 	[NonSerialized] public Vector2 ledgeStartPosition;
 	[NonSerialized] public Vector2 ledgeEndPosition;
 
-	/*[NonSerialized]*/ public bool isGrounded;
-	/*[NonSerialized]*/ public bool isGroundClose;
-	/*[NonSerialized]*/ public bool isTouchingCeiling;
-	/*[NonSerialized]*/ public bool isTouchingCeilingWhenClimb;
-	/*[NonSerialized]*/ public bool isTouchingWall;
-	/*[NonSerialized]*/ public bool isTouchingWallBack;
-	/*[NonSerialized]*/ public bool isClampedBetweenWalls;
-	/*[NonSerialized]*/ public bool isTouchingLedge;
+	[NonSerialized] public bool isGrounded;
+	[NonSerialized] public bool isGroundClose;
+	[NonSerialized] public bool isTouchingCeiling;
+	[NonSerialized] public bool isTouchingCeilingWhenClimb;
+	[NonSerialized] public bool isTouchingWall;
+	[NonSerialized] public bool isTouchingWallBack;
+	[NonSerialized] public bool isClampedBetweenWalls;
+	[NonSerialized] public bool isTouchingLedge;
 
 	private Vector2 _startLedgeOffset;
 	private Vector2 _endLedgeOffset;

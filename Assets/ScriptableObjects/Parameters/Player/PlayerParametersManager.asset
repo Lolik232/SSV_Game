@@ -14,19 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed:
     _min: 0
-    _max: 10
+    _max: 15
   crouchMoveSpeed:
     _min: 0
-    _max: 6
+    _max: 10
   inAirMoveSpeed:
     _min: 0
-    _max: 15
+    _max: 17
   wallSlideSpeed:
     _min: 0
-    _max: 4
+    _max: 5
   wallClimbSpeed:
     _min: 0
-    _max: 5
+    _max: 7
   dashForce:
     _min: 0
     _max: 35
