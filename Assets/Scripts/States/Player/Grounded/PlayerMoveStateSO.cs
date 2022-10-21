@@ -7,24 +7,24 @@ public class PlayerMoveStateSO : PlayerGroundedStateSO
 	{
 		base.OnEnable();
 
-		bool IdleCondition() => inputReader.moveInput.x == 0;
+		bool IdleCondition() => data.input.moveInput.x == 0;
 
-		bool CrouchMoveCondition() => inputReader.moveInput.y < 0;
+		bool CrouchMoveCondition() => data.input.moveInput.y < 0;
 
-		bool LedgeClimbCondition() => player.isTouchingWall &&
-																	!player.isTouchingLedge &&
-																	inputReader.moveInput.x == -player.wallDirection;
+		bool LedgeClimbCondition() => data.checkers.isTouchingWall &&
+																	!data.checkers.isTouchingLedge &&
+																	data.input.moveInput.x == -data.checkers.wallDirection;
 
-		void LedgeClimbAction() => player.DetermineLedgePosition();
+		void LedgeClimbAction() => data.checkers.DetermineLedgePosition();
 
-		transitions.Add(new TransitionItem(states.idle, IdleCondition));
-		transitions.Add(new TransitionItem(states.crouchMove, CrouchMoveCondition));
-		transitions.Add(new TransitionItem(states.ledgeClimb, LedgeClimbCondition, LedgeClimbAction));
+		transitions.Add(new TransitionItem(data.states.idle, IdleCondition));
+		transitions.Add(new TransitionItem(data.states.crouchMove, CrouchMoveCondition));
+		transitions.Add(new TransitionItem(data.states.ledgeClimb, LedgeClimbCondition, LedgeClimbAction));
 
 		updateActions.Add(() =>
 		{
-			player.CheckIfShouldFlip(inputReader.moveInput.x);
-			player.TrySetVelocityX(inputReader.moveInput.x * parameters.moveSpeed);
+			player.CheckIfShouldFlip(data.input.moveInput.x);
+			player.TrySetVelocityX(data.input.moveInput.x * data.parameters.moveSpeed);
 		});
 	}
 }

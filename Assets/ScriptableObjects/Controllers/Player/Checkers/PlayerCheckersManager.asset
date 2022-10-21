@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91faf38b6015c664496b82564e71f4a8, type: 3}
+  m_Name: PlayerCheckersManager
+  m_EditorClassIdentifier: 
+  _groundCheckDistance: 0.1
+  _ceilingCheckDistance: 0.1
+  _wallCheckDistance: 0.2
+  _ledgeCheckDistance: 0.25
+  _groundCloseCheckDistance: 0.8
+  _wallCloseCheckDistance: 0.6
+  _wallCheckerHeight: 0.8
+  _ledgeCheckerHeight: 1.8
+  _whatIsTarget:
+  - serializedVersion: 2
+    m_Bits: 8

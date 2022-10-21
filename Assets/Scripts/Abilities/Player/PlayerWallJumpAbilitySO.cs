@@ -21,34 +21,34 @@ public class PlayerWallJumpAbilitySO : PlayerAbilitySO
 
 		beforeUseActions.Add(() =>
 		{
-			_jumpDirection = player.wallDirection;
+			_jumpDirection = data.checkers.wallDirection;
 		});
 
 		useConditions.Add(() =>
 		{
-			return inputReader.jumpInput &&
-						 !player.isClampedBetweenWalls &&
-						 !player.isTouchingCeiling &&
-						 (player.isTouchingWall || player.isTouchingWallBack);
+			return data.input.jumpInput &&
+						 !data.checkers.isClampedBetweenWalls &&
+						 !data.checkers.isTouchingCeiling &&
+						 (data.checkers.isTouchingWall || data.checkers.isTouchingWallBack);
 		});
 
 		terminateConditions.Add(() =>
 		{
 			return _outOfWall &&
-						 (Mathf.Abs(player.rb.velocity.x) <= 0.01f || player.rb.velocity.y < 0.01f);
+						 (Mathf.Abs(player.Velocity.x) <= 0.01f || player.Velocity.y < 0.01f);
 		});
 
 		useActions.Add(() =>
 		{
 			_outOfWall = false;
-			player.HoldVelocity(parameters.wallJumpForce, _angle, _jumpDirection);
+			player.HoldVelocity(data.parameters.wallJumpForce, _angle, _jumpDirection);
 			player.CheckIfShouldFlip(_jumpDirection);
-			inputReader.jumpInput = false;
+			data.input.jumpInput = false;
 		});
 
 		updateActions.Add(() =>
 		{
-			if (!player.isTouchingWall)
+			if (!data.checkers.isTouchingWall)
 			{
 				_outOfWall = true;
 			}

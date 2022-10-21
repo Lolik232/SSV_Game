@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
-
 [CreateAssetMenu(fileName = "PlayerParametersManager", menuName = "Player/Parameters/Parameters Manager")]
 
 public class PlayerParametersManagerSO : ScriptableObject
@@ -21,6 +20,9 @@ public class PlayerParametersManagerSO : ScriptableObject
 	public Parameter jumpForce;
 	public Parameter wallJumpForce;
 
+	public Parameter swordAttackDistance;
+	public Parameter swordAttackAngle;
+
 	private void OnEnable()
 	{
 		parameters = new List<Parameter>
@@ -34,6 +36,9 @@ public class PlayerParametersManagerSO : ScriptableObject
 				dashForce,
 				jumpForce,
 				wallJumpForce,
+
+				swordAttackDistance,
+				swordAttackAngle
 		};
 	}
 

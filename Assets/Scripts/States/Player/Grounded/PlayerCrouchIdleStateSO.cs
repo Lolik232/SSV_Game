@@ -8,13 +8,13 @@ public class PlayerCrouchIdleStateSO : PlayerGroundedStateSO
 	{
 		base.OnEnable();
 
-		bool IdleCondition() => inputReader.moveInput.y > -1 &&
-														!player.isTouchingCeiling;
+		bool IdleCondition() => data.input.moveInput.y > -1 &&
+														!data.checkers.isTouchingCeiling;
 
-		bool CrouchMoveCondition() => inputReader.moveInput.x != 0;
+		bool CrouchMoveCondition() => data.input.moveInput.x != 0;
 
-		transitions.Add(new TransitionItem(states.idle, IdleCondition));
-		transitions.Add(new TransitionItem(states.crouchMove, CrouchMoveCondition));
+		transitions.Add(new TransitionItem(data.states.idle, IdleCondition));
+		transitions.Add(new TransitionItem(data.states.crouchMove, CrouchMoveCondition));
 
 		enterActions.Add(() =>
 		{

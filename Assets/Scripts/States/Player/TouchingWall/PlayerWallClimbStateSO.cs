@@ -8,13 +8,14 @@ public class PlayerWallClimbStateSO : PlayerTouchingWallStateSO
 	{
 		base.OnEnable();
 
-		bool WallClimbCondition() => inputReader.moveInput.y < 1;
+		bool WallGrabCondition() => data.input.moveInput.y <= 0 || 
+																 !data.input.grabInput;
 
-		transitions.Add(new TransitionItem(states.wallGrab, WallClimbCondition));
+		transitions.Add(new TransitionItem(data.states.wallGrab, WallGrabCondition));
 
 		updateActions.Add(() =>
 		{
-			player.TrySetVelocityY(parameters.wallClimbSpeed);
+			player.TrySetVelocityY(data.parameters.wallClimbSpeed);
 		});
 	}
 }

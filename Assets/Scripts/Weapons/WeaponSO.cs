@@ -1,15 +1,16 @@
+using System.Collections;
 using System.Collections.Generic;
+
+using Unity.VisualScripting;
 
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Weapon : MonoBehaviour
+public abstract class WeaponSO : ScriptableObject
 {
 	[SerializeField] private string _weaponName;
-	[SerializeField] private GameObject _base;
-	[SerializeField] private GameObject _hit;
 
-	protected PlayerInputReaderSO inputReader;
+	[SerializeField] protected PlayerDataSO data;
 
 	private bool _isActive;
 
@@ -17,42 +18,26 @@ public class Weapon : MonoBehaviour
 
 	protected Animator baseAnim;
 	protected Animator anim;
-	protected Player player;
+	protected Hit hit;
 
-	protected List<UnityAction> lateUpdateActions = new();
 	protected List<UnityAction> updateActions = new();
 	protected List<UnityAction> enterActions = new();
 	protected List<UnityAction> exitActions = new();
 
-	private readonly Blocker _hitPositionBlocker = new();
 	protected readonly Blocker directionBlocker = new();
-	private Vector2 _holdHitPosition;
+
 	protected int holdDirection;
 
-	protected virtual void Awake()
-	{
-		player = _base.GetComponent<Player>();
-		baseAnim = _base.GetComponent<Animator>();
-		inputReader = _base.GetComponent<PlayerInputReaderOwner>().inputReader;
-		anim = GetComponent<Animator>();
-	}
+	protected void InitializeBaseAnimator(Animator baseAnim) => this.baseAnim = baseAnim;
+	protected void InitializeAnimator(Animator anim) => this.anim = anim;
+	protected void InitializeHit(Hit hit) => this.hit = hit;
 
-	protected virtual void Start()
+	protected virtual void OnEnable()
 	{
 		_isActive = false;
 		needExit = false;
 
 		updateActions.Clear();
-		lateUpdateActions = new List<UnityAction>
-		{
-			()=>
-			{
-				if (_hitPositionBlocker.IsLocked)
-				{
-					_hit.transform.position = _holdHitPosition;
-				}
-			}
-		};
 		enterActions = new List<UnityAction>
 		{ ()=>
 			{
@@ -96,7 +81,7 @@ public class Weapon : MonoBehaviour
 		}
 	}
 
-	public void Update()
+	public void OnUpdate()
 	{
 		foreach (var action in updateActions)
 		{
@@ -113,14 +98,6 @@ public class Weapon : MonoBehaviour
 		}
 	}
 
-	public void LateUpdate()
-	{
-		foreach (var action in lateUpdateActions)
-		{
-			action();
-		}
-	}
-
 	public void HoldDirection(int direction)
 	{
 		holdDirection = direction;
@@ -132,20 +109,7 @@ public class Weapon : MonoBehaviour
 		directionBlocker.RemoveBlock();
 	}
 
-	public void HoldHitPosition(Vector2 holdPosition)
+	public virtual void OnDrawGizmos()
 	{
-		_holdHitPosition = holdPosition;
-		_hit.transform.position = holdPosition;
-		_hitPositionBlocker.AddBlock();
-	}
-
-	public void ReleaseHitPosition()
-	{
-		_hitPositionBlocker.RemoveBlock();
-	}
-
-	protected virtual void OnDrawGizmos()
-	{
-
 	}
 }

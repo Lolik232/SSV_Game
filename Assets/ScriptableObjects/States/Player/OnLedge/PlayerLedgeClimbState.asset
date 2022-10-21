@@ -14,14 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _animBoolNames:
   - ledgeClimb
-  _animTriggerNames: []
   _blockedAbilities:
-  - {fileID: 11400000, guid: f099f390b43105b4f92b85f1e8494dc1, type: 2}
-  - {fileID: 11400000, guid: 39983b7066119fd42ad942ed7d5eed01, type: 2}
-  - {fileID: 11400000, guid: 29b560b1852e4594d9cf188e2e83282f, type: 2}
-  - {fileID: 11400000, guid: a8afe2bf020990f47854dcf8196791c8, type: 2}
-  _defaultState: {fileID: 11400000, guid: 490db7eaeaebdb94eb7aee3a32ee2448, type: 2}
-  states: {fileID: 11400000, guid: 9c603ec4709b5f74bb3d72e0af3766ca, type: 2}
-  abilities: {fileID: 11400000, guid: 0917e0108459ae84c8d98c687dd1da49, type: 2}
-  parameters: {fileID: 11400000, guid: 4162b27446d9dd24589dac8069397f3d, type: 2}
-  inputReader: {fileID: 11400000, guid: 65e8862389616104686b04238f8a0641, type: 2}
+  - blockedAbility: {fileID: 11400000, guid: a8afe2bf020990f47854dcf8196791c8, type: 2}
+    isHardBlocked: 0
+  - blockedAbility: {fileID: 11400000, guid: f099f390b43105b4f92b85f1e8494dc1, type: 2}
+    isHardBlocked: 1
+  - blockedAbility: {fileID: 11400000, guid: 39983b7066119fd42ad942ed7d5eed01, type: 2}
+    isHardBlocked: 1
+  - blockedAbility: {fileID: 11400000, guid: 29b560b1852e4594d9cf188e2e83282f, type: 2}
+    isHardBlocked: 1
+  _machine: {fileID: 11400000, guid: 3362953f1f9f0fe408fb08aa9bb22d02, type: 2}
+  data: {fileID: 11400000, guid: 61c99a593f8f1a74fb3575845de2cf40, type: 2}

@@ -12,9 +12,11 @@ public abstract class StateSO : ScriptableObject
 	protected float startTime;
 
 	[SerializeField] private List<string> _animBoolNames = new();
-	[SerializeField] private List<string> _animTriggerNames = new();
-	[SerializeField] private List<AbilitySO> _blockedAbilities = new();
-	[SerializeField] private StateSO _defaultState;
+	[SerializeField] private List<BlockedAbility> _blockedAbilities = new();
+
+	[SerializeField] private StateMachineSO _machine;
+
+	private StateSO _transitionStateWhenBlocked;
 
 	protected List<TransitionItem> transitions = new();
 	protected List<UnityAction> enterActions = new();
@@ -25,8 +27,6 @@ public abstract class StateSO : ScriptableObject
 	protected List<UnityAction<int>> animationActions = new();
 
 	protected Animator anim;
-
-	private StateMachine _machine;
 
 	public Blocker blocker = new();
 
@@ -49,18 +49,17 @@ public abstract class StateSO : ScriptableObject
 				startTime = Time.time;
 				foreach (var ability in _blockedAbilities)
 				{
-						ability.Terminate();
-						ability.blocker.AddBlock();
+					if (ability.isHardBlocked)
+					{
+						ability.blockedAbility.Terminate();
+					}
+
+					ability.blockedAbility.blocker.AddBlock();
 				}
 
 				foreach (var name in _animBoolNames)
 				{
 						anim.SetBool(name, true);
-				}
-
-				foreach (var name in _animTriggerNames)
-				{
-						anim.SetTrigger(name);
 				}
 			}};
 		exitActions = new List<UnityAction> { () =>
@@ -68,7 +67,7 @@ public abstract class StateSO : ScriptableObject
 				_isActive = false;
 				foreach (var ability in _blockedAbilities)
 				{
-						ability.blocker.RemoveBlock();
+					ability.blockedAbility.blocker.RemoveBlock();
 				}
 
 				foreach (var name in _animBoolNames)
@@ -79,7 +78,6 @@ public abstract class StateSO : ScriptableObject
 	}
 
 	protected void InitializeAnimator(Animator animator) => anim = animator;
-	protected void InitializeMachine(StateMachine stateMachine) => _machine = stateMachine;
 
 	public void OnStateEnter()
 	{
@@ -114,19 +112,19 @@ public abstract class StateSO : ScriptableObject
 
 	public void OnStateUpdate()
 	{
-		if (_defaultState != null && blocker.IsLocked)
+		if (!_isActive)
 		{
-			_machine.GetTransitionState(_defaultState);
+			return;
+		}
+
+		if (_transitionStateWhenBlocked != null && blocker.IsLocked)
+		{
+			_machine.GetTransitionState(_transitionStateWhenBlocked);
 			return;
 		}
 
 		foreach (var transition in transitions)
 		{
-			if (!_isActive)
-			{
-				return;
-			}
-
 			if (!transition.toState.blocker.IsLocked && transition.condition())
 			{
 				transition.action?.Invoke();
@@ -137,37 +135,32 @@ public abstract class StateSO : ScriptableObject
 
 		foreach (var action in updateActions)
 		{
-			if (!_isActive)
-			{
-				return;
-			}
-
 			action();
 		}
 	}
 
-	public void OnFixedUpdate()
+	public void OnStateFixedUpdate()
 	{
+		if (!_isActive)
+		{
+			return;
+		}
+
 		foreach (var check in checks)
 		{
-			if (!_isActive)
-			{
-				return;
-			}
-
 			check();
 		}
 	}
 
 	public void OnStateAnimationFinishTrigger()
 	{
+		if (!_isActive)
+		{
+			return;
+		}
+
 		foreach (var action in animationFinishActions)
 		{
-			if (!_isActive)
-			{
-				return;
-			}
-
 			action();
 		}
 
@@ -176,17 +169,27 @@ public abstract class StateSO : ScriptableObject
 
 	public void OnStateAnimationTrigger()
 	{
+		if (!_isActive)
+		{
+			return;
+		}
+
 		foreach (var action in animationActions)
 		{
-			if (!_isActive)
-			{
-				return;
-			}
-
 			action(_animIndex);
 		}
 
 		_animIndex++;
+	}
+
+	public void SetBlockTransition(StateSO state)
+	{
+		_transitionStateWhenBlocked = state;
+	}
+
+	public void ResetBlockTransition()
+	{
+		_transitionStateWhenBlocked = null;
 	}
 }
 
@@ -200,5 +203,18 @@ public struct TransitionItem
 		this.toState = toState;
 		this.condition = condition;
 		this.action = action;
+	}
+}
+
+[Serializable]
+public struct BlockedState
+{
+	public StateSO blockedState;
+	public StateSO transitionState;
+
+	public BlockedState(StateSO blockedState, StateSO transitionState)
+	{
+		this.blockedState = blockedState;
+		this.transitionState = transitionState;
 	}
 }

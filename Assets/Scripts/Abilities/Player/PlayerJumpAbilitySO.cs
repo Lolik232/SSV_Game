@@ -14,27 +14,27 @@ public class PlayerJumpAbilitySO : PlayerAbilitySO
 
 		useConditions.Add(() =>
 		{
-			return inputReader.jumpInput &&
-						 !player.isTouchingCeiling;
+			return data.input.jumpInput &&
+						 !data.checkers.isTouchingCeiling;
 		});
 
 		terminateConditions.Add(() =>
 		{
-			return player.rb.velocity.y < 0f ||
-						 !inputReader.jumpInputHold;
+			return player.Velocity.y < 0f ||
+						 !data.input.jumpInputHold;
 		});
 
 		useActions.Add(() =>
 		{
-			inputReader.jumpInput = false;
-			player.TrySetVelocityY(parameters.jumpForce);
+			data.input.jumpInput = false;
+			player.TrySetVelocityY(data.parameters.jumpForce);
 		});
 
 		terminateActions.Add(() =>
 		{
-			if (player.rb.velocity.y > 0f)
+			if (player.Velocity.y > 0f)
 			{
-				player.TrySetVelocityY(player.rb.velocity.y * 0.5f);
+				player.TrySetVelocityY(player.Velocity.y * 0.5f);
 			}
 		});
 	}

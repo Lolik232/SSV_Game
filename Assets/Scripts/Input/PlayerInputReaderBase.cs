@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerInputReaderOwner : MonoBehaviour
+public class PlayerInputReaderBase : MonoBehaviour
 {
 	private Player _player;
 
@@ -10,7 +10,12 @@ public class PlayerInputReaderOwner : MonoBehaviour
 	private void Awake()
 	{
 		_player = GetComponent<Player>();
+	}
+
+	private void Start()
+	{
 		inputReader.InitializePlayerInput(GetComponent<PlayerInput>());
+		inputReader.InitializeCamera(Camera.main);
 	}
 
 	private void Update()

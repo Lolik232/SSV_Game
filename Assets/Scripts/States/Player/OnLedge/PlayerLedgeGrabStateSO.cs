@@ -14,13 +14,13 @@ public class PlayerLedgeGrabStateSO : PlayerOnLedgeStateSO
 
 		bool LedgeHoldCondition() => _grabFinish;
 
-		transitions.Add(new TransitionItem(states.ledgeHold, LedgeHoldCondition));
+		transitions.Add(new TransitionItem(data.states.ledgeHold, LedgeHoldCondition));
 
 		enterActions.Add(() =>
 		{
 			_grabFinish = false;
-			abilities.jump.SetAmountOfUsagesToZero();
-			player.HoldPosition(player.ledgeStartPosition);
+			data.abilities.jump.SetAmountOfUsagesToZero();
+			player.HoldPosition(data.checkers.ledgeStartPosition);
 		});
 
 		animationFinishActions.Add(() =>

@@ -50,11 +50,11 @@ public class PlayerStatesManagerSO : ScriptableObject
 			};
 	}
 
-	public void Initialize(Player player)
+	public void Initialize(Player player, Animator anim)
 	{
 		foreach (var state in states)
 		{
-			state.Initialize(player);
+			state.Initialize(player, anim);
 		}
 	}
 }

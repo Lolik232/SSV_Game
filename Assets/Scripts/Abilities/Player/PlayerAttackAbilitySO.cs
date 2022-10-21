@@ -4,31 +4,33 @@ using UnityEngine;
 
 public class PlayerAttackAbilitySO : PlayerAbilitySO
 {
+	[SerializeField] private InventorySO _inventory;
+
 	protected override void OnEnable()
 	{
 		base.OnEnable();
 
-		useConditions.Add(() => inputReader.attackInput);
+		useConditions.Add(() => data.input.attackInput);
 
 		useActions.Add(() =>
 		{
-			inputReader.attackInput = false;
-			player.weapon.OnWeaponEnter();
+			data.input.attackInput = false;
+			_inventory.CurrentWeapon.OnWeaponEnter();
 		});
 
 		terminateActions.Add(() =>
 		{
-			player.weapon.OnWeaponExit();
+			_inventory.CurrentWeapon.OnWeaponExit();
 		});
 	}
 
 	public void HoldDirection(int direction)
 	{
-		player.weapon.HoldDirection(direction);
+		_inventory.CurrentWeapon.HoldDirection(direction);
 	}
 
 	public void ReleaseDirection()
 	{
-		player.weapon.ReleaseDirection();
+		_inventory.CurrentWeapon.ReleaseDirection();
 	}
 }

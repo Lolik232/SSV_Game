@@ -4,34 +4,34 @@ public class PlayerGroundedStateSO : PlayerStateSO
 	{
 		base.OnEnable();
 
-		bool InAirCondition() => !player.isGrounded;
+		bool InAirCondition() => !data.checkers.isGrounded;
 
-		bool WallGrabCondition() => player.isTouchingWall &&
-																player.isTouchingLedge &&
-																!player.isTouchingCeiling &&
-																inputReader.grabInput &&
-																inputReader.moveInput.y >= 0f;
+		bool WallGrabCondition() => data.checkers.isTouchingWall &&
+																data.checkers.isTouchingLedge &&
+																!data.checkers.isTouchingCeiling &&
+																data.input.grabInput &&
+																data.input.moveInput.y >= 0f;
 
 		void InAirActions()
 		{
-			if (player.isTouchingCeiling && !player.isStanding)
+			if (data.checkers.isTouchingCeiling && !player.isStanding)
 			{
 				player.MoveToY(player.Position.y - (player.StandSize.y - player.CrouchSize.y));
 			}
 
-			if (!abilities.jump.isActive)
+			if (!data.abilities.jump.isActive)
 			{
-				abilities.jump.StartCoyoteTime();
+				data.abilities.jump.StartCoyoteTime();
 			}
 		}
 
-		transitions.Add(new TransitionItem(states.inAir, InAirCondition, InAirActions));
-		transitions.Add(new TransitionItem(states.wallGrab, WallGrabCondition));
+		transitions.Add(new TransitionItem(data.states.inAir, InAirCondition, InAirActions));
+		transitions.Add(new TransitionItem(data.states.wallGrab, WallGrabCondition));
 
 		enterActions.Add(() =>
 		{
-			abilities.dash.RestoreAmountOfUsages();
-			abilities.jump.RestoreAmountOfUsages();
+			data.abilities.dash.RestoreAmountOfUsages();
+			data.abilities.jump.RestoreAmountOfUsages();
 		});
 	}
 }

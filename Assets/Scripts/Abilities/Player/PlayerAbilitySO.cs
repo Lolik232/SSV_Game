@@ -1,15 +1,14 @@
 using UnityEngine;
 
-public class PlayerAbilitySO : AbilitySO
+public abstract class PlayerAbilitySO : AbilitySO
 {
-	[SerializeField] protected PlayerInputReaderSO inputReader;
-	[SerializeField] protected PlayerParametersManagerSO parameters;
+	[SerializeField] protected PlayerDataSO data;
 
 	protected Player player;
 
-	public void Initialize(Player player)
+	public void Initialize(Player player, Animator anim)
 	{
-		InitializeAnimator(player.anim);
+		InitializeAnimator(anim);
 		this.player = player;
 	}
 }

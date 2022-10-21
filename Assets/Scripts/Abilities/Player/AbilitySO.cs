@@ -4,15 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class AbilitySO : ScriptableObject
+public abstract class AbilitySO : ScriptableObject
 {
 	[SerializeField] protected Parameter duration;
 	[SerializeField] protected Parameter cooldown;
 	[SerializeField] private int _maxAmountOfUsages;
 
 	[SerializeField] private List<string> _animBoolNames = new();
-	[SerializeField] private List<AbilitySO> _blockedAbilities = new();
-	[SerializeField] private List<StateSO> _blockedStates = new();
+	[SerializeField] private List<BlockedAbility> _blockedAbilities = new();
+	[SerializeField] private List<BlockedState> _blockedStates = new();
 
 	protected List<UnityAction> beforeUseActions = new();
 	protected List<UnityAction> useActions = new();
@@ -50,18 +50,23 @@ public class AbilitySO : ScriptableObject
 			amountOfUsagesLeft--;
 			foreach (var ability in _blockedAbilities)
 			{
-					ability.Terminate();
-					ability.blocker.AddBlock();
+				if (ability.isHardBlocked)
+				{
+					ability.blockedAbility.Terminate();
+				}
+
+				ability.blockedAbility.blocker.AddBlock();
 			}
 
 			foreach (var state in _blockedStates)
 			{
-				state.blocker.AddBlock();
+				state.blockedState.SetBlockTransition(state.transitionState);
+				state.blockedState.blocker.AddBlock();
 			}
 
 			foreach (var name in _animBoolNames)
 			{
-					anim.SetBool(name, true);
+				anim.SetBool(name, true);
 			}
 
 			startTime = Time.time;
@@ -72,17 +77,18 @@ public class AbilitySO : ScriptableObject
 
 			foreach (var ability in _blockedAbilities)
 			{
-					ability.blocker.RemoveBlock();
+				ability.blockedAbility.blocker.RemoveBlock();
 			}
 
 			foreach (var state in _blockedStates)
 			{
-					state.blocker.RemoveBlock();
+				state.blockedState.ResetBlockTransition();
+				state.blockedState.blocker.RemoveBlock();
 			}
 
 			foreach (var name in _animBoolNames)
 			{
-					anim.SetBool(name, false);
+				anim.SetBool(name, false);
 			}
 
 			endTime = Time.time;
@@ -179,5 +185,18 @@ public class AbilitySO : ScriptableObject
 		{
 			amountOfUsagesLeft--;
 		}
+	}
+}
+
+[Serializable]
+public struct BlockedAbility
+{
+	public AbilitySO blockedAbility;
+	public bool isHardBlocked;
+
+	public BlockedAbility(AbilitySO blockedAbility, bool isHardBlocked)
+	{
+		this.blockedAbility = blockedAbility;
+		this.isHardBlocked = isHardBlocked;
 	}
 }

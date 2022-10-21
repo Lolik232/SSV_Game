@@ -1,19 +1,18 @@
 using UnityEngine;
 
-public class Sword : Weapon
-{
-	[SerializeField] private float _maxAttackDistance;
-	[SerializeField] private float _attackAngle;
+[CreateAssetMenu(fileName = "PlayerSword", menuName = "Player/Weapons/Sword")]
 
+public class PlayerSwordSO : PlayerWeaponSO
+{
 	private Vector2 _attackPosition;
 
-	protected override void Start()
+	protected override void OnEnable()
 	{
-		base.Start();
+		base.OnEnable();
 
 		enterActions.Add(() =>
 		{
-			Vector2 attackVector = inputReader.mouseInputDirection * ((inputReader.mouseInputDistance > _maxAttackDistance && _maxAttackDistance != 0) ? _maxAttackDistance : inputReader.mouseInputDistance);
+			Vector2 attackVector = data.input.mouseInputDirection * ((data.input.mouseInputDistance > data.parameters.swordAttackDistance && data.parameters.swordAttackDistance.Max != 0) ? data.parameters.swordAttackDistance : data.input.mouseInputDistance);
 
 			if (directionBlocker.IsLocked && attackVector.x >= 0 != holdDirection >= 0)
 			{
@@ -34,7 +33,7 @@ public class Sword : Weapon
 				}
 			}
 
-			HoldHitPosition(_attackPosition);
+			hit.OnHit(_attackPosition);
 		});
 
 		exitActions.Add(() =>
@@ -44,11 +43,12 @@ public class Sword : Weapon
 		});
 	}
 
-	protected override void OnDrawGizmos()
+	public override void OnDrawGizmos()
 	{
 		base.OnDrawGizmos();
 
-		Gizmos.color = Color.blue;
-		Gizmos.DrawWireSphere(_attackPosition, _attackAngle);
+		Gizmos.color = Color.black;
+		Gizmos.DrawWireSphere(player.Center, data.parameters.swordAttackDistance);
+		Gizmos.DrawWireSphere(_attackPosition, data.parameters.swordAttackAngle);
 	}
 }

@@ -15,40 +15,39 @@ public class PlayerDashAbilitySO : PlayerAbilitySO
 
 		beforeUseActions.Add(() =>
 		{
-			_dashDirection = inputReader.mouseInputDirection;
+			_dashDirection = data.input.mouseInputDirection;
 		});
 
 		useConditions.Add(() =>
 		{
-			return inputReader.dashInput &&
+			return data.input.dashInput &&
 						 _dashDirection != Vector2.zero &&
-						 !(player.isTouchingCeiling && !player.isStanding);
+						 !(data.checkers.isTouchingCeiling && !player.isStanding);
 		});
 
 		terminateConditions.Add(() =>
 		{
-			return player.rb.velocity.magnitude <= parameters.dashForce * _minProportion ||
-						 (!inputReader.dashInputHold && Time.time > startTime + duration * _minProportion);
+			return player.Velocity.magnitude <= data.parameters.dashForce * _minProportion ||
+						 (!data.input.dashInputHold && Time.time > startTime + duration * _minProportion);
 		});
 
 		useActions.Add(() =>
 		{
 			player.HoldGravity(_dashGravity);
-			player.HoldVelocity(parameters.dashForce * _dashDirection);
+			player.HoldVelocity(data.parameters.dashForce * _dashDirection);
 			player.CheckIfShouldFlip(_dashDirection.x >= 0 ? 1 : -1);
-			inputReader.dashInput = false;
-			player.tr.emitting = true;
+			data.input.dashInput = false;
+			player.EnableTrail();
 		});
 
 		terminateActions.Add(() =>
 		{
 			player.ReleaseGravity();
 			player.ReleaseVelocity();
-			player.tr.emitting = false;
-			player.tr.Clear();
-			if (player.rb.velocity.y > 0f)
+			player.DisableTrail();
+			if (player.Velocity.y > 0f)
 			{
-				player.TrySetVelocityY(player.rb.velocity.y * 0.1f);
+				player.TrySetVelocityY(player.Velocity.y * 0.1f);
 			}
 		});
 	}

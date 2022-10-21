@@ -25,11 +25,11 @@ public class PlayerAbilitiesManagerSO : ScriptableObject
 		};
 	}
 
-	public void Initialize(Player player)
+	public void Initialize(Player player, Animator anim)
 	{
 		foreach (var ability in abilities)
 		{
-			ability.Initialize(player);
+			ability.Initialize(player, anim);
 		}
 	}
 }

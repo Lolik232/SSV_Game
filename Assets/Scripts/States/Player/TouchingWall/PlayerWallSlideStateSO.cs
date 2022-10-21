@@ -1,3 +1,5 @@
+using System.Runtime.CompilerServices;
+
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerWallSlideState", menuName = "Player/States/Touching Wall/Wall Slide")]
@@ -8,26 +10,25 @@ public class PlayerWallSlideStateSO : PlayerTouchingWallStateSO
 	{
 		base.OnEnable();
 
-		bool WallGrabCondition() => inputReader.moveInput.y >= 0 &&
-																inputReader.grabInput;
+		bool WallGrabCondition() => data.input.moveInput.y >= 0 &&
+																data.input.grabInput;
 
-		transitions.Add(new TransitionItem(states.wallGrab, WallGrabCondition));
+		transitions.Add(new TransitionItem(data.states.wallGrab, WallGrabCondition));
 
 		enterActions.Add(() =>
 		{
-			player.transform.Rotate(0f, 180f, 0f);
-			abilities.attack.HoldDirection(player.wallDirection);
+			needHadFlip = true;
+			player.SoftFlip();
 		});
 
 		updateActions.Add(() =>
 		{
-			player.TrySetVelocityY(-parameters.wallSlideSpeed);
+			player.TrySetVelocityY(-data.parameters.wallSlideSpeed);
 		});
 
 		exitActions.Add(() =>
 		{
-			abilities.attack.ReleaseDirection();
-			player.transform.Rotate(0f, 180f, 0f);
+			player.SoftFlip();
 		});
 	}
 }

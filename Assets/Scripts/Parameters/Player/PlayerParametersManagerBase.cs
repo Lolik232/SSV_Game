@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerParametersManagerOwner : MonoBehaviour
+public class PlayerParametersManagerBase : MonoBehaviour
 {
 	[SerializeField] private PlayerParametersManagerSO _parametersManager;
 

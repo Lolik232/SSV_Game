@@ -2,20 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerAbilitiesManagerOwner : MonoBehaviour
+public class PlayerAbilitiesManagerBase : MonoBehaviour
 {
 	[SerializeField] private PlayerAbilitiesManagerSO _abilitiesManager;
 
 	private Player _player;
+	private Animator _anim;
 
 	private void Awake()
 	{
 		_player = GetComponent<Player>();
+		_anim = GetComponent<Animator>();
 	}
 
 	private void Start()
 	{
-		_abilitiesManager.Initialize(_player);
+		_abilitiesManager.Initialize(_player, _anim);
 	}
 
 	private void Update()

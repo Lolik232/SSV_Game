@@ -31015,6 +31015,31 @@ CompositeCollider2D:
       - {x: 101.00166, y: -35.001667}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0
+--- !u!1 &2020938748 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2858492609654353185, guid: 9910b7cf424e9134ea5fd433dd4bc562, type: 3}
+  m_PrefabInstance: {fileID: 2858492610793730444}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &2020938753
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2020938748}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b6f4f9c9e3bbef24bb455e355467b711, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2031086829
 GameObject:
   m_ObjectHideFlags: 0

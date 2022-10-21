@@ -1,18 +1,14 @@
 using UnityEngine;
 
-public class PlayerStateSO : StateSO
+public abstract class PlayerStateSO : StateSO
 {
-	[SerializeField] protected PlayerStatesManagerSO states;
-	[SerializeField] protected PlayerAbilitiesManagerSO abilities;
-	[SerializeField] protected PlayerParametersManagerSO parameters;
-	[SerializeField] protected PlayerInputReaderSO inputReader;
+	[SerializeField] protected PlayerDataSO data;
 
 	protected Player player;
 
-	public void Initialize(Player player)
+	public void Initialize(Player player, Animator anim)
 	{
-		InitializeMachine(player.machine);
-		InitializeAnimator(player.anim);
+		InitializeAnimator(anim);
 		this.player = player;
 	}
 
@@ -22,7 +18,7 @@ public class PlayerStateSO : StateSO
 
 		checks.Add(() =>
 		{
-			player.DoChecks();
+			data.checkers.DoChecks();
 		});
 	}
 }

@@ -23,19 +23,29 @@ MonoBehaviour:
   - jump
   _blockedAbilities: []
   _blockedStates:
-  - {fileID: 11400000, guid: e4a73d75491eef54e847c88ab68a03e4, type: 2}
-  - {fileID: 11400000, guid: d0d38fe3b05349140ba28dc83ce40cd6, type: 2}
-  - {fileID: 11400000, guid: a5af3b9b15e226341a29cd54e412d8df, type: 2}
-  - {fileID: 11400000, guid: 727cac17514e06c42b226ca227fd8d16, type: 2}
-  - {fileID: 11400000, guid: d28e4d7f8e057f947ba8de99faa2fc21, type: 2}
-  - {fileID: 11400000, guid: d02b124ee9fa12c4f947b0ce0f6df895, type: 2}
-  - {fileID: 11400000, guid: 7617914b9bb6c004a834c51363c59b42, type: 2}
-  - {fileID: 11400000, guid: b9f4c60c05bda3a4dbdadc3e9460c43b, type: 2}
-  - {fileID: 11400000, guid: 928408281917347468e21ea281056d32, type: 2}
-  - {fileID: 11400000, guid: a3e0c4c17df249640a3e321f915b07a4, type: 2}
-  - {fileID: 11400000, guid: d053b7ebcf07adc48b4b0b1e890c4909, type: 2}
-  inputReader: {fileID: 11400000, guid: 65e8862389616104686b04238f8a0641, type: 2}
-  parameters: {fileID: 11400000, guid: 4162b27446d9dd24589dac8069397f3d, type: 2}
+  - blockedState: {fileID: 11400000, guid: d02b124ee9fa12c4f947b0ce0f6df895, type: 2}
+    transitionState: {fileID: 11400000, guid: 490db7eaeaebdb94eb7aee3a32ee2448, type: 2}
+  - blockedState: {fileID: 11400000, guid: 7617914b9bb6c004a834c51363c59b42, type: 2}
+    transitionState: {fileID: 11400000, guid: 490db7eaeaebdb94eb7aee3a32ee2448, type: 2}
+  - blockedState: {fileID: 11400000, guid: 928408281917347468e21ea281056d32, type: 2}
+    transitionState: {fileID: 11400000, guid: 490db7eaeaebdb94eb7aee3a32ee2448, type: 2}
+  - blockedState: {fileID: 11400000, guid: a3e0c4c17df249640a3e321f915b07a4, type: 2}
+    transitionState: {fileID: 11400000, guid: 490db7eaeaebdb94eb7aee3a32ee2448, type: 2}
+  - blockedState: {fileID: 11400000, guid: b9f4c60c05bda3a4dbdadc3e9460c43b, type: 2}
+    transitionState: {fileID: 11400000, guid: 490db7eaeaebdb94eb7aee3a32ee2448, type: 2}
+  - blockedState: {fileID: 11400000, guid: d053b7ebcf07adc48b4b0b1e890c4909, type: 2}
+    transitionState: {fileID: 0}
+  - blockedState: {fileID: 11400000, guid: a5af3b9b15e226341a29cd54e412d8df, type: 2}
+    transitionState: {fileID: 11400000, guid: 490db7eaeaebdb94eb7aee3a32ee2448, type: 2}
+  - blockedState: {fileID: 11400000, guid: 727cac17514e06c42b226ca227fd8d16, type: 2}
+    transitionState: {fileID: 11400000, guid: 490db7eaeaebdb94eb7aee3a32ee2448, type: 2}
+  - blockedState: {fileID: 11400000, guid: e4a73d75491eef54e847c88ab68a03e4, type: 2}
+    transitionState: {fileID: 11400000, guid: 490db7eaeaebdb94eb7aee3a32ee2448, type: 2}
+  - blockedState: {fileID: 11400000, guid: d28e4d7f8e057f947ba8de99faa2fc21, type: 2}
+    transitionState: {fileID: 11400000, guid: 490db7eaeaebdb94eb7aee3a32ee2448, type: 2}
+  - blockedState: {fileID: 11400000, guid: d0d38fe3b05349140ba28dc83ce40cd6, type: 2}
+    transitionState: {fileID: 11400000, guid: 490db7eaeaebdb94eb7aee3a32ee2448, type: 2}
+  data: {fileID: 11400000, guid: 61c99a593f8f1a74fb3575845de2cf40, type: 2}
   _coyoteTime: 0.1
   _wallExitTime: 0.1
   _angle: {x: 1, y: 1.2}
