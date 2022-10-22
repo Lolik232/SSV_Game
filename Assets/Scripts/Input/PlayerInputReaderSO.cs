@@ -9,6 +9,8 @@ public class PlayerInputReaderSO : ScriptableObject
 	[SerializeField] private float _jumpInputHoldTime;
 	[SerializeField] private float _dashInputPressTime;
 
+	[SerializeField] private EntitySO _entity;
+
 	private PlayerInput _playerInput;
 	private Camera      _mainCamera;
 
@@ -35,15 +37,18 @@ public class PlayerInputReaderSO : ScriptableObject
 	public void OnUpdate()
 	{
 		mouseInputPosition = _mainCamera.ScreenToWorldPoint(_mouseInputPosition);
+		mouseInputDirection = (mouseInputPosition - _entity.Center).normalized;
+		mouseInputDistance = (mouseInputPosition - _entity.Center).magnitude;
 
 		jumpInput &= Time.time < _jumpInputStartTime + _jumpInputHoldTime;
 		dashInput &= Time.time < _dashInputStartTime + _dashInputPressTime;
 	}
 
-	public void InitializePlayerInput(PlayerInput playerInput) => _playerInput = playerInput;
-	public void InitializeCamera(Camera camera) => _mainCamera = camera;
-
-	public void InitializePlayerCamera(Camera camera) => _mainCamera = camera;
+	public void Initialize(PlayerInput playerInput, Camera camera)
+	{
+		_playerInput =	playerInput;
+		_mainCamera = camera;
+	}
 
 	public void OnMoveInput(InputAction.CallbackContext context)
 	{

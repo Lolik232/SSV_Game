@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlayerData
   m_EditorClassIdentifier: 
   states: {fileID: 11400000, guid: 9c603ec4709b5f74bb3d72e0af3766ca, type: 2}
-  checkers: {fileID: 11400000, guid: 6e630779cdd03fe439bcb3d2008723c5, type: 2}
+  checkers: {fileID: 11400000, guid: f76f511fc79650e4499c8bb22e976166, type: 2}
   abilities: {fileID: 11400000, guid: 0917e0108459ae84c8d98c687dd1da49, type: 2}
   parameters: {fileID: 11400000, guid: 4162b27446d9dd24589dac8069397f3d, type: 2}
   weapons: {fileID: 11400000, guid: 981a9775838a06c4ca807e8a1646aba4, type: 2}

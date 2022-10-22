@@ -4,19 +4,19 @@ public class PlayerGroundedStateSO : PlayerStateSO
 	{
 		base.OnEnable();
 
-		bool InAirCondition() => !data.checkers.isGrounded;
+		bool InAirCondition() => !data.checkers.grounded;
 
-		bool WallGrabCondition() => data.checkers.isTouchingWall &&
-																data.checkers.isTouchingLedge &&
-																!data.checkers.isTouchingCeiling &&
+		bool WallGrabCondition() => data.checkers.touchingWall &&
+																data.checkers.touchingLedge &&
+																!data.checkers.touchingCeiling &&
 																data.input.grabInput &&
 																data.input.moveInput.y >= 0f;
 
 		void InAirActions()
 		{
-			if (data.checkers.isTouchingCeiling && !player.isStanding)
+			if (data.checkers.touchingCeiling && !entity.isStanding)
 			{
-				player.MoveToY(player.Position.y - (player.StandSize.y - player.CrouchSize.y));
+				entity.MoveToY(entity.Position.y - (entity.StandSize.y - entity.CrouchSize.y));
 			}
 
 			if (!data.abilities.jump.isActive)

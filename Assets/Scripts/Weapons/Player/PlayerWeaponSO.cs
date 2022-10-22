@@ -2,15 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class PlayerWeaponSO : WeaponSO
+public class PlayerWeaponSO : WeaponSO
 {
-	protected Player player;
+	protected new PlayerDataSO data => (PlayerDataSO)base.data;
 
-	public void Initialize(Player player, Animator baseAnim, Animator anim, Hit hit)
+	protected override void OnEnable()
 	{
-		InitializeBaseAnimator(baseAnim);
-		InitializeAnimator(anim);
-		InitializeHit(hit);
-		this.player = player;
+		base.OnEnable();
 	}
 }

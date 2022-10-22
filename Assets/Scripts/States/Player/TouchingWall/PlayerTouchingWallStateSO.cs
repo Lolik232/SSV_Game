@@ -8,21 +8,21 @@ public class PlayerTouchingWallStateSO : PlayerStateSO
 	{
 		base.OnEnable();
 
-		bool IdleCondition() => data.checkers.isGrounded &&
+		bool IdleCondition() => data.checkers.grounded &&
 														(!data.input.grabInput || data.input.moveInput.y < 0f);
 
-		bool LedgeGrabCondition() => data.checkers.isTouchingWall &&
-																 !data.checkers.isTouchingLedge &&
-																 !data.checkers.isGroundClose;
+		bool LedgeGrabCondition() => data.checkers.touchingWall &&
+																 !data.checkers.touchingLedge &&
+																 !data.checkers.groundClose;
 
-		bool InAirCondition() => !data.checkers.isTouchingWall ||
-														 (data.input.moveInput.x != player.facingDirection && !data.input.grabInput);
+		bool InAirCondition() => !data.checkers.touchingWall ||
+														 (data.input.moveInput.x != entity.facingDirection && !data.input.grabInput);
 
 		void InAirAction()
 		{
 			if (needHadFlip)
 			{
-				player.HardFlip();
+				entity.HardFlip();
 			}
 
 			if (!data.abilities.wallJump.isActive)
@@ -40,7 +40,7 @@ public class PlayerTouchingWallStateSO : PlayerStateSO
 		enterActions.Add(() =>
 		{
 			needHadFlip = false;
-			player.MoveToX(data.checkers.wallPosition.x + data.checkers.wallDirection * (player.Size.x / 2 + 0.02f));
+			entity.MoveToX(data.checkers.wallPosition.x + data.checkers.wallDirection * (entity.Size.x / 2 + 0.02f));
 			data.abilities.wallJump.RestoreAmountOfUsages();
 			data.abilities.jump.SetAmountOfUsagesToZero();
 			data.abilities.attack.HoldDirection(data.checkers.wallDirection);

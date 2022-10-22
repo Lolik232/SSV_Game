@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f1b9bb56b5356fa458a7ca8379cc4767, type: 3}
+  m_Script: {fileID: 11500000, guid: 700ef77f26d1c694e8a134bbeb1a7d20, type: 3}
   m_Name: PlayerSword
   m_EditorClassIdentifier: 
   _weaponName: sword
   data: {fileID: 11400000, guid: 61c99a593f8f1a74fb3575845de2cf40, type: 2}
-  _maxAttackDistance: 2
-  _attackAngle: 1
+  entity: {fileID: 11400000, guid: c765f728276573247bf28102c833d262, type: 2}
+  hit: {fileID: 11400000, guid: 04df1f8d5a660944ba8e09e55ff9f301, type: 2}

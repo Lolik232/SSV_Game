@@ -22,55 +22,42 @@ public class BaseMonoBehaviour : MonoBehaviour
 
 	private void Start()
 	{
-		foreach (var action in startActions)
-		{
-			action();
-		}
+		ApplyActions(startActions);
 	}
 
 	private void OnEnable()
 	{
-		foreach (var action in enableActions)
-		{
-			action();
-		}
+		ApplyActions(enableActions);
 	}
 
 	private void OnDisable()
 	{
-		foreach (var action in disableActions)
-		{
-			action();
-		}
+		ApplyActions(disableActions);
 	}
 
 	private void Update()
 	{
-		foreach (var action in updateActions)
-		{
-			action();
-		}
+		ApplyActions(updateActions);
 	}
 
 	private void FixedUpdate()
 	{
-		foreach (var action in fixedUpdateActions)
-		{
-			action();
-		}
+		ApplyActions(fixedUpdateActions);
 	}
 
 	private void LateUpdate()
 	{
-		foreach (var action in lateUpdateActions)
-		{
-			action();
-		}
+		ApplyActions(lateUpdateActions);
 	}
 
 	private void OnDrawGizmos()
 	{
-		foreach (var action in drawGizmosActions)
+		ApplyActions(drawGizmosActions);
+	}
+
+	protected void ApplyActions(List<UnityAction> actions)
+	{
+		foreach (var action in actions)
 		{
 			action();
 		}

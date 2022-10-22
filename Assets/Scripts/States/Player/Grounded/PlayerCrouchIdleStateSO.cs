@@ -9,7 +9,7 @@ public class PlayerCrouchIdleStateSO : PlayerGroundedStateSO
 		base.OnEnable();
 
 		bool IdleCondition() => data.input.moveInput.y > -1 &&
-														!data.checkers.isTouchingCeiling;
+														!data.checkers.touchingCeiling;
 
 		bool CrouchMoveCondition() => data.input.moveInput.x != 0;
 
@@ -18,13 +18,13 @@ public class PlayerCrouchIdleStateSO : PlayerGroundedStateSO
 
 		enterActions.Add(() =>
 		{
-			player.TrySetVelocityZero();
-			player.Crouch();
+			entity.TrySetVelocityZero();
+			entity.Crouch();
 		});
 
 		exitActions.Add(() =>
 		{
-			player.Stand();
+			entity.Stand();
 		});
 	}
 }

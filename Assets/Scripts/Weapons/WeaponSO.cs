@@ -10,7 +10,9 @@ public abstract class WeaponSO : ScriptableObject
 {
 	[SerializeField] private string _weaponName;
 
-	[SerializeField] protected PlayerDataSO data;
+	[SerializeField] protected DataSO data;
+	[SerializeField] protected EntitySO entity;
+	[SerializeField] protected HitSO hit;
 
 	private bool _isActive;
 
@@ -18,7 +20,6 @@ public abstract class WeaponSO : ScriptableObject
 
 	protected Animator baseAnim;
 	protected Animator anim;
-	protected Hit hit;
 
 	protected List<UnityAction> updateActions = new();
 	protected List<UnityAction> enterActions = new();
@@ -28,9 +29,11 @@ public abstract class WeaponSO : ScriptableObject
 
 	protected int holdDirection;
 
-	protected void InitializeBaseAnimator(Animator baseAnim) => this.baseAnim = baseAnim;
-	protected void InitializeAnimator(Animator anim) => this.anim = anim;
-	protected void InitializeHit(Hit hit) => this.hit = hit;
+	public void Initialize(Animator baseAnim, Animator anim)
+	{
+		this.baseAnim = baseAnim;
+		this.anim = anim;
+	}
 
 	protected virtual void OnEnable()
 	{

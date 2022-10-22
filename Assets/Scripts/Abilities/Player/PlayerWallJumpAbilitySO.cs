@@ -19,7 +19,7 @@ public class PlayerWallJumpAbilitySO : PlayerAbilitySO
 	{
 		base.OnEnable();
 
-		beforeUseActions.Add(() =>
+		beforeEnterActions.Add(() =>
 		{
 			_jumpDirection = data.checkers.wallDirection;
 		});
@@ -27,36 +27,36 @@ public class PlayerWallJumpAbilitySO : PlayerAbilitySO
 		useConditions.Add(() =>
 		{
 			return data.input.jumpInput &&
-						 !data.checkers.isClampedBetweenWalls &&
-						 !data.checkers.isTouchingCeiling &&
-						 (data.checkers.isTouchingWall || data.checkers.isTouchingWallBack);
+						 !data.checkers.clampedBetweenWalls &&
+						 !data.checkers.touchingCeiling &&
+						 (data.checkers.touchingWall || data.checkers.touchingWallBack);
 		});
 
 		terminateConditions.Add(() =>
 		{
 			return _outOfWall &&
-						 (Mathf.Abs(player.Velocity.x) <= 0.01f || player.Velocity.y < 0.01f);
+						 (Mathf.Abs(entity.Velocity.x) <= 0.01f || entity.Velocity.y < 0.01f);
 		});
 
-		useActions.Add(() =>
+		enterActions.Add(() =>
 		{
 			_outOfWall = false;
-			player.HoldVelocity(data.parameters.wallJumpForce, _angle, _jumpDirection);
-			player.CheckIfShouldFlip(_jumpDirection);
+			entity.HoldVelocity(data.parameters.wallJumpForce, _angle, _jumpDirection);
+			entity.CheckIfShouldFlip(_jumpDirection);
 			data.input.jumpInput = false;
 		});
 
 		updateActions.Add(() =>
 		{
-			if (!data.checkers.isTouchingWall)
+			if (!data.checkers.touchingWall)
 			{
 				_outOfWall = true;
 			}
 		});
 
-		terminateActions.Add(() =>
+		exitActions.Add(() =>
 		{
-			player.ReleaseVelocity();
+			entity.ReleaseVelocity();
 		});
 	}
 

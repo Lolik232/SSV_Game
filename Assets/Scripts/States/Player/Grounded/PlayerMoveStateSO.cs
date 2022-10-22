@@ -11,8 +11,8 @@ public class PlayerMoveStateSO : PlayerGroundedStateSO
 
 		bool CrouchMoveCondition() => data.input.moveInput.y < 0;
 
-		bool LedgeClimbCondition() => data.checkers.isTouchingWall &&
-																	!data.checkers.isTouchingLedge &&
+		bool LedgeClimbCondition() => data.checkers.touchingWall &&
+																	!data.checkers.touchingLedge &&
 																	data.input.moveInput.x == -data.checkers.wallDirection;
 
 		void LedgeClimbAction() => data.checkers.DetermineLedgePosition();
@@ -23,8 +23,8 @@ public class PlayerMoveStateSO : PlayerGroundedStateSO
 
 		updateActions.Add(() =>
 		{
-			player.CheckIfShouldFlip(data.input.moveInput.x);
-			player.TrySetVelocityX(data.input.moveInput.x * data.parameters.moveSpeed);
+			entity.CheckIfShouldFlip(data.input.moveInput.x);
+			entity.TrySetVelocityX(data.input.moveInput.x * data.parameters.moveSpeed);
 		});
 	}
 }

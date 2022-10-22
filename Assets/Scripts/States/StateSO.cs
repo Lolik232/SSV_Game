@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public abstract class StateSO : ScriptableObject
+public abstract class StateSO : BaseScriptableObject
 {
 	private bool _isActive;
 	private int _animIndex;
@@ -14,34 +14,27 @@ public abstract class StateSO : ScriptableObject
 	[SerializeField] private List<string> _animBoolNames = new();
 	[SerializeField] private List<BlockedAbility> _blockedAbilities = new();
 
+	[SerializeField] protected DataSO data;
+	[SerializeField] protected EntitySO entity;
 	[SerializeField] private StateMachineSO _machine;
 
 	private StateSO _transitionStateWhenBlocked;
 
 	protected List<TransitionItem> transitions = new();
-	protected List<UnityAction> enterActions = new();
-	protected List<UnityAction> exitActions = new();
-	protected List<UnityAction> updateActions = new();
-	protected List<UnityAction> checks = new();
 	protected List<UnityAction> animationFinishActions = new();
 	protected List<UnityAction<int>> animationActions = new();
 
 	protected Animator anim;
 
-	public Blocker blocker = new();
+	public readonly Blocker blocker = new();
 
-	protected virtual void OnEnable()
+	protected override void OnEnable()
 	{
 		_isActive = false;
-
 		_animIndex = 0;
 		startTime = 0f;
 
-		transitions.Clear();
-		updateActions.Clear();
-		animationFinishActions.Clear();
-		animationActions.Clear();
-		checks.Clear();
+		base.OnEnable();
 
 		enterActions = new List<UnityAction> { () =>
 			{
@@ -77,7 +70,7 @@ public abstract class StateSO : ScriptableObject
 			}};
 	}
 
-	protected void InitializeAnimator(Animator animator) => anim = animator;
+	public void Initialize(Animator animator) => anim = animator;
 
 	public void OnStateEnter()
 	{
@@ -86,15 +79,8 @@ public abstract class StateSO : ScriptableObject
 			return;
 		}
 
-		foreach (var action in enterActions)
-		{
-			action();
-		}
-
-		foreach (var check in checks)
-		{
-			check();
-		}
+		ApplyActions(enterActions);
+		ApplyActions(fixedUpdateActions);
 	}
 
 	public void OnStateExit()
@@ -104,10 +90,7 @@ public abstract class StateSO : ScriptableObject
 			return;
 		}
 
-		foreach (var action in exitActions)
-		{
-			action();
-		}
+		ApplyActions(exitActions);
 	}
 
 	public void OnStateUpdate()
@@ -133,10 +116,7 @@ public abstract class StateSO : ScriptableObject
 			}
 		}
 
-		foreach (var action in updateActions)
-		{
-			action();
-		}
+		ApplyActions(updateActions);
 	}
 
 	public void OnStateFixedUpdate()
@@ -146,10 +126,7 @@ public abstract class StateSO : ScriptableObject
 			return;
 		}
 
-		foreach (var check in checks)
-		{
-			check();
-		}
+		ApplyActions(fixedUpdateActions);
 	}
 
 	public void OnStateAnimationFinishTrigger()
@@ -159,10 +136,7 @@ public abstract class StateSO : ScriptableObject
 			return;
 		}
 
-		foreach (var action in animationFinishActions)
-		{
-			action();
-		}
+		ApplyActions(animationFinishActions);
 
 		_animIndex = 0;
 	}
@@ -174,10 +148,7 @@ public abstract class StateSO : ScriptableObject
 			return;
 		}
 
-		foreach (var action in animationActions)
-		{
-			action(_animIndex);
-		}
+		ApplyActions(animationActions, _animIndex);
 
 		_animIndex++;
 	}

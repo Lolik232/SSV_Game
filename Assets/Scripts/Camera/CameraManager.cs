@@ -8,7 +8,7 @@ public class CameraManager : MonoBehaviour
 {
     [SerializeField] private Camera m_mainCamera = default;
 
-    // player camera
+    // entity camera
     [SerializeField] private CinemachineVirtualCamera m_virtualCamera = default;
 
     [SerializeField] private VoidEventChannelSO m_cameraShakeChannel = default;

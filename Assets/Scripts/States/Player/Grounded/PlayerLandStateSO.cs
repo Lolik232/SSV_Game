@@ -20,7 +20,7 @@ public class PlayerLandStateSO : PlayerGroundedStateSO
 
 		enterActions.Add(() =>
 		{
-			player.TrySetVelocityZero();
+			entity.TrySetVelocityZero();
 			_isLandFinished = false;
 		});
 

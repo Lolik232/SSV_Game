@@ -13,7 +13,7 @@ public class PlayerDashAbilitySO : PlayerAbilitySO
 	{
 		base.OnEnable();
 
-		beforeUseActions.Add(() =>
+		beforeEnterActions.Add(() =>
 		{
 			_dashDirection = data.input.mouseInputDirection;
 		});
@@ -22,32 +22,32 @@ public class PlayerDashAbilitySO : PlayerAbilitySO
 		{
 			return data.input.dashInput &&
 						 _dashDirection != Vector2.zero &&
-						 !(data.checkers.isTouchingCeiling && !player.isStanding);
+						 !(data.checkers.touchingCeiling && !entity.isStanding);
 		});
 
 		terminateConditions.Add(() =>
 		{
-			return player.Velocity.magnitude <= data.parameters.dashForce * _minProportion ||
+			return entity.Velocity.magnitude <= data.parameters.dashForce * _minProportion ||
 						 (!data.input.dashInputHold && Time.time > startTime + duration * _minProportion);
 		});
 
-		useActions.Add(() =>
+		enterActions.Add(() =>
 		{
-			player.HoldGravity(_dashGravity);
-			player.HoldVelocity(data.parameters.dashForce * _dashDirection);
-			player.CheckIfShouldFlip(_dashDirection.x >= 0 ? 1 : -1);
+			entity.HoldGravity(_dashGravity);
+			entity.HoldVelocity(data.parameters.dashForce * _dashDirection);
+			entity.CheckIfShouldFlip(_dashDirection.x >= 0 ? 1 : -1);
 			data.input.dashInput = false;
-			player.EnableTrail();
+			entity.EnableTrail();
 		});
 
-		terminateActions.Add(() =>
+		exitActions.Add(() =>
 		{
-			player.ReleaseGravity();
-			player.ReleaseVelocity();
-			player.DisableTrail();
-			if (player.Velocity.y > 0f)
+			entity.ReleaseGravity();
+			entity.ReleaseVelocity();
+			entity.DisableTrail();
+			if (entity.Velocity.y > 0f)
 			{
-				player.TrySetVelocityY(player.Velocity.y * 0.1f);
+				entity.TrySetVelocityY(entity.Velocity.y * 0.1f);
 			}
 		});
 	}

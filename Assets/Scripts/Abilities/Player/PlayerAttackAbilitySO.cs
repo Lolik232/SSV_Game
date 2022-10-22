@@ -12,13 +12,13 @@ public class PlayerAttackAbilitySO : PlayerAbilitySO
 
 		useConditions.Add(() => data.input.attackInput);
 
-		useActions.Add(() =>
+		enterActions.Add(() =>
 		{
 			data.input.attackInput = false;
 			_inventory.CurrentWeapon.OnWeaponEnter();
 		});
 
-		terminateActions.Add(() =>
+		exitActions.Add(() =>
 		{
 			_inventory.CurrentWeapon.OnWeaponExit();
 		});

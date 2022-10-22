@@ -15,5 +15,6 @@ MonoBehaviour:
   _animBoolNames:
   - move
   _blockedAbilities: []
-  _machine: {fileID: 11400000, guid: 3362953f1f9f0fe408fb08aa9bb22d02, type: 2}
   data: {fileID: 11400000, guid: 61c99a593f8f1a74fb3575845de2cf40, type: 2}
+  entity: {fileID: 11400000, guid: c765f728276573247bf28102c833d262, type: 2}
+  _machine: {fileID: 11400000, guid: 3362953f1f9f0fe408fb08aa9bb22d02, type: 2}

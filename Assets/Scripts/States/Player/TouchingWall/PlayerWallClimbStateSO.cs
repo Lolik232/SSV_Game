@@ -15,7 +15,7 @@ public class PlayerWallClimbStateSO : PlayerTouchingWallStateSO
 
 		updateActions.Add(() =>
 		{
-			player.TrySetVelocityY(data.parameters.wallClimbSpeed);
+			entity.TrySetVelocityY(data.parameters.wallClimbSpeed);
 		});
 	}
 }

@@ -8,10 +8,10 @@ public class PlayerLedgeHoldStateSO : PlayerOnLedgeStateSO
 	{
 		base.OnEnable();
 
-		bool LedgeClimbCondition() => data.input.moveInput.x == player.facingDirection ||
+		bool LedgeClimbCondition() => data.input.moveInput.x == entity.facingDirection ||
 																	data.input.moveInput.y == 1;
 
-		bool InAirCondition() => data.input.moveInput.x == -player.facingDirection ||
+		bool InAirCondition() => data.input.moveInput.x == -entity.facingDirection ||
 														 data.input.moveInput.y == -1;
 
 		transitions.Add(new TransitionItem(data.states.ledgeClimb, LedgeClimbCondition));
@@ -24,7 +24,7 @@ public class PlayerLedgeHoldStateSO : PlayerOnLedgeStateSO
 
 		exitActions.Add(() =>
 		{
-			player.ReleasePosition();
+			entity.ReleasePosition();
 		});
 	}
 }

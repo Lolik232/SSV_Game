@@ -18,17 +18,17 @@ public class PlayerWallSlideStateSO : PlayerTouchingWallStateSO
 		enterActions.Add(() =>
 		{
 			needHadFlip = true;
-			player.SoftFlip();
+			entity.SoftFlip();
 		});
 
 		updateActions.Add(() =>
 		{
-			player.TrySetVelocityY(-data.parameters.wallSlideSpeed);
+			entity.TrySetVelocityY(-data.parameters.wallSlideSpeed);
 		});
 
 		exitActions.Add(() =>
 		{
-			player.SoftFlip();
+			entity.SoftFlip();
 		});
 	}
 }

@@ -15,26 +15,26 @@ public class PlayerJumpAbilitySO : PlayerAbilitySO
 		useConditions.Add(() =>
 		{
 			return data.input.jumpInput &&
-						 !data.checkers.isTouchingCeiling;
+						 !data.checkers.touchingCeiling;
 		});
 
 		terminateConditions.Add(() =>
 		{
-			return player.Velocity.y < 0f ||
+			return entity.Velocity.y < 0f ||
 						 !data.input.jumpInputHold;
 		});
 
-		useActions.Add(() =>
+		enterActions.Add(() =>
 		{
 			data.input.jumpInput = false;
-			player.TrySetVelocityY(data.parameters.jumpForce);
+			entity.TrySetVelocityY(data.parameters.jumpForce);
 		});
 
-		terminateActions.Add(() =>
+		exitActions.Add(() =>
 		{
-			if (player.Velocity.y > 0f)
+			if (entity.Velocity.y > 0f)
 			{
-				player.TrySetVelocityY(player.Velocity.y * 0.5f);
+				entity.TrySetVelocityY(entity.Velocity.y * 0.5f);
 			}
 		});
 	}

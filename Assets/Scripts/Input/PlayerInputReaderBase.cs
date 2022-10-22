@@ -6,28 +6,24 @@ using UnityEngine.InputSystem;
 
 public class PlayerInputReaderBase : BaseMonoBehaviour
 {
-	private Player _player;
+	[SerializeField] private PlayerInputReaderSO _inputReader;
 
-	public PlayerInputReaderSO inputReader;
+	private PlayerInput _input;
 
 	protected override void Awake()
 	{
-		_player = GetComponent<Player>();
+		_input = GetComponent<PlayerInput>();
 
 		base.Awake();
 
 		startActions.Add(() =>
 		{
-			inputReader.InitializePlayerInput(GetComponent<PlayerInput>());
-			inputReader.InitializePlayerCamera(Camera.main);
-			inputReader.InitializeCamera(Camera.main);
+			_inputReader.Initialize(_input, Camera.main);
 		});
 
 		updateActions.Add(() =>
 		{
-			inputReader.OnUpdate();
-			inputReader.mouseInputDirection = (inputReader.mouseInputPosition - _player.Center).normalized;
-			inputReader.mouseInputDistance = (inputReader.mouseInputPosition - _player.Center).magnitude;
+			_inputReader.OnUpdate();
 		});
 	}
 }

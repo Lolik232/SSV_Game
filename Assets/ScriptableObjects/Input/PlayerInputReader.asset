@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _jumpInputHoldTime: 0.1
   _dashInputPressTime: 0.5
+  _entity: {fileID: 11400000, guid: c765f728276573247bf28102c833d262, type: 2}

@@ -23,5 +23,6 @@ MonoBehaviour:
     isHardBlocked: 1
   - blockedAbility: {fileID: 11400000, guid: 29b560b1852e4594d9cf188e2e83282f, type: 2}
     isHardBlocked: 1
-  _machine: {fileID: 11400000, guid: 3362953f1f9f0fe408fb08aa9bb22d02, type: 2}
   data: {fileID: 11400000, guid: 61c99a593f8f1a74fb3575845de2cf40, type: 2}
+  entity: {fileID: 11400000, guid: c765f728276573247bf28102c833d262, type: 2}
+  _machine: {fileID: 11400000, guid: 3362953f1f9f0fe408fb08aa9bb22d02, type: 2}

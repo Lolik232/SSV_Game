@@ -1,7 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "PlayerSword", menuName = "Player/Weapons/Sword")]
-
+[CreateAssetMenu(fileName = "PlayerSword", menuName = "Weapons/Weapon/Sword/Player")]
 public class PlayerSwordSO : PlayerWeaponSO
 {
 	private Vector2 _attackPosition;
@@ -16,20 +15,20 @@ public class PlayerSwordSO : PlayerWeaponSO
 
 			if (directionBlocker.IsLocked && attackVector.x >= 0 != holdDirection >= 0)
 			{
-				_attackPosition = attackVector * Vector2.up + player.Center;
+				_attackPosition = attackVector * Vector2.up + entity.Center;
 			}
 			else
 			{
-				_attackPosition = attackVector + player.Center;
+				_attackPosition = attackVector + entity.Center;
 				if (!directionBlocker.IsLocked)
 				{
 					int facingDirection = attackVector.x >= 0 ? 1 : -1;
-					if (facingDirection != player.facingDirection)
+					if (facingDirection != entity.facingDirection)
 					{
 						baseAnim.SetBool("mirror", true);
 					}
 
-					player.HoldDirection(facingDirection);
+					entity.HoldDirection(facingDirection);
 				}
 			}
 
@@ -38,7 +37,7 @@ public class PlayerSwordSO : PlayerWeaponSO
 
 		exitActions.Add(() =>
 		{
-			player.ReleaseDirection();
+			entity.ReleaseDirection();
 			baseAnim.SetBool("mirror", false);
 		});
 	}
@@ -48,7 +47,7 @@ public class PlayerSwordSO : PlayerWeaponSO
 		base.OnDrawGizmos();
 
 		Gizmos.color = Color.black;
-		Gizmos.DrawWireSphere(player.Center, data.parameters.swordAttackDistance);
+		Gizmos.DrawWireSphere(entity.Center, data.parameters.swordAttackDistance);
 		Gizmos.DrawWireSphere(_attackPosition, data.parameters.swordAttackAngle);
 	}
 }

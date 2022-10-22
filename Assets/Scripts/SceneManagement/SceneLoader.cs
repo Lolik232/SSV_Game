@@ -26,7 +26,7 @@ namespace SceneManagement
         [Header("Broadcasting")]
         [SerializeField] private BoolEventChannelSO m_toggleLoadingScreenChan = default;
         [SerializeField]
-        private VoidEventChannelSO m_onSceneReadyChan = default; // to scene managers. Spawn player, etc.
+        private VoidEventChannelSO m_onSceneReadyChan = default; // to scene managers. Spawn entity, etc.
         [SerializeField] private FadeChannelSO m_fadeRequestChan = default;
 
         private AsyncOperationHandle<SceneInstance> m_loadingOperationHandle;

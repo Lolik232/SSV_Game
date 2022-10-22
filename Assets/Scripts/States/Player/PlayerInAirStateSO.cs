@@ -7,20 +7,20 @@ public class PlayerInAirStateSO : PlayerStateSO
 	{
 		base.OnEnable();
 
-		bool LandCondition() => data.checkers.isGrounded &&
-														player.Velocity.y < 0.01f;
+		bool LandCondition() => data.checkers.grounded &&
+														entity.Velocity.y < 0.01f;
 
-		bool LedgeGrabCondition() => data.checkers.isTouchingWall &&
-																 !data.checkers.isTouchingLedge &&
-																 !data.checkers.isGroundClose;
+		bool LedgeGrabCondition() => data.checkers.touchingWall &&
+																 !data.checkers.touchingLedge &&
+																 !data.checkers.groundClose;
 
-		bool WallGrabCondition() => data.checkers.isTouchingWall &&
-																data.checkers.isTouchingLedge &&
+		bool WallGrabCondition() => data.checkers.touchingWall &&
+																data.checkers.touchingLedge &&
 																data.input.grabInput;
 
-		bool WallSlideCondition() => data.checkers.isTouchingWall &&
-																 data.input.moveInput.x == player.facingDirection &&
-																 player.Velocity.y <= 0f;
+		bool WallSlideCondition() => data.checkers.touchingWall &&
+																 data.input.moveInput.x == entity.facingDirection &&
+																 entity.Velocity.y <= 0f;
 
 		void LedgeGrabAction() => data.checkers.DetermineLedgePosition();
 
@@ -38,11 +38,11 @@ public class PlayerInAirStateSO : PlayerStateSO
 		{
 			CheckForJumps();
 
-			player.TrySetVelocityX(data.input.moveInput.x * data.parameters.inAirMoveSpeed);
-			player.CheckIfShouldFlip(data.input.moveInput.x);
+			entity.TrySetVelocityX(data.input.moveInput.x * data.parameters.inAirMoveSpeed);
+			entity.CheckIfShouldFlip(data.input.moveInput.x);
 
-			anim.SetFloat("xVelocity", player.Velocity.x);
-			anim.SetFloat("yVelocity", player.Velocity.y);
+			anim.SetFloat("xVelocity", entity.Velocity.x);
+			anim.SetFloat("yVelocity", entity.Velocity.y);
 		});
 	}
 
@@ -53,7 +53,7 @@ public class PlayerInAirStateSO : PlayerStateSO
 			data.abilities.jump.SetAmountOfUsagesToZero();
 		}
 
-		if (data.checkers.isTouchingWall || data.checkers.isTouchingWallBack)
+		if (data.checkers.touchingWall || data.checkers.touchingWallBack)
 		{
 			data.abilities.wallJump.RestoreAmountOfUsages();
 		}

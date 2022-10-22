@@ -20,12 +20,12 @@ public class PlayerWallGrabStateSO : PlayerTouchingWallStateSO
 
 		enterActions.Add(() =>
 		{
-			player.HoldPosition(player.Position);
+			entity.HoldPosition(entity.Position);
 		});
 
 		exitActions.Add(() =>
 		{
-			player.ReleasePosition();
+			entity.ReleasePosition();
 		});
 	}
 }

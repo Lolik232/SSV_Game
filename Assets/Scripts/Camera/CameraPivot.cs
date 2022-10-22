@@ -20,7 +20,7 @@ public class CameraPivot : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.GetComponent<Player>() != null)
+        if (other.GetComponent<EntityBase>() != null)
         {
             m_cameraTargetEnterChannel.RaiseEvent(m_currentPivotTransform);
         }
@@ -28,7 +28,7 @@ public class CameraPivot : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.GetComponent<Player>() != null)
+        if (other.GetComponent<EntityBase>() != null)
         {
             m_cameraTargetEnterChannel.RaiseEvent(m_currentPivotTransform);
         }
@@ -36,7 +36,7 @@ public class CameraPivot : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.GetComponent<Player>() != null)
+        if (other.GetComponent<EntityBase>() != null)
         {
             m_cameraTargetExitChannel.RaiseEvent(m_currentPivotTransform);
         }

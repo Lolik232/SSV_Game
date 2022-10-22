@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "PlayerWeaponsManager", menuName = "Player/Weapons/Weapons Manager")]
+[CreateAssetMenu(fileName = "PlayerWeaponsManager", menuName = "Weapons/Managers/Player")]
 
 public class PlayerWeaponsManagerSO : ScriptableObject
 {
