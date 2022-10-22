@@ -7,7 +7,7 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerCheckersManagerBase), typeof(InventoryBase))]
 [RequireComponent(typeof(PlayerStateMachineBase), typeof(Rigidbody2D), typeof(Animator))]
 
-public class Player : MonoBehaviour
+public class Player : BaseMonoBehaviour
 {
 	[SerializeField] private Vector2 _standOffset;
 	[SerializeField] private Vector2 _standSize;
@@ -55,24 +55,26 @@ public class Player : MonoBehaviour
 
 	public float Gravity => _rb.gravityScale;
 
-	private void Awake()
+	protected override void Awake()
 	{
+		base.Awake();
+
 		_tr = GetComponent<TrailRenderer>();
 		_rb = GetComponent<Rigidbody2D>();
 		_col = GetComponent<BoxCollider2D>();
-	}
 
-	private void Start()
-	{
-		Stand();
-	}
-
-	private void Update()
-	{
-		if (_positionBlocker.IsLocked)
+		startActions.Add(() =>
 		{
-			transform.position = _holdPosition;
-		}
+			Stand();
+		});
+
+		updateActions.Add(() =>
+		{
+			if (_positionBlocker.IsLocked)
+			{
+				transform.position = _holdPosition;
+			}
+		});
 	}
 
 	public void CheckIfShouldFlip(int direction)

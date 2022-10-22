@@ -1,23 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 
-public class InventoryBase : MonoBehaviour
+public class InventoryBase : BaseMonoBehaviour
 {
 	[SerializeField] private InventorySO _inventory;
 
-	protected virtual void Awake()
+	protected override void Awake()
 	{
+		startActions.Add(() =>
+		{
+			_inventory.Initialize();
+		});
 
-	}
-
-	protected virtual void Start()
-	{
-		_inventory.Initialize();
-	}
-
-	private void Update()
-	{
-		_inventory.CurrentWeapon.OnUpdate();
+		updateActions.Add(() =>
+		{
+			_inventory.CurrentWeapon.OnUpdate();
+		});
 	}
 }

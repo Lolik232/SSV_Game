@@ -396,6 +396,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d561e23d79938048b31bb5fa10979fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _attachedComponets:
+  - {fileID: 4867245502010508884}
+  - {fileID: 1467728627466492301}
   _machine: {fileID: 11400000, guid: 3362953f1f9f0fe408fb08aa9bb22d02, type: 2}
   _statesManager: {fileID: 11400000, guid: 9c603ec4709b5f74bb3d72e0af3766ca, type: 2}
 --- !u!114 &4867245502010508884
@@ -410,6 +413,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a8b3bfda16293546a0ea81988c985a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _attachedComponets:
+  - {fileID: 1467728627466492301}
+  - {fileID: 3286704870696138778}
   _standOffset: {x: 0, y: 0.975}
   _standSize: {x: 0.5, y: 1.95}
   _crouchOffset: {x: 0, y: 0.475}
@@ -452,6 +458,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16e55ecad40c7a24890ca76f16ec54c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _attachedComponets:
+  - {fileID: 4867245502010508884}
   _checkersManager: {fileID: 11400000, guid: 6e630779cdd03fe439bcb3d2008723c5, type: 2}
 --- !u!114 &8029372522264472569
 MonoBehaviour:
@@ -477,6 +485,7 @@ GameObject:
   - component: {fileID: 2858492609654353186}
   - component: {fileID: 2858492609654353187}
   - component: {fileID: 6332324685682563826}
+  - component: {fileID: 5533673985491799931}
   m_Layer: 6
   m_Name: Hit
   m_TagString: Untagged
@@ -563,6 +572,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5b6ff8728e371c4dafc43804c0f691a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &5533673985491799931
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2858492609654353185}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b6f4f9c9e3bbef24bb455e355467b711, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &3238070780658984553
 GameObject:
   m_ObjectHideFlags: 0
@@ -736,6 +765,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d75d6837d51b384893dd798faf595d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _attachedComponets: []
   _weapon: {fileID: 11400000, guid: 62c28d3770653b344a8acc9cddb14780, type: 2}
   baseUnit: {fileID: 16557013547266712}
 --- !u!1001 &1677854725844204535

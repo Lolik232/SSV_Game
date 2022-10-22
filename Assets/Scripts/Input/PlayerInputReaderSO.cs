@@ -32,14 +32,6 @@ public class PlayerInputReaderSO : ScriptableObject
 	[NonSerialized] public Vector2 mouseInputDirection;
 	[NonSerialized] public float   mouseInputDistance;
 
-<<<<<<< HEAD:Assets/Scripts/Player/Input/PlayerInputReaderSO.cs
-	// private void OnEnable()
-	// {
-	// 	_mainCamera = Camera.main;
-	// }
-
-=======
->>>>>>> controller:Assets/Scripts/Input/PlayerInputReaderSO.cs
 	public void OnUpdate()
 	{
 		mouseInputPosition = _mainCamera.ScreenToWorldPoint(_mouseInputPosition);

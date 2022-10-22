@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerParametersManagerBase : MonoBehaviour
+public class PlayerParametersManagerBase : BaseMonoBehaviour
 {
 	[SerializeField] private PlayerParametersManagerSO _parametersManager;
 
-	private void Start()
+	protected override void Awake()
 	{
 		_parametersManager.Initialize();
+
+		base.Awake();
 	}
 }

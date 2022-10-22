@@ -64,7 +64,6 @@ public class PlayerCheckersManagerSO : ScriptableObject
 
 	private void UpdateCheckersPositions()
 	{
-
 		var checkerOffset = _player.Size / 2 - Vector2.one * CHECK_OFFSET;
 		int facingRight = _player.facingDirection;
 		int facingLeft = -_player.facingDirection;

@@ -1,3 +1,5 @@
+using All.Events;
+
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
@@ -10,13 +12,13 @@ public class PlayerStateMachineBase : StateMachineBase
 
 	protected override void Awake()
 	{
-		base.Awake();
 		_player = GetComponent<Player>();
-	}
 
-	protected override void Start()
-	{
-		_statesManager.Initialize(_player, anim);
-		base.Start();
+		base.Awake();
+
+		startActions.Insert(0, () =>
+		{
+			_statesManager.Initialize(_player, anim);
+		});
 	}
 }

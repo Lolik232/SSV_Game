@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class PlayerWeaponBase : MonoBehaviour
+public class PlayerWeaponBase : BaseMonoBehaviour
 {
 	[SerializeField] private PlayerWeaponSO _weapon;
 
@@ -14,27 +14,23 @@ public class PlayerWeaponBase : MonoBehaviour
 	private Player _player;
 	private Hit _hit;
 
-	private bool _initilized = false;
-
-	protected virtual void Awake()
+	protected override void Awake()
 	{
 		_player = baseUnit.GetComponent<Player>();
 		_baseAnim = baseUnit.GetComponent<Animator>();
 		_anim = GetComponent<Animator>();
 		_hit = GetComponentInChildren<Hit>();
-	}
 
-	protected virtual void Start()
-	{
-		_weapon.Initialize(_player, _baseAnim, _anim, _hit);
-		_initilized = true;
-	}
+		base.Awake();
 
-	protected virtual void OnDrawGizmos()
-	{
-		if (_initilized)
+		startActions.Add(() =>
+		{
+			_weapon.Initialize(_player, _baseAnim, _anim, _hit);
+		});
+
+		drawGizmosActions.Add(() =>
 		{
 			_weapon.OnDrawGizmos();
-		}
+		});
 	}
 }

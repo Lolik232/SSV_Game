@@ -63,6 +63,7 @@
     <Compile Include="Assets\Scripts\SpellEffects\ActiveEffects.cs" />
     <Compile Include="Assets\Scripts\Parameters\Parameter.cs" />
     <Compile Include="Assets\Scripts\Weapons\Player\PlayerSwordSO.cs" />
+    <Compile Include="Assets\Scripts\EditorTools\MousePlace.cs" />
     <Compile Include="Assets\Scripts\Weapons\Player\PlayerWeaponBase.cs" />
     <Compile Include="Assets\Scripts\States\Player\TouchingWall\PlayerWallClimbStateSO.cs" />
     <Compile Include="Assets\Scripts\SceneManagement\MenuSO.cs" />
@@ -76,9 +77,11 @@
     <Compile Include="Assets\Scripts\States\Player\PlayerInAirStateSO.cs" />
     <Compile Include="Assets\Scripts\Controllers\Player.cs" />
     <Compile Include="Assets\Scripts\States\Player\PlayerStatesManagerSO.cs" />
+    <Compile Include="Assets\Scripts\Events\TransformEventChannel.cs" />
     <Compile Include="Assets\Scripts\Input\PlayerInputReaderBase.cs" />
     <Compile Include="Assets\Scripts\Parameters\Player\PlayerParametersManagerBase.cs" />
     <Compile Include="Assets\Scripts\States\Player\Grounded\PlayerIdleStateSO.cs" />
+    <Compile Include="Assets\Scripts\States\StateMachineBase.cs" />
     <Compile Include="Assets\Scripts\SaveSystem\SerializableScriptableObject.cs" />
     <Compile Include="Assets\Scripts\States\Player\OnLedge\PlayerOnLedgeStateSO.cs" />
     <Compile Include="Assets\Scripts\States\Player\Grounded\PlayerCrouchMoveStateSO.cs" />
@@ -87,28 +90,35 @@
     <Compile Include="Assets\Scripts\BaseClasses\BaseDescriptionSO.cs" />
     <Compile Include="Assets\Scripts\SpellEffects\SpellEffectHolder.cs" />
     <Compile Include="Assets\Scripts\Weapons\WeaponSO.cs" />
+    <Compile Include="Assets\Scripts\SceneManagement\Camera\RoomCam.cs" />
     <Compile Include="Assets\Scripts\States\Player\OnLedge\PlayerLedgeGrabStateSO.cs" />
     <Compile Include="Assets\Scripts\SceneManagement\LocationSO.cs" />
     <Compile Include="Assets\Scripts\Parameters\Player\PlayerParametersManagerSO.cs" />
     <Compile Include="Assets\Scripts\Data\Player\PlayerDataSO.cs" />
+    <Compile Include="Assets\Scripts\Camera\CameraPivot.cs" />
+    <Compile Include="Assets\Scripts\Inventory\Player\InventoryBase.cs" />
     <Compile Include="Assets\Scripts\Gameplay\PlayerSpawnManager.cs" />
     <Compile Include="Assets\Scripts\SceneManagement\SceneLoader.cs" />
     <Compile Include="Assets\Scripts\SceneManagement\GameSceneSO.cs" />
     <Compile Include="Assets\Scripts\Interfaces\ISpellEffect.cs" />
+    <Compile Include="Assets\Scripts\States\StateMachineSO.cs" />
     <Compile Include="Assets\Scripts\States\Player\TouchingWall\PlayerWallSlideStateSO.cs" />
     <Compile Include="Assets\Scripts\Interfaces\ILiveCycle.cs" />
     <Compile Include="Assets\Scripts\SceneManagement\LocationExit.cs" />
     <Compile Include="Assets\Scripts\SceneManagement\ManagersSO.cs" />
+    <Compile Include="Assets\Scripts\Inventory\Player\InventorySO.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IPhysicsUpdate.cs" />
     <Compile Include="Assets\Scripts\Interfaces\ISpellEffectVisitor.cs" />
     <Compile Include="Assets\Scripts\Input\PlayerInputReaderSO.cs" />
     <Compile Include="Assets\Scripts\Controllers\Checkers\Player\PlayerCheckersManagerSO.cs" />
     <Compile Include="Assets\Scripts\States\Player\OnLedge\PlayerLedgeHoldStateSO.cs" />
+    <Compile Include="Assets\Scripts\Camera\CameraManager.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IObject.cs" />
     <Compile Include="Assets\Scripts\Abilities\Player\AbilitySO.cs" />
     <Compile Include="Assets\Scripts\Abilities\Player\PlayerAbilitiesManagerSO.cs" />
     <Compile Include="Assets\Scripts\Weapons\Player\PlayerWeaponSO.cs" />
     <Compile Include="Assets\Scripts\States\Player\TouchingWall\PlayerTouchingWallStateSO.cs" />
+    <Compile Include="Assets\Scripts\EditorTools\EditorStartup.cs" />
     <Compile Include="Assets\Scripts\Events\BoolEventChannelSO.cs" />
     <Compile Include="Assets\Scripts\Controllers\Checkers\Player\PlayerCheckersManagerBase.cs" />
     <Compile Include="Assets\Scripts\Spell\SpellsLiveCycle\TimeLiveCycle.cs" />
@@ -122,13 +132,11 @@
     <Compile Include="Assets\Scripts\Abilities\Player\PlayerAbilitySO.cs" />
     <Compile Include="Assets\Scripts\Abilities\Player\PlayerAttackAbilitySO.cs" />
     <Compile Include="Assets\Scripts\Spell\SpellHolder.cs" />
+    <Compile Include="Assets\Scripts\Camera\CameraPivotAttacher.cs" />
     <Compile Include="Assets\Scripts\Events\IntEventChannelSO.cs" />
     <Compile Include="Assets\Scripts\Weapons\Hit.cs" />
-    <Compile Include="Assets\Scripts\Inventory\Player\InventorySO.cs" />
     <Compile Include="Assets\Scripts\Weapons\Player\PlayerWeaponsManagerSO.cs" />
-    <Compile Include="Assets\Scripts\States\StateMachineBase.cs" />
-    <Compile Include="Assets\Scripts\Inventory\Player\InventoryBase.cs" />
-    <Compile Include="Assets\Scripts\States\StateMachineSO.cs" />
+    <Compile Include="Assets\Scripts\BaseClasses\BaseMonoBehaviour.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -391,6 +399,9 @@
     </Reference>
     <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
       <HintPath>Library\PackageCache\com.unity.visualscripting@1.7.8\Runtime\VisualScripting.Flow\Dependencies\NCalc\Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="clipper_library">
+      <HintPath>Library\PackageCache\com.unity.cinemachine@2.8.6\Runtime\ThirdParty\clipper_library.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@3.0.2\Runtime\Newtonsoft.Json.dll</HintPath>

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Hit : MonoBehaviour
+public class Hit : BaseMonoBehaviour
 {
 	private Animator anim;
 
@@ -12,17 +12,19 @@ public class Hit : MonoBehaviour
 
 	public Vector2 Position => transform.position;
 
-	private void Awake()
+	protected override void Awake()
 	{
 		anim = GetComponent<Animator>();
-	}
 
-	private void LateUpdate()
-	{
-		if (_positionBlocker.IsLocked)
+		base.Awake();
+
+		lateUpdateActions.Add(() =>
 		{
-			transform.position = _holdPosition;
-		}
+			if (_positionBlocker.IsLocked)
+			{
+				transform.position = _holdPosition;
+			}
+		});
 	}
 
 	public void OnHit(Vector2 hitposition)
