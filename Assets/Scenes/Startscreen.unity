@@ -2126,6 +2126,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _initialState: {fileID: 11400000, guid: 9c64f1c553e380b43a6dc842b15e296c, type: 2}
-  _uiInput: {fileID: 11400000, guid: 2fbaa6bf9df41e847931f044603cca79, type: 2}
+  _uiInputSO: {fileID: 11400000, guid: 2fbaa6bf9df41e847931f044603cca79, type: 2}
   _textAnim: {fileID: 727180689}
   _menuAnim: {fileID: 1282044682}
