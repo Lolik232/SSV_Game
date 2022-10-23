@@ -10,6 +10,6 @@ public class MenuToStartScreenDecision : Decision
 {
 	public override bool Decide(BaseStateMachine stateMachine)
 	{
-		return stateMachine.UIInput.escPressed;
+		return stateMachine.UIInputSO.escPressed;
 	}
 }

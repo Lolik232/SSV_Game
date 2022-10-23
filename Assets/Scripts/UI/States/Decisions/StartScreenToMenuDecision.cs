@@ -14,7 +14,7 @@ public class StartScreenToMenuDecision : Decision
 {
 	public override bool Decide(BaseStateMachine stateMachine)
 	{
-		return stateMachine.UIInput.enterPressed;
+		return stateMachine.UIInputSO.enterPressed;
 
 
 	}

@@ -93,7 +93,7 @@
      <Compile Include="Assets\Scripts\States\StateMachineSO.cs" />
      <Compile Include="Assets\Scripts\States\Player\TouchingWall\PlayerWallSlideStateSO.cs" />
      <Compile Include="Assets\Scripts\Interfaces\ILiveCycle.cs" />
-     <Compile Include="Assets\Scripts\UI\Input\UIInput.cs" />
+     <Compile Include="Assets\Scripts\UI\Input\UIInputSO.cs" />
      <Compile Include="Assets\Scripts\SceneManagement\LocationExit.cs" />
      <Compile Include="Assets\Scripts\UI\States\BaseStateMachine.cs" />
      <Compile Include="Assets\Scripts\SceneManagement\ManagersSO.cs" />

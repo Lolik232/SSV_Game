@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [CreateAssetMenu(menuName = "UI/Input/UIInput")]
-public class UIInput : ScriptableObject
+public class UIInputSO : ScriptableObject
 {
 	[NonSerialized] public bool enterPressed;
 	[NonSerialized] public bool escPressed;
@@ -37,6 +37,6 @@ public class UIInput : ScriptableObject
 
 	public void OnQuitButton()
 	{
-		Debug.Log("Button clicked");
+		Application.Quit();
 	}
 }
