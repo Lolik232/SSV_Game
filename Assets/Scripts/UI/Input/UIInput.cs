@@ -34,4 +34,9 @@ public class UIInput : ScriptableObject
 			escPressed = false;
 		}
 	}
+
+	public void OnQuitButton()
+	{
+		Debug.Log("Button clicked");
+	}
 }

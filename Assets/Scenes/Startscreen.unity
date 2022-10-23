@@ -1859,7 +1859,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1970800003}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 2fbaa6bf9df41e847931f044603cca79, type: 2}
+        m_TargetAssemblyTypeName: UIInput, Assembly-CSharp
+        m_MethodName: OnQuitButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
 --- !u!114 &1970800003
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1987,8 +1999,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2114112681}
-  - component: {fileID: 2114112680}
   - component: {fileID: 2114112682}
+  - component: {fileID: 2114112683}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: Untagged
@@ -1996,20 +2008,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2114112680
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2114112679}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a346b6b68159804ab9793190ba66d8f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textAnimator: {fileID: 727180689}
-  menuAnimator: {fileID: 1282044682}
 --- !u!4 &2114112681
 Transform:
   m_ObjectHideFlags: 0
@@ -2037,7 +2035,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: a8aea0864b5791447a44e5f7c4bb448c, type: 3}
+  m_Actions: {fileID: -944628639613478452, guid: fa1dd6cab9a44c5409a81eb67fbdbb61, type: 3}
   m_NotificationBehavior: 2
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
@@ -2068,12 +2066,20 @@ MonoBehaviour:
     m_ActionName: Gameplay/Dash[/Keyboard/alt]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 0c8c1b0a-4d9a-4a58-a658-60166c4b6d22
-    m_ActionName: Gameplay/DashDirection[/Mouse/position]
+    m_ActionId: ef50c3db-59e0-47e6-b9e8-7dbab383aaa6
+    m_ActionName: Gameplay/Dash[/Keyboard/e]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 5f60d7ad-25cd-4461-89c2-9bc61c9c9f52
+    m_ActionName: Gameplay/Attack[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 4ad294ea-429e-437f-b346-31e596a047bb
+    m_ActionName: Gameplay/Ability[/Mouse/rightButton]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2114112680}
-        m_TargetAssemblyTypeName: MenuAnimationLoader, Assembly-CSharp
+      - m_Target: {fileID: 11400000, guid: 2fbaa6bf9df41e847931f044603cca79, type: 2}
+        m_TargetAssemblyTypeName: UIInput, Assembly-CSharp
         m_MethodName: OnEnterDown
         m_Mode: 0
         m_Arguments:
@@ -2084,10 +2090,42 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: d1211932-c799-4f9f-89b4-7aff6abd6ca9
-    m_ActionName: Ui/GameStart[/Keyboard/enter]
+    m_ActionId: f2012ff9-f0de-4151-aa5f-6edddb096523
+    m_ActionName: UI/MenuEntering[/Keyboard/enter]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 2fbaa6bf9df41e847931f044603cca79, type: 2}
+        m_TargetAssemblyTypeName: UIInput, Assembly-CSharp
+        m_MethodName: OnEscDown
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 9d5686ad-d36a-412c-8443-7d871aeeb4b0
+    m_ActionName: UI/MenuExiting[/Keyboard/escape]
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: Keyboard
-  m_DefaultActionMap: Ui
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: UI
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &2114112683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2114112679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c834d9f6484d4bf44b853b3d3dd46725, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _initialState: {fileID: 11400000, guid: 9c64f1c553e380b43a6dc842b15e296c, type: 2}
+  _uiInput: {fileID: 11400000, guid: 2fbaa6bf9df41e847931f044603cca79, type: 2}
+  _textAnim: {fileID: 727180689}
+  _menuAnim: {fileID: 1282044682}
