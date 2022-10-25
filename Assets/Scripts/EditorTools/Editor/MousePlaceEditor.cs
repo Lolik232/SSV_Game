@@ -7,15 +7,15 @@ using UnityEngine;
 [CustomEditor(typeof(MousePlace))]
 public class MousePlaceEditor : Editor
 {
-    private MousePlace m_mousePlace => target as MousePlace;
+    private MousePlace _mousePlace => target as MousePlace;
 
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
 
-        if (GUILayout.Button("Place at mouse cursor") && !m_mousePlace.IsTargeting)
+        if (GUILayout.Button("Place at mouse cursor") && !_mousePlace.IsTargeting)
         {
-            m_mousePlace.BeginTargeting();
+            _mousePlace.BeginTargeting();
             SceneView.duringSceneGui += OnDuringSceneGui;
         }
     }
@@ -33,7 +33,7 @@ public class MousePlaceEditor : Editor
 
         mousePos = sceneView.camera.ScreenToWorldPoint(mousePos);
 
-        m_mousePlace.UpdateTargeting(mousePos);
+        _mousePlace.UpdateTargeting(mousePos);
  
 
         switch (currentGUIEvent.type)
@@ -46,10 +46,10 @@ public class MousePlaceEditor : Editor
                 switch (currentGUIEvent.button)
                 {
                     case 0:
-                        m_mousePlace.EndTargeting();
+                        _mousePlace.EndTargeting();
                         break;
                     case 1:
-                        m_mousePlace.Cancel();
+                        _mousePlace.Cancel();
                         break;
                 }
 

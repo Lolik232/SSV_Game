@@ -1,22 +1,25 @@
 ﻿using All.Events;
 
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace SceneManagement
 {
 	[RequireComponent(typeof(Collider2D))]
 	public class LocationExit : MonoBehaviour
 	{
-		[SerializeField] private GameSceneSO m_locationToLoad = default;
+		[FormerlySerializedAs("m_locationToLoad")]
+		[SerializeField] private GameSceneSO _locationToLoad = default;
 
 		[Header("Broadcasting")]
-		[SerializeField] private LoadEventChannelSO m_loadLocationChannel = default;
+		[FormerlySerializedAs("m_loadLocationChannel")]
+		[SerializeField] private LoadEventChannelSO _loadLocationChannel = default;
 
 		private void OnTriggerEnter2D(Collider2D other)
 		{
 			if (other.TryGetComponent<EntityBase>(out var entity))
 			{
-				m_loadLocationChannel.RaiseEvent(m_locationToLoad, false, true);
+				_loadLocationChannel.RaiseEvent(_locationToLoad, false, true);
 			}
 		}
 
@@ -24,7 +27,7 @@ namespace SceneManagement
 		{
 			if (col.gameObject.TryGetComponent<EntityBase>(out var entity))
 			{
-				m_loadLocationChannel.RaiseEvent(m_locationToLoad, false, true);
+				_loadLocationChannel.RaiseEvent(_locationToLoad, false, true);
 			}
 		}
 
