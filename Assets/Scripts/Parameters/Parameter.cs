@@ -10,7 +10,7 @@ public class Parameter
 	private float _current;
 
 	[NonSerialized] public float preAddition;
-	[NonSerialized] public float multiplier = 1;
+	[NonSerialized] public float multiplier = 1f;
 	[NonSerialized] public float postAddition;
 
 	public float Min => _min;

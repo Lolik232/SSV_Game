@@ -16,11 +16,11 @@ GameObject:
   - component: {fileID: 1683216502060990014}
   - component: {fileID: 5897945034156752116}
   - component: {fileID: 3917114990227662077}
-  - component: {fileID: 8029372522264472569}
-  - component: {fileID: 8034197896902455126}
   - component: {fileID: 5348522544844646140}
+  - component: {fileID: 8034197896902455126}
   - component: {fileID: 2371286146542268027}
-  - component: {fileID: 5615563412954949548}
+  - component: {fileID: 6955278318416131826}
+  - component: {fileID: 8029372522264472569}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -397,7 +397,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _parametersManager: {fileID: 11400000, guid: 4162b27446d9dd24589dac8069397f3d, type: 2}
---- !u!114 &8029372522264472569
+--- !u!114 &5348522544844646140
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -406,10 +406,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 16557013547266712}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a885e2806623e848b8f51d6a9dd59ce, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e917dc23c3ba8a4b936fbcb4bfc07c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inventory: {fileID: 11400000, guid: 22bd3417d03a2ac45a42b9324c95f88c, type: 2}
+  component: {fileID: 11400000, guid: c765f728276573247bf28102c833d262, type: 2}
 --- !u!114 &8034197896902455126
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -424,19 +424,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _statesManager: {fileID: 11400000, guid: 9c603ec4709b5f74bb3d72e0af3766ca, type: 2}
   _machine: {fileID: 11400000, guid: 3362953f1f9f0fe408fb08aa9bb22d02, type: 2}
---- !u!114 &5348522544844646140
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 16557013547266712}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e917dc23c3ba8a4b936fbcb4bfc07c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _entity: {fileID: 11400000, guid: c765f728276573247bf28102c833d262, type: 2}
 --- !u!114 &2371286146542268027
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -449,8 +436,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e771d905013f1646b4fdb1ea5cbadba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _checkersManager: {fileID: 11400000, guid: f76f511fc79650e4499c8bb22e976166, type: 2}
---- !u!114 &5615563412954949548
+  _checkersManager: {fileID: 11400000, guid: b170e08cd35970c4bb6e662d17469f4e, type: 2}
+--- !u!114 &6955278318416131826
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -459,10 +446,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 16557013547266712}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f92da2c0958447941a5168d537010cbc, type: 3}
+  m_Script: {fileID: 11500000, guid: 3ac6b0dd4bfd3b44aab73961b680999f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  abilitiesManager: {fileID: 11400000, guid: 0917e0108459ae84c8d98c687dd1da49, type: 2}
+  _abilitiesManager: {fileID: 11400000, guid: 0917e0108459ae84c8d98c687dd1da49, type: 2}
+--- !u!114 &8029372522264472569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16557013547266712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a885e2806623e848b8f51d6a9dd59ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inventory: {fileID: 11400000, guid: 22bd3417d03a2ac45a42b9324c95f88c, type: 2}
 --- !u!1 &2858492609654353185
 GameObject:
   m_ObjectHideFlags: 0
@@ -830,7 +830,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 555109377384448038, guid: e96f51f846d3dd94b8578dd8e035496d, type: 3}
       propertyPath: m_Name
-      value: Unit
+      value: Skin
       objectReference: {fileID: 0}
     - target: {fileID: 585213174314222321, guid: e96f51f846d3dd94b8578dd8e035496d, type: 3}
       propertyPath: m_Bounds.m_Center.x

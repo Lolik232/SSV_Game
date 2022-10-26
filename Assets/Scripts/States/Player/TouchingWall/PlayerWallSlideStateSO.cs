@@ -10,25 +10,19 @@ public class PlayerWallSlideStateSO : PlayerTouchingWallStateSO
 	{
 		base.OnEnable();
 
-		bool WallGrabCondition() => data.input.moveInput.y >= 0 &&
-																data.input.grabInput;
+		bool WallGrabCondition() => data.controller.move.y >= 0 &&
+																data.controller.grab;
 
 		transitions.Add(new TransitionItem(data.states.wallGrab, WallGrabCondition));
 
 		enterActions.Add(() =>
 		{
-			needHadFlip = true;
-			entity.SoftFlip();
+			entity.RotateBodyIntoDirection(data.checkers.wallDirection);
 		});
 
 		updateActions.Add(() =>
 		{
 			entity.TrySetVelocityY(-data.parameters.wallSlideSpeed);
-		});
-
-		exitActions.Add(() =>
-		{
-			entity.SoftFlip();
 		});
 	}
 }

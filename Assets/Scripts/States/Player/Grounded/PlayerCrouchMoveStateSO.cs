@@ -8,10 +8,10 @@ public class PlayerCrouchMoveStateSO : PlayerGroundedStateSO
 	{
 		base.OnEnable();
 
-		bool MoveCondition() => data.input.moveInput.y > -1 &&
+		bool MoveCondition() => data.controller.move.y > -1 &&
 														!data.checkers.touchingCeiling;
 
-		bool CrouchIdleCondition() => data.input.moveInput.x == 0;
+		bool CrouchIdleCondition() => data.controller.move.x == 0;
 
 		transitions.Add(new TransitionItem(data.states.move, MoveCondition));
 		transitions.Add(new TransitionItem(data.states.crouchIdle, CrouchIdleCondition));
@@ -23,8 +23,8 @@ public class PlayerCrouchMoveStateSO : PlayerGroundedStateSO
 
 		updateActions.Add(() =>
 		{
-			entity.CheckIfShouldFlip(data.input.moveInput.x);
-			entity.TrySetVelocityX(data.input.moveInput.x * data.parameters.crouchMoveSpeed);
+			entity.TryRotateIntoDirection(data.controller.move.x);
+			entity.TrySetVelocityX(data.controller.move.x * data.parameters.crouchMoveSpeed);
 		});
 
 		exitActions.Add(() =>

@@ -12,21 +12,21 @@ public class PlayerJumpAbilitySO : PlayerAbilitySO
 	{
 		base.OnEnable();
 
-		useConditions.Add(() =>
+		enterConditions.Add(() =>
 		{
-			return data.input.jumpInput &&
+			return data.controller.jump &&
 						 !data.checkers.touchingCeiling;
 		});
 
-		terminateConditions.Add(() =>
+		exitConditions.Add(() =>
 		{
 			return entity.Velocity.y < 0f ||
-						 !data.input.jumpInputHold;
+						 !data.controller.jumpInputHold;
 		});
 
 		enterActions.Add(() =>
 		{
-			data.input.jumpInput = false;
+			data.controller.jump = false;
 			entity.TrySetVelocityY(data.parameters.jumpForce);
 		});
 

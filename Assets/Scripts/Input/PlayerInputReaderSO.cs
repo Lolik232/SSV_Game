@@ -4,12 +4,10 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [CreateAssetMenu(fileName = "PlayerInputReader", menuName = "Player/Input/Reader")]
-public class PlayerInputReaderSO : ScriptableObject
+public class PlayerInputReaderSO : BehaviourControllerSO
 {
 	[SerializeField] private float _jumpInputHoldTime;
 	[SerializeField] private float _dashInputPressTime;
-
-	[SerializeField] private EntitySO _entity;
 
 	private PlayerInput _playerInput;
 	private Camera      _mainCamera;
@@ -19,51 +17,46 @@ public class PlayerInputReaderSO : ScriptableObject
 
 	private Vector2 _mouseInputPosition;
 
-	[NonSerialized] public bool jumpInput;
-	[NonSerialized] public bool grabInput;
-	[NonSerialized] public bool dashInput;
-	[NonSerialized] public bool attackInput;
-	[NonSerialized] public bool abilityInput;
+	[NonSerialized] public bool dash;
 
 	[NonSerialized] public bool jumpInputHold;
 	[NonSerialized] public bool dashInputHold;
 
-	[NonSerialized] public Vector2Int moveInput;
-
-	[NonSerialized] public Vector2 mouseInputPosition;
-	[NonSerialized] public Vector2 mouseInputDirection;
-	[NonSerialized] public float   mouseInputDistance;
-
-	public void OnUpdate()
+	protected override void OnEnable()
 	{
-		mouseInputPosition = _mainCamera.ScreenToWorldPoint(_mouseInputPosition);
-		mouseInputDirection = (mouseInputPosition - _entity.Center).normalized;
-		mouseInputDistance = (mouseInputPosition - _entity.Center).magnitude;
+		base.OnEnable();
 
-		jumpInput &= Time.time < _jumpInputStartTime + _jumpInputHoldTime;
-		dashInput &= Time.time < _dashInputStartTime + _dashInputPressTime;
+		updateActions.Add(() =>
+		{
+			lookAtPosition = _mainCamera.ScreenToWorldPoint(_mouseInputPosition);
+			lookAtDirection = (lookAtPosition - entity.Center).normalized;
+			lookAtDistance = (lookAtPosition - entity.Center).magnitude;
+
+			jump &= Time.time < _jumpInputStartTime + _jumpInputHoldTime;
+			dash &= Time.time < _dashInputStartTime + _dashInputPressTime;
+		});
 	}
 
 	public void Initialize(PlayerInput playerInput, Camera camera)
 	{
-		_playerInput =	playerInput;
+		_playerInput = playerInput;
 		_mainCamera = camera;
 	}
 
 	public void OnMoveInput(InputAction.CallbackContext context)
 	{
-		moveInput = Vector2Int.RoundToInt(context.ReadValue<Vector2>());
+		move = Vector2Int.RoundToInt(context.ReadValue<Vector2>());
 	}
 
 	public void OnGrabInput(InputAction.CallbackContext context)
 	{
 		if (context.performed)
 		{
-			grabInput = true;
+			grab = true;
 		}
 		else if (context.canceled)
 		{
-			grabInput = false;
+			grab = false;
 		}
 	}
 
@@ -71,13 +64,13 @@ public class PlayerInputReaderSO : ScriptableObject
 	{
 		if (context.performed)
 		{
-			dashInput           = true;
-			dashInputHold       = true;
+			dash = true;
+			dashInputHold = true;
 			_dashInputStartTime = Time.time;
 		}
 		else if (context.canceled)
 		{
-			dashInput     = false;
+			dash = false;
 			dashInputHold = false;
 		}
 	}
@@ -86,11 +79,11 @@ public class PlayerInputReaderSO : ScriptableObject
 	{
 		if (context.performed)
 		{
-			attackInput = true;
+			attack = true;
 		}
 		else if (context.canceled)
 		{
-			attackInput = false;
+			attack = false;
 		}
 	}
 
@@ -98,11 +91,11 @@ public class PlayerInputReaderSO : ScriptableObject
 	{
 		if (context.performed)
 		{
-			abilityInput = true;
+			ability = true;
 		}
 		else if (context.canceled)
 		{
-			abilityInput = false;
+			ability = false;
 		}
 	}
 
@@ -118,8 +111,8 @@ public class PlayerInputReaderSO : ScriptableObject
 	{
 		if (context.performed)
 		{
-			jumpInput           = true;
-			jumpInputHold       = true;
+			jump = true;
+			jumpInputHold = true;
 			_jumpInputStartTime = Time.time;
 		}
 		else if (context.canceled)

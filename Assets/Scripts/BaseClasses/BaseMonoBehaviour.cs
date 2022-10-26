@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [Serializable]
-public class BaseMonoBehaviour : MonoBehaviour
+public abstract class BaseMonoBehaviour : MonoBehaviour
 {
 	protected List<UnityAction> startActions = new();
 	protected List<UnityAction> enableActions = new();
@@ -22,44 +22,36 @@ public class BaseMonoBehaviour : MonoBehaviour
 
 	private void Start()
 	{
-		ApplyActions(startActions);
+		Utility.ApplyActions(startActions);
 	}
 
 	private void OnEnable()
 	{
-		ApplyActions(enableActions);
+		Utility.ApplyActions(enableActions);
 	}
 
 	private void OnDisable()
 	{
-		ApplyActions(disableActions);
+		Utility.ApplyActions(disableActions);
 	}
 
 	private void Update()
 	{
-		ApplyActions(updateActions);
+		Utility.ApplyActions(updateActions);
 	}
 
 	private void FixedUpdate()
 	{
-		ApplyActions(fixedUpdateActions);
+		Utility.ApplyActions(fixedUpdateActions);
 	}
 
 	private void LateUpdate()
 	{
-		ApplyActions(lateUpdateActions);
+		Utility.ApplyActions(lateUpdateActions);
 	}
 
 	private void OnDrawGizmos()
 	{
-		ApplyActions(drawGizmosActions);
-	}
-
-	protected void ApplyActions(List<UnityAction> actions)
-	{
-		foreach (var action in actions)
-		{
-			action();
-		}
+		Utility.ApplyActions(drawGizmosActions);
 	}
 }

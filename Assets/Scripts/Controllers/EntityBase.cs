@@ -3,36 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(AbilitiesManagerBase), typeof(PlayerParametersManagerBase))]
-[RequireComponent(typeof(CheckersManagerBase), typeof(InventoryBase))]
-[RequireComponent(typeof(StateMachineBase), typeof(Rigidbody2D), typeof(Animator))]
+[RequireComponent(typeof(AbilitiesManagerBase), typeof(ParametersManagerBase))]
+[RequireComponent(typeof(CheckersManagerBase), typeof(InventoryBase), typeof(StateMachineBase))]
+[RequireComponent(typeof(Rigidbody2D), typeof(BoxCollider2D), typeof(TrailRenderer))]
 
-public class EntityBase : BaseMonoBehaviour
+public class EntityBase : ComponentBase
 {
-	[SerializeField]  private EntitySO _entity;
-
-	private BoxCollider2D _col;
-	private Rigidbody2D _rb;
-	private TrailRenderer _tr;
+	[HideInInspector] protected new EntitySO component;
 
 	protected override void Awake()
 	{
-		_tr = GetComponent<TrailRenderer>();
-		_rb = GetComponent<Rigidbody2D>();
-		_col = GetComponent<BoxCollider2D>();
-		_entity.Initialize(transform, _rb,	_col, _tr);
+		component = (EntitySO)base.component;
 
 		base.Awake();
-
-		startActions.Add(() =>
-		{
-			_entity.Stand();
-		});
-
-		updateActions.Add(() =>
-		{
-			_entity.OnUpdate();
-		});
 	}
 }
 

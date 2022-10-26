@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf4086f9a4051264599d070fff00d604, type: 3}
   m_Name: PlayerWallClimbState
   m_EditorClassIdentifier: 
-  _animBoolNames:
+  animBoolNames:
   - wallClimb
   _blockedAbilities:
   - blockedAbility: {fileID: 11400000, guid: 39983b7066119fd42ad942ed7d5eed01, type: 2}

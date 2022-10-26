@@ -13,12 +13,13 @@ public class PlayerInputReaderBase : BaseMonoBehaviour
 	protected override void Awake()
 	{
 		_input = GetComponent<PlayerInput>();
+		_inputReader.Initialize(_input, Camera.main);
 
 		base.Awake();
 
 		startActions.Add(() =>
 		{
-			_inputReader.Initialize(_input, Camera.main);
+			_inputReader.OnEnter();
 		});
 
 		updateActions.Add(() =>

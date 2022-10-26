@@ -5,10 +5,8 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerParametersManager", menuName = "Player/Parameters/Parameters Manager")]
 
-public class PlayerParametersManagerSO : ScriptableObject
+public class PlayerParametersManagerSO : ParametersManagerSO
 {
-	[NonSerialized] public List<Parameter> parameters;
-
 	public Parameter moveSpeed;
 	public Parameter crouchMoveSpeed;
 	public Parameter inAirMoveSpeed;
@@ -19,9 +17,6 @@ public class PlayerParametersManagerSO : ScriptableObject
 
 	public Parameter jumpForce;
 	public Parameter wallJumpForce;
-
-	public Parameter swordAttackDistance;
-	public Parameter swordAttackAngle;
 
 	private void OnEnable()
 	{
@@ -35,18 +30,7 @@ public class PlayerParametersManagerSO : ScriptableObject
 
 				dashForce,
 				jumpForce,
-				wallJumpForce,
-
-				swordAttackDistance,
-				swordAttackAngle
+				wallJumpForce
 		};
-	}
-
-	public void Initialize()
-	{
-		foreach (var parameter in parameters)
-		{
-			parameter.Set(parameter.Max);
-		}
 	}
 }

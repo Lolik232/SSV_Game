@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AbilitiesManagerBase : BaseMonoBehaviour
 {
-	[SerializeField] protected AbilitiesManagerSO abilitiesManager;
+	[SerializeField] private AbilitiesManagerSO _abilitiesManager;
 
 	private Animator _anim;
 	protected override void Awake()
@@ -15,22 +15,23 @@ public class AbilitiesManagerBase : BaseMonoBehaviour
 
 		startActions.Add(()=>
 		{
-			abilitiesManager.Initialize(_anim);
+			_abilitiesManager.Initialize(_anim);
 		});
-
 
 		updateActions.Add(() =>
 		{
 			bool abilityUsed = false;
-			foreach (var ability in abilitiesManager.abilities)
+			foreach (var ability in _abilitiesManager.abilities)
 			{
 				if (!abilityUsed)
 				{
-					abilityUsed |= ability.TryUseAbility();
+					ability.OnEnter();
 				}
 
 				ability.OnUpdate();
 			}
 		});
 	}
+
+	private void OnAttackAnimationFinishTrigger() => _abilitiesManager.OnAttackAnimationFinishTrigger();
 }

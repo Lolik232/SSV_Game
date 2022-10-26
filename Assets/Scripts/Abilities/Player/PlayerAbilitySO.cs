@@ -4,5 +4,11 @@ using UnityEngine;
 
 public abstract class PlayerAbilitySO : AbilitySO
 {
-	protected new PlayerDataSO data => (PlayerDataSO)base.data;
+	[HideInInspector] protected new PlayerDataSO data;
+
+	protected override void OnEnable()
+	{
+		data = (PlayerDataSO)base.data;
+		base.OnEnable();
+	}
 }

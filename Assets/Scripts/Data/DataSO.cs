@@ -4,11 +4,12 @@ using UnityEngine;
 
 public abstract class DataSO : ScriptableObject
 {
-	[SerializeField] protected StatesManagerSO states;
-	[SerializeField] protected CheckersManagerSO checkers;
-	[SerializeField] protected AbilitiesManagerSO abilities;
-	[SerializeField] protected PlayerParametersManagerSO parameters;
-	[SerializeField] protected PlayerWeaponsManagerSO weapons;
+	public StatesManagerSO states;
+	public CheckersManagerSO checkers;
+	public AbilitiesManagerSO abilities;
+	public ParametersManagerSO parameters;
+	public WeaponsManagerSO weapons;
+	public BehaviourControllerSO controller;
 
 	protected virtual void OnEnable()
 	{

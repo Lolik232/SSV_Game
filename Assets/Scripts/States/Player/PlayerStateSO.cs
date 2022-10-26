@@ -4,15 +4,12 @@ using UnityEngine;
 
 public abstract class PlayerStateSO : StateSO
 {
-	protected new PlayerDataSO data => (PlayerDataSO)base.data;
+	[HideInInspector] protected new PlayerDataSO data; 
 
 	protected override void OnEnable()
 	{
-		base.OnEnable();
+		data = (PlayerDataSO)base.data;
 
-		fixedUpdateActions.Add(() =>
-		{
-			data.checkers.DoChecks();
-		});
+		base.OnEnable();
 	}
 }

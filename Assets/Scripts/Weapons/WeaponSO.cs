@@ -1,104 +1,70 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 using Unity.VisualScripting;
 
 using UnityEngine;
 using UnityEngine.Events;
 
-public abstract class WeaponSO : ScriptableObject
+public abstract class WeaponSO : AbilitySO
 {
 	[SerializeField] private string _weaponName;
 
-	[SerializeField] protected DataSO data;
-	[SerializeField] protected EntitySO entity;
+	[SerializeField] protected Parameter attackDistance;
+	[SerializeField] protected Parameter attackRadius;
+
 	[SerializeField] protected HitSO hit;
 
-	private bool _isActive;
-
-	protected bool needExit;
+	protected Vector2 attackOrigin;
+	protected Vector2 attackTarget;
 
 	protected Animator baseAnim;
-	protected Animator anim;
-
-	protected List<UnityAction> updateActions = new();
-	protected List<UnityAction> enterActions = new();
-	protected List<UnityAction> exitActions = new();
 
 	protected readonly Blocker directionBlocker = new();
 
 	protected int holdDirection;
 
+	protected override void OnEnable()
+	{
+		base.OnEnable();
+
+		enterActions.Add(() =>
+		{
+			baseAnim.SetBool(_weaponName, true);
+			DetermineAttackPosition();
+			hit.OnEnter();
+		});
+
+		exitActions.Add(() =>
+		{
+			baseAnim.SetBool(_weaponName, false);
+			baseAnim.SetBool("mirror", false);
+			hit.OnExit();
+		});
+
+		updateActions.Add(() =>
+		{
+			LookAtAttackPosition();
+		});
+
+		drawGizmosActions.Add(() =>
+		{
+			Gizmos.color = Color.black;
+			Gizmos.DrawWireSphere(entity.Center, attackDistance);
+			Gizmos.DrawWireSphere(attackTarget, attackRadius);
+		});
+	}
+
 	public void Initialize(Animator baseAnim, Animator anim)
 	{
 		this.baseAnim = baseAnim;
 		this.anim = anim;
-	}
 
-	protected virtual void OnEnable()
-	{
-		_isActive = false;
-		needExit = false;
-
-		updateActions.Clear();
-		enterActions = new List<UnityAction>
-		{ ()=>
-			{
-					baseAnim.SetBool(_weaponName, true);
-					anim.SetBool("attack", true);
-					_isActive = true;
-					needExit = false;
-			} };
-		exitActions = new List<UnityAction>
-		{ ()=>
-			{
-					baseAnim.SetBool(_weaponName, false);
-					anim.SetBool("attack", false);
-					_isActive = false;
-			} };
-	}
-
-	public void OnWeaponEnter()
-	{
-		if (_isActive)
-		{
-			return;
-		}
-
-		foreach (var action in enterActions)
-		{
-			action();
-		}
-	}
-
-	public void OnWeaponExit()
-	{
-		if (!_isActive)
-		{
-			return;
-		}
-
-		foreach (var action in exitActions)
-		{
-			action();
-		}
-	}
-
-	public void OnUpdate()
-	{
-		foreach (var action in updateActions)
-		{
-			if (!_isActive)
-			{
-				return;
-			}
-
-			action();
-			if (needExit)
-			{
-				OnWeaponExit();
-			}
-		}
+		attackDistance.Set(attackDistance.Max);
+		attackRadius.Set(attackRadius.Max);
+		duration.Set(duration.Max);
+		cooldown.Set(cooldown.Max);
 	}
 
 	public void HoldDirection(int direction)
@@ -111,8 +77,39 @@ public abstract class WeaponSO : ScriptableObject
 	{
 		directionBlocker.RemoveBlock();
 	}
-
-	public virtual void OnDrawGizmos()
+	private void LookAtAttackPosition()
 	{
+		if (!directionBlocker.IsLocked)
+		{
+			int facingDirection = attackTarget.x > entity.Center.x ? 1 : -1;
+			baseAnim.SetBool("mirror", facingDirection != entity.facingDirection);
+			entity.RotateIntoDirection(facingDirection);
+		}
+	}
+
+	private void DetermineAttackPosition()
+	{
+		attackOrigin = entity.Center;
+
+		Vector2 attackDirection = data.controller.lookAtDirection;
+
+		if (data.controller.lookAtDistance < attackDistance || attackDistance.Max == 0)
+		{
+			attackTarget = data.controller.lookAtPosition;
+		}
+		else if (directionBlocker.IsLocked && attackDirection.x >= 0 != holdDirection >= 0)
+		{
+			attackTarget.x = attackOrigin.x;
+		}
+		else
+		{
+			attackTarget = attackOrigin + attackDirection * attackDistance;
+		}
+
+		RaycastHit2D hit = Utility.Check(Physics2D.Linecast, attackOrigin, attackTarget, data.checkers.whatIsTarget);
+		if (hit)
+		{
+			attackTarget = hit.point;
+		} 
 	}
 }

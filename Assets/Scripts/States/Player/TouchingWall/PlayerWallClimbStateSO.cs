@@ -8,8 +8,8 @@ public class PlayerWallClimbStateSO : PlayerTouchingWallStateSO
 	{
 		base.OnEnable();
 
-		bool WallGrabCondition() => data.input.moveInput.y <= 0 || 
-																 !data.input.grabInput;
+		bool WallGrabCondition() => data.controller.move.y <= 0 || 
+																 !data.controller.grab;
 
 		transitions.Add(new TransitionItem(data.states.wallGrab, WallGrabCondition));
 

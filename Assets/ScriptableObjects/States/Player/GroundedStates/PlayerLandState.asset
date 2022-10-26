@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 910f68a5751680743966959fe1235be4, type: 3}
   m_Name: PlayerLandState
   m_EditorClassIdentifier: 
-  _animBoolNames:
+  animBoolNames:
   - land
   _blockedAbilities: []
   data: {fileID: 11400000, guid: 61c99a593f8f1a74fb3575845de2cf40, type: 2}

@@ -2,7 +2,7 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "PayerAttackAbility", menuName = "Player/Abilities/Attack")]
 
-public class PlayerAttackAbilitySO : PlayerAbilitySO
+public class PlayerAttackAbilitySO : AbilitySO
 {
 	[SerializeField] private InventorySO _inventory;
 
@@ -10,17 +10,17 @@ public class PlayerAttackAbilitySO : PlayerAbilitySO
 	{
 		base.OnEnable();
 
-		useConditions.Add(() => data.input.attackInput);
+		enterConditions.Add(() => data.controller.attack);
 
 		enterActions.Add(() =>
 		{
-			data.input.attackInput = false;
-			_inventory.CurrentWeapon.OnWeaponEnter();
+			data.controller.attack = false;
+			_inventory.CurrentWeapon.OnEnter();
 		});
 
 		exitActions.Add(() =>
 		{
-			_inventory.CurrentWeapon.OnWeaponExit();
+			_inventory.CurrentWeapon.OnExit();
 		});
 	}
 

@@ -69,7 +69,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: material._Size
-    path: Unit/UnitSkeleton/Leg1
+    path: Skin/SkinSkeleton/Leg1
     classID: 212
     script: {fileID: 0}
   - curve:
@@ -133,7 +133,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: material._Size
-    path: Unit/UnitSkeleton/Foot1
+    path: Skin/SkinSkeleton/Foot1
     classID: 212
     script: {fileID: 0}
   - curve:
@@ -188,7 +188,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: material._Size
-    path: Unit/UnitSkeleton/Leg2
+    path: Skin/SkinSkeleton/Leg2
     classID: 212
     script: {fileID: 0}
   - curve:
@@ -252,7 +252,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: material._Size
-    path: Unit/UnitSkeleton/Foot2
+    path: Skin/SkinSkeleton/Foot2
     classID: 212
     script: {fileID: 0}
   m_PPtrCurves:
@@ -262,7 +262,7 @@ AnimationClip:
     - time: 0.5
       value: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     attribute: m_Materials.Array.data[0]
-    path: Unit/UnitSkeleton/Foot2
+    path: Skin/SkinSkeleton/Foot2
     classID: 212
     script: {fileID: 0}
   - curve:
@@ -271,7 +271,7 @@ AnimationClip:
     - time: 0.5
       value: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     attribute: m_Materials.Array.data[0]
-    path: Unit/UnitSkeleton/Leg2
+    path: Skin/SkinSkeleton/Leg2
     classID: 212
     script: {fileID: 0}
   - curve:
@@ -280,7 +280,7 @@ AnimationClip:
     - time: 0.5
       value: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     attribute: m_Materials.Array.data[0]
-    path: Unit/UnitSkeleton/Foot1
+    path: Skin/SkinSkeleton/Foot1
     classID: 212
     script: {fileID: 0}
   - curve:
@@ -289,7 +289,7 @@ AnimationClip:
     - time: 0.5
       value: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     attribute: m_Materials.Array.data[0]
-    path: Unit/UnitSkeleton/Leg1
+    path: Skin/SkinSkeleton/Leg1
     classID: 212
     script: {fileID: 0}
   m_SampleRate: 60
@@ -437,7 +437,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: material._Size
-    path: Unit/UnitSkeleton/Leg1
+    path: Skin/SkinSkeleton/Leg1
     classID: 212
     script: {fileID: 0}
   - curve:
@@ -501,7 +501,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: material._Size
-    path: Unit/UnitSkeleton/Foot1
+    path: Skin/SkinSkeleton/Foot1
     classID: 212
     script: {fileID: 0}
   - curve:
@@ -556,7 +556,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: material._Size
-    path: Unit/UnitSkeleton/Leg2
+    path: Skin/SkinSkeleton/Leg2
     classID: 212
     script: {fileID: 0}
   - curve:
@@ -620,7 +620,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: material._Size
-    path: Unit/UnitSkeleton/Foot2
+    path: Skin/SkinSkeleton/Foot2
     classID: 212
     script: {fileID: 0}
   m_EulerEditorCurves: []

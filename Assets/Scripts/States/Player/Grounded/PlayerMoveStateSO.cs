@@ -7,13 +7,13 @@ public class PlayerMoveStateSO : PlayerGroundedStateSO
 	{
 		base.OnEnable();
 
-		bool IdleCondition() => data.input.moveInput.x == 0;
+		bool IdleCondition() => data.controller.move.x == 0;
 
-		bool CrouchMoveCondition() => data.input.moveInput.y < 0;
+		bool CrouchMoveCondition() => data.controller.move.y < 0;
 
 		bool LedgeClimbCondition() => data.checkers.touchingWall &&
 																	!data.checkers.touchingLedge &&
-																	data.input.moveInput.x == -data.checkers.wallDirection;
+																	data.controller.move.x == -data.checkers.wallDirection;
 
 		void LedgeClimbAction() => data.checkers.DetermineLedgePosition();
 
@@ -23,8 +23,8 @@ public class PlayerMoveStateSO : PlayerGroundedStateSO
 
 		updateActions.Add(() =>
 		{
-			entity.CheckIfShouldFlip(data.input.moveInput.x);
-			entity.TrySetVelocityX(data.input.moveInput.x * data.parameters.moveSpeed);
+			entity.TryRotateIntoDirection(data.controller.move.x);
+			entity.TrySetVelocityX(data.controller.move.x * data.parameters.moveSpeed);
 		});
 	}
 }

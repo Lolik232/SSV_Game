@@ -13,30 +13,30 @@ public class PlayerDashAbilitySO : PlayerAbilitySO
 	{
 		base.OnEnable();
 
-		beforeEnterActions.Add(() =>
+		prepareActions.Add(() =>
 		{
-			_dashDirection = data.input.mouseInputDirection;
+			_dashDirection = data.controller.lookAtDirection;
 		});
 
-		useConditions.Add(() =>
+		enterConditions.Add(() =>
 		{
-			return data.input.dashInput &&
+			return data.controller.dash &&
 						 _dashDirection != Vector2.zero &&
 						 !(data.checkers.touchingCeiling && !entity.isStanding);
 		});
 
-		terminateConditions.Add(() =>
+		exitConditions.Add(() =>
 		{
 			return entity.Velocity.magnitude <= data.parameters.dashForce * _minProportion ||
-						 (!data.input.dashInputHold && Time.time > startTime + duration * _minProportion);
+						 (!data.controller.dashInputHold && Time.time > startTime + duration * _minProportion);
 		});
 
 		enterActions.Add(() =>
 		{
 			entity.HoldGravity(_dashGravity);
 			entity.HoldVelocity(data.parameters.dashForce * _dashDirection);
-			entity.CheckIfShouldFlip(_dashDirection.x >= 0 ? 1 : -1);
-			data.input.dashInput = false;
+			entity.RotateIntoDirection(Mathf.RoundToInt(_dashDirection.x));
+			data.controller.dash = false;
 			entity.EnableTrail();
 		});
 

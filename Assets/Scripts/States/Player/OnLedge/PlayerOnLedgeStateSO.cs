@@ -10,12 +10,14 @@ public class PlayerOnLedgeStateSO : PlayerStateSO
 
 		enterActions.Add(() =>
 		{
-			data.abilities.attack.HoldDirection(data.checkers.wallDirection);
+			data.abilities.attack.HoldDirection(-data.checkers.wallDirection);
+			entity.HoldPosition(data.checkers.ledgeStartPosition);
 		});
 
 		exitActions.Add(() =>
 		{
 			data.abilities.attack.ReleaseDirection();
+			entity.ReleasePosition();
 		});
 	}
 }

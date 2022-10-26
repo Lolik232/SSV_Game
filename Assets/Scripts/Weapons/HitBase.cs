@@ -26,5 +26,5 @@ public class HitBase : BaseMonoBehaviour
 		});
 	}
 
-	private void ReleasePosition() => _hit.ReleasePosition();
+	private void OnAnimationFinishTrigger() => _hit.ReleasePosition();
 }

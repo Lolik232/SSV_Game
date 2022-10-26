@@ -10,10 +10,10 @@ public class PlayerWallGrabStateSO : PlayerTouchingWallStateSO
 	{
 		base.OnEnable();
 
-		bool WallClimbCondition() => data.input.moveInput.y > 0;
+		bool WallClimbCondition() => data.controller.move.y > 0;
 
-		bool WallSlideCondition() => data.input.moveInput.y < 0 ||
-																 !data.input.grabInput;
+		bool WallSlideCondition() => data.controller.move.y < 0 ||
+																 !data.controller.grab;
 
 		transitions.Add(new TransitionItem(data.states.wallSlide, WallSlideCondition));
 		transitions.Add(new TransitionItem(data.states.wallClimb, WallClimbCondition));

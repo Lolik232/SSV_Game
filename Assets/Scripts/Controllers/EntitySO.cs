@@ -2,17 +2,23 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
+using Unity.VisualScripting;
+
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Entity", menuName = "Entity")]
-public class EntitySO : BaseScriptableObject
+[CreateAssetMenu(fileName = "Entity", menuName = "Componets/Entity")]
+public class EntitySO : ComponentSO
 {
+	public const int DIRECTION_LEFT = -1;
+	public const int DIRECTION_RIGHT = 1;
+
 	[SerializeField] private Vector2 _standOffset;
 	[SerializeField] private Vector2 _standSize;
 	[SerializeField] private Vector2 _crouchOffset;
 	[SerializeField] private Vector2 _crouchSize;
 
 	[NonSerialized] public int facingDirection;
+	[NonSerialized] public int realDirection;
 
 	[NonSerialized] public bool isStanding;
 
@@ -56,8 +62,13 @@ public class EntitySO : BaseScriptableObject
 
 	protected override void OnEnable()
 	{
-		facingDirection = 1;
-		isStanding = true;
+		base.OnEnable();
+
+		enterActions.Add(() =>
+		{
+			Stand();
+			RotateIntoDirection(DIRECTION_RIGHT);
+		});
 
 		updateActions.Add(() =>
 		{
@@ -68,36 +79,56 @@ public class EntitySO : BaseScriptableObject
 		});
 	}
 
-	public void OnUpdate()
+	public override void InitialzeBase(GameObject baseObject)
 	{
-		ApplyActions(updateActions);
+		base.InitialzeBase(baseObject);
+
+		_transform = baseObject.GetComponent<Transform>();
+		_rb = baseObject.GetComponent<Rigidbody2D>();
+		_col = baseObject.GetComponent<BoxCollider2D>();
+		_tr = baseObject.GetComponent<TrailRenderer>();
 	}
 
-	public void Initialize(Transform transform, Rigidbody2D rb, BoxCollider2D col, TrailRenderer tr)
+	public void TryRotateIntoDirection(int direction)
 	{
-		_transform = transform;
-		_rb = rb;
-		_col = col;
-		_tr = tr;
-	}
-
-	public void CheckIfShouldFlip(int direction)
-	{
-		if (facingDirection != direction && direction != 0 && !_directionBlocker.IsLocked)
+		if (_directionBlocker.IsLocked)
 		{
-			HardFlip();
+			return;
 		}
+
+		RotateIntoDirection(direction);
 	}
 
-	public void HardFlip()
+	public void RotateIntoDirection(int direction)
 	{
-		facingDirection = -facingDirection;
-		SoftFlip();
+		if (direction == 0)
+		{
+			return;
+		}
+
+		facingDirection = direction;
+		RotateBodyIntoDirection(direction);
 	}
 
-	public void SoftFlip()
+	public void RotateBodyIntoDirection(int direction)
 	{
-		_transform.Rotate(0f, 180f, 0f);
+		if (direction == 0)
+		{
+			return;
+		}
+
+		realDirection = direction;
+		switch (direction)
+		{
+			case DIRECTION_RIGHT:
+				_transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+				break;
+			case DIRECTION_LEFT:
+				_transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+				break;
+			default:
+				break;
+		}
 	}
 
 	public void TrySetVelocity(float velocity, Vector2 angle, int direction)
@@ -201,7 +232,7 @@ public class EntitySO : BaseScriptableObject
 
 	public void HoldDirection(int direction)
 	{
-		CheckIfShouldFlip(direction);
+		RotateIntoDirection(direction);
 		_directionBlocker.AddBlock();
 	}
 

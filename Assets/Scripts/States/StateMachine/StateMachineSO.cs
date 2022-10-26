@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "StateMachine", menuName = "Player/States/State Machine")]
+[CreateAssetMenu(fileName = "StateMachine", menuName = "States/Machine")]
 
 public class StateMachineSO : ScriptableObject
 {
@@ -17,10 +17,11 @@ public class StateMachineSO : ScriptableObject
 	{
 		if (CurrentState != null)
 		{
-			CurrentState.OnStateExit();
+			CurrentState.OnExit();
 		}
 
 		CurrentState = transitionState;
-		CurrentState.OnStateEnter();
+		CurrentState.OnEnter();
+		CurrentState.OnFixedUpdate();
 	}
 }

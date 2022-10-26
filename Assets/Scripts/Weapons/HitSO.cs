@@ -25,17 +25,18 @@ public class HitSO : BaseScriptableObject
 				_transform.position = _holdPosition;
 			}
 		});
+
+		drawGizmosActions.Add(() =>
+		{
+			Gizmos.color = Color.blue;
+			Gizmos.DrawWireSphere(Position, 0.2f);
+		});
 	}
 
 	public void Initialize(Transform transform, Animator anim)
 	{
 		_transform = transform;
 		_anim = anim;
-	}
-
-	public void OnLateUpdate()
-	{
-		ApplyActions(lateUpdateActions);
 	}
 
 	public void OnHit(Vector2 hitposition)
@@ -54,11 +55,5 @@ public class HitSO : BaseScriptableObject
 	public void ReleasePosition()
 	{
 		_positionBlocker.RemoveBlock();
-	}
-
-	public void OnDrawGizmos()
-	{
-		Gizmos.color = Color.blue;
-		Gizmos.DrawWireSphere(Position, 0.2f);
 	}
 }

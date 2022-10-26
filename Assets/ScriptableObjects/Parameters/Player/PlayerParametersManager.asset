@@ -36,9 +36,3 @@ MonoBehaviour:
   wallJumpForce:
     _min: 0
     _max: 25
-  swordAttackDistance:
-    _min: 0
-    _max: 2
-  swordAttackAngle:
-    _min: 0
-    _max: 1

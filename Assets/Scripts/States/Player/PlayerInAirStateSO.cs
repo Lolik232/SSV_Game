@@ -16,10 +16,10 @@ public class PlayerInAirStateSO : PlayerStateSO
 
 		bool WallGrabCondition() => data.checkers.touchingWall &&
 																data.checkers.touchingLedge &&
-																data.input.grabInput;
+																data.controller.grab;
 
 		bool WallSlideCondition() => data.checkers.touchingWall &&
-																 data.input.moveInput.x == entity.facingDirection &&
+																 data.controller.move.x == entity.facingDirection &&
 																 entity.Velocity.y <= 0f;
 
 		void LedgeGrabAction() => data.checkers.DetermineLedgePosition();
@@ -38,8 +38,8 @@ public class PlayerInAirStateSO : PlayerStateSO
 		{
 			CheckForJumps();
 
-			entity.TrySetVelocityX(data.input.moveInput.x * data.parameters.inAirMoveSpeed);
-			entity.CheckIfShouldFlip(data.input.moveInput.x);
+			entity.TrySetVelocityX(data.controller.move.x * data.parameters.inAirMoveSpeed);
+			entity.TryRotateIntoDirection(data.controller.move.x);
 
 			anim.SetFloat("xVelocity", entity.Velocity.x);
 			anim.SetFloat("yVelocity", entity.Velocity.y);

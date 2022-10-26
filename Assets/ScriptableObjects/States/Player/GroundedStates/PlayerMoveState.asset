@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cea7cf04d4dfa943b8b008f8fce42b7, type: 3}
   m_Name: PlayerMoveState
   m_EditorClassIdentifier: 
-  _animBoolNames:
+  animBoolNames:
   - move
   _blockedAbilities: []
   data: {fileID: 11400000, guid: 61c99a593f8f1a74fb3575845de2cf40, type: 2}

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf2472cd99974df4f882645a5faafcc3, type: 3}
   m_Name: PlayerWallGrabState
   m_EditorClassIdentifier: 
-  _animBoolNames:
+  animBoolNames:
   - wallGrab
   _blockedAbilities:
   - blockedAbility: {fileID: 11400000, guid: 39983b7066119fd42ad942ed7d5eed01, type: 2}

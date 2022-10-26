@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c4641650c166954a949057bce526f3b, type: 3}
   m_Name: PlayerInAirState
   m_EditorClassIdentifier: 
-  _animBoolNames:
+  animBoolNames:
   - inAir
   _blockedAbilities: []
   data: {fileID: 11400000, guid: 61c99a593f8f1a74fb3575845de2cf40, type: 2}

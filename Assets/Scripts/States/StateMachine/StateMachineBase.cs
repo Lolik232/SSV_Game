@@ -23,16 +23,16 @@ public class StateMachineBase : BaseMonoBehaviour
 
 		updateActions.Add(() =>
 		{
-			_machine.CurrentState.OnStateUpdate();
+			_machine.CurrentState.OnUpdate();
 		});
 
 		fixedUpdateActions.Add(() =>
 		{
-			_machine.CurrentState.OnStateFixedUpdate();
+			_machine.CurrentState.OnFixedUpdate();
 		});
 	}
 
-	private void OnStateAnimationFinishTrigger() => _machine.CurrentState.OnStateAnimationFinishTrigger();
+	private void OnStateAnimationFinishTrigger() => _machine.CurrentState.OnAnimationFinishTrigger();
 
-	private void OnStateAnimationTrigger() => _machine.CurrentState.OnStateAnimationTrigger();
+	private void OnStateAnimationTrigger() => _machine.CurrentState.OnAnimationTrigger();
 }

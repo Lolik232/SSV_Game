@@ -19,20 +19,20 @@ public class PlayerWallJumpAbilitySO : PlayerAbilitySO
 	{
 		base.OnEnable();
 
-		beforeEnterActions.Add(() =>
+		prepareActions.Add(() =>
 		{
 			_jumpDirection = data.checkers.wallDirection;
 		});
 
-		useConditions.Add(() =>
+		enterConditions.Add(() =>
 		{
-			return data.input.jumpInput &&
+			return data.controller.jump &&
 						 !data.checkers.clampedBetweenWalls &&
 						 !data.checkers.touchingCeiling &&
 						 (data.checkers.touchingWall || data.checkers.touchingWallBack);
 		});
 
-		terminateConditions.Add(() =>
+		exitConditions.Add(() =>
 		{
 			return _outOfWall &&
 						 (Mathf.Abs(entity.Velocity.x) <= 0.01f || entity.Velocity.y < 0.01f);
@@ -42,8 +42,8 @@ public class PlayerWallJumpAbilitySO : PlayerAbilitySO
 		{
 			_outOfWall = false;
 			entity.HoldVelocity(data.parameters.wallJumpForce, _angle, _jumpDirection);
-			entity.CheckIfShouldFlip(_jumpDirection);
-			data.input.jumpInput = false;
+			entity.RotateIntoDirection(_jumpDirection);
+			data.controller.jump = false;
 		});
 
 		updateActions.Add(() =>

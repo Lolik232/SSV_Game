@@ -12,17 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73f60fc10955a11428aff294041cfbf5, type: 3}
   m_Name: PayerJumpAbility
   m_EditorClassIdentifier: 
+  entity: {fileID: 11400000, guid: c765f728276573247bf28102c833d262, type: 2}
+  data: {fileID: 11400000, guid: 61c99a593f8f1a74fb3575845de2cf40, type: 2}
+  animBoolNames:
+  - jump
   duration:
     _min: 0
     _max: 0.4
   cooldown:
     _min: 0
     _max: 0
-  _maxAmountOfUsages: 1
-  data: {fileID: 11400000, guid: 61c99a593f8f1a74fb3575845de2cf40, type: 2}
-  entity: {fileID: 11400000, guid: c765f728276573247bf28102c833d262, type: 2}
-  _animBoolNames:
-  - jump
+  amountOfUsages:
+    _min: 0
+    _max: 1
   _blockedAbilities: []
   _blockedStates:
   - blockedState: {fileID: 11400000, guid: a5af3b9b15e226341a29cd54e412d8df, type: 2}

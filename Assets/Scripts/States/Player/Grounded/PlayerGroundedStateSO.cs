@@ -9,8 +9,8 @@ public class PlayerGroundedStateSO : PlayerStateSO
 		bool WallGrabCondition() => data.checkers.touchingWall &&
 																data.checkers.touchingLedge &&
 																!data.checkers.touchingCeiling &&
-																data.input.grabInput &&
-																data.input.moveInput.y >= 0f;
+																data.controller.grab &&
+																data.controller.move.y >= 0f;
 
 		void InAirActions()
 		{

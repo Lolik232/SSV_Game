@@ -22,4 +22,9 @@ public class PlayerAbilitiesManagerSO : AbilitiesManagerSO
 				wallJump
 		};
 	}
+
+	public override void OnAttackAnimationFinishTrigger()
+	{
+		attack.OnExit();
+	}
 }

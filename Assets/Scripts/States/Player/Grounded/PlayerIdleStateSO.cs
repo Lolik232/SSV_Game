@@ -7,9 +7,9 @@ public class PlayerIdleStateSO : PlayerGroundedStateSO
 	{
 		base.OnEnable();
 
-		bool CrouchIdleCondition() => data.input.moveInput.y < 0;
+		bool CrouchIdleCondition() => data.controller.move.y < 0;
 
-		bool MoveCondition() => data.input.moveInput.x != 0;
+		bool MoveCondition() => data.controller.move.x != 0;
 
 		transitions.Add(new TransitionItem(data.states.crouchIdle, CrouchIdleCondition));
 		transitions.Add(new TransitionItem(data.states.move, MoveCondition));

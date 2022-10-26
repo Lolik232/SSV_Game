@@ -4,163 +4,85 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public abstract class StateSO : BaseScriptableObject
+public abstract class StateSO : AnimatedComponentSO, IBlockable
 {
-	private bool _isActive;
-	private int _animIndex;
-
-	protected float startTime;
-
-	[SerializeField] private List<string> _animBoolNames = new();
 	[SerializeField] private List<BlockedAbility> _blockedAbilities = new();
 
-	[SerializeField] protected DataSO data;
-	[SerializeField] protected EntitySO entity;
 	[SerializeField] private StateMachineSO _machine;
 
-	private StateSO _transitionStateWhenBlocked;
+	private StateSO _blockedTransition;
 
 	protected List<TransitionItem> transitions = new();
-	protected List<UnityAction> animationFinishActions = new();
-	protected List<UnityAction<int>> animationActions = new();
 
-	protected Animator anim;
-
-	public readonly Blocker blocker = new();
+	private readonly Blocker _blocker = new();
 
 	protected override void OnEnable()
 	{
-		_isActive = false;
-		_animIndex = 0;
-		startTime = 0f;
-
 		base.OnEnable();
 
-		enterActions = new List<UnityAction> { () =>
-			{
-				_isActive = true;
-				startTime = Time.time;
-				foreach (var ability in _blockedAbilities)
-				{
-					if (ability.isHardBlocked)
-					{
-						ability.blockedAbility.Terminate();
-					}
+		enterActions.Add(() =>
+		{
+			Utility.BlockAll(_blockedAbilities);
+			Utility.SetAnimBools(anim, animBoolNames, true);
+		});
 
-					ability.blockedAbility.blocker.AddBlock();
-				}
+		exitActions.Add(() =>
+		{
+			Utility.UnlockAll(_blockedAbilities);
+			Utility.SetAnimBools(anim, animBoolNames, false);
+		});
 
-				foreach (var name in _animBoolNames)
-				{
-						anim.SetBool(name, true);
-				}
-			}};
-		exitActions = new List<UnityAction> { () =>
-			{
-				_isActive = false;
-				foreach (var ability in _blockedAbilities)
-				{
-					ability.blockedAbility.blocker.RemoveBlock();
-				}
-
-				foreach (var name in _animBoolNames)
-				{
-						anim.SetBool(name, false);
-				}
-			}};
+		fixedUpdateActions.Add(() =>
+		{
+			data.checkers.DoChecks();
+		});
 	}
 
 	public void Initialize(Animator animator) => anim = animator;
 
-	public void OnStateEnter()
+	public override void OnUpdate()
 	{
-		if (_isActive)
-		{
-			return;
-		}
-
-		ApplyActions(enterActions);
-		ApplyActions(fixedUpdateActions);
+		CheckIfNeedTransition();
+		base.OnUpdate();
 	}
 
-	public void OnStateExit()
+	private void CheckIfNeedTransition()
 	{
-		if (!_isActive)
+		if (!isActive)
 		{
-			return;
-		}
-
-		ApplyActions(exitActions);
-	}
-
-	public void OnStateUpdate()
-	{
-		if (!_isActive)
-		{
-			return;
-		}
-
-		if (_transitionStateWhenBlocked != null && blocker.IsLocked)
-		{
-			_machine.GetTransitionState(_transitionStateWhenBlocked);
 			return;
 		}
 
 		foreach (var transition in transitions)
 		{
-			if (!transition.toState.blocker.IsLocked && transition.condition())
+			if (!transition.toState._blocker.IsLocked && transition.condition())
 			{
 				transition.action?.Invoke();
 				_machine.GetTransitionState(transition.toState);
 				return;
 			}
 		}
-
-		ApplyActions(updateActions);
 	}
 
-	public void OnStateFixedUpdate()
+	public void SetBlockedTransition(StateSO blockedTransition)
 	{
-		if (!_isActive)
+		_blockedTransition = blockedTransition;
+	}
+
+	public void Block(bool needHardExit)
+	{
+		if (needHardExit && isActive)
 		{
-			return;
+			_machine.GetTransitionState(_blockedTransition);
 		}
 
-		ApplyActions(fixedUpdateActions);
+		_blocker.AddBlock();
 	}
 
-	public void OnStateAnimationFinishTrigger()
+	public void Unlock()
 	{
-		if (!_isActive)
-		{
-			return;
-		}
-
-		ApplyActions(animationFinishActions);
-
-		_animIndex = 0;
-	}
-
-	public void OnStateAnimationTrigger()
-	{
-		if (!_isActive)
-		{
-			return;
-		}
-
-		ApplyActions(animationActions, _animIndex);
-
-		_animIndex++;
-	}
-
-	public void SetBlockTransition(StateSO state)
-	{
-		_transitionStateWhenBlocked = state;
-	}
-
-	public void ResetBlockTransition()
-	{
-		_transitionStateWhenBlocked = null;
+		_blockedTransition = null;
+		_blocker.RemoveBlock();
 	}
 }
 
@@ -180,12 +102,14 @@ public struct TransitionItem
 [Serializable]
 public struct BlockedState
 {
-	public StateSO blockedState;
-	public StateSO transitionState;
+	public StateSO component;
+	public StateSO target;
+	public bool needHardExit;
 
-	public BlockedState(StateSO blockedState, StateSO transitionState)
+	public BlockedState(StateSO blockedState, StateSO transitionState, bool needHardExit)
 	{
-		this.blockedState = blockedState;
-		this.transitionState = transitionState;
+		this.component = blockedState;
+		this.target = transitionState;
+		this.needHardExit = needHardExit;
 	}
 }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fa76e28dd45f454db9b2e12a08b82bb, type: 3}
   m_Name: PlayerLedgeClimbState
   m_EditorClassIdentifier: 
-  _animBoolNames:
+  animBoolNames:
   - ledgeClimb
   _blockedAbilities:
   - blockedAbility: {fileID: 11400000, guid: a8afe2bf020990f47854dcf8196791c8, type: 2}

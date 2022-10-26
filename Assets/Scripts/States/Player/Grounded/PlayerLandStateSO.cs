@@ -11,8 +11,8 @@ public class PlayerLandStateSO : PlayerGroundedStateSO
 		base.OnEnable();
 
 		bool IdleCondition() => _isLandFinished;
-		bool CrouchIdleCondition() => data.input.moveInput.y < 0;
-		bool MoveCondition() => data.input.moveInput.x != 0;
+		bool CrouchIdleCondition() => data.controller.move.y < 0;
+		bool MoveCondition() => data.controller.move.x != 0;
 
 		transitions.Add(new TransitionItem(data.states.idle, IdleCondition));
 		transitions.Add(new TransitionItem(data.states.crouchIdle, CrouchIdleCondition));

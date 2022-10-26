@@ -7,16 +7,22 @@ using UnityEngine;
 
 public class PlayerDataSO : DataSO
 {
-	public new PlayerStatesManagerSO states => (PlayerStatesManagerSO)base.states;
-	public new CheckersManagerSO checkers => (CheckersManagerSO)base.checkers;
-	public new PlayerAbilitiesManagerSO abilities => (PlayerAbilitiesManagerSO)base.abilities;
-	public new PlayerParametersManagerSO parameters => (PlayerParametersManagerSO)base.parameters;
-	public new PlayerWeaponsManagerSO weapons => (PlayerWeaponsManagerSO)base.weapons;
-
-	public PlayerInputReaderSO input;
+	[HideInInspector] public new PlayerStatesManagerSO states;
+	[HideInInspector] public new PlayerCheckersManagerSO checkers;
+	[HideInInspector] public new PlayerAbilitiesManagerSO abilities;
+	[HideInInspector] public new PlayerParametersManagerSO parameters;
+	[HideInInspector] public new WeaponsManagerSO weapons;
+	[HideInInspector] public new PlayerInputReaderSO controller;
 
 	protected override void OnEnable()
 	{
+		states = (PlayerStatesManagerSO)base.states;
+		checkers = (PlayerCheckersManagerSO)base.checkers;
+		abilities = (PlayerAbilitiesManagerSO)base.abilities;
+		parameters = (PlayerParametersManagerSO)base.parameters;
+		weapons = (WeaponsManagerSO)base.weapons;
+		controller = (PlayerInputReaderSO)base.controller;
+
 		base.OnEnable();
 	}
 }

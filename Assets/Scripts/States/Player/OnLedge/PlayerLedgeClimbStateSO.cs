@@ -24,13 +24,11 @@ public class PlayerLedgeClimbStateSO : PlayerOnLedgeStateSO
 		enterActions.Add(() =>
 		{
 			_climbFinished = false;
-			entity.HoldPosition(data.checkers.ledgeStartPosition);
 		});
 
 		exitActions.Add(() =>
 		{
 			entity.MoveTo(data.checkers.ledgeEndPosition);
-			entity.ReleasePosition();
 		});
 
 		animationFinishActions.Add(() =>

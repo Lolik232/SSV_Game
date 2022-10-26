@@ -20,7 +20,6 @@ public class PlayerLedgeGrabStateSO : PlayerOnLedgeStateSO
 		{
 			_grabFinish = false;
 			data.abilities.jump.SetAmountOfUsagesToZero();
-			entity.HoldPosition(data.checkers.ledgeStartPosition);
 		});
 
 		animationFinishActions.Add(() =>
