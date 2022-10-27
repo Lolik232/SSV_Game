@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "PlayerParametersManager", menuName = "Player/Parameters/Parameters Manager")]
+[CreateAssetMenu(fileName = "PlayerParametersManager", menuName = "Managers/Parameters/Player")]
 
 public class PlayerParametersManagerSO : ParametersManagerSO
 {

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "PlayerCheckersManager", menuName = "Checks/Manager/Player")]
+[CreateAssetMenu(fileName = "PlayerCheckersManager", menuName = "Managers/Checks/Player")]
 
 public class PlayerCheckersManagerSO : CheckersManagerSO
 {

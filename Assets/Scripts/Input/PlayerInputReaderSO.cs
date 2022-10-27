@@ -17,6 +17,10 @@ public class PlayerInputReaderSO : BehaviourControllerSO
 
 	private Vector2 _mouseInputPosition;
 
+	[NonSerialized] public bool jump;
+	[NonSerialized] public bool grab;
+	[NonSerialized] public bool attack;
+	[NonSerialized] public bool ability;
 	[NonSerialized] public bool dash;
 
 	[NonSerialized] public bool jumpInputHold;
@@ -37,10 +41,11 @@ public class PlayerInputReaderSO : BehaviourControllerSO
 		});
 	}
 
-	public void Initialize(PlayerInput playerInput, Camera camera)
+	public override void InitialzeBase(GameObject baseObject)
 	{
-		_playerInput = playerInput;
-		_mainCamera = camera;
+		base.InitialzeBase(baseObject);
+		_playerInput = baseObject.GetComponent<PlayerInput>();
+		_mainCamera = Camera.main;
 	}
 
 	public void OnMoveInput(InputAction.CallbackContext context)

@@ -9,7 +9,7 @@ public abstract class AnimatedComponentBase : ComponentBase, IAnimated
 
 	protected override void Awake()
 	{
-		component = (AnimatedComponentSO)base.component;
+		component = base.component as AnimatedComponentSO;
 
 		base.Awake();
 	}

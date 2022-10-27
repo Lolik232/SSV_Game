@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 708070380e4cbcd4383b3bbedb12736d, type: 3}
   m_Name: Inventory
   m_EditorClassIdentifier: 
-  _defaultWeapon: {fileID: 11400000, guid: 62c28d3770653b344a8acc9cddb14780, type: 2}
+  _defaultWeapon: {fileID: 0}

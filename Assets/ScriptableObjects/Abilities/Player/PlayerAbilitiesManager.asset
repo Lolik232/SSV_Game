@@ -12,7 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05396eb5b5328dd4f8792c44eb77f09a, type: 3}
   m_Name: PlayerAbilitiesManager
   m_EditorClassIdentifier: 
-  attack: {fileID: 11400000, guid: a8afe2bf020990f47854dcf8196791c8, type: 2}
-  dash: {fileID: 11400000, guid: f099f390b43105b4f92b85f1e8494dc1, type: 2}
-  jump: {fileID: 11400000, guid: 39983b7066119fd42ad942ed7d5eed01, type: 2}
-  wallJump: {fileID: 11400000, guid: 29b560b1852e4594d9cf188e2e83282f, type: 2}
+  entity: {fileID: 11400000, guid: c765f728276573247bf28102c833d262, type: 2}
+  moveUp: {fileID: 11400000, guid: 58e5b2ac493e04946bafbf65df679647, type: 2}
+  moveDown: {fileID: 11400000, guid: 19f0c5d8a58e22048a3e8acbb1fb49c9, type: 2}
+  moveForward: {fileID: 11400000, guid: 841b3a425249cc649b352e996d4ee736, type: 2}
+  moveBackward: {fileID: 11400000, guid: 40ea0a972c45a9e4a828eeb10a7f1c66, type: 2}
+  moveUp: {fileID: 0}
+  moveDown: {fileID: 0}
+  moveForward: {fileID: 0}
+  moveBackward: {fileID: 0}
+  attack: {fileID: 0}
+  dash: {fileID: 0}
+  jump: {fileID: 0}
+  wallJump: {fileID: 0}

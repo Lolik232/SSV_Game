@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
-public abstract class MultiTaskManagerSO<T> : ManagerSO<T> where T : ComponentSO
+public abstract class MultiTaskManagerSO<T> : StaticManagerSO<T> where T : ComponentSO
 {
 	protected override void OnEnable()
 	{
@@ -17,11 +17,15 @@ public abstract class MultiTaskManagerSO<T> : ManagerSO<T> where T : ComponentSO
 			{
 				if (!entered)
 				{
-					elements[i].OnEnter();
-					entered = true;
+					if (elements[i] != null)
+					{
+						elements[i].OnEnter();
+						entered = elements[i].isActive;
+					}
+
 				}
 
-				elements[i].OnUpdate();
+				elements[i]?.OnUpdate();
 			}
 		});
 
@@ -29,7 +33,7 @@ public abstract class MultiTaskManagerSO<T> : ManagerSO<T> where T : ComponentSO
 		{
 			for (int i = 0; i < elements.Count; i++)
 			{
-				elements[i].OnFixedUpdate();
+				elements[i]?.OnFixedUpdate();
 			}
 		});
 
@@ -37,7 +41,7 @@ public abstract class MultiTaskManagerSO<T> : ManagerSO<T> where T : ComponentSO
 		{
 			for (int i = 0; i < elements.Count; i++)
 			{
-				elements[i].OnLateUpdate();
+				elements[i]?.OnLateUpdate();
 			}
 		});
 
@@ -45,7 +49,7 @@ public abstract class MultiTaskManagerSO<T> : ManagerSO<T> where T : ComponentSO
 		{
 			for (int i = 0; i < elements.Count; i++)
 			{
-				elements[i].OnDrawGizmos();
+				elements[i]?.OnDrawGizmos();
 			}
 		});
 	}
@@ -54,7 +58,7 @@ public abstract class MultiTaskManagerSO<T> : ManagerSO<T> where T : ComponentSO
 		base.InitialzeBase(baseObject);
 		for (int i = 0; i < elements.Count; i++)
 		{
-			elements[i].InitialzeBase(baseObject);
+			elements[i]?.InitialzeBase(baseObject);
 		}
 	}
 
@@ -63,7 +67,7 @@ public abstract class MultiTaskManagerSO<T> : ManagerSO<T> where T : ComponentSO
 		base.InitializeParameters();
 		for (int i = 0; i < elements.Count; i++)
 		{
-			elements[i].InitializeParameters();
+			elements[i]?.InitializeParameters();
 		}
 	}
 }

@@ -4,27 +4,14 @@ using System.Security;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerInputReaderBase : BaseMonoBehaviour
+public class PlayerInputReaderBase : ComponentBase
 {
-	[SerializeField] private PlayerInputReaderSO _inputReader;
-
-	private PlayerInput _input;
+	[HideInInspector] protected new PlayerInputReaderSO component;
 
 	protected override void Awake()
 	{
-		_input = GetComponent<PlayerInput>();
-		_inputReader.Initialize(_input, Camera.main);
+		component = (PlayerInputReaderSO)base.component;
 
 		base.Awake();
-
-		startActions.Add(() =>
-		{
-			_inputReader.OnEnter();
-		});
-
-		updateActions.Add(() =>
-		{
-			_inputReader.OnUpdate();
-		});
 	}
 }

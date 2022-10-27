@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class SingleTaskManagerSO<T> : ManagerSO<T>, IAnimated where T : AnimatedComponentSO
+public abstract class SingleTaskManagerSO<T> : StaticManagerSO<T>, IAnimated where T : AnimatedComponentSO
 {
 	[SerializeField] private T _default;
 
@@ -15,7 +15,7 @@ public abstract class SingleTaskManagerSO<T> : ManagerSO<T>, IAnimated where T :
 
 		enterActions.Add(() =>
 		{
-			GetNext(default);
+			GetNext(_default);
 		});
 
 		updateActions.Add(() =>

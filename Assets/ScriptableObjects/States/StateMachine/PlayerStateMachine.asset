@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 770113295ab23a3449a0c3c312f219cd, type: 3}
+  m_Name: PlayerStateMachine
+  m_EditorClassIdentifier: 
+  entity: {fileID: 11400000, guid: c765f728276573247bf28102c833d262, type: 2}
+  _default: {fileID: 11400000, guid: 99f32321491905142b4dd0c67e2974be, type: 2}
+  grounded: {fileID: 11400000, guid: 99f32321491905142b4dd0c67e2974be, type: 2}
+  inAir: {fileID: 11400000, guid: 490db7eaeaebdb94eb7aee3a32ee2448, type: 2}
+  grounded: {fileID: 0}
+  inAir: {fileID: 0}
+  onLedge: {fileID: 11400000, guid: 9b09fa5886adb674aa5df0a6a4141d72, type: 2}
+  touchingWall: {fileID: 11400000, guid: fcabbad07a685f24d836c7c132309d3c, type: 2}

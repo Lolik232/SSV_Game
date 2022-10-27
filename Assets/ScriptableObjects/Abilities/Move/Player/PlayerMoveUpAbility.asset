@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6efb0ea951abd6045b65c98ea462eba6, type: 3}
+  m_Name: PlayerMoveUpAbility
+  m_EditorClassIdentifier: 
+  entity: {fileID: 11400000, guid: c765f728276573247bf28102c833d262, type: 2}
+  animBoolNames:
+  - moveUp
+  duration:
+    _min: 0
+    _max: 0
+  cooldown:
+    _min: 0
+    _max: 0
+  amountOfUsages:
+    _min: 0
+    _max: 0
+  _blockedStates: []
+  _blockedAbilities:
+  - component: {fileID: 11400000, guid: 19f0c5d8a58e22048a3e8acbb1fb49c9, type: 2}
+    needHardExit: 1

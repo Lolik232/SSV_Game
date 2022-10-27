@@ -12,27 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e75906b290eaefc4d9523f1071dff960, type: 3}
   m_Name: PlayerParametersManager
   m_EditorClassIdentifier: 
-  moveSpeed:
-    _min: 0
-    _max: 15
-  crouchMoveSpeed:
-    _min: 0
-    _max: 10
-  inAirMoveSpeed:
-    _min: 0
-    _max: 17
-  wallSlideSpeed:
+  entity: {fileID: 11400000, guid: c765f728276573247bf28102c833d262, type: 2}
+  moveUpSpeed:
     _min: 0
     _max: 5
-  wallClimbSpeed:
+  moveDownSpeed:
     _min: 0
-    _max: 7
+    _max: 6
+  moveForwardSpeed:
+    _min: 0
+    _max: 10
+  moveBackwardSpeed:
+    _min: 0
+    _max: 5
   dashForce:
     _min: 0
     _max: 35
   jumpForce:
     _min: 0
-    _max: 20
+    _max: 25
   wallJumpForce:
     _min: 0
     _max: 25

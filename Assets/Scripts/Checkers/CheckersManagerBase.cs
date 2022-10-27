@@ -5,24 +5,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class CheckersManagerBase : BaseMonoBehaviour
+public class CheckersManagerBase : ComponentBase
 {
-	[SerializeField] private CheckersManagerSO _checkersManager;
+	[HideInInspector] protected new CheckersManagerSO component;
 
 	protected override void Awake()
 	{
-		_checkersManager.Initialize();
+		component = (CheckersManagerSO)base.component;
 
 		base.Awake();
-
-		startActions.Add(() =>
-		{
-			_checkersManager.OnEnter();
-		});
-
-		drawGizmosActions.Add(() =>
-		{
-			_checkersManager.OnDrawGizmos();
-		});
 	}
 }

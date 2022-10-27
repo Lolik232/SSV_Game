@@ -1,10 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Data;
-
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "PlayerMoveBackwardAbility", menuName = "Abilities/MoveBackward/Player")]
+[CreateAssetMenu(fileName = "PlayerMoveBackwardAbility", menuName = "Abilities/Move/Backward/Player")]
 
 public class PlayerMoveBackwardAbilitySO : MoveBackwardAbilitySO
 {

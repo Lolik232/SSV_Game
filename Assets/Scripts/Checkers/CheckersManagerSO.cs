@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public abstract class CheckersManagerSO : ManagerSO<bool>
+public abstract class CheckersManagerSO : StaticManagerSO<bool>
 {
 	protected const float CHECK_OFFSET = 0.02f;
 	protected const float UNIT_SIZE = 1f;

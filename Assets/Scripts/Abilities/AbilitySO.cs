@@ -7,7 +7,7 @@ using UnityEngine.Events;
 public abstract class AbilitySO : ActionComponentSO, IBlockable
 {
 	[SerializeField] private List<BlockedState> _blockedStates = new();
-	[SerializeField] private List<BlockedAbility> _blockedActions = new();
+	[SerializeField] private List<BlockedAbility> _blockedAbilities = new();
 
 	private readonly Blocker _blocker = new();
 
@@ -17,13 +17,13 @@ public abstract class AbilitySO : ActionComponentSO, IBlockable
 
 		enterActions.Add(() =>
 		{
-			Utility.BlockAll(_blockedActions);
+			Utility.BlockAll(_blockedAbilities);
 			Utility.BlockAll(_blockedStates);
 		});
 
 		exitActions.Add(() =>
 		{
-			Utility.UnlockAll(_blockedActions);
+			Utility.UnlockAll(_blockedAbilities);
 			Utility.UnlockAll(_blockedStates);
 		});
 
@@ -49,7 +49,7 @@ public abstract class AbilitySO : ActionComponentSO, IBlockable
 	}
 }
 
-[SerializeField]
+[Serializable]
 public struct BlockedAbility
 {
 	public AbilitySO component;

@@ -9,12 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c4641650c166954a949057bce526f3b, type: 3}
+  m_Script: {fileID: 11500000, guid: 77762343096e92340ae3c776417bc585, type: 3}
   m_Name: PlayerInAirState
   m_EditorClassIdentifier: 
+  entity: {fileID: 11400000, guid: c765f728276573247bf28102c833d262, type: 2}
   animBoolNames:
   - inAir
-  _blockedAbilities: []
-  data: {fileID: 11400000, guid: 61c99a593f8f1a74fb3575845de2cf40, type: 2}
-  entity: {fileID: 11400000, guid: c765f728276573247bf28102c833d262, type: 2}
-  _machine: {fileID: 11400000, guid: 3362953f1f9f0fe408fb08aa9bb22d02, type: 2}
+  _blockedAbilities:
+  - component: {fileID: 11400000, guid: 19f0c5d8a58e22048a3e8acbb1fb49c9, type: 2}
+    needHardExit: 1
+  - component: {fileID: 11400000, guid: 58e5b2ac493e04946bafbf65df679647, type: 2}
+    needHardExit: 1
+  _states: {fileID: 11400000, guid: 1f24998f2d41f364e9c2637873b891af, type: 2}

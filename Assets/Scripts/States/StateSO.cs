@@ -8,8 +8,6 @@ public abstract class StateSO : AnimatedComponentSO, IBlockable
 {
 	[SerializeField] private List<BlockedAbility> _blockedAbilities = new();
 
-	[SerializeField] private StateMachineSO _machine;
-
 	private StateSO _blockedTransition;
 
 	protected List<TransitionItem> transitions = new();
@@ -42,26 +40,30 @@ public abstract class StateSO : AnimatedComponentSO, IBlockable
 
 	public override void OnUpdate()
 	{
-		CheckIfNeedTransition();
-		base.OnUpdate();
+		if (!CheckIfNeedTransition())
+		{
+			base.OnUpdate();
+		}
 	}
 
-	private void CheckIfNeedTransition()
+	private bool CheckIfNeedTransition()
 	{
 		if (!isActive)
 		{
-			return;
+			return false;
 		}
 
 		for (int i = 0; i < transitions.Count; i++)
 		{
 			if (!transitions[i].toState._blocker.IsLocked && transitions[i].condition())
 			{
-				transitions[i].action?.Invoke();
-				_machine.GetTransitionState(transitions[i].toState);
-				return;
+				transitions[i].action();
+				entity.states.GetNext(transitions[i].toState);
+				return true;
 			}
 		}
+
+		return false;
 	}
 
 	public void SetBlockedTransition(StateSO blockedTransition)
@@ -73,7 +75,7 @@ public abstract class StateSO : AnimatedComponentSO, IBlockable
 	{
 		if (needHardExit && isActive)
 		{
-			_machine.GetTransitionState(_blockedTransition);
+			entity.states.GetNext(_blockedTransition);
 		}
 
 		_blocker.AddBlock();
@@ -91,7 +93,8 @@ public struct TransitionItem
 	public StateSO toState;
 	public Func<bool> condition;
 	public UnityAction action;
-	public TransitionItem(StateSO toState, Func<bool> condition, UnityAction action = null)
+
+	public TransitionItem(StateSO toState, Func<bool> condition, UnityAction action)
 	{
 		this.toState = toState;
 		this.condition = condition;
@@ -106,10 +109,10 @@ public struct BlockedState
 	public StateSO target;
 	public bool needHardExit;
 
-	public BlockedState(StateSO blockedState, StateSO transitionState, bool needHardExit)
+	public BlockedState(StateSO component, StateSO target, bool needHardExit)
 	{
-		this.component = blockedState;
-		this.target = transitionState;
+		this.component = component;
+		this.target = target;
 		this.needHardExit = needHardExit;
 	}
 }

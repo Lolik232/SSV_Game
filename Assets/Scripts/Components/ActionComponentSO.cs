@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class ActionComponentSO : AnimatedComponentSO, IAnimated
+public abstract class ActionComponentSO : AnimatedComponentSO, IAnimated
 {
 	[SerializeField] protected Parameter duration;
 	[SerializeField] protected Parameter cooldown;

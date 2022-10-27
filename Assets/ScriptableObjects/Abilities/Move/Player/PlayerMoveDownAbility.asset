@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c913f6f306fd3ba42be7d6e4412f12a0, type: 3}
+  m_Name: PlayerMoveDownAbility
+  m_EditorClassIdentifier: 
+  entity: {fileID: 11400000, guid: c765f728276573247bf28102c833d262, type: 2}
+  animBoolNames:
+  - moveDown
+  duration:
+    _min: 0
+    _max: 0
+  cooldown:
+    _min: 0
+    _max: 0
+  amountOfUsages:
+    _min: 0
+    _max: 0
+  _blockedStates: []
+  _blockedAbilities:
+  - component: {fileID: 11400000, guid: 58e5b2ac493e04946bafbf65df679647, type: 2}
+    needHardExit: 1
