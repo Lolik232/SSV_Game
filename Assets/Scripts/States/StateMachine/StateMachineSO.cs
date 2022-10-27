@@ -1,27 +1,15 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-[CreateAssetMenu(fileName = "StateMachine", menuName = "States/Machine")]
-
-public class StateMachineSO : ScriptableObject
+public abstract class StateMachineSO : SingleTaskManagerSO<StateSO>
 {
-	[SerializeField] private StateSO _defaultState;
+	public GroundedStateSO grounded;
+	public TouchingWallStateSO touchingWall;
+	public InAirStateSO inAir;
 
-	public StateSO CurrentState { get; private set; }
-
-	public void Initialize() => GetTransitionState(_defaultState);
-
-	public void GetTransitionState(StateSO transitionState)
+	protected override void OnEnable()
 	{
-		if (CurrentState != null)
-		{
-			CurrentState.OnExit();
-		}
+		base.OnEnable();
 
-		CurrentState = transitionState;
-		CurrentState.OnEnter();
-		CurrentState.OnFixedUpdate();
+		elements.Add(grounded);
+		elements.Add(touchingWall);
+		elements.Add(inAir);
 	}
 }

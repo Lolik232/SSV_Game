@@ -2,20 +2,20 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerWallClimbState", menuName = "Player/States/Touching Wall/Wall Climb")]
 
-public class PlayerWallClimbStateSO : PlayerTouchingWallStateSO
+public class PlayerWallClimbStateSO : TouchingWallStateSO
 {
 	protected override void OnEnable()
 	{
 		base.OnEnable();
 
-		bool WallGrabCondition() => data.controller.move.y <= 0 || 
-																 !data.controller.grab;
+		bool WallGrabCondition() => entity.controller.move.y <= 0 || 
+																 !entity.controller.grab;
 
-		transitions.Add(new TransitionItem(data.states.wallGrab, WallGrabCondition));
+		transitions.Add(new TransitionItem(entity.states.wallGrab, WallGrabCondition));
 
 		updateActions.Add(() =>
 		{
-			entity.TrySetVelocityY(data.parameters.wallClimbSpeed);
+			entity.TrySetVelocityY(entity.parameters.wallClimbSpeed);
 		});
 	}
 }

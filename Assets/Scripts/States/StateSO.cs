@@ -34,7 +34,7 @@ public abstract class StateSO : AnimatedComponentSO, IBlockable
 
 		fixedUpdateActions.Add(() =>
 		{
-			data.checkers.DoChecks();
+			entity.checkers.DoChecks();
 		});
 	}
 
@@ -53,12 +53,12 @@ public abstract class StateSO : AnimatedComponentSO, IBlockable
 			return;
 		}
 
-		foreach (var transition in transitions)
+		for (int i = 0; i < transitions.Count; i++)
 		{
-			if (!transition.toState._blocker.IsLocked && transition.condition())
+			if (!transitions[i].toState._blocker.IsLocked && transitions[i].condition())
 			{
-				transition.action?.Invoke();
-				_machine.GetTransitionState(transition.toState);
+				transitions[i].action?.Invoke();
+				_machine.GetTransitionState(transitions[i].toState);
 				return;
 			}
 		}

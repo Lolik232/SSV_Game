@@ -2,10 +2,12 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "PayerWallJumpAbility", menuName = "Player/Abilities/Wall Jump")]
 
-public class PlayerWallJumpAbilitySO : PlayerAbilitySO
+public class PlayerWallJumpAbilitySO : AbilitySO
 {
 	[SerializeField] private float _coyoteTime;
 	[SerializeField] private float _wallExitTime;
+
+	[HideInInspector] protected new PlayerSO entity;
 
 	[SerializeField] private Vector2 _angle;
 
@@ -17,19 +19,21 @@ public class PlayerWallJumpAbilitySO : PlayerAbilitySO
 
 	protected override void OnEnable()
 	{
+		entity = (PlayerSO)base.entity;
+
 		base.OnEnable();
 
 		prepareActions.Add(() =>
 		{
-			_jumpDirection = data.checkers.wallDirection;
+			_jumpDirection = entity.checkers.wallDirection;
 		});
 
 		enterConditions.Add(() =>
 		{
-			return data.controller.jump &&
-						 !data.checkers.clampedBetweenWalls &&
-						 !data.checkers.touchingCeiling &&
-						 (data.checkers.touchingWall || data.checkers.touchingWallBack);
+			return entity.controller.jump &&
+						 !entity.checkers.clampedBetweenWalls &&
+						 !entity.checkers.touchingCeiling &&
+						 (entity.checkers.touchingWall || entity.checkers.touchingWallBack);
 		});
 
 		exitConditions.Add(() =>
@@ -41,14 +45,14 @@ public class PlayerWallJumpAbilitySO : PlayerAbilitySO
 		enterActions.Add(() =>
 		{
 			_outOfWall = false;
-			entity.HoldVelocity(data.parameters.wallJumpForce, _angle, _jumpDirection);
+			entity.HoldVelocity(entity.parameters.wallJumpForce, _angle, _jumpDirection);
 			entity.RotateIntoDirection(_jumpDirection);
-			data.controller.jump = false;
+			entity.controller.jump = false;
 		});
 
 		updateActions.Add(() =>
 		{
-			if (!data.checkers.touchingWall)
+			if (!entity.checkers.touchingWall)
 			{
 				_outOfWall = true;
 			}

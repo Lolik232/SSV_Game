@@ -91,11 +91,11 @@ public abstract class WeaponSO : AbilitySO
 	{
 		attackOrigin = entity.Center;
 
-		Vector2 attackDirection = data.controller.lookAtDirection;
+		Vector2 attackDirection = entity.controller.lookAtDirection;
 
-		if (data.controller.lookAtDistance < attackDistance || attackDistance.Max == 0)
+		if (entity.controller.lookAtDistance < attackDistance || attackDistance.Max == 0)
 		{
-			attackTarget = data.controller.lookAtPosition;
+			attackTarget = entity.controller.lookAtPosition;
 		}
 		else if (directionBlocker.IsLocked && attackDirection.x >= 0 != holdDirection >= 0)
 		{
@@ -106,7 +106,7 @@ public abstract class WeaponSO : AbilitySO
 			attackTarget = attackOrigin + attackDirection * attackDistance;
 		}
 
-		RaycastHit2D hit = Utility.Check(Physics2D.Linecast, attackOrigin, attackTarget, data.checkers.whatIsTarget);
+		RaycastHit2D hit = Utility.Check(Physics2D.Linecast, attackOrigin, attackTarget, entity.checkers.whatIsTarget);
 		if (hit)
 		{
 			attackTarget = hit.point;

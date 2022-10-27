@@ -2,32 +2,36 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "PayerJumpAbility", menuName = "Player/Abilities/Jump")]
 
-public class PlayerJumpAbilitySO : PlayerAbilitySO
+public class PlayerJumpAbilitySO : AbilitySO
 {
 	[SerializeField] private float _coyoteTime;
+
+	[HideInInspector] protected new PlayerSO entity;
 
 	private float _startCoyoteTime;
 
 	protected override void OnEnable()
 	{
+		entity = (PlayerSO)base.entity;
+
 		base.OnEnable();
 
 		enterConditions.Add(() =>
 		{
-			return data.controller.jump &&
-						 !data.checkers.touchingCeiling;
+			return entity.controller.jump &&
+						 !entity.checkers.touchingCeiling;
 		});
 
 		exitConditions.Add(() =>
 		{
 			return entity.Velocity.y < 0f ||
-						 !data.controller.jumpInputHold;
+						 !entity.controller.jumpInputHold;
 		});
 
 		enterActions.Add(() =>
 		{
-			data.controller.jump = false;
-			entity.TrySetVelocityY(data.parameters.jumpForce);
+			entity.controller.jump = false;
+			entity.TrySetVelocityY(entity.parameters.jumpForce);
 		});
 
 		exitActions.Add(() =>

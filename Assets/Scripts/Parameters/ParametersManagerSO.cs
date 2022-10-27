@@ -1,17 +1,17 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public abstract class ParametersManagerSO : ScriptableObject
+public abstract class ParametersManagerSO : ManagerSO<Parameter>
 {
-	[NonSerialized] public List<Parameter> parameters = new();
+	public Parameter moveUpSpeed;
+	public Parameter moveDownSpeed;
+	public Parameter moveForwardSpeed;
+	public Parameter moveBackwardSpeed;
 
-	public void Initialize()
+	protected override void OnEnable()
 	{
-		foreach (var parameter in parameters)
-		{
-			parameter.Set(parameter.Max);
-		}
+		base.OnEnable();
+
+		elements.Add(moveUpSpeed);
+		elements.Add(moveDownSpeed);
+		elements.Add(moveForwardSpeed);
+		elements.Add(moveBackwardSpeed);
 	}
 }

@@ -4,19 +4,19 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerWallGrabState", menuName = "Player/States/Touching Wall/Wall Grab")]
 
-public class PlayerWallGrabStateSO : PlayerTouchingWallStateSO
+public class PlayerWallGrabStateSO : TouchingWallStateSO
 {
 	protected override void OnEnable()
 	{
 		base.OnEnable();
 
-		bool WallClimbCondition() => data.controller.move.y > 0;
+		bool WallClimbCondition() => entity.controller.move.y > 0;
 
-		bool WallSlideCondition() => data.controller.move.y < 0 ||
-																 !data.controller.grab;
+		bool WallSlideCondition() => entity.controller.move.y < 0 ||
+																 !entity.controller.grab;
 
-		transitions.Add(new TransitionItem(data.states.wallSlide, WallSlideCondition));
-		transitions.Add(new TransitionItem(data.states.wallClimb, WallClimbCondition));
+		transitions.Add(new TransitionItem(entity.states.wallSlide, WallSlideCondition));
+		transitions.Add(new TransitionItem(entity.states.wallClimb, WallClimbCondition));
 
 		enterActions.Add(() =>
 		{

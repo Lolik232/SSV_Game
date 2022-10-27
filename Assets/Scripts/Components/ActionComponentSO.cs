@@ -69,9 +69,9 @@ public class ActionComponentSO : AnimatedComponentSO, IAnimated
 	{
 		Utility.ApplyActions(prepareActions);
 
-		foreach (var condition in enterConditions)
+		for (int i = 0; i < enterConditions.Count; i++)
 		{
-			if (!condition())
+			if (!enterConditions[i]())
 			{
 				return false;
 			}
@@ -82,9 +82,9 @@ public class ActionComponentSO : AnimatedComponentSO, IAnimated
 
 	private void CheckIfTerminate()
 	{
-		foreach (var condition in exitConditions)
+		for (int i = 0; i < exitConditions.Count; i++)
 		{
-			if (condition())
+			if (exitConditions[i]())
 			{
 				OnExit();
 				return;

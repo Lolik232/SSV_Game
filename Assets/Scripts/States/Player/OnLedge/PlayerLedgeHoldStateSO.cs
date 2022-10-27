@@ -8,18 +8,18 @@ public class PlayerLedgeHoldStateSO : PlayerOnLedgeStateSO
 	{
 		base.OnEnable();
 
-		bool LedgeClimbCondition() => data.controller.move.x == entity.facingDirection ||
-																	data.controller.move.y == 1;
+		bool LedgeClimbCondition() => entity.controller.move.x == entity.facingDirection ||
+																	entity.controller.move.y == 1;
 
-		bool InAirCondition() => data.controller.move.x == -entity.facingDirection ||
-														 data.controller.move.y == -1;
+		bool InAirCondition() => entity.controller.move.x == -entity.facingDirection ||
+														 entity.controller.move.y == -1;
 
-		transitions.Add(new TransitionItem(data.states.ledgeClimb, LedgeClimbCondition));
-		transitions.Add(new TransitionItem(data.states.inAir, InAirCondition));
+		transitions.Add(new TransitionItem(entity.states.ledgeClimb, LedgeClimbCondition));
+		transitions.Add(new TransitionItem(entity.states.inAir, InAirCondition));
 
 		enterActions.Add(() =>
 		{
-			data.abilities.wallJump.RestoreAmountOfUsages();
+			entity.abilities.wallJump.RestoreAmountOfUsages();
 		});
 	}
 }

@@ -6,11 +6,16 @@ using Unity.VisualScripting;
 
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Entity", menuName = "Componets/Entity")]
-public class EntitySO : ComponentSO
+public abstract class EntitySO : ComponentSO
 {
 	public const int DIRECTION_LEFT = -1;
 	public const int DIRECTION_RIGHT = 1;
+
+	public AbilitiesManagerSO abilities;
+	public StateMachineSO states;
+	public CheckersManagerSO checkers;
+	public ParametersManagerSO parameters;
+	public BehaviourControllerSO controller;
 
 	[SerializeField] private Vector2 _standOffset;
 	[SerializeField] private Vector2 _standSize;

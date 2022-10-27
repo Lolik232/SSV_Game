@@ -2,19 +2,19 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerCrouchIdleState", menuName = "Player/States/Grounded/Crouch Idle")]
 
-public class PlayerCrouchIdleStateSO : PlayerGroundedStateSO
+public class PlayerCrouchIdleStateSO : GroundedStateSO
 {
 	protected override void OnEnable()
 	{
 		base.OnEnable();
 
-		bool IdleCondition() => data.controller.move.y > -1 &&
-														!data.checkers.touchingCeiling;
+		bool IdleCondition() => entity.controller.move.y > -1 &&
+														!entity.checkers.touchingCeiling;
 
-		bool CrouchMoveCondition() => data.controller.move.x != 0;
+		bool CrouchMoveCondition() => entity.controller.move.x != 0;
 
-		transitions.Add(new TransitionItem(data.states.idle, IdleCondition));
-		transitions.Add(new TransitionItem(data.states.crouchMove, CrouchMoveCondition));
+		transitions.Add(new TransitionItem(entity.states.idle, IdleCondition));
+		transitions.Add(new TransitionItem(entity.states.crouchMove, CrouchMoveCondition));
 
 		enterActions.Add(() =>
 		{

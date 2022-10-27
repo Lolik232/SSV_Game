@@ -5,12 +5,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public abstract class CheckersManagerSO : BaseScriptableObject
+public abstract class CheckersManagerSO : ManagerSO<bool>
 {
 	protected const float CHECK_OFFSET = 0.02f;
 	protected const float UNIT_SIZE = 1f;
-
-	[SerializeField] protected EntitySO entity;
 
 	[SerializeField] protected float groundCheckDistance;
 	[SerializeField] protected float ceilingCheckDistance;
@@ -24,10 +22,10 @@ public abstract class CheckersManagerSO : BaseScriptableObject
 	[NonSerialized] public Vector2 ledgeStartPosition;
 	[NonSerialized] public Vector2 ledgeEndPosition;
 
-	[NonSerialized] public Collider2D grounded;
-	[NonSerialized] public Collider2D touchingCeiling;
-	[NonSerialized] public RaycastHit2D touchingWall;
-	[NonSerialized] public RaycastHit2D touchingWallBack;
+	[NonSerialized] public bool grounded;
+	[NonSerialized] public bool touchingCeiling;
+	[NonSerialized] public bool touchingWall;
+	[NonSerialized] public bool touchingWallBack;
 
 	public LayerMask whatIsTarget;
 
@@ -115,11 +113,12 @@ public abstract class CheckersManagerSO : BaseScriptableObject
 
 	private void CheckIfTouchingWall()
 	{
-		touchingWall = Utility.Check(Physics2D.Linecast, wallCheckPosition, whatIsTarget);
+		RaycastHit2D hit = Utility.Check(Physics2D.Linecast, wallCheckPosition, whatIsTarget);
+		touchingWall = hit;
 		wallDirection = touchingWall ? -entity.facingDirection : entity.facingDirection;
 		if (touchingWall)
 		{
-			wallPosition.Set(wallCheckPosition.Item1.x + entity.facingDirection * touchingWall.distance, wallCheckPosition.Item1.y);
+			wallPosition.Set(wallCheckPosition.Item1.x + entity.facingDirection * hit.distance, wallCheckPosition.Item1.y);
 		}
 	}
 

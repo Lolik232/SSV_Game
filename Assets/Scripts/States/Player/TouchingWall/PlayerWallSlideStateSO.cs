@@ -4,25 +4,25 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerWallSlideState", menuName = "Player/States/Touching Wall/Wall Slide")]
 
-public class PlayerWallSlideStateSO : PlayerTouchingWallStateSO
+public class PlayerWallSlideStateSO : TouchingWallStateSO
 {
 	protected override void OnEnable()
 	{
 		base.OnEnable();
 
-		bool WallGrabCondition() => data.controller.move.y >= 0 &&
-																data.controller.grab;
+		bool WallGrabCondition() => entity.controller.move.y >= 0 &&
+																entity.controller.grab;
 
-		transitions.Add(new TransitionItem(data.states.wallGrab, WallGrabCondition));
+		transitions.Add(new TransitionItem(entity.states.wallGrab, WallGrabCondition));
 
 		enterActions.Add(() =>
 		{
-			entity.RotateBodyIntoDirection(data.checkers.wallDirection);
+			entity.RotateBodyIntoDirection(entity.checkers.wallDirection);
 		});
 
 		updateActions.Add(() =>
 		{
-			entity.TrySetVelocityY(-data.parameters.wallSlideSpeed);
+			entity.TrySetVelocityY(-entity.parameters.wallSlideSpeed);
 		});
 	}
 }

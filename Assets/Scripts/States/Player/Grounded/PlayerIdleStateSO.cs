@@ -1,18 +1,18 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerIdleState", menuName = "Player/States/Grounded/Idle")]
-public class PlayerIdleStateSO : PlayerGroundedStateSO
+public class PlayerIdleStateSO : GroundedStateSO
 {
 	protected override void OnEnable()
 	{
 		base.OnEnable();
 
-		bool CrouchIdleCondition() => data.controller.move.y < 0;
+		bool CrouchIdleCondition() => entity.controller.move.y < 0;
 
-		bool MoveCondition() => data.controller.move.x != 0;
+		bool MoveCondition() => entity.controller.move.x != 0;
 
-		transitions.Add(new TransitionItem(data.states.crouchIdle, CrouchIdleCondition));
-		transitions.Add(new TransitionItem(data.states.move, MoveCondition));
+		transitions.Add(new TransitionItem(entity.states.crouchIdle, CrouchIdleCondition));
+		transitions.Add(new TransitionItem(entity.states.move, MoveCondition));
 
 		enterActions.Add(() =>
 		{

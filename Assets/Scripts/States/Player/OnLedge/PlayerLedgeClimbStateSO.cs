@@ -13,13 +13,13 @@ public class PlayerLedgeClimbStateSO : PlayerOnLedgeStateSO
 		base.OnEnable();
 
 		bool IdleCondition() => _climbFinished &&
-														!data.checkers.touchingCeilingWhenClimb;
+														!entity.checkers.touchingCeilingWhenClimb;
 
 		bool CrouchIdleCondition() => _climbFinished &&
-																	data.checkers.touchingCeilingWhenClimb;
+																	entity.checkers.touchingCeilingWhenClimb;
 
-		transitions.Add(new TransitionItem(data.states.idle, IdleCondition));
-		transitions.Add(new TransitionItem(data.states.crouchIdle, CrouchIdleCondition));
+		transitions.Add(new TransitionItem(entity.states.idle, IdleCondition));
+		transitions.Add(new TransitionItem(entity.states.crouchIdle, CrouchIdleCondition));
 
 		enterActions.Add(() =>
 		{
@@ -28,7 +28,7 @@ public class PlayerLedgeClimbStateSO : PlayerOnLedgeStateSO
 
 		exitActions.Add(() =>
 		{
-			entity.MoveTo(data.checkers.ledgeEndPosition);
+			entity.MoveTo(entity.checkers.ledgeEndPosition);
 		});
 
 		animationFinishActions.Add(() =>

@@ -7,24 +7,18 @@ using UnityEngine;
 
 public class PlayerAbilitiesManagerSO : AbilitiesManagerSO
 {
-	public PlayerAttackAbilitySO attack;
+	public AttackAbilitySO attack;
 	public PlayerDashAbilitySO dash;
 	public PlayerJumpAbilitySO jump;
 	public PlayerWallJumpAbilitySO wallJump;
 
-	private void OnEnable()
+	protected override void OnEnable()
 	{
-		abilities = new List<PlayerAbilitySO>
-		{
-				attack,
-				dash,
-				jump,
-				wallJump
-		};
-	}
+		base.OnEnable();
 
-	public override void OnAttackAnimationFinishTrigger()
-	{
-		attack.OnExit();
+		elements.Add(attack);
+		elements.Add(dash);
+		elements.Add(jump);
+		elements.Add(wallJump);
 	}
 }

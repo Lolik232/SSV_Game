@@ -7,7 +7,7 @@ using UnityEngine;
 [RequireComponent(typeof(CheckersManagerBase), typeof(InventoryBase), typeof(StateMachineBase))]
 [RequireComponent(typeof(Rigidbody2D), typeof(BoxCollider2D), typeof(TrailRenderer))]
 
-public class EntityBase : ComponentBase
+public abstract class EntityBase : ComponentBase
 {
 	[HideInInspector] protected new EntitySO component;
 

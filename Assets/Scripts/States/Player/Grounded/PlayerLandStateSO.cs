@@ -2,7 +2,7 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerLandState", menuName = "Player/States/Grounded/Land")]
 
-public class PlayerLandStateSO : PlayerGroundedStateSO
+public class PlayerLandStateSO : GroundedStateSO
 {
 	private bool _isLandFinished;
 
@@ -11,12 +11,12 @@ public class PlayerLandStateSO : PlayerGroundedStateSO
 		base.OnEnable();
 
 		bool IdleCondition() => _isLandFinished;
-		bool CrouchIdleCondition() => data.controller.move.y < 0;
-		bool MoveCondition() => data.controller.move.x != 0;
+		bool CrouchIdleCondition() => entity.controller.move.y < 0;
+		bool MoveCondition() => entity.controller.move.x != 0;
 
-		transitions.Add(new TransitionItem(data.states.idle, IdleCondition));
-		transitions.Add(new TransitionItem(data.states.crouchIdle, CrouchIdleCondition));
-		transitions.Add(new TransitionItem(data.states.move, MoveCondition));
+		transitions.Add(new TransitionItem(entity.states.idle, IdleCondition));
+		transitions.Add(new TransitionItem(entity.states.crouchIdle, CrouchIdleCondition));
+		transitions.Add(new TransitionItem(entity.states.move, MoveCondition));
 
 		enterActions.Add(() =>
 		{

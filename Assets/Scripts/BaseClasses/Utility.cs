@@ -1,79 +1,73 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-
-using Mono.CompilerServices.SymbolWriter;
 
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.ResourceManagement.ResourceProviders.Simulation;
-
-using static UnityEngine.Rendering.DebugUI;
 
 public static class Utility
 {
 	static public void ApplyActions(List<UnityAction> actions)
 	{
-		foreach (var action in actions)
+		for (int i = 0; i < actions.Count; i++)
 		{
-			action();
+			actions[i]();
 		}
 	}
 
 	static public void ApplyActions<T>(List<UnityAction<T>> actions, T value)
 	{
-		foreach (var action in actions)
+		for (int i = 0; i < actions.Count; i++)
 		{
-			action(value);
+			actions[i](value);
 		}
 	}
 
 	static public void SetAnimBools(Animator anim, List<string> names, bool value)
 	{
-		foreach (var name in names)
+		for (int i = 0; i < names.Count; i++)
 		{
-			anim.SetBool(name, value);
+			anim.SetBool(names[i], value);
 		}
 	}
 
 	static public void SetAnimTrigger(Animator anim, List<string> names)
 	{
-		foreach (var name in names)
+		for (int i = 0; i < names.Count; i++)
 		{
-			anim.SetTrigger(name);
+			anim.SetTrigger(names[i]);
 		}
 	}
 
 	static public void BlockAll(List<BlockedAbility> blockedAbilities)
 	{
-		foreach (var ability in blockedAbilities)
+		for (int i = 0; i < blockedAbilities.Count; i++)
 		{
-			ability.component.Block(ability.needHardExit);
+			blockedAbilities[i].component.Block(blockedAbilities[i].needHardExit);
 		}
 	}
 
 	static public void UnlockAll(List<BlockedAbility> blockedAbilities)
 	{
-		foreach (var ability in blockedAbilities)
+		for (int i = 0; i < blockedAbilities.Count; i++)
 		{
-			ability.component.Unlock();
+			blockedAbilities[i].component.Unlock();
 		}
 	}
 
 	static public void BlockAll(List<BlockedState> blockedStates)
 	{
-		foreach (var state in blockedStates)
+		for (int i = 0; i < blockedStates.Count; i++)
 		{
-			state.component.SetBlockedTransition(state.target);
-			state.component.Block(state.needHardExit);
+			blockedStates[i].component.SetBlockedTransition(blockedStates[i].target);
+			blockedStates[i].component.Block(blockedStates[i].needHardExit);
 		}
 	}
 
 	static public void UnlockAll(List<BlockedState> blockedStates)
 	{
-		foreach (var state in blockedStates)
+		for (int i = 0; i < blockedStates.Count; i++)
 		{
-			state.component.Unlock();
+			blockedStates[i].component.Unlock();
 		}
 	}
 

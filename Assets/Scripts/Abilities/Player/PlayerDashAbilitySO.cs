@@ -2,41 +2,46 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "PayerDashAbility", menuName = "Player/Abilities/Dash")]
 
-public class PlayerDashAbilitySO : PlayerAbilitySO
+public class PlayerDashAbilitySO : AbilitySO
 {
 	[SerializeField] private float _minProportion;
 	[SerializeField] private float _dashGravity;
 
+	[HideInInspector] protected new PlayerSO entity;
+
 	private Vector2 _dashDirection;
+
 
 	protected override void OnEnable()
 	{
+		entity = (PlayerSO)base.entity;
+
 		base.OnEnable();
 
 		prepareActions.Add(() =>
 		{
-			_dashDirection = data.controller.lookAtDirection;
+			_dashDirection = entity.controller.lookAtDirection;
 		});
 
 		enterConditions.Add(() =>
 		{
-			return data.controller.dash &&
+			return entity.controller.dash &&
 						 _dashDirection != Vector2.zero &&
-						 !(data.checkers.touchingCeiling && !entity.isStanding);
+						 !(entity.checkers.touchingCeiling && !entity.isStanding);
 		});
 
 		exitConditions.Add(() =>
 		{
-			return entity.Velocity.magnitude <= data.parameters.dashForce * _minProportion ||
-						 (!data.controller.dashInputHold && Time.time > startTime + duration * _minProportion);
+			return entity.Velocity.magnitude <= entity.parameters.dashForce * _minProportion ||
+						 (!entity.controller.dashInputHold && Time.time > startTime + duration * _minProportion);
 		});
 
 		enterActions.Add(() =>
 		{
 			entity.HoldGravity(_dashGravity);
-			entity.HoldVelocity(data.parameters.dashForce * _dashDirection);
+			entity.HoldVelocity(entity.parameters.dashForce * _dashDirection);
 			entity.RotateIntoDirection(Mathf.RoundToInt(_dashDirection.x));
-			data.controller.dash = false;
+			entity.controller.dash = false;
 			entity.EnableTrail();
 		});
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public abstract class AnimatedComponentSO : ComponentSO, IAnimated
+public abstract class AnimatedComponentSO : EntityComponentSO, IAnimated
 {
 	private int _animationIndex;
 

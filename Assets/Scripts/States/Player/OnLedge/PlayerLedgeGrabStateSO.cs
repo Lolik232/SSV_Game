@@ -14,12 +14,12 @@ public class PlayerLedgeGrabStateSO : PlayerOnLedgeStateSO
 
 		bool LedgeHoldCondition() => _grabFinish;
 
-		transitions.Add(new TransitionItem(data.states.ledgeHold, LedgeHoldCondition));
+		transitions.Add(new TransitionItem(entity.states.ledgeHold, LedgeHoldCondition));
 
 		enterActions.Add(() =>
 		{
 			_grabFinish = false;
-			data.abilities.jump.SetAmountOfUsagesToZero();
+			entity.abilities.jump.SetAmountOfUsagesToZero();
 		});
 
 		animationFinishActions.Add(() =>
