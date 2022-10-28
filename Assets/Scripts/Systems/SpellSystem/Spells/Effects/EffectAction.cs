@@ -1,4 +1,6 @@
-﻿namespace Spells
+﻿using All.Interfaces;
+
+namespace Spells
 {
     public abstract class EffectAction
     {
@@ -10,6 +12,6 @@
             _effectActionSO = effectActionSo;
         }
 
-        public abstract void Apply();
+        public abstract void Apply(ISpellEffectActionVisitor visitor);
     }
 }
