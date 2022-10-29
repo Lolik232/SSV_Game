@@ -12,5 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d65a8e80ce647e8ba00eded152ad67c, type: 3}
   m_Name: Spell1
   m_EditorClassIdentifier: 
+  _guid: dbdb553bd6b18dd4fb122aac2f453874
+  description: 
+  _name: spell
   _baseSpell: 0
   _effects: []

@@ -10,10 +10,14 @@ namespace Spells
     [Serializable]
     public class Effect
     {
-        private EffectSO            _effectSO;
-        private EffectApplyStrategy _applyStrategy;
-        private EffectAction        _effectAction;
-        
+        [SerializeField] private EffectSO            _effectSO;
+        [SerializeField] private EffectApplyStrategy _applyStrategy;
+        [SerializeField] private EffectAction        _effectAction;
+
+        public EffectSO              EffectSO              => _effectSO;
+        public EffectActionSO        EffectActionSO        => _effectAction.EffectActionSO;
+        public EffectApplyStrategySO EffectApplyStrategySO => _applyStrategy.ApplyStrategySO;
+
         public Effect(EffectSO            effectSo,
                       EffectApplyStrategy applyStrategy,
                       EffectAction        effectAction,

@@ -3,10 +3,16 @@
 namespace Spells
 {
     [Serializable]
-    public class OneTime : EffectApplyStrategy
+    public class OneTimeApplyStrategy : EffectApplyStrategy
     {
         private bool _effectUsed = false;
 
+        
+        public OneTimeApplyStrategy(EffectApplyStrategySO applyStrategySo) : base(applyStrategySo)
+        {
+            
+        }
+        
         public override void OnApply()
         {
             _effectUsed = true;
@@ -15,5 +21,6 @@ namespace Spells
         public override bool CanApply() => !_effectUsed;
 
         // public override void LogicUpdate() { }
+        
     }
 }
