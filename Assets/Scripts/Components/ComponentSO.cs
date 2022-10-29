@@ -1,16 +1,9 @@
 using UnityEngine;
 
-public abstract class ComponentSO : BaseScriptableObject
+public abstract class ComponentSO : BaseScriptableObject, IComponent
 {
-	protected GameObject baseObject;
-
-	public virtual void InitialzeBase(GameObject baseObject)
+	public virtual void Initialize(GameObject origin)
 	{
-		this.baseObject = baseObject;
-	}
-
-	public virtual void InitializeParameters()
-	{
-
+		
 	}
 }

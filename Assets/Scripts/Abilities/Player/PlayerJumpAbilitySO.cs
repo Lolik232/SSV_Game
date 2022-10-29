@@ -12,6 +12,8 @@ public class PlayerJumpAbilitySO : AbilitySO
 
 	private float _startCoyoteTime;
 
+	protected Movable movable;
+
 	protected override void OnEnable()
 	{
 		entity = (PlayerSO)base.entity;
@@ -26,23 +28,29 @@ public class PlayerJumpAbilitySO : AbilitySO
 
 		exitConditions.Add(() =>
 		{
-			return entity.Velocity.y < 0f ||
+			return movable.Velocity.y < 0f ||
 						 !entity.controller.jumpInputHold;
 		});
 
 		enterActions.Add(() =>
 		{
 			entity.controller.jump = false;
-			entity.TrySetVelocityY(entity.parameters.jumpForce);
+			movable.TrySetVelocityY(entity.parameters.jumpForce);
 		});
 
 		exitActions.Add(() =>
 		{
-			if (entity.Velocity.y > 0f)
+			if (movable.Velocity.y > 0f)
 			{
-				entity.TrySetVelocityY(entity.Velocity.y * 0.5f);
+				movable.TrySetVelocityY(movable.Velocity.y * 0.5f);
 			}
 		});
+	}
+
+	public override void Initialize(GameObject origin)
+	{
+		base.Initialize(origin);
+		movable = origin.GetComponent<Movable>();
 	}
 
 	public bool IsCoyoteTime() => Time.time < _startCoyoteTime + _coyoteTime;

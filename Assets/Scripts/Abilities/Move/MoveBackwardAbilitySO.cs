@@ -1,27 +1,32 @@
+using UnityEngine;
+
 public abstract class MoveBackwardAbilitySO : AbilitySO
 {
+	protected Movable movable;
+
 	protected override void OnEnable()
 	{
 		base.OnEnable();
 
-		enterConditions.Add(() => entity.controller.move.x == -entity.direction.facing);
+		enterConditions.Add(() => entity.controller.move.x == -movable.FacingDirection);
 
-		exitConditions.Add(() => entity.controller.move.x != -entity.direction.facing);
+		exitConditions.Add(() => entity.controller.move.x != -movable.FacingDirection);
 
 		updateActions.Add(() =>
 		{
-			entity.TrySetVelocityX(-entity.direction.facing * entity.parameters.moveBackwardSpeed);
-			entity.TryRotateIntoDirection(entity.controller.move.x);
+			movable.TrySetVelocityX(-movable.FacingDirection * movable.MoveBackwardSpeed);
+			movable.TryRotateIntoDirection(entity.controller.move.x);
 		});
 
 		exitActions.Add(() =>
 		{
-			entity.TrySetVelocityX(0f);
+			movable.TrySetVelocityX(0f);
 		});
 	}
 
-	public override void InitializeParameters()
+	public override void Initialize(GameObject origin)
 	{
-		base.InitializeParameters();
+		base.Initialize(origin);
+		movable = origin.AddComponent<Movable>();
 	}
 }

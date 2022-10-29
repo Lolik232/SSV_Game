@@ -8,6 +8,11 @@ public class PlayerLedgeClimbAbilitySO : AbilitySO
 {
 	[HideInInspector] [NonSerialized] protected new PlayerSO entity;
 
+	protected Movable movable;
+
+	private int _positionHolder;
+	private int _directionHolder;
+
 	protected override void OnEnable()
 	{
 		entity = base.entity as PlayerSO;
@@ -16,21 +21,27 @@ public class PlayerLedgeClimbAbilitySO : AbilitySO
 
 		enterConditions.Add(() => entity.checkers.touchingWall &&
 															!entity.checkers.touchingLedge &&
-															(entity.controller.move.x == entity.direction.facing ||
+															(entity.controller.move.x == movable.FacingDirection ||
 															 entity.controller.move.y == 1));
 
 		enterActions.Add(() =>
 		{
 			entity.checkers.DetermineLedgePosition();
-			entity.HoldDirection(-entity.checkers.wallDirection);
-			entity.HoldPosition(entity.checkers.ledgeStartPosition);
+			_directionHolder = movable.HoldDirection(-entity.checkers.wallDirection);
+			_positionHolder = movable.HoldPosition(entity.checkers.ledgeStartPosition);
 		});
 
 		exitActions.Add(() =>
 		{
-			entity.ReleaseDirection();
-			entity.ReleasePosition();
-			entity.MoveTo(entity.checkers.ledgeEndPosition);
+			movable.ReleaseDirection(_directionHolder);
+			movable.ReleasePosition(_positionHolder);
+			movable.TrySetPosition(entity.checkers.ledgeEndPosition);
 		});
+	}
+
+	public override void Initialize(GameObject origin)
+	{
+		base.Initialize(origin);
+		movable = origin.GetComponent<Movable>();
 	}
 }

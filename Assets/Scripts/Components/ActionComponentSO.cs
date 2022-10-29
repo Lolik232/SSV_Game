@@ -11,13 +11,10 @@ public abstract class ActionComponentSO : AnimatedComponentSO, IAnimated
 
 	[SerializeField] protected Parameter amountOfUsages;
 
-	[SerializeField] private List<AnimationClip> _animations = new();
-
 	protected List<Func<bool>> enterConditions = new();
 	protected List<Func<bool>> exitConditions = new();
 
 	protected List<UnityAction> prepareActions = new();
-
 
 	protected override void OnEnable()
 	{
@@ -53,9 +50,9 @@ public abstract class ActionComponentSO : AnimatedComponentSO, IAnimated
 		prepareActions.Clear();
 	}
 
-	public override void InitializeParameters()
+	public override void Initialize(GameObject origin)
 	{
-		base.InitializeParameters();
+		base.Initialize(origin);
 
 		duration.Set(duration.Max);
 		cooldown.Set(cooldown.Max);

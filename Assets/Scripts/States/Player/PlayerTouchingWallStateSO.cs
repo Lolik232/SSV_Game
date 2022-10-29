@@ -6,24 +6,30 @@ using UnityEngine;
 
 public class PlayerTouchingWallStateSO : StateSO
 {
-	[HideInInspector] [NonSerialized] protected new PlayerSO entity;
+	[SerializeField] protected InAirStateSO inAir;
+	[SerializeField] protected GroundedStateSO grounded;
+	[Space]
+
+	protected Movable movable;
 
 	protected override void OnEnable()
 	{
-		entity = (PlayerSO)base.entity;
-
 		base.OnEnable();
 
-		requiredCondition = () => entity.checkers.touchingWall && entity.checkers.touchingLedge;
+		transitions.Add(new TransitionItem(inAir, InAirCondition, InAirAction));
+		transitions.Add(new TransitionItem(grounded, GroundedCondition, GroundedAction));
+	}
 
-		transitions.Add(new TransitionItem(entity.states.inAir, InAirCondition, InAirAction));
-		transitions.Add(new TransitionItem(entity.states.grounded, GroundedCondition, GroundedAction));
+	public override void Initialize(GameObject origin)
+	{
+		base.Initialize(origin);
+		movable = origin.GetComponent<Movable>();
 	}
 
 	protected virtual bool InAirCondition()
 	{
 		return !entity.checkers.touchingWall ||
-					 (entity.controller.move.x != entity.direction.facing && !entity.controller.grab);
+					 (entity.controller.move.x != movable.FacingDirection && !entity.controller.grab);
 	}
 
 	protected virtual bool GroundedCondition()

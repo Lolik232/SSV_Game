@@ -13,6 +13,12 @@ public class PlayerDashAbilitySO : AbilitySO
 
 	private Vector2 _dashDirection;
 
+	protected Movable movable;
+	protected Crouchable crouchable;
+
+	private int _gravityHolder;
+	private int _velocityHolder;
+
 	protected override void OnEnable()
 	{
 		entity = base.entity as PlayerSO;
@@ -28,33 +34,39 @@ public class PlayerDashAbilitySO : AbilitySO
 		{
 			return entity.controller.dash &&
 						 _dashDirection != Vector2.zero &&
-						 !(entity.checkers.touchingCeiling && !entity.isStanding);
+						 !(entity.checkers.touchingCeiling && !crouchable.IsStanding);
 		});
 
 		exitConditions.Add(() =>
 		{
-			return entity.Velocity.magnitude <= entity.parameters.dashForce * _minProportion ||
+			return movable.Velocity.magnitude <= entity.parameters.dashForce * _minProportion ||
 						 (!entity.controller.dashInputHold && Time.time > startTime + duration * _minProportion);
 		});
 
 		enterActions.Add(() =>
 		{
-			entity.HoldGravity(_dashGravity);
-			entity.HoldVelocity(entity.parameters.dashForce * _dashDirection);
-			entity.RotateIntoDirection(Mathf.RoundToInt(_dashDirection.x));
+			_gravityHolder = movable.HoldGravity(_dashGravity);
+			_velocityHolder = movable.HoldVelocity(entity.parameters.dashForce * _dashDirection);
+			movable.TryRotateIntoDirection(Mathf.RoundToInt(_dashDirection.x));
 			entity.controller.dash = false;
-			entity.EnableTrail();
+			//movable.EnableTrail();
 		});
 
 		exitActions.Add(() =>
 		{
-			entity.ReleaseGravity();
-			entity.ReleaseVelocity();
-			entity.DisableTrail();
-			if (entity.Velocity.y > 0f)
+			movable.ReleaseGravity(_gravityHolder);
+			movable.ReleaseVelocity(_velocityHolder);
+			//movable.DisableTrail();
+			if (movable.Velocity.y > 0f)
 			{
-				entity.TrySetVelocityY(entity.Velocity.y * 0.1f);
+				movable.TrySetVelocityY(movable.Velocity.y * 0.1f);
 			}
 		});
+	}
+	public override void Initialize(GameObject origin)
+	{
+		base.Initialize(origin);
+		movable = origin.GetComponent<Movable>();
+		crouchable = origin.GetComponent<Crouchable>();
 	}
 }

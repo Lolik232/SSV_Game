@@ -30,10 +30,10 @@ public class HitSO : AnimatedComponentSO
 		});
 	}
 
-	public override void InitialzeBase(GameObject baseObject)
+	public override void Initialize(GameObject origin)
 	{
-		base.InitialzeBase(baseObject);
-		_transform = baseObject.transform;
+		base.Initialize(origin);
+		_transform = origin.transform;
 	}
 
 	public void OnHit(Vector2 hitposition)

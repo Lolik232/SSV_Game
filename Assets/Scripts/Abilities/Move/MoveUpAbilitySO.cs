@@ -1,5 +1,9 @@
+using UnityEngine;
+
 public abstract class MoveUpAbilitySO : AbilitySO
 {
+	protected Movable movable;
+
 	protected override void OnEnable()
 	{
 		base.OnEnable();
@@ -10,7 +14,14 @@ public abstract class MoveUpAbilitySO : AbilitySO
 
 		updateActions.Add(() =>
 		{
-			entity.TrySetVelocityY(entity.parameters.moveUpSpeed);
+			movable.TrySetVelocityY(movable.MoveUpSpeed);
 		});
 	}
+
+	public override void Initialize(GameObject origin)
+	{
+		base.Initialize(origin);
+		movable = origin.GetComponent<Movable>();
+	}
 }
+ 

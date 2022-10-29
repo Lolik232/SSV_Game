@@ -16,6 +16,9 @@ public abstract class WeaponSO : ActionComponentSO
 
 	protected int holdDirection;
 
+	protected Physical physical;
+	protected Movable movable;
+
 	protected override void OnEnable()
 	{
 		base.OnEnable();
@@ -39,14 +42,16 @@ public abstract class WeaponSO : ActionComponentSO
 		drawGizmosActions.Add(() =>
 		{
 			Gizmos.color = Color.black;
-			Gizmos.DrawWireSphere(entity.Center, attackDistance);
+			Gizmos.DrawWireSphere(physical.Center, attackDistance);
 			Gizmos.DrawWireSphere(attackTarget, attackRadius);
 		});
 	}
 
-	public void Initialize(Animator baseAnim, Animator anim)
+	public override void Initialize(GameObject origin)
 	{
-		this.anim = anim;
+		base.Initialize(origin);
+		physical = origin.GetComponent<Physical>();
+		movable = origin.GetComponent<Movable>();
 
 		attackDistance.Set(attackDistance.Max);
 		attackRadius.Set(attackRadius.Max);
@@ -68,15 +73,15 @@ public abstract class WeaponSO : ActionComponentSO
 	{
 		if (!directionBlocker.IsLocked)
 		{
-			int facingDirection = attackTarget.x > entity.Center.x ? 1 : -1;
+			int facingDirection = attackTarget.x > physical.Center.x ? 1 : -1;
 			//baseAnim.SetBool("mirror", facingDirection != entity.direction.facing);
-			entity.RotateIntoDirection(facingDirection);
+			movable.TryRotateIntoDirection(facingDirection);
 		}
 	}
 
 	private void DetermineAttackPosition()
 	{
-		attackOrigin = entity.Center;
+		attackOrigin = physical.Center;
 
 		Vector2 attackDirection = entity.controller.lookAtDirection;
 

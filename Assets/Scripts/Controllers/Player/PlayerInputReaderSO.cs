@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [CreateAssetMenu(fileName = "PlayerInputReader", menuName = "Player/Input/Reader")]
-public class PlayerInputReaderSO : BehaviourControllerSO
+public class PlayerInputReaderSO : MoveController
 {
 	[SerializeField] private float _jumpInputHoldTime;
 	[SerializeField] private float _dashInputPressTime;
@@ -26,6 +26,8 @@ public class PlayerInputReaderSO : BehaviourControllerSO
 	[NonSerialized] public bool jumpInputHold;
 	[NonSerialized] public bool dashInputHold;
 
+	protected Physical physical;
+
 	protected override void OnEnable()
 	{
 		base.OnEnable();
@@ -33,18 +35,19 @@ public class PlayerInputReaderSO : BehaviourControllerSO
 		updateActions.Add(() =>
 		{
 			lookAtPosition = _mainCamera.ScreenToWorldPoint(_mouseInputPosition);
-			lookAtDirection = (lookAtPosition - entity.Center).normalized;
-			lookAtDistance = (lookAtPosition - entity.Center).magnitude;
+			lookAtDirection = (lookAtPosition - physical.Center).normalized;
+			lookAtDistance = (lookAtPosition - physical.Center).magnitude;
 
 			jump &= Time.time < _jumpInputStartTime + _jumpInputHoldTime;
 			dash &= Time.time < _dashInputStartTime + _dashInputPressTime;
 		});
 	}
 
-	public override void InitialzeBase(GameObject baseObject)
+	public override void Initialize(GameObject origin)
 	{
-		base.InitialzeBase(baseObject);
-		_playerInput = baseObject.GetComponent<PlayerInput>();
+		base.Initialize(origin);
+		physical = origin.GetComponent<Physical>();
+		_playerInput = origin.GetComponent<PlayerInput>();
 		_mainCamera = Camera.main;
 	}
 

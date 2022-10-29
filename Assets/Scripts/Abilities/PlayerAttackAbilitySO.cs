@@ -19,22 +19,22 @@ public class PlayerAttackAbilitySO : AbilitySO
 		enterActions.Add(() =>
 		{
 			entity.controller.attack = false;
-			entity.weapons.Current.OnEnter();
+			//entity.weapons.Current.OnEnter();
 		});
 
 		exitActions.Add(() =>
 		{
-			entity.weapons.Current.OnExit();
+			//entity.weapons.Current.OnExit();
 		});
 	}
 
 	public void HoldDirection(int direction)
 	{
-		entity.weapons.Current.HoldDirection(direction);
+		//entity.weapons.Current.HoldDirection(direction);
 	}
 
 	public void ReleaseDirection()
 	{
-		entity.weapons.Current.ReleaseDirection();
+		//entity.weapons.Current.ReleaseDirection();
 	}
 }

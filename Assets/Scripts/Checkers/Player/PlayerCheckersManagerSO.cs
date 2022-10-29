@@ -58,8 +58,8 @@ public class PlayerCheckersManagerSO : CheckersManagerSO
 			Utility.DrawArea(_clampedBetweenWallsCheckPosition);
 
 			Gizmos.color = Color.yellow;
-			Gizmos.DrawWireCube(ledgeEndPosition + entity.Offset, entity.Size);
-			Gizmos.DrawWireCube(ledgeStartPosition + entity.Offset, entity.Size);
+			Gizmos.DrawWireCube(ledgeEndPosition + physical.Offset, physical.Size);
+			Gizmos.DrawWireCube(ledgeStartPosition + physical.Offset, physical.Size);
 
 			Utility.DrawLine(_groundCloseCheckPosition);
 			Gizmos.color = Color.red;
@@ -70,11 +70,12 @@ public class PlayerCheckersManagerSO : CheckersManagerSO
 		});
 	}
 
-	public override void InitialzeBase(GameObject baseObject)
+	public override void Initialize(GameObject origin)
 	{
-		base.InitialzeBase(baseObject);
-		_startLedgeOffset = new Vector2(entity.StandSize.x / 2 + CHECK_OFFSET, UNIT_SIZE * _ledgeCheckerHeight + CHECK_OFFSET);
-		_endLedgeOffset = new Vector2(entity.StandSize.x / 2 + CHECK_OFFSET, CHECK_OFFSET);
+		base.Initialize(origin);
+
+		_startLedgeOffset = new Vector2(crouchable.StandSize.x / 2 + CHECK_OFFSET, UNIT_SIZE * _ledgeCheckerHeight + CHECK_OFFSET);
+		_endLedgeOffset = new Vector2(crouchable.StandSize.x / 2 + CHECK_OFFSET, CHECK_OFFSET);
 	}
 
 	protected override void UpdateCheckersPositions()
@@ -82,11 +83,11 @@ public class PlayerCheckersManagerSO : CheckersManagerSO
 		base.UpdateCheckersPositions();
 
 		_headHeight = _ledgeCheckerHeight - wallCheckerHeight;
-		workspace = new(entity.Center.x, entity.Center.y - checkerOffset.y);
+		workspace = new(physical.Center.x, physical.Center.y - checkerOffset.y);
 		_groundCloseCheckPosition = new Tuple<Vector2, Vector2>(workspace, new(workspace.x, workspace.y - _groundCloseCheckDistance));
 		workspace = new Vector2(ledgeEndPosition.x, ledgeEndPosition.y + UNIT_SIZE - ceilingCheckDistance / 2);
 		_ceilingWhenClimbCheckPosition = new Tuple<Vector2, Vector2>(workspace, new(workspace.x, workspace.y + ceilingCheckDistance));
-		workspace = new Vector2(rightCheckerPositionX, entity.Position.y + UNIT_SIZE * _ledgeCheckerHeight);
+		workspace = new Vector2(rightCheckerPositionX, physical.Position.y + UNIT_SIZE * _ledgeCheckerHeight);
 		_ledgeCheckPosition = new Tuple<Vector2, Vector2>(workspace, new(workspace.x + facingRight * _ledgeCheckDistance, workspace.y));
 
 		workspace = _ledgeCheckPosition.Item2;

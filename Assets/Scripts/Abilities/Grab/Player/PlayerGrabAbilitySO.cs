@@ -8,6 +8,10 @@ public class PlayerGrabAbilitySO : AbilitySO
 {
 	[HideInInspector] [NonSerialized] protected new PlayerSO entity;
 
+	protected Movable movable;
+
+	private int _positionHolder;
+
 	protected override void OnEnable()
 	{
 		entity = (PlayerSO)base.entity;
@@ -20,12 +24,18 @@ public class PlayerGrabAbilitySO : AbilitySO
 
 		enterActions.Add(() =>
 		{
-			entity.HoldPosition(entity.Position);
+			_positionHolder = movable.HoldPosition(movable.Position);
 		});
 
 		exitActions.Add(() =>
 		{
-			entity.ReleasePosition();
+			movable.ReleasePosition(_positionHolder);
 		});
+	}
+
+	public override void Initialize(GameObject origin)
+	{
+		base.Initialize(origin);
+		movable = origin.GetComponent<Movable>();
 	}
 }

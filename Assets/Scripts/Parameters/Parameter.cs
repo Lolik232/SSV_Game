@@ -21,7 +21,10 @@ public class Parameter
 		set => Set(value);
 	}
 
-
+	public void Initialize()
+	{
+		_current = _max;
+	}
 
 	public void Set(float value)
 	{

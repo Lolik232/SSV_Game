@@ -33,11 +33,11 @@ public abstract class AnimatedComponentSO : EntityComponentSO, IAnimated
 		animationFinishActions.Clear();
 	}
 
-	public override void InitialzeBase(GameObject baseObject)
+	public override void Initialize(GameObject origin)
 	{
-		base.InitialzeBase(baseObject);
+		base.Initialize(origin);
 
-		anim = baseObject.GetComponent<Animator>();
+		anim = origin.GetComponent<Animator>();
 	}
 
 	public virtual void OnAnimationTrigger()
@@ -58,17 +58,4 @@ public abstract class AnimatedComponentSO : EntityComponentSO, IAnimated
 	}
 }
 
-[Serializable]
-public struct AnimationBool
-{
-	public string name;
-	public bool onEnterValue;
-	public bool onExitValue;
 
-	public AnimationBool(string name, bool onEnterValue, bool onExitValue)
-	{
-		this.name = name;
-		this.onEnterValue = onEnterValue;
-		this.onExitValue = onExitValue;
-	}
-}

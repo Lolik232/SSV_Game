@@ -26,7 +26,17 @@ public static class Utility
 	{
 		foreach (var animBool in animBools)
 		{
-			anim.SetBool(animBool.name, animBool.onEnterValue);
+			switch (animBool.mode)
+			{
+				case AnimationBool.EnableMode.Enable:
+				case AnimationBool.EnableMode.EnableOnEnterDisableOnExit:
+					anim.SetBool(animBool.name, true);
+					break;
+				case AnimationBool.EnableMode.Disable:
+				case AnimationBool.EnableMode.DisableOnEnterEnableOnExit:
+					anim.SetBool(animBool.name, false);
+					break;
+			}
 		}
 	}
 
@@ -34,9 +44,16 @@ public static class Utility
 	{
 		foreach (var animBool in animBools)
 		{
-			if (animBool.onExitValue != animBool.onEnterValue)
+			switch (animBool.mode)
 			{
-				anim.SetBool(animBool.name, animBool.onExitValue);
+				case AnimationBool.EnableMode.Disable:
+				case AnimationBool.EnableMode.EnableOnEnterDisableOnExit:
+					anim.SetBool(animBool.name, false);
+					break;
+				case AnimationBool.EnableMode.Enable:
+				case AnimationBool.EnableMode.DisableOnEnterEnableOnExit:
+					anim.SetBool(animBool.name, true);
+					break;
 			}
 		}
 	}
@@ -49,15 +66,15 @@ public static class Utility
 		}
 	}
 
-	static public void BlockAll(List<BlockedAbility> blockedAbilities)
+	static public void BlockAll(List<PermitedAbility> blockedAbilities)
 	{
 		foreach (var blockedAbility in blockedAbilities)
 		{
-			blockedAbility.component.Block(blockedAbility.needHardExit);
+			blockedAbility.component.Block();
 		}
 	}
 
-	static public void UnlockAll(List<BlockedAbility> blockedAbilities)
+	static public void UnlockAll(List<PermitedAbility> blockedAbilities)
 	{
 		foreach (var blockedAbility in blockedAbilities)
 		{
@@ -70,7 +87,7 @@ public static class Utility
 		foreach (var blockedState in blockedStates)
 		{
 			blockedState.component.SetBlockedTransition(blockedState.target);
-			blockedState.component.Block(blockedState.needHardExit);
+			blockedState.component.Block();
 		}
 	}
 
@@ -92,17 +109,31 @@ public static class Utility
 		return checkFunction(pointA, pointB, whatIsTarget);
 	}
 
-	static public void DrawArea(Tuple<Vector2, Vector2> ray)
+	static public void DrawArea(CheckArea area, bool detected, Color color)
 	{
-		var a = ray.Item1;
-		var b = ray.Item2;
+		var a = area.a;
+		var b = area.b;
 
+		Gizmos.color = SetTargetDetectedColor(detected, color);
 		Gizmos.DrawLine(a, b);
 		Gizmos.DrawWireCube((a + b) / 2, new Vector2(Mathf.Max(a.x, b.x) - Mathf.Min(a.x, b.x), Mathf.Max(a.y, b.y) - Mathf.Min(a.y, b.y)));
 	}
 
-	static public void DrawLine(Tuple<Vector2, Vector2> ray)
+	static public void DrawLine(CheckArea ray, bool detected, Color color)
 	{
-		Gizmos.DrawLine(ray.Item1, ray.Item2);
+		Gizmos.color = SetTargetDetectedColor(detected, color);
+		Gizmos.DrawLine(ray.a, ray.b);
+	}
+
+	static private Color SetTargetDetectedColor(bool detected, Color color)
+	{
+		if (!detected)
+		{
+			return color;
+		}
+		else
+		{
+			return new Color(color.r * 2, color.g * 2, color.b * 2);
+		}
 	}
 }

@@ -40,6 +40,10 @@ public abstract class CheckersManagerSO : StaticManagerSO<bool>
 	protected float rightCheckerPositionX;
 	protected float leftCheckerPositionX;
 
+	protected Physical physical;
+	protected Movable movable;
+	protected Crouchable crouchable;
+
 	protected override void OnEnable()
 	{
 		base.OnEnable();
@@ -58,7 +62,7 @@ public abstract class CheckersManagerSO : StaticManagerSO<bool>
 		drawGizmosActions.Add(() =>
 		{
 			Gizmos.color = Color.green;
-			Gizmos.DrawWireCube(entity.Position + entity.Offset, entity.Size);
+			Gizmos.DrawWireCube(physical.Position + physical.Offset, physical.Size);
 
 			Gizmos.color = Color.red;
 			Utility.DrawArea(groundCheckPosition);
@@ -69,21 +73,29 @@ public abstract class CheckersManagerSO : StaticManagerSO<bool>
 		});
 	}
 
+	public override void Initialize(GameObject origin)
+	{
+		base.Initialize(origin);
+		physical = origin.GetComponent<Physical>();
+		movable = origin.GetComponent<Movable>();
+		crouchable = origin.GetComponent<Crouchable>();
+	}
+
 	protected virtual void UpdateCheckersPositions()
 	{
-		checkerOffset = entity.Size / 2 - Vector2.one * CHECK_OFFSET;
-		facingRight = entity.direction.facing;
-		facingLeft = -entity.direction.facing;
-		rightCheckerPositionX = entity.Center.x + facingRight * checkerOffset.x;
-		leftCheckerPositionX = entity.Center.x + facingLeft * checkerOffset.x;
+		checkerOffset = physical.Size / 2 - Vector2.one * CHECK_OFFSET;
+		facingRight = movable.FacingDirection;
+		facingLeft = -movable.FacingDirection;
+		rightCheckerPositionX = physical.Center.x + facingRight * checkerOffset.x;
+		leftCheckerPositionX = physical.Center.x + facingLeft * checkerOffset.x;
 
-		workspace = entity.Center - checkerOffset;
-		groundCheckPosition = new Tuple<Vector2, Vector2>(workspace, new(entity.Center.x + checkerOffset.x, workspace.y - groundCheckDistance));
+		workspace = physical.Center - checkerOffset;
+		groundCheckPosition = new Tuple<Vector2, Vector2>(workspace, new(physical.Center.x + checkerOffset.x, workspace.y - groundCheckDistance));
 
-		workspace = entity.Center + checkerOffset;
-		ceilingCheckPosition = new Tuple<Vector2, Vector2>(new(entity.Center.x - checkerOffset.x, workspace.y + ceilingCheckDistance), workspace);
+		workspace = physical.Center + checkerOffset;
+		ceilingCheckPosition = new Tuple<Vector2, Vector2>(new(physical.Center.x - checkerOffset.x, workspace.y + ceilingCheckDistance), workspace);
 
-		workspace = new Vector2(rightCheckerPositionX, entity.Position.y + UNIT_SIZE * wallCheckerHeight);
+		workspace = new Vector2(rightCheckerPositionX, physical.Position.y + UNIT_SIZE * wallCheckerHeight);
 		wallCheckPosition = new Tuple<Vector2, Vector2>(workspace, new(workspace.x + facingRight * wallCheckDistance, workspace.y));
 		workspace = new Vector2(leftCheckerPositionX, workspace.y);
 		wallBackCheckPosition = new Tuple<Vector2, Vector2>(workspace, new(workspace.x + facingLeft * wallCheckDistance, workspace.y));
@@ -103,10 +115,10 @@ public abstract class CheckersManagerSO : StaticManagerSO<bool>
 	{
 		RaycastHit2D hit = Utility.Check(Physics2D.Linecast, wallCheckPosition, whatIsTarget);
 		touchingWall = hit;
-		wallDirection = touchingWall ? -entity.direction.facing : entity.direction.facing;
+		wallDirection = touchingWall ? -movable.FacingDirection : movable.FacingDirection;
 		if (touchingWall)
 		{
-			wallPosition.Set(wallCheckPosition.Item1.x + entity.direction.facing * hit.distance, wallCheckPosition.Item1.y);
+			wallPosition.Set(wallCheckPosition.Item1.x + movable.FacingDirection * hit.distance, wallCheckPosition.Item1.y);
 		}
 	}
 

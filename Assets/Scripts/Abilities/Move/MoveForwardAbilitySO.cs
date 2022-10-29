@@ -8,36 +8,39 @@ public abstract class MoveForwardAbilitySO : AbilitySO
 	private float _endSpeed;
 	private float _cureentSpeed;
 
+	protected Movable movable;
+
 	protected override void OnEnable()
 	{
 		base.OnEnable();
 
-		enterConditions.Add(() => entity.controller.move.x == entity.direction.facing);
+		enterConditions.Add(() => entity.controller.move.x == movable.FacingDirection);
 
-		exitConditions.Add(() => entity.controller.move.x != entity.direction.facing);
+		exitConditions.Add(() => entity.controller.move.x != movable.FacingDirection);
 
 		enterActions.Add(() =>
 		{
-			_startSpeed = Mathf.Abs(entity.Velocity.x);
-			_endSpeed = entity.parameters.moveForwardSpeed;
+			_startSpeed = Mathf.Abs(movable.Velocity.x);
+			_endSpeed = movable.MoveForwardSpeed;
 		});
 
 		updateActions.Add(() =>
 		{
 			Accelerate();
-			entity.TrySetVelocityX(entity.direction.facing * _cureentSpeed);
-			entity.TryRotateIntoDirection(entity.controller.move.x);
+			movable.TrySetVelocityX(movable.FacingDirection * _cureentSpeed);
+			movable.TryRotateIntoDirection(entity.controller.move.x);
 		});
 
 		exitActions.Add(() =>
 		{
-			entity.TrySetVelocityX(0f);
+			movable.TrySetVelocityX(0f);
 		});
 	}
 
-	public override void InitializeParameters()
+	public override void Initialize(GameObject origin)
 	{
-		base.InitializeParameters();
+		base.Initialize(origin);
+		movable = origin.GetComponent<Movable>();
 		accelerationTime.Set(accelerationTime.Max);
 	}
 

@@ -6,9 +6,14 @@ using UnityEngine;
 public abstract class AbilitySO : ActionComponentSO, IBlockable
 {
 	[SerializeField] private List<BlockedState> _blockedStates = new();
-	[SerializeField] private List<BlockedAbility> _blockedAbilities = new();
+	[SerializeField] private List<PermitedAbility> _blockedAbilities = new();
 
 	private readonly Blocker _blocker = new();
+
+	public bool IsLocked
+	{
+		get => _blocker.IsLocked;
+	}
 
 	protected override void OnEnable()
 	{
@@ -28,17 +33,13 @@ public abstract class AbilitySO : ActionComponentSO, IBlockable
 
 		enterConditions.Add(() =>
 		{
-			return !_blocker.IsLocked;
+			return !IsLocked;
 		});
 	}
 
-	public void Block(bool needHardExit)
+	public void Block()
 	{
-		if (needHardExit)
-		{
-			OnExit();
-		}
-
+		OnExit();
 		_blocker.AddBlock();
 	}
 
@@ -49,12 +50,12 @@ public abstract class AbilitySO : ActionComponentSO, IBlockable
 }
 
 [Serializable]
-public struct BlockedAbility
+public struct PermitedAbility
 {
 	public AbilitySO component;
 	public bool needHardExit;
 
-	public BlockedAbility(AbilitySO component, bool needHardExit)
+	public PermitedAbility(AbilitySO component, bool needHardExit)
 	{
 		this.component = component;
 		this.needHardExit = needHardExit;

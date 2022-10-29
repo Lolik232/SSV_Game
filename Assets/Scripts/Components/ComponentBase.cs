@@ -7,8 +7,7 @@ public abstract class ComponentBase : BaseMonoBehaviour
 	protected override void Awake()
 	{
 		base.Awake();
-		component.InitialzeBase(gameObject);
-		component.InitializeParameters();
+		component.Initialize(gameObject);
 	}
 
 	protected override void Start()

@@ -4,11 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public abstract class StateSO : AnimatedComponentSO, IBlockable
+public abstract class StateSO : BaseScriptableObject, IComponent, IBlockable
 {
-	[SerializeField] private List<BlockedAbility> _blockedAbilities = new();
-
-	[SerializeField] private string _stateName;
+	[SerializeField] private StateMachineSO _stateMachine;
+	[SerializeField] private List<AnimationBool> _animBools;
+	[Space]
+	[SerializeField] private List<PermitedAbility> _permitedAbilities;
+	[Space]
 
 	protected List<TransitionItem> transitions = new();
 
@@ -16,33 +18,34 @@ public abstract class StateSO : AnimatedComponentSO, IBlockable
 
 	private readonly Blocker _blocker = new();
 
-	protected Func<bool> requiredCondition;
+	protected Animator anim;
+
+	public bool IsLocked
+	{
+		get => _blocker.IsLocked;
+	}
 
 	protected override void OnEnable()
 	{
-		requiredCondition = () => true;
-
 		base.OnEnable();
 
 		enterActions.Add(() =>
 		{
-			Utility.BlockAll(_blockedAbilities);
-			anim.SetBool(_stateName, true);
+			Utility.UnlockAll(_permitedAbilities);
+			Utility.SetAnimBoolsOnEnter(anim, _animBools);
 		});
 
 		exitActions.Add(() =>
 		{
-			Utility.UnlockAll(_blockedAbilities);
-			anim.SetBool(_stateName, false);
-		});
-
-		fixedUpdateActions.Add(() =>
-		{
-			entity.checkers.DoChecks();
+			Utility.BlockAll(_permitedAbilities);
+			Utility.SetAnimBoolsOnExit(anim, _animBools);
 		});
 	}
 
-	public void Initialize(Animator animator) => anim = animator;
+	public virtual void Initialize(GameObject origin)
+	{
+		anim = origin.GetComponent<Animator>();
+	}
 
 	public override void OnUpdate()
 	{
@@ -61,10 +64,10 @@ public abstract class StateSO : AnimatedComponentSO, IBlockable
 
 		foreach (var transition in transitions)
 		{
-			if (!transition.toState._blocker.IsLocked && transition.toState.requiredCondition() && transition.condition())
+			if (!transition.toState.IsLocked && transition.condition())
 			{
 				transition.action();
-				entity.states.GetNext(transition.toState);
+				_stateMachine.GetNext(transition.toState);
 				return true;
 			}
 		}
@@ -77,13 +80,9 @@ public abstract class StateSO : AnimatedComponentSO, IBlockable
 		_blockedTransition = blockedTransition;
 	}
 
-	public void Block(bool needHardExit)
+	public void Block()
 	{
-		if (needHardExit && isActive)
-		{
-			entity.states.GetNext(_blockedTransition);
-		}
-
+		_stateMachine.GetNext(_blockedTransition);
 		_blocker.AddBlock();
 	}
 
@@ -113,12 +112,31 @@ public struct BlockedState
 {
 	public StateSO component;
 	public StateSO target;
-	public bool needHardExit;
 
-	public BlockedState(StateSO component, StateSO target, bool needHardExit)
+	public BlockedState(StateSO component, StateSO target)
 	{
 		this.component = component;
 		this.target = target;
-		this.needHardExit = needHardExit;
+	}
+}
+
+[Serializable]
+public struct AnimationBool
+{
+	public enum EnableMode
+	{
+		Enable, 
+		Disable, 
+		EnableOnEnterDisableOnExit,
+		DisableOnEnterEnableOnExit
+	} 
+
+	public string name;
+	public EnableMode mode;
+
+	public AnimationBool(string name, EnableMode enable)
+	{
+		this.name = name;
+		this.mode = enable;
 	}
 }

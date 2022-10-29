@@ -19,6 +19,10 @@ public class PlayerWallJumpAbilitySO : AbilitySO
 
 	private int _jumpDirection;
 
+	protected Movable movable;
+
+	private int _velocityHolder;
+
 	protected override void OnEnable()
 	{
 		entity = (PlayerSO)base.entity;
@@ -41,14 +45,14 @@ public class PlayerWallJumpAbilitySO : AbilitySO
 		exitConditions.Add(() =>
 		{
 			return _outOfWall &&
-						 (Mathf.Abs(entity.Velocity.x) <= 0.01f || entity.Velocity.y < 0.01f);
+						 (Mathf.Abs(movable.Velocity.x) <= 0.01f || movable.Velocity.y < 0.01f);
 		});
 
 		enterActions.Add(() =>
 		{
 			_outOfWall = false;
-			entity.HoldVelocity(entity.parameters.wallJumpForce, _angle, _jumpDirection);
-			entity.RotateIntoDirection(_jumpDirection);
+			_velocityHolder = movable.HoldVelocity(entity.parameters.wallJumpForce, _angle, _jumpDirection);
+			movable.TryRotateIntoDirection(_jumpDirection);
 			entity.controller.jump = false;
 		});
 
@@ -62,8 +66,14 @@ public class PlayerWallJumpAbilitySO : AbilitySO
 
 		exitActions.Add(() =>
 		{
-			entity.ReleaseVelocity();
+			movable.ReleaseVelocity(_velocityHolder);
 		});
+	}
+
+	public override void Initialize(GameObject origin)
+	{
+		base.Initialize(origin);
+		movable = origin.GetComponent<Movable>();
 	}
 
 	public bool IsCoyoteTime() => Time.time < _startCoyoteTime + _coyoteTime;

@@ -2,306 +2,201 @@ using System;
 
 using UnityEngine;
 
-public abstract class EntitySO : ComponentSO
+public abstract class EntitySO : ComponentSO /*: ContainerSO, IPhysical, IMovable, ICrouchable*/
 {
-	public const int DIRECTION_LEFT = -1;
-	public const int DIRECTION_RIGHT = 1;
-
 	public AbilitiesManagerSO abilities;
 	public StateMachineSO states;
 	public CheckersManagerSO checkers;
 	public ParametersManagerSO parameters;
-	public BehaviourControllerSO controller;
+	public MoveController controller;
 
-	[SerializeField] private Vector2 _standOffset;
-	[SerializeField] private Vector2 _standSize;
-	[SerializeField] private Vector2 _crouchOffset;
-	[SerializeField] private Vector2 _crouchSize;
+	//[SerializeField] private Physical _physical;
+	//[SerializeField] private Movable _movable;
+	//[SerializeField] private Crouchable _crouchable;
 
+	//public Vector2 Position
+	//{
+	//	get => _physical.Position;
+	//}
+	//public Vector2 Velocity
+	//{
+	//	get => _physical.Velocity;
+	//}
+	//public float Gravity
+	//{
+	//	get => _physical.Gravity;
+	//}
+	//public int FacingDirection
+	//{
+	//	get => _movable.FacingDirection;
+	//}
+	//public int BodyDirection
+	//{
+	//	get => _movable.BodyDirection;
+	//}
+	//public Parameter MoveUpSpeed
+	//{
+	//	get => _movable.MoveUpSpeed;
+	//	set => _movable.MoveUpSpeed = value;
+	//}
+	//public Parameter MoveDownSpeed
+	//{
+	//	get => _movable.MoveDownSpeed;
+	//	set => _movable.MoveDownSpeed = value;
+	//}
+	//public Parameter MoveForwardSpeed
+	//{
+	//	get => _movable.MoveForwardSpeed;
+	//	set => _movable.MoveForwardSpeed = value;
+	//}
+	//public Parameter MoveBackwardSpeed
+	//{
+	//	get => _movable.MoveBackwardSpeed;
+	//	set => _movable.MoveBackwardSpeed = value;
+	//}
+	//public Vector2 Size
+	//{
+	//	get => _physical.Size;
+	//}
+	//public Vector2 Offset
+	//{
+	//	get => _physical.Offset;
+	//}
+	//public Vector2 Center
+	//{
+	//	get => _physical.Center;
+	//}
+	//public Vector2 StandSize
+	//{
+	//	get => _crouchable.StandSize;
+	//}
+	//public Vector2 StandOffset
+	//{
+	//	get => _crouchable.StandOffset;
+	//}
+	//public Vector2 StandCenter
+	//{
+	//	get => _crouchable.StandCenter;
+	//}
+	//public Vector2 CrouchSize
+	//{
+	//	get => _crouchable.CrouchSize;
+	//}
+	//public Vector2 CrouchOffset
+	//{
+	//	get => _crouchable.CrouchOffset;
+	//}
+	//public Vector2 CrouchCenter
+	//{
+	//	get => _crouchable.CrouchCenter;
+	//}
+	//public bool IsStanding
+	//{
+	//	get => _crouchable.IsStanding;
+	//}
 
-	public EntityDirection direction = new();
-	[NonSerialized] public bool isStanding;
+	//public void TrySetPosition(Vector2 position)
+	//{
+	//	_movable.TrySetPosition(position);
+	//}
 
-	private Transform _transform;
-	private BoxCollider2D _col;
-	private Rigidbody2D _rb;
-	private TrailRenderer _tr;
+	//public void TrySetPositionX(float x)
+	//{
+	//	_movable.TrySetPositionX(x);
+	//}
 
-	private readonly Blocker _positionBlocker = new();
-	private readonly Blocker _velocityBlocker = new();
-	private readonly Blocker _gravityBlocker = new();
-	private readonly Blocker _directionBlocker = new();
+	//public void TrySetPositionY(float y)
+	//{
+	//	_movable.TrySetPositionY(y);
+	//}
 
-	private Vector2 _holdPosition;
-	private Vector2 _cachedVelocity;
-	private float _cachedGravity;
+	//public void TrySetVelocity(Vector2 velocity)
+	//{
+	//	_movable.TrySetVelocity(velocity);
+	//}
 
-	public Vector2 Velocity => _rb.velocity;
+	//public void TrySetVelocity(float speed, Vector2 angle, int direction)
+	//{
+	//	_movable.TrySetVelocity(speed, angle, direction);
+	//}
 
-	public Vector2 Position => _transform.position;
+	//public void TrySetVelocityX(float x)
+	//{
+	//	_movable.TrySetVelocityX(x);
+	//}
 
-	public Vector2 Size => _col.size;
+	//public void TrySetVelocityY(float y)
+	//{
+	//	_movable.TrySetVelocityY(y);
+	//}
 
-	public Vector2 Offset => _col.offset;
+	//public void TrySetGravity(float gravity)
+	//{
+	//	_movable.TrySetGravity(gravity);
+	//}
 
-	public Vector2 Center => Position + Offset;
+	//public void TryRotateIntoDirection(int direction)
+	//{
+	//	_movable.TryRotateIntoDirection(direction);
+	//}
 
-	public Vector2 StandOffset => _standOffset;
+	//public void RotateBodyIntoDirection(int direction)
+	//{
+	//	_movable.RotateBodyIntoDirection(direction);
+	//}
 
-	public Vector2 StandSize => _standSize;
+	//public int HoldPosition(Vector2 position)
+	//{
+	//	return _movable.HoldPosition(position);
+	//}
 
-	public Vector2 StandCenter => Position + StandOffset;
+	//public int HoldVeclocity(Vector2 velocity)
+	//{
+	//	return _movable.HoldVeclocity(velocity);
+	//}
 
-	public Vector2 CrouchSize => _crouchSize;
+	//public int HoldGravity(float gravity)
+	//{
+	//	return _movable.HoldGravity(gravity);
+	//}
 
-	public Vector2 CrouchOffset => _crouchOffset;
+	//public int HoldDirection(int direction)
+	//{
+	//	return _movable.HoldDirection(direction);
+	//}
 
-	public Vector2 CrouchCenter => Position + CrouchOffset;
+	//public void ReleasePosition(int id)
+	//{
+	//	_movable.ReleasePosition(id);
+	//}
 
-	public float Gravity => _rb.gravityScale;
+	//public void ReleaseVelocity(int id)
+	//{
+	//	_movable.ReleaseVelocity(id);
+	//}
 
-	protected override void OnEnable()
-	{
-		base.OnEnable();
+	//public void ReleaseGravity(int id)
+	//{
+	//	_movable.ReleaseGravity(id);
+	//}
 
-		enterActions.Add(() =>
-		{
-			Stand();
-			RotateIntoDirection(DIRECTION_RIGHT);
-		});
+	//public void ReleaseDirection(int id)
+	//{
+	//	_movable.ReleaseDirection(id);
+	//}
 
-		updateActions.Add(() =>
-		{
-			if (_positionBlocker.IsLocked)
-			{
-				_transform.position = _holdPosition;
-			}
-		});
-	}
+	//public void Stand()
+	//{
+	//	_crouchable.Stand();
+	//}
 
-	public override void InitialzeBase(GameObject baseObject)
-	{
-		base.InitialzeBase(baseObject);
+	//public void Crouch()
+	//{
+	//	_crouchable.Crouch();
+	//}
 
-		_transform = baseObject.transform;
-		_rb = baseObject.GetComponent<Rigidbody2D>();
-		_col = baseObject.GetComponent<BoxCollider2D>();
-		_tr = baseObject.GetComponent<TrailRenderer>();
-	}
-
-	public void TryRotateIntoDirection(int direction)
-	{
-		if (_directionBlocker.IsLocked)
-		{
-			return;
-		}
-
-		RotateIntoDirection(direction);
-	}
-
-	public void RotateIntoDirection(int direction)
-	{
-		if (direction == 0)
-		{
-			return;
-		}
-
-		this.direction.facing = direction;
-		RotateBodyIntoDirection(direction);
-	}
-
-	public void RotateBodyIntoDirection(int direction)
-	{
-		if (direction == 0)
-		{
-			return;
-		}
-
-		this.direction.body = direction;
-		switch (direction)
-		{
-			case DIRECTION_RIGHT:
-				_transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-				break;
-			case DIRECTION_LEFT:
-				_transform.rotation = Quaternion.Euler(0f, 180f, 0f);
-				break;
-			default:
-				break;
-		}
-	}
-
-	public void TrySetVelocity(float velocity, Vector2 angle, int direction)
-	{
-		TrySetVelocity(new Vector2(angle.normalized.x * velocity * direction, angle.normalized.y * velocity));
-	}
-
-	public void TrySetVelocityX(float xVelocity)
-	{
-		TrySetVelocity(new Vector2(xVelocity, _rb.velocity.y));
-	}
-
-	public void TrySetVelocityY(float yVelocity)
-	{
-		TrySetVelocity(new Vector2(_rb.velocity.x, yVelocity));
-	}
-
-	public void TrySetVelocityZero()
-	{
-		TrySetVelocity(Vector2.zero);
-	}
-
-	public void TrySetVelocity(Vector2 velocity)
-	{
-		if (!_velocityBlocker.IsLocked)
-		{
-			_rb.velocity = velocity;
-		}
-		else
-		{
-			CacheVelocity(velocity);
-		}
-	}
-
-	public void TrySetGravity(float gravity)
-	{
-		if (!_gravityBlocker.IsLocked)
-		{
-			_rb.gravityScale = gravity;
-		}
-		else
-		{
-			CacheGravity(gravity);
-		}
-	}
-
-	public void HoldVelocity(float velocity, Vector2 angle, int direction)
-	{
-		HoldVelocity(new Vector2(angle.normalized.x * velocity * direction, angle.normalized.y * velocity));
-	}
-
-	public void HoldVelocity(Vector2 velocit)
-	{
-		if (!_velocityBlocker.IsLocked)
-		{
-			CacheVelocity(_rb.velocity);
-		}
-
-		_rb.velocity = velocit;
-		_velocityBlocker.AddBlock();
-	}
-
-	public void ReleaseVelocity()
-	{
-		_velocityBlocker.RemoveBlock();
-		if (!_velocityBlocker.IsLocked)
-		{
-			_rb.velocity = _cachedVelocity;
-		}
-	}
-
-	public void CacheVelocity(Vector2 velocity)
-	{
-		_cachedVelocity = velocity;
-	}
-
-	public void HoldGravity(float gravity)
-	{
-		if (!_gravityBlocker.IsLocked)
-		{
-			CacheGravity(_rb.gravityScale);
-		}
-
-		_rb.gravityScale = gravity;
-		_gravityBlocker.AddBlock();
-	}
-
-	public void ReleaseGravity()
-	{
-		_gravityBlocker.RemoveBlock();
-		if (!_gravityBlocker.IsLocked)
-		{
-			_rb.gravityScale = _cachedGravity;
-		}
-	}
-
-	public void CacheGravity(float gravity)
-	{
-		_cachedGravity = gravity;
-	}
-
-	public void HoldDirection(int direction)
-	{
-		RotateIntoDirection(direction);
-		_directionBlocker.AddBlock();
-	}
-
-	public void ReleaseDirection()
-	{
-		_directionBlocker.RemoveBlock();
-	}
-
-	public void HoldPosition(Vector2 holdPosition)
-	{
-		if (!_positionBlocker.IsLocked)
-		{
-			HoldGravity(0f);
-			HoldVelocity(Vector2.zero);
-			CacheVelocity(Vector2.zero);
-		}
-
-		_holdPosition = holdPosition;
-		_transform.position = holdPosition;
-		_positionBlocker.AddBlock();
-	}
-
-	public void ReleasePosition()
-	{
-		_positionBlocker.RemoveBlock();
-		if (!_positionBlocker.IsLocked)
-		{
-			ReleaseGravity();
-			ReleaseVelocity();
-		}
-	}
-
-	public void MoveTo(Vector2 position)
-	{
-		_transform.position = position;
-	}
-
-	public void MoveToX(float x)
-	{
-		_transform.position = new Vector2(x, _transform.position.y);
-	}
-
-	public void MoveToY(float y)
-	{
-		_transform.position = new Vector2(_transform.position.x, y);
-	}
-
-	public void Stand()
-	{
-		isStanding = true;
-		_col.size = _standSize;
-		_col.offset = _standOffset;
-	}
-
-	public void Crouch()
-	{
-		isStanding = false;
-		_col.size = _crouchSize;
-		_col.offset = _crouchOffset;
-	}
-
-	public void EnableTrail()
-	{
-		_tr.emitting = true;
-	}
-
-	public void DisableTrail()
-	{
-		_tr.emitting = false;
-		_tr.Clear();
-	}
+	//protected override void OnEnable()
+	//{
+	//	base.OnEnable();
+	//}
 }

@@ -1,5 +1,7 @@
 using System;
 
+using Unity.VisualScripting;
+
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerInAirState", menuName = "States/In Air/Player")]
@@ -19,7 +21,7 @@ public class PlayerInAirStateSO : InAirStateSO
 
 	protected virtual bool TouchingWallCondition()
 	{
-		return entity.controller.grab || entity.controller.move.x == entity.direction.facing;
+		return entity.controller.grab || entity.controller.move.x == movable.FacingDirection;
 	}
 
 	protected virtual void TouchingWallAction()
