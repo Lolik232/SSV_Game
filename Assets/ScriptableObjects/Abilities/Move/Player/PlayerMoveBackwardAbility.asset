@@ -13,8 +13,13 @@ MonoBehaviour:
   m_Name: PlayerMoveBackwardAbility
   m_EditorClassIdentifier: 
   entity: {fileID: 11400000, guid: c765f728276573247bf28102c833d262, type: 2}
-  animBoolNames:
-  - moveBackward
+  _animBools:
+  - name: backward
+    onEnterValue: 1
+    onExitValue: 0
+  - name: move
+    onEnterValue: 1
+    onExitValue: 0
   duration:
     _min: 0
     _max: 0
@@ -24,7 +29,11 @@ MonoBehaviour:
   amountOfUsages:
     _min: 0
     _max: 0
+  _animations: []
   _blockedStates: []
   _blockedAbilities:
   - component: {fileID: 11400000, guid: 841b3a425249cc649b352e996d4ee736, type: 2}
     needHardExit: 1
+  minRotateTime:
+    _min: 0
+    _max: 0.1

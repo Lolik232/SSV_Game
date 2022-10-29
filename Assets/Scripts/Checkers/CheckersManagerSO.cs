@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
@@ -15,12 +14,10 @@ public abstract class CheckersManagerSO : StaticManagerSO<bool>
 	[SerializeField] protected float wallCheckDistance;
 
 	[SerializeField] protected float wallCheckerHeight;
-	
+
 	[NonSerialized] public int wallDirection;
 
 	[NonSerialized] public Vector2 wallPosition;
-	[NonSerialized] public Vector2 ledgeStartPosition;
-	[NonSerialized] public Vector2 ledgeEndPosition;
 
 	[NonSerialized] public bool grounded;
 	[NonSerialized] public bool touchingCeiling;
@@ -63,10 +60,6 @@ public abstract class CheckersManagerSO : StaticManagerSO<bool>
 			Gizmos.color = Color.green;
 			Gizmos.DrawWireCube(entity.Position + entity.Offset, entity.Size);
 
-			Gizmos.color = Color.yellow;
-			Gizmos.DrawWireCube(ledgeEndPosition + entity.Offset, entity.Size);
-			Gizmos.DrawWireCube(ledgeStartPosition + entity.Offset, entity.Size);
-
 			Gizmos.color = Color.red;
 			Utility.DrawArea(groundCheckPosition);
 			Utility.DrawArea(ceilingCheckPosition);
@@ -76,16 +69,11 @@ public abstract class CheckersManagerSO : StaticManagerSO<bool>
 		});
 	}
 
-	public virtual void Initialize()
-	{
-	
-	}
-
 	protected virtual void UpdateCheckersPositions()
 	{
 		checkerOffset = entity.Size / 2 - Vector2.one * CHECK_OFFSET;
-		facingRight = entity.facingDirection;
-		facingLeft = -entity.facingDirection;
+		facingRight = entity.direction.facing;
+		facingLeft = -entity.direction.facing;
 		rightCheckerPositionX = entity.Center.x + facingRight * checkerOffset.x;
 		leftCheckerPositionX = entity.Center.x + facingLeft * checkerOffset.x;
 
@@ -94,7 +82,7 @@ public abstract class CheckersManagerSO : StaticManagerSO<bool>
 
 		workspace = entity.Center + checkerOffset;
 		ceilingCheckPosition = new Tuple<Vector2, Vector2>(new(entity.Center.x - checkerOffset.x, workspace.y + ceilingCheckDistance), workspace);
-	
+
 		workspace = new Vector2(rightCheckerPositionX, entity.Position.y + UNIT_SIZE * wallCheckerHeight);
 		wallCheckPosition = new Tuple<Vector2, Vector2>(workspace, new(workspace.x + facingRight * wallCheckDistance, workspace.y));
 		workspace = new Vector2(leftCheckerPositionX, workspace.y);
@@ -115,10 +103,10 @@ public abstract class CheckersManagerSO : StaticManagerSO<bool>
 	{
 		RaycastHit2D hit = Utility.Check(Physics2D.Linecast, wallCheckPosition, whatIsTarget);
 		touchingWall = hit;
-		wallDirection = touchingWall ? -entity.facingDirection : entity.facingDirection;
+		wallDirection = touchingWall ? -entity.direction.facing : entity.direction.facing;
 		if (touchingWall)
 		{
-			wallPosition.Set(wallCheckPosition.Item1.x + entity.facingDirection * hit.distance, wallCheckPosition.Item1.y);
+			wallPosition.Set(wallCheckPosition.Item1.x + entity.direction.facing * hit.distance, wallCheckPosition.Item1.y);
 		}
 	}
 

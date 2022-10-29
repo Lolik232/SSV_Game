@@ -1,13 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-
-using Unity.VisualScripting;
-
 using UnityEngine;
-using UnityEngine.Events;
 
-public abstract class WeaponSO : AbilitySO
+public abstract class WeaponSO : ActionComponentSO
 {
 	[SerializeField] private string _weaponName;
 
@@ -19,8 +12,6 @@ public abstract class WeaponSO : AbilitySO
 	protected Vector2 attackOrigin;
 	protected Vector2 attackTarget;
 
-	protected Animator baseAnim;
-
 	protected readonly Blocker directionBlocker = new();
 
 	protected int holdDirection;
@@ -31,15 +22,12 @@ public abstract class WeaponSO : AbilitySO
 
 		enterActions.Add(() =>
 		{
-			baseAnim.SetBool(_weaponName, true);
 			DetermineAttackPosition();
 			hit.OnEnter();
 		});
 
 		exitActions.Add(() =>
 		{
-			baseAnim.SetBool(_weaponName, false);
-			baseAnim.SetBool("mirror", false);
 			hit.OnExit();
 		});
 
@@ -58,7 +46,6 @@ public abstract class WeaponSO : AbilitySO
 
 	public void Initialize(Animator baseAnim, Animator anim)
 	{
-		this.baseAnim = baseAnim;
 		this.anim = anim;
 
 		attackDistance.Set(attackDistance.Max);
@@ -82,7 +69,7 @@ public abstract class WeaponSO : AbilitySO
 		if (!directionBlocker.IsLocked)
 		{
 			int facingDirection = attackTarget.x > entity.Center.x ? 1 : -1;
-			baseAnim.SetBool("mirror", facingDirection != entity.facingDirection);
+			//baseAnim.SetBool("mirror", facingDirection != entity.direction.facing);
 			entity.RotateIntoDirection(facingDirection);
 		}
 	}
@@ -110,6 +97,6 @@ public abstract class WeaponSO : AbilitySO
 		if (hit)
 		{
 			attackTarget = hit.point;
-		} 
+		}
 	}
 }

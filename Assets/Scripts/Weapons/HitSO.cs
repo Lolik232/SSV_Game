@@ -1,11 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Hit", menuName = "Weapons/Hit")]
-public class HitSO : BaseScriptableObject
+public class HitSO : AnimatedComponentSO
 {
-	private Animator _anim;
 	private Transform _transform;
 
 	private readonly Blocker _positionBlocker = new();
@@ -33,16 +30,16 @@ public class HitSO : BaseScriptableObject
 		});
 	}
 
-	public void Initialize(Transform transform, Animator anim)
+	public override void InitialzeBase(GameObject baseObject)
 	{
-		_transform = transform;
-		_anim = anim;
+		base.InitialzeBase(baseObject);
+		_transform = baseObject.transform;
 	}
 
 	public void OnHit(Vector2 hitposition)
 	{
 		HoldPosition(hitposition);
-		_anim.SetTrigger("hit");
+		anim.SetTrigger("hit");
 	}
 
 	public void HoldPosition(Vector2 holdPosition)

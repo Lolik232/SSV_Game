@@ -1,17 +1,17 @@
-using System;
-
 public abstract class GroundedStateSO : StateSO
 {
 	protected override void OnEnable()
 	{
 		base.OnEnable();
 
+		requiredCondition = () => entity.checkers.grounded;
+
 		transitions.Add(new TransitionItem(entity.states.inAir, InAirCondition, InAirAction));
 	}
 
 	protected virtual bool InAirCondition()
 	{
-		return !entity.checkers.grounded;
+		return true;
 	}
 
 	protected virtual void InAirAction()

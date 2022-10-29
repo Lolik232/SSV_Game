@@ -24,7 +24,7 @@ MonoBehaviour:
     _max: 10
   moveBackwardSpeed:
     _min: 0
-    _max: 5
+    _max: 4
   dashForce:
     _min: 0
     _max: 35

@@ -1,7 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-
 using UnityEngine;
 
 public abstract class MultiTaskManagerSO<T> : StaticManagerSO<T> where T : ComponentSO
@@ -13,61 +9,61 @@ public abstract class MultiTaskManagerSO<T> : StaticManagerSO<T> where T : Compo
 		updateActions.Add(() =>
 		{
 			bool entered = false;
-			for (int i = 0; i < elements.Count; i++)
+			foreach (var element in elements)
 			{
 				if (!entered)
 				{
-					if (elements[i] != null)
+					if (element != null)
 					{
-						elements[i].OnEnter();
-						entered = elements[i].isActive;
+						element.OnEnter();
+						entered = element.isActive;
 					}
 
 				}
 
-				elements[i]?.OnUpdate();
+				element?.OnUpdate();
 			}
 		});
 
 		fixedUpdateActions.Add(() =>
 		{
-			for (int i = 0; i < elements.Count; i++)
+			foreach (var element in elements)
 			{
-				elements[i]?.OnFixedUpdate();
+				element?.OnFixedUpdate();
 			}
 		});
 
 		lateUpdateActions.Add(() =>
 		{
-			for (int i = 0; i < elements.Count; i++)
+			foreach (var element in elements)
 			{
-				elements[i]?.OnLateUpdate();
+				element?.OnLateUpdate();
 			}
 		});
 
 		drawGizmosActions.Add(() =>
 		{
-			for (int i = 0; i < elements.Count; i++)
+			foreach (var element in elements)
 			{
-				elements[i]?.OnDrawGizmos();
+				element?.OnDrawGizmos();
 			}
 		});
 	}
 	public override void InitialzeBase(GameObject baseObject)
 	{
 		base.InitialzeBase(baseObject);
-		for (int i = 0; i < elements.Count; i++)
+		foreach (var element in elements)
 		{
-			elements[i]?.InitialzeBase(baseObject);
+			element?.InitialzeBase(baseObject);
 		}
 	}
 
 	public override void InitializeParameters()
 	{
 		base.InitializeParameters();
-		for (int i = 0; i < elements.Count; i++)
+		foreach (var element in elements)
 		{
-			elements[i]?.InitializeParameters();
+			element?.InitializeParameters();
 		}
 	}
 }

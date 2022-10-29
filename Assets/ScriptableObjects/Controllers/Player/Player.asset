@@ -15,14 +15,15 @@ MonoBehaviour:
   abilities: {fileID: 11400000, guid: 0917e0108459ae84c8d98c687dd1da49, type: 2}
   states: {fileID: 11400000, guid: 1f24998f2d41f364e9c2637873b891af, type: 2}
   checkers: {fileID: 11400000, guid: b170e08cd35970c4bb6e662d17469f4e, type: 2}
-  parameters: {fileID: 0}
+  parameters: {fileID: 11400000, guid: 4162b27446d9dd24589dac8069397f3d, type: 2}
   controller: {fileID: 11400000, guid: 3b322eb55e74fc14ba7db14e574b0519, type: 2}
   _standOffset: {x: 0, y: 0.975}
   _standSize: {x: 0.4, y: 1.95}
   _crouchOffset: {x: 0, y: 0.475}
   _crouchSize: {x: 0.4, y: 0.95}
-  abilities: {fileID: 11400000, guid: 0917e0108459ae84c8d98c687dd1da49, type: 2}
+  abilities: {fileID: 0}
   states: {fileID: 0}
   checkers: {fileID: 0}
   parameters: {fileID: 0}
-  controller: {fileID: 11400000, guid: 3b322eb55e74fc14ba7db14e574b0519, type: 2}
+  controller: {fileID: 0}
+  weapons: {fileID: 11400000, guid: 981a9775838a06c4ca807e8a1646aba4, type: 2}

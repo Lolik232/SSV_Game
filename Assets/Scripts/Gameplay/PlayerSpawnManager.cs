@@ -1,6 +1,4 @@
-﻿using System;
-
-using All.Events;
+﻿using All.Events;
 
 using UnityEngine;
 

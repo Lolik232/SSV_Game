@@ -1,6 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 [RequireComponent(typeof(AbilitiesManagerBase), typeof(ParametersManagerBase))]
@@ -9,7 +8,7 @@ using UnityEngine;
 
 public class EntityBase : ComponentBase
 {
-	[HideInInspector] protected new EntitySO component;
+	[HideInInspector] [NonSerialized] protected new EntitySO component;
 
 	protected override void Awake()
 	{
@@ -19,4 +18,4 @@ public class EntityBase : ComponentBase
 	}
 }
 
-	
+

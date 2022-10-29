@@ -1,6 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerCheckersManager", menuName = "Managers/Checks/Player")]
@@ -13,11 +12,14 @@ public class PlayerCheckersManagerSO : CheckersManagerSO
 
 	[SerializeField] private float _ledgeCheckerHeight;
 
-	[NonSerialized] public RaycastHit2D groundClose;
-	[NonSerialized] public RaycastHit2D touchingCeilingWhenClimb;
-	[NonSerialized] public Collider2D clampedBetweenWalls;
-	[NonSerialized] public RaycastHit2D touchingLedge;
-	[NonSerialized] public RaycastHit2D touchingCorner;
+	[NonSerialized] public Vector2 ledgeStartPosition;
+	[NonSerialized] public Vector2 ledgeEndPosition;
+
+	[NonSerialized] public bool groundClose;
+	[NonSerialized] public bool touchingCeilingWhenClimb;
+	[NonSerialized] public bool clampedBetweenWalls;
+	[NonSerialized] public bool touchingLedge;
+	[NonSerialized] public bool touchingCorner;
 
 	private Tuple<Vector2, Vector2> _ceilingWhenClimbCheckPosition;
 	private Tuple<Vector2, Vector2> _groundCloseCheckPosition;
@@ -55,6 +57,10 @@ public class PlayerCheckersManagerSO : CheckersManagerSO
 			Utility.DrawArea(_clampedBetweenWallsBackCheckPosition);
 			Utility.DrawArea(_clampedBetweenWallsCheckPosition);
 
+			Gizmos.color = Color.yellow;
+			Gizmos.DrawWireCube(ledgeEndPosition + entity.Offset, entity.Size);
+			Gizmos.DrawWireCube(ledgeStartPosition + entity.Offset, entity.Size);
+
 			Utility.DrawLine(_groundCloseCheckPosition);
 			Gizmos.color = Color.red;
 			Utility.DrawLine(_ceilingWhenClimbCheckPosition);
@@ -64,9 +70,9 @@ public class PlayerCheckersManagerSO : CheckersManagerSO
 		});
 	}
 
-	public override void Initialize()
+	public override void InitialzeBase(GameObject baseObject)
 	{
-		base.Initialize();
+		base.InitialzeBase(baseObject);
 		_startLedgeOffset = new Vector2(entity.StandSize.x / 2 + CHECK_OFFSET, UNIT_SIZE * _ledgeCheckerHeight + CHECK_OFFSET);
 		_endLedgeOffset = new Vector2(entity.StandSize.x / 2 + CHECK_OFFSET, CHECK_OFFSET);
 	}
@@ -74,6 +80,7 @@ public class PlayerCheckersManagerSO : CheckersManagerSO
 	protected override void UpdateCheckersPositions()
 	{
 		base.UpdateCheckersPositions();
+
 		_headHeight = _ledgeCheckerHeight - wallCheckerHeight;
 		workspace = new(entity.Center.x, entity.Center.y - checkerOffset.y);
 		_groundCloseCheckPosition = new Tuple<Vector2, Vector2>(workspace, new(workspace.x, workspace.y - _groundCloseCheckDistance));
@@ -116,10 +123,11 @@ public class PlayerCheckersManagerSO : CheckersManagerSO
 
 	private void CheckIfTouchingCorner()
 	{
-		touchingCorner = Utility.Check(Physics2D.Linecast, _cornerCheckPosition, whatIsTarget);
+		RaycastHit2D hit = Utility.Check(Physics2D.Linecast, _cornerCheckPosition, whatIsTarget);
+		touchingCorner = hit;
 		if (touchingCorner)
 		{
-			_cornerPosition.Set(wallPosition.x, _cornerCheckPosition.Item1.y - touchingCorner.distance);
+			_cornerPosition.Set(wallPosition.x, _cornerCheckPosition.Item1.y - hit.distance);
 		}
 	}
 

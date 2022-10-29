@@ -21,6 +21,8 @@ public class Parameter
 		set => Set(value);
 	}
 
+
+
 	public void Set(float value)
 	{
 		_current = Mathf.Max(Min, Mathf.Min(Max, value));

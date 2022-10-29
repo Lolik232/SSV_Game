@@ -1,10 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
+
 using UnityEngine;
 
 public class ParametersManagerBase : ComponentBase
 {
-	[HideInInspector] protected new ParametersManagerSO component;
+	[HideInInspector] [NonSerialized] protected new ParametersManagerSO component;
 
 	protected override void Awake()
 	{

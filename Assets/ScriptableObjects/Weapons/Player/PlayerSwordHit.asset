@@ -12,3 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99764c765816fd449890c1989313a4fe, type: 3}
   m_Name: PlayerSwordHit
   m_EditorClassIdentifier: 
+  entity: {fileID: 11400000, guid: c765f728276573247bf28102c833d262, type: 2}
+  _animBools: []

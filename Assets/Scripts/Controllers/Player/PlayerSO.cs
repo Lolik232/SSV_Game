@@ -1,14 +1,18 @@
+using System;
+
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Player", menuName = "Controllers/Entity/Player")]
 
 public class PlayerSO : EntitySO
 {
-	[HideInInspector] public new PlayerAbilitiesManagerSO abilities;
-	[HideInInspector] public new PlayerStateMachineSO states;
-	[HideInInspector] public new PlayerCheckersManagerSO checkers;
-	[HideInInspector] public new PlayerParametersManagerSO parameters;
-	[HideInInspector] public new PlayerInputReaderSO controller;
+	[HideInInspector] [NonSerialized] public new PlayerAbilitiesManagerSO abilities;
+	[HideInInspector] [NonSerialized] public new PlayerStateMachineSO states;
+	[HideInInspector] [NonSerialized] public new PlayerCheckersManagerSO checkers;
+	[HideInInspector] [NonSerialized] public new PlayerParametersManagerSO parameters;
+	[HideInInspector] [NonSerialized] public new PlayerInputReaderSO controller;
+
+	public WeaponsManagerSO weapons;
 
 	protected override void OnEnable()
 	{

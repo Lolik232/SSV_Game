@@ -1,8 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-
-using Unity.VisualScripting;
 
 using UnityEngine;
 
@@ -22,9 +18,8 @@ public abstract class EntitySO : ComponentSO
 	[SerializeField] private Vector2 _crouchOffset;
 	[SerializeField] private Vector2 _crouchSize;
 
-	[NonSerialized] public int facingDirection;
-	[NonSerialized] public int realDirection;
 
+	public EntityDirection direction = new();
 	[NonSerialized] public bool isStanding;
 
 	private Transform _transform;
@@ -88,7 +83,7 @@ public abstract class EntitySO : ComponentSO
 	{
 		base.InitialzeBase(baseObject);
 
-		_transform = baseObject.GetComponent<Transform>();
+		_transform = baseObject.transform;
 		_rb = baseObject.GetComponent<Rigidbody2D>();
 		_col = baseObject.GetComponent<BoxCollider2D>();
 		_tr = baseObject.GetComponent<TrailRenderer>();
@@ -111,7 +106,7 @@ public abstract class EntitySO : ComponentSO
 			return;
 		}
 
-		facingDirection = direction;
+		this.direction.facing = direction;
 		RotateBodyIntoDirection(direction);
 	}
 
@@ -122,7 +117,7 @@ public abstract class EntitySO : ComponentSO
 			return;
 		}
 
-		realDirection = direction;
+		this.direction.body = direction;
 		switch (direction)
 		{
 			case DIRECTION_RIGHT:

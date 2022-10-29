@@ -16,7 +16,6 @@ MonoBehaviour:
   _default: {fileID: 11400000, guid: 99f32321491905142b4dd0c67e2974be, type: 2}
   grounded: {fileID: 11400000, guid: 99f32321491905142b4dd0c67e2974be, type: 2}
   inAir: {fileID: 11400000, guid: 490db7eaeaebdb94eb7aee3a32ee2448, type: 2}
-  grounded: {fileID: 0}
-  inAir: {fileID: 0}
-  onLedge: {fileID: 11400000, guid: 9b09fa5886adb674aa5df0a6a4141d72, type: 2}
+  grounded: {fileID: 11400000, guid: 99f32321491905142b4dd0c67e2974be, type: 2}
+  inAir: {fileID: 11400000, guid: 490db7eaeaebdb94eb7aee3a32ee2448, type: 2}
   touchingWall: {fileID: 11400000, guid: fcabbad07a685f24d836c7c132309d3c, type: 2}

@@ -8,66 +8,77 @@ public static class Utility
 {
 	static public void ApplyActions(List<UnityAction> actions)
 	{
-		for (int i = 0; i < actions.Count; i++)
+		foreach (var action in actions)
 		{
-			actions[i]();
+			action();
 		}
 	}
 
 	static public void ApplyActions<T>(List<UnityAction<T>> actions, T value)
 	{
-		for (int i = 0; i < actions.Count; i++)
+		foreach (var action in actions)
 		{
-			actions[i](value);
+			action(value);
 		}
 	}
 
-	static public void SetAnimBools(Animator anim, List<string> names, bool value)
+	static public void SetAnimBoolsOnEnter(Animator anim, List<AnimationBool> animBools)
 	{
-		for (int i = 0; i < names.Count; i++)
+		foreach (var animBool in animBools)
 		{
-			anim.SetBool(names[i], value);
+			anim.SetBool(animBool.name, animBool.onEnterValue);
+		}
+	}
+
+	static public void SetAnimBoolsOnExit(Animator anim, List<AnimationBool> animBools)
+	{
+		foreach (var animBool in animBools)
+		{
+			if (animBool.onExitValue != animBool.onEnterValue)
+			{
+				anim.SetBool(animBool.name, animBool.onExitValue);
+			}
 		}
 	}
 
 	static public void SetAnimTrigger(Animator anim, List<string> names)
 	{
-		for (int i = 0; i < names.Count; i++)
+		foreach (var name in names)
 		{
-			anim.SetTrigger(names[i]);
+			anim.SetTrigger(name);
 		}
 	}
 
 	static public void BlockAll(List<BlockedAbility> blockedAbilities)
 	{
-		for (int i = 0; i < blockedAbilities.Count; i++)
+		foreach (var blockedAbility in blockedAbilities)
 		{
-			blockedAbilities[i].component.Block(blockedAbilities[i].needHardExit);
+			blockedAbility.component.Block(blockedAbility.needHardExit);
 		}
 	}
 
 	static public void UnlockAll(List<BlockedAbility> blockedAbilities)
 	{
-		for (int i = 0; i < blockedAbilities.Count; i++)
+		foreach (var blockedAbility in blockedAbilities)
 		{
-			blockedAbilities[i].component.Unlock();
+			blockedAbility.component.Unlock();
 		}
 	}
 
 	static public void BlockAll(List<BlockedState> blockedStates)
 	{
-		for (int i = 0; i < blockedStates.Count; i++)
+		foreach (var blockedState in blockedStates)
 		{
-			blockedStates[i].component.SetBlockedTransition(blockedStates[i].target);
-			blockedStates[i].component.Block(blockedStates[i].needHardExit);
+			blockedState.component.SetBlockedTransition(blockedState.target);
+			blockedState.component.Block(blockedState.needHardExit);
 		}
 	}
 
 	static public void UnlockAll(List<BlockedState> blockedStates)
 	{
-		for (int i = 0; i < blockedStates.Count; i++)
+		foreach (var blockedState in blockedStates)
 		{
-			blockedStates[i].component.Unlock();
+			blockedState.component.Unlock();
 		}
 	}
 

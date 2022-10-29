@@ -1,3 +1,5 @@
+using System;
+
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PayerDashAbility", menuName = "Player/Abilities/Dash")]
@@ -7,14 +9,13 @@ public class PlayerDashAbilitySO : AbilitySO
 	[SerializeField] private float _minProportion;
 	[SerializeField] private float _dashGravity;
 
-	[HideInInspector] protected new PlayerSO entity;
+	[HideInInspector] [NonSerialized] protected new PlayerSO entity;
 
 	private Vector2 _dashDirection;
 
-
 	protected override void OnEnable()
 	{
-		entity = (PlayerSO)base.entity;
+		entity = base.entity as PlayerSO;
 
 		base.OnEnable();
 

@@ -1,10 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
+
 using UnityEngine;
 
 public class StateMachineBase : ComponentBase, IAnimated
 {
-	[HideInInspector] protected new StateMachineSO component;
+	[HideInInspector] [NonSerialized] protected new StateMachineSO component;
 
 	protected override void Awake()
 	{

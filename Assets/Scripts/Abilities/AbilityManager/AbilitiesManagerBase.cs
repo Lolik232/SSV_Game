@@ -1,10 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
+
 using UnityEngine;
 
 public class AbilitiesManagerBase : ComponentBase
 {
-	[HideInInspector] protected new AbilitiesManagerSO component;
+	[HideInInspector] [NonSerialized] protected new AbilitiesManagerSO component;
 
 	protected override void Awake()
 	{

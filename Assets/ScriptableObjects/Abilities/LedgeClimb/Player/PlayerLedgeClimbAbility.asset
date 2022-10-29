@@ -9,12 +9,31 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e325ed022ef11e43bd41ed9a64f727d, type: 3}
-  m_Name: PlayerOnLedgeState
+  m_Script: {fileID: 11500000, guid: 4178496f0aa80654da1888c5268ff26d, type: 3}
+  m_Name: PlayerLedgeClimbAbility
   m_EditorClassIdentifier: 
   entity: {fileID: 11400000, guid: c765f728276573247bf28102c833d262, type: 2}
-  animBoolNames:
-  - onLedge
+  _animBools:
+  - name: ledgeClimb
+    onEnterValue: 1
+    onExitValue: 0
+  duration:
+    _min: 0
+    _max: 0.3
+  cooldown:
+    _min: 0
+    _max: 0
+  amountOfUsages:
+    _min: 0
+    _max: 0
+  _animations: []
+  _blockedStates:
+  - component: {fileID: 11400000, guid: fcabbad07a685f24d836c7c132309d3c, type: 2}
+    target: {fileID: 11400000, guid: 99f32321491905142b4dd0c67e2974be, type: 2}
+    needHardExit: 1
+  - component: {fileID: 11400000, guid: 490db7eaeaebdb94eb7aee3a32ee2448, type: 2}
+    target: {fileID: 11400000, guid: 99f32321491905142b4dd0c67e2974be, type: 2}
+    needHardExit: 1
   _blockedAbilities:
   - component: {fileID: 11400000, guid: 40ea0a972c45a9e4a828eeb10a7f1c66, type: 2}
     needHardExit: 1
@@ -24,4 +43,5 @@ MonoBehaviour:
     needHardExit: 1
   - component: {fileID: 11400000, guid: 58e5b2ac493e04946bafbf65df679647, type: 2}
     needHardExit: 1
-  _states: {fileID: 11400000, guid: 1f24998f2d41f364e9c2637873b891af, type: 2}
+  - component: {fileID: 11400000, guid: 5a9a152ce2bf24840806050f1befc169, type: 2}
+    needHardExit: 1

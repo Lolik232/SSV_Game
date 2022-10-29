@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 public abstract class ComponentBase : BaseMonoBehaviour
 {
@@ -9,39 +6,49 @@ public abstract class ComponentBase : BaseMonoBehaviour
 
 	protected override void Awake()
 	{
+		base.Awake();
 		component.InitialzeBase(gameObject);
 		component.InitializeParameters();
+	}
 
-		base.Awake();
+	protected override void Start()
+	{
+		base.Start();
+	}
 
-		enableActions.Add(() =>
-		{
-			component.OnEnter();
-		});
+	protected override void OnEnable()
+	{
+		base.OnEnable();
+		component.OnEnter();
+	}
 
-		disableActions.Add(() =>
-		{
-			component.OnExit();
-		});
+	protected override void OnDisable()
+	{
+		base.OnDisable();
+		component.OnExit();
+	}
 
-		updateActions.Add(() =>
-		{
-			component.OnUpdate();
-		});
+	protected override void Update()
+	{
+		base.Update();
+		component.OnUpdate();
+	}
 
-		lateUpdateActions.Add(() =>
-		{
-			component.OnLateUpdate();
-		});
+	protected override void FixedUpdate()
+	{
+		base.FixedUpdate();
+		component.OnFixedUpdate();
+	}
 
-		fixedUpdateActions.Add(() =>
-		{
-			component.OnFixedUpdate();
-		});
+	protected override void LateUpdate()
+	{
+		base.LateUpdate();
+		component.OnLateUpdate();
+	}
 
-		drawGizmosActions.Add(() =>
-		{
-			component.OnDrawGizmos();
-		});
+	protected override void OnDrawGizmos()
+	{
+		base.OnDrawGizmos();
+		component.OnDrawGizmos();
 	}
 }

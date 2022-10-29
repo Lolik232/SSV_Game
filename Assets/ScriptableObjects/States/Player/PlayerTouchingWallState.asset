@@ -9,14 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7588349cf6d7a96429527d7b224a27e9, type: 3}
+  m_Script: {fileID: 11500000, guid: aa506b1c344507d42840e7a5932b96d8, type: 3}
   m_Name: PlayerTouchingWallState
   m_EditorClassIdentifier: 
   entity: {fileID: 11400000, guid: c765f728276573247bf28102c833d262, type: 2}
-  animBoolNames:
-  - touchingWall
+  _animBools: []
   _blockedAbilities:
-  - component: {fileID: 11400000, guid: 40ea0a972c45a9e4a828eeb10a7f1c66, type: 2}
-    needHardExit: 1
   - component: {fileID: 11400000, guid: 841b3a425249cc649b352e996d4ee736, type: 2}
     needHardExit: 1
+  - component: {fileID: 11400000, guid: 40ea0a972c45a9e4a828eeb10a7f1c66, type: 2}
+    needHardExit: 1
+  _stateName: touchingWall

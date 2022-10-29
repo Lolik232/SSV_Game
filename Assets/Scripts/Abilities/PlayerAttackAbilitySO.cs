@@ -1,12 +1,12 @@
+using System;
+
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerAttackAbility", menuName = "Abilities/Attack/Player")]
 
 public class PlayerAttackAbilitySO : AbilitySO
 {
-	[SerializeField] private InventorySO _inventory;
-
-	[HideInInspector] protected new PlayerSO entity;
+	[HideInInspector] [NonSerialized] protected new PlayerSO entity;
 
 	protected override void OnEnable()
 	{
@@ -19,22 +19,22 @@ public class PlayerAttackAbilitySO : AbilitySO
 		enterActions.Add(() =>
 		{
 			entity.controller.attack = false;
-			_inventory.CurrentWeapon.OnEnter();
+			entity.weapons.Current.OnEnter();
 		});
 
 		exitActions.Add(() =>
 		{
-			_inventory.CurrentWeapon.OnExit();
+			entity.weapons.Current.OnExit();
 		});
 	}
 
 	public void HoldDirection(int direction)
 	{
-		_inventory.CurrentWeapon.HoldDirection(direction);
+		entity.weapons.Current.HoldDirection(direction);
 	}
 
 	public void ReleaseDirection()
 	{
-		_inventory.CurrentWeapon.ReleaseDirection();
+		entity.weapons.Current.ReleaseDirection();
 	}
 }

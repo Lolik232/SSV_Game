@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public abstract class MoveUpAbilitySO : AbilitySO
 {
 	protected override void OnEnable()
@@ -15,11 +11,6 @@ public abstract class MoveUpAbilitySO : AbilitySO
 		updateActions.Add(() =>
 		{
 			entity.TrySetVelocityY(entity.parameters.moveUpSpeed);
-		});
-
-		exitActions.Add(() =>
-		{
-			entity.TrySetVelocityZero();
 		});
 	}
 }

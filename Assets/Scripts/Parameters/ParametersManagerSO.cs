@@ -18,9 +18,9 @@ public abstract class ParametersManagerSO : StaticManagerSO<Parameter>
 	public override void InitializeParameters()
 	{
 		base.InitializeParameters();
-		for (int i = 0; i < elements.Count; i++)
+		foreach (var element in elements)
 		{
-			elements[i].Set(elements[i].Max);
+			element.Set(element.Max);
 		}
 	}
 }

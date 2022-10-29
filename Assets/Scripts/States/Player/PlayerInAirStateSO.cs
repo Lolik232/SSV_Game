@@ -1,17 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
+
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerInAirState", menuName = "States/In Air/Player")]
 
 public class PlayerInAirStateSO : InAirStateSO
 {
-	[HideInInspector] protected new PlayerSO entity;
+	[HideInInspector] [NonSerialized] protected new PlayerSO entity;
 
 	protected override void OnEnable()
 	{
 		entity = (PlayerSO)base.entity;
 
 		base.OnEnable();
+
+		transitions.Add(new TransitionItem(entity.states.touchingWall, TouchingWallCondition, TouchingWallAction));
+	}
+
+	protected virtual bool TouchingWallCondition()
+	{
+		return entity.controller.grab || entity.controller.move.x == entity.direction.facing;
+	}
+
+	protected virtual void TouchingWallAction()
+	{
+
 	}
 }

@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
@@ -7,15 +6,18 @@ using UnityEngine.Events;
 
 public abstract class ActionComponentSO : AnimatedComponentSO, IAnimated
 {
-	[SerializeField] protected Parameter duration;
-	[SerializeField] protected Parameter cooldown;
+	public Parameter duration;
+	public Parameter cooldown;
+
 	[SerializeField] protected Parameter amountOfUsages;
 
+	[SerializeField] private List<AnimationClip> _animations = new();
 
 	protected List<Func<bool>> enterConditions = new();
 	protected List<Func<bool>> exitConditions = new();
 
 	protected List<UnityAction> prepareActions = new();
+
 
 	protected override void OnEnable()
 	{
@@ -24,19 +26,28 @@ public abstract class ActionComponentSO : AnimatedComponentSO, IAnimated
 		enterActions.Add(() =>
 		{
 			amountOfUsages.Current--;
+			if (duration != 0)
+			{
+				anim.speed = 1 / duration;
+			}
+		});
+
+		exitActions.Add(() =>
+		{
+			anim.speed = 1;
 		});
 
 		enterConditions = new List<Func<bool>> { () =>
 		{
 			return !isActive &&
 						 (amountOfUsages.Max == 0 || amountOfUsages > 0) &&
-						 Time.time > endTime + cooldown;
+						 InactiveTime > cooldown;
 		}};
 
 		exitConditions = new List<Func<bool>> { () =>
 		{
 			return !isActive ||
-						 (duration.Max != 0 && Time.time > startTime + duration);
+						 (duration.Max != 0 && ActiveTime > duration);
 		}};
 
 		prepareActions.Clear();
@@ -69,9 +80,9 @@ public abstract class ActionComponentSO : AnimatedComponentSO, IAnimated
 	{
 		Utility.ApplyActions(prepareActions);
 
-		for (int i = 0; i < enterConditions.Count; i++)
+		foreach (var condition in enterConditions)
 		{
-			if (!enterConditions[i]())
+			if (!condition())
 			{
 				return false;
 			}
@@ -82,9 +93,9 @@ public abstract class ActionComponentSO : AnimatedComponentSO, IAnimated
 
 	private void CheckIfTerminate()
 	{
-		for (int i = 0; i < exitConditions.Count; i++)
+		foreach (var condition in exitConditions)
 		{
-			if (exitConditions[i]())
+			if (condition())
 			{
 				OnExit();
 				return;

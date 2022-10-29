@@ -42,18 +42,18 @@ public abstract class SingleTaskManagerSO<T> : StaticManagerSO<T>, IAnimated whe
 	public override void InitialzeBase(GameObject baseObject)
 	{
 		base.InitialzeBase(baseObject);
-		for (int i = 0; i < elements.Count; i++)
+		foreach (var element in elements)
 		{
-			elements[i].InitialzeBase(baseObject);
+			element.InitialzeBase(baseObject);
 		}
 	}
 
 	public override void InitializeParameters()
 	{
 		base.InitializeParameters();
-		for (int i = 0; i < elements.Count; i++)
+		foreach (var element in elements)
 		{
-			elements[i].InitializeParameters();
+			element.InitializeParameters();
 		}
 	}
 

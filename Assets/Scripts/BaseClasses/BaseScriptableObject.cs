@@ -1,6 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -17,6 +17,10 @@ public abstract class BaseScriptableObject : ScriptableObject
 	protected float endTime;
 
 	[NonSerialized] public bool isActive;
+
+	public float ActiveTime => Time.time - startTime;
+
+	public float InactiveTime => Time.time - endTime;
 
 	protected virtual void OnEnable()
 	{
@@ -53,7 +57,7 @@ public abstract class BaseScriptableObject : ScriptableObject
 		if (!isActive)
 		{
 			Utility.ApplyActions(enterActions);
-		} 
+		}
 	}
 
 	public virtual void OnExit()

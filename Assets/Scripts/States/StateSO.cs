@@ -8,26 +8,32 @@ public abstract class StateSO : AnimatedComponentSO, IBlockable
 {
 	[SerializeField] private List<BlockedAbility> _blockedAbilities = new();
 
-	private StateSO _blockedTransition;
+	[SerializeField] private string _stateName;
 
 	protected List<TransitionItem> transitions = new();
 
+	private StateSO _blockedTransition;
+
 	private readonly Blocker _blocker = new();
+
+	protected Func<bool> requiredCondition;
 
 	protected override void OnEnable()
 	{
+		requiredCondition = () => true;
+
 		base.OnEnable();
 
 		enterActions.Add(() =>
 		{
 			Utility.BlockAll(_blockedAbilities);
-			Utility.SetAnimBools(anim, animBoolNames, true);
+			anim.SetBool(_stateName, true);
 		});
 
 		exitActions.Add(() =>
 		{
 			Utility.UnlockAll(_blockedAbilities);
-			Utility.SetAnimBools(anim, animBoolNames, false);
+			anim.SetBool(_stateName, false);
 		});
 
 		fixedUpdateActions.Add(() =>
@@ -53,12 +59,12 @@ public abstract class StateSO : AnimatedComponentSO, IBlockable
 			return false;
 		}
 
-		for (int i = 0; i < transitions.Count; i++)
+		foreach (var transition in transitions)
 		{
-			if (!transitions[i].toState._blocker.IsLocked && transitions[i].condition())
+			if (!transition.toState._blocker.IsLocked && transition.toState.requiredCondition() && transition.condition())
 			{
-				transitions[i].action();
-				entity.states.GetNext(transitions[i].toState);
+				transition.action();
+				entity.states.GetNext(transition.toState);
 				return true;
 			}
 		}

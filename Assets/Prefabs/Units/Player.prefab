@@ -35,7 +35,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 16557013547266712}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -248,7 +248,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 5
+  m_GravityScale: 3
   m_Material: {fileID: 6200000, guid: 6601d3cd1fec93444960aabf6f4a1873, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -422,7 +422,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a885e2806623e848b8f51d6a9dd59ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inventory: {fileID: 11400000, guid: 22bd3417d03a2ac45a42b9324c95f88c, type: 2}
+  component: {fileID: 11400000, guid: 22bd3417d03a2ac45a42b9324c95f88c, type: 2}
 --- !u!114 &8241592001382021635
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -560,7 +560,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32719b1ed6ed6894f9d697b446eab9d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hit: {fileID: 11400000, guid: 04df1f8d5a660944ba8e09e55ff9f301, type: 2}
+  component: {fileID: 11400000, guid: 04df1f8d5a660944ba8e09e55ff9f301, type: 2}
 --- !u!95 &5533673985491799931
 Animator:
   serializedVersion: 4
@@ -754,8 +754,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d75d6837d51b384893dd798faf595d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weapon: {fileID: 11400000, guid: 62c28d3770653b344a8acc9cddb14780, type: 2}
-  _baseObject: {fileID: 16557013547266712}
+  component: {fileID: 11400000, guid: 62c28d3770653b344a8acc9cddb14780, type: 2}
 --- !u!1001 &1677854725844204535
 PrefabInstance:
   m_ObjectHideFlags: 0

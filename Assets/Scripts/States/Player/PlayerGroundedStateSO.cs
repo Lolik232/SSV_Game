@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 
 using UnityEngine;
 
@@ -8,9 +6,7 @@ using UnityEngine;
 
 public class PlayerGroundedStateSO : GroundedStateSO
 {
-	[HideInInspector] protected new PlayerSO entity;
-
-	[NonSerialized] public bool isClimbFinish;
+	[HideInInspector] [NonSerialized] protected new PlayerSO entity;
 
 	protected override void OnEnable()
 	{
@@ -18,9 +14,16 @@ public class PlayerGroundedStateSO : GroundedStateSO
 
 		base.OnEnable();
 
-		updateActions.Add(() =>
-		{
+		transitions.Add(new TransitionItem(entity.states.touchingWall, TouchingWallCondition, TouchingWallAction));
+	}
 
-		});
+	protected virtual bool TouchingWallCondition()
+	{
+		return !entity.checkers.touchingCeiling && entity.controller.grab;
+	}
+
+	protected virtual void TouchingWallAction()
+	{
+
 	}
 }

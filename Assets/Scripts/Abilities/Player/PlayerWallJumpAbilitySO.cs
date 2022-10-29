@@ -1,3 +1,5 @@
+using System;
+
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PayerWallJumpAbility", menuName = "Player/Abilities/Wall Jump")]
@@ -7,7 +9,7 @@ public class PlayerWallJumpAbilitySO : AbilitySO
 	[SerializeField] private float _coyoteTime;
 	[SerializeField] private float _wallExitTime;
 
-	[HideInInspector] protected new PlayerSO entity;
+	[HideInInspector] [NonSerialized] protected new PlayerSO entity;
 
 	[SerializeField] private Vector2 _angle;
 

@@ -1,22 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 
 using UnityEngine;
 
-public class InventoryBase : BaseMonoBehaviour
+public class InventoryBase : ComponentBase
 {
-	[SerializeField] private InventorySO _inventory;
+	[HideInInspector] [NonSerialized] protected new InventorySO component;
 
 	protected override void Awake()
 	{
-		startActions.Add(() =>
-		{
-			_inventory.Initialize();
-		});
+		component = (InventorySO)base.component;
 
-		updateActions.Add(() =>
-		{
-			_inventory.CurrentWeapon.OnUpdate();
-		});
+		base.Awake();
 	}
 }

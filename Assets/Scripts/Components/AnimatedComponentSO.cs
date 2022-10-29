@@ -1,5 +1,6 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -7,7 +8,8 @@ public abstract class AnimatedComponentSO : EntityComponentSO, IAnimated
 {
 	private int _animationIndex;
 
-	[SerializeField] protected List<string> animBoolNames = new();
+	[SerializeField] private List<AnimationBool> _animBools = new();
+
 	protected List<UnityAction<int>> animationActions = new();
 	protected List<UnityAction> animationFinishActions = new();
 
@@ -19,12 +21,12 @@ public abstract class AnimatedComponentSO : EntityComponentSO, IAnimated
 
 		enterActions.Add(() =>
 		{
-			Utility.SetAnimBools(anim, animBoolNames, true);
+			Utility.SetAnimBoolsOnEnter(anim, _animBools);
 		});
 
 		exitActions.Add(() =>
 		{
-			Utility.SetAnimBools(anim, animBoolNames, false);
+			Utility.SetAnimBoolsOnExit(anim, _animBools);
 		});
 
 		animationActions.Clear();
@@ -53,5 +55,20 @@ public abstract class AnimatedComponentSO : EntityComponentSO, IAnimated
 			Utility.ApplyActions(animationFinishActions);
 			_animationIndex = 0;
 		}
+	}
+}
+
+[Serializable]
+public struct AnimationBool
+{
+	public string name;
+	public bool onEnterValue;
+	public bool onExitValue;
+
+	public AnimationBool(string name, bool onEnterValue, bool onExitValue)
+	{
+		this.name = name;
+		this.onEnterValue = onEnterValue;
+		this.onExitValue = onExitValue;
 	}
 }

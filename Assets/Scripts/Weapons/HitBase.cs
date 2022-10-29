@@ -1,30 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
+
 using UnityEngine;
 
-public class HitBase : BaseMonoBehaviour
+public class HitBase : AnimatedComponentBase
 {
-	[SerializeField] private HitSO _hit;
-
-	private Animator _anim;
+	[HideInInspector] [NonSerialized] protected new HitSO component;
 
 	protected override void Awake()
 	{
-		_anim = GetComponent<Animator>();
-		_hit.Initialize(transform, _anim);
+		component = (HitSO)base.component;
 
 		base.Awake();
-
-		lateUpdateActions.Add(() =>
-		{
-			_hit.OnLateUpdate();
-		});
-
-		drawGizmosActions.Add(() =>
-		{
-			_hit.OnDrawGizmos();
-		});
 	}
-
-	private void OnAnimationFinishTrigger() => _hit.ReleasePosition();
 }

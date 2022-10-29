@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 700ef77f26d1c694e8a134bbeb1a7d20, type: 3}
   m_Name: PlayerSword
   m_EditorClassIdentifier: 
-  animBoolNames:
-  - attack
+  entity: {fileID: 11400000, guid: c765f728276573247bf28102c833d262, type: 2}
+  _animBools: []
   duration:
     _min: 0
     _max: 0.1
@@ -23,10 +23,7 @@ MonoBehaviour:
   amountOfUsages:
     _min: 0
     _max: 0
-  data: {fileID: 11400000, guid: 61c99a593f8f1a74fb3575845de2cf40, type: 2}
-  entity: {fileID: 11400000, guid: c765f728276573247bf28102c833d262, type: 2}
-  _blockedAbilities: []
-  _blockedStates: []
+  _animations: []
   _weaponName: sword
   attackDistance:
     _min: 0

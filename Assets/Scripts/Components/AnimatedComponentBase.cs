@@ -1,11 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
+
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
 public abstract class AnimatedComponentBase : ComponentBase, IAnimated
 {
-	[HideInInspector] protected new AnimatedComponentSO component;
+	[HideInInspector] [NonSerialized] protected new AnimatedComponentSO component;
 
 	protected override void Awake()
 	{
