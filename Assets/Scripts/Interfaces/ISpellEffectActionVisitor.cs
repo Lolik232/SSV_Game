@@ -4,8 +4,8 @@ namespace All.Interfaces
 {
     public interface ISpellEffectActionVisitor
     {
-        void Visit(Damage damage);
-        void Visit(BlockAbility blockAbility);
+        void Visit(DamageAction damageAction);
+        void Visit(BlockAbilityAction blockAbilityAction);
         // void Visit(Damage damage);
     }
 }

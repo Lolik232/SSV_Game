@@ -5,15 +5,15 @@ using UnityEngine;
 namespace Spells.Actions
 {
     [Serializable]
-    public class Damage : EffectAction
+    public class DamageAction : EffectAction
     {
         [SerializeField] private float _value;
 
         public float Value => _value;
 
-        public Damage(EffectActionSO effectActionSO) : base(effectActionSO) { }
+        public DamageAction(EffectActionSO effectActionSO) : base(effectActionSO) { }
 
-        public Damage(EffectActionSO effectActionSO, float value) : base(effectActionSO)
+        public DamageAction(EffectActionSO effectActionSO, float value) : base(effectActionSO)
         {
             _value = value;
         }

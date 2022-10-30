@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using All.BaseClasses;
 using All.Interfaces;
+using Spells.SpellLiveCycle;
 using UnityEngine;
 
 namespace Spells
@@ -11,10 +12,15 @@ namespace Spells
     {
         [SerializeField] private string _name = "spell";
 
-        [SerializeField] private ILiveCycle _liveCycle;
-       
-        [SerializeField] private List<EffectSO> _effects = new();
-        
+        [SerializeField] private LiveCycleSO _liveCycle;
+
+        [SerializeField] private List<Effect> _effects = new();
+
+        public void AddEffect(EffectSO effect)
+        {
+            _effects.Add(effect.CreateEffect());
+        }
+
         public string Name => _name;
     }
 }

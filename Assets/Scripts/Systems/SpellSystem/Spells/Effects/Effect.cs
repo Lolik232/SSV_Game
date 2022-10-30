@@ -20,8 +20,7 @@ namespace Spells
 
         public Effect(EffectSO            effectSo,
                       EffectApplyStrategy applyStrategy,
-                      EffectAction        effectAction,
-                      BaseLiveCycle       liveCycle)
+                      EffectAction        effectAction)
         {
             _effectSO      = effectSo;
             _applyStrategy = applyStrategy;

@@ -3,11 +3,13 @@
 namespace Spells.Actions.ScriptableObjects
 {
     [CreateAssetMenu(fileName = "Spells/Effects/Damage", menuName = "damage")]
-    public class DamageSO : EffectActionSO
+    public class DamageActionSO : EffectActionSO
     {
+        [SerializeField] private float _value = 0f;
+        
         public override EffectAction CreateAction()
         {
-            return new Damage(this);
+            return new DamageAction(this, _value);
         }
     }
 }
