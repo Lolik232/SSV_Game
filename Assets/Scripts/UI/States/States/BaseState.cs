@@ -7,5 +7,9 @@ namespace FSM
 		public virtual void Execute(BaseStateMachine machine)
 		{
 		}
+
+		public virtual void OnEnter(BaseStateMachine machine)
+		{
+		}
 	}
 }

@@ -9,8 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31a7f129a6c1d0347b0698103721acc0, type: 3}
-  m_Name: UI Input SO
+  m_Script: {fileID: 11500000, guid: 4faed90f24174df2b5c3ff296c42b6d1, type: 3}
+  m_Name: StartScreen
   m_EditorClassIdentifier: 
-  locationToLoad: {fileID: 11400000, guid: 3364c22a734aa764ba23233e4a085500, type: 2}
-  loadLocationChannel: {fileID: 11400000, guid: efcd5361b4da801408cb91de1a0effaa, type: 2}
+  sceneType: 0
+  sceneReference:
+    m_AssetGUID: 2123febb9bc08e741af7292389d56d91
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  locationName: Start Screen

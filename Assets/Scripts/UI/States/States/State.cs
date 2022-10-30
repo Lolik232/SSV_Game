@@ -9,6 +9,12 @@ namespace FSM
 		public List<FSMAction> Action = new List<FSMAction>();
 		public List<Transition> Transitions = new List<Transition>();
 
+		public override void OnEnter(BaseStateMachine machine)
+		{
+			foreach (var action in Action)
+				action.OnEnter(machine);
+		}
+		
 		public override void Execute(BaseStateMachine machine)
 		{
 			foreach (var action in Action)

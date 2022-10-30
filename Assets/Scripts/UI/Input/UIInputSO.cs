@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
+using All.Events;
+
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,6 +12,9 @@ public class UIInputSO : ScriptableObject
 {
 	[NonSerialized] public bool enterPressed;
 	[NonSerialized] public bool escPressed;
+
+	[SerializeField] private GameSceneSO locationToLoad;
+	[SerializeField] private LoadEventChannelSO loadLocationChannel;
 
 	public void OnEnterDown(InputAction.CallbackContext context)
 	{
@@ -38,5 +43,10 @@ public class UIInputSO : ScriptableObject
 	public void OnQuitButton()
 	{
 		Application.Quit();
+	}
+
+	public void OnNewGameButton()
+	{
+		loadLocationChannel.RaiseEvent(locationToLoad, false, true);
 	}
 }

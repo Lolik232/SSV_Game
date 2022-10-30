@@ -12,9 +12,9 @@ namespace FSM
 		public void Execute(BaseStateMachine stateMachine)
 		{
 			if (Decision.Decide(stateMachine) && TrueState is not RemainInState)
-				stateMachine.CurrentState = TrueState;
+				stateMachine.ChangeState(TrueState);
 			else if (FalseState is not RemainInState)
-				stateMachine.CurrentState = FalseState;
+				stateMachine.ChangeState(FalseState);
 		}
 	}
 }
