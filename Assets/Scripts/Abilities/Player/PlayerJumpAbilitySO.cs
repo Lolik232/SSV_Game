@@ -6,54 +6,50 @@ using UnityEngine;
 
 public class PlayerJumpAbilitySO : AbilitySO
 {
-	[SerializeField] private float _coyoteTime;
+	//[SerializeField] private float _coyoteTime;
 
-	[HideInInspector] [NonSerialized] protected new PlayerSO entity;
+	//private float _startCoyoteTime;
 
-	private float _startCoyoteTime;
+	//protected Movable movable;
 
-	protected Movable movable;
+	//protected override void OnEnable()
+	//{
+	//	base.OnEnable();
 
-	protected override void OnEnable()
-	{
-		entity = (PlayerSO)base.entity;
+	//	enterConditions.Add(() =>
+	//	{
+	//		return entity.controller.jump &&
+	//					 !entity.checkers.touchingCeiling;
+	//	});
 
-		base.OnEnable();
+	//	exitConditions.Add(() =>
+	//	{
+	//		return movable.Velocity.y < 0f ||
+	//					 !entity.controller.jumpInputHold;
+	//	});
 
-		enterConditions.Add(() =>
-		{
-			return entity.controller.jump &&
-						 !entity.checkers.touchingCeiling;
-		});
+	//	enterActions.Add(() =>
+	//	{
+	//		entity.controller.jump = false;
+	//		movable.TrySetVelocityY(entity.parameters.jumpForce);
+	//	});
 
-		exitConditions.Add(() =>
-		{
-			return movable.Velocity.y < 0f ||
-						 !entity.controller.jumpInputHold;
-		});
+	//	exitActions.Add(() =>
+	//	{
+	//		if (movable.Velocity.y > 0f)
+	//		{
+	//			movable.TrySetVelocityY(movable.Velocity.y * 0.5f);
+	//		}
+	//	});
+	//}
 
-		enterActions.Add(() =>
-		{
-			entity.controller.jump = false;
-			movable.TrySetVelocityY(entity.parameters.jumpForce);
-		});
+	//public override void Initialize(GameObject origin)
+	//{
+	//	base.Initialize(origin);
+	//	movable = origin.GetComponent<Movable>();
+	//}
 
-		exitActions.Add(() =>
-		{
-			if (movable.Velocity.y > 0f)
-			{
-				movable.TrySetVelocityY(movable.Velocity.y * 0.5f);
-			}
-		});
-	}
+	//public bool IsCoyoteTime() => Time.time < _startCoyoteTime + _coyoteTime;
 
-	public override void Initialize(GameObject origin)
-	{
-		base.Initialize(origin);
-		movable = origin.GetComponent<Movable>();
-	}
-
-	public bool IsCoyoteTime() => Time.time < _startCoyoteTime + _coyoteTime;
-
-	public void StartCoyoteTime() => _startCoyoteTime = Time.time;
+	//public void StartCoyoteTime() => _startCoyoteTime = Time.time;
 }

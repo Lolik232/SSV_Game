@@ -6,12 +6,8 @@ using UnityEngine;
 
 public class PlayerMoveForwardAbilitySO : MoveForwardAbilitySO
 {
-	[HideInInspector] [NonSerialized] protected new PlayerSO entity;
-
 	protected override void OnEnable()
 	{
-		entity = (PlayerSO)base.entity;
-
 		base.OnEnable();
 	}
 }

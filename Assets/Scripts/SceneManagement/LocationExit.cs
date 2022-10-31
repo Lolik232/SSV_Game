@@ -14,7 +14,7 @@ namespace SceneManagement
 
 		private void OnTriggerEnter2D(Collider2D other)
 		{
-			if (other.TryGetComponent<EntityBase>(out var entity))
+			if (other.TryGetComponent<Player>(out var entity))
 			{
 				m_loadLocationChannel.RaiseEvent(m_locationToLoad, false, true);
 			}
@@ -22,7 +22,7 @@ namespace SceneManagement
 
 		private void OnCollisionEnter2D(Collision2D col)
 		{
-			if (col.gameObject.TryGetComponent<EntityBase>(out var entity))
+			if (col.gameObject.TryGetComponent<Player>(out var entity))
 			{
 				m_loadLocationChannel.RaiseEvent(m_locationToLoad, false, true);
 			}

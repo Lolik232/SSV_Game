@@ -38,22 +38,22 @@ public class Movable : BaseMonoBehaviour, IMovable
 	{
 		get => _bodyDirection;
 	}
-	public Parameter MoveUpSpeed
+	public float MoveUpSpeed
 	{
 		get => _moveUpSpeed;
 		set => _moveUpSpeed.Set(value);
 	}
-	public Parameter MoveDownSpeed
+	public float MoveDownSpeed
 	{
 		get => _moveDownSpeed;
 		set => _moveDownSpeed.Set(value);
 	}
-	public Parameter MoveForwardSpeed
+	public float MoveForwardSpeed
 	{
 		get => _moveForwardSpeed;
 		set => _moveForwardSpeed.Set(value);
 	}
-	public Parameter MoveBackwardSpeed
+	public float MoveBackwardSpeed
 	{
 		get => _moveBackwardSpeed;
 		set => _moveBackwardSpeed.Set(value);

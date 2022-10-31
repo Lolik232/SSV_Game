@@ -6,12 +6,8 @@ using UnityEngine;
 
 public class PlayerMoveBackwardAbilitySO : MoveBackwardAbilitySO
 {
-	[HideInInspector] [NonSerialized] protected new PlayerSO entity;
-
-	protected override void OnEnable()
+		protected override void OnEnable()
 	{
-		entity = (PlayerSO)base.entity;
-
 		base.OnEnable();
 	}
 }

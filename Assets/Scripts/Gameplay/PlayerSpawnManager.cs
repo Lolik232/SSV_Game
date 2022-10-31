@@ -6,7 +6,7 @@ namespace All.Gameplay
 {
 	public class PlayerSpawnManager : MonoBehaviour
 	{
-		[SerializeField] private EntityBase m_playerPrefab = default;
+		[SerializeField] private Player m_playerPrefab = default;
 
 		[Header("Broadcasting")]
 		[SerializeField] private VoidEventChannelSO m_onSceneReadyChan = default;
@@ -35,7 +35,7 @@ namespace All.Gameplay
 		private void SpawnPlayer()
 		{
 			Transform spawnLocation = m_defaultSpawnPoint;
-			EntityBase playerInstance = Instantiate(m_playerPrefab, spawnLocation.position, spawnLocation.rotation);
+			Player playerInstance = Instantiate(m_playerPrefab, spawnLocation.position, spawnLocation.rotation);
 
 			m_transformEventChannel.RaiseEvent(playerInstance.transform);
 

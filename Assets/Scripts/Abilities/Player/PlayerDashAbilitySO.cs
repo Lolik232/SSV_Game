@@ -6,67 +6,63 @@ using UnityEngine;
 
 public class PlayerDashAbilitySO : AbilitySO
 {
-	[SerializeField] private float _minProportion;
-	[SerializeField] private float _dashGravity;
+	//[SerializeField] private float _minProportion;
+	//[SerializeField] private float _dashGravity;
 
-	[HideInInspector] [NonSerialized] protected new PlayerSO entity;
+	//private Vector2 _dashDirection;
 
-	private Vector2 _dashDirection;
+	//protected Movable movable;
+	//protected Crouchable crouchable;
 
-	protected Movable movable;
-	protected Crouchable crouchable;
+	//private int _gravityHolder;
+	//private int _velocityHolder;
 
-	private int _gravityHolder;
-	private int _velocityHolder;
+	//protected override void OnEnable()
+	//{
+	//	base.OnEnable();
 
-	protected override void OnEnable()
-	{
-		entity = base.entity as PlayerSO;
+	//	prepareActions.Add(() =>
+	//	{
+	//		_dashDirection = entity.controller.lookAtDirection;
+	//	});
 
-		base.OnEnable();
+	//	enterConditions.Add(() =>
+	//	{
+	//		return entity.controller.dash &&
+	//					 _dashDirection != Vector2.zero &&
+	//					 !(entity.checkers.touchingCeiling && !crouchable.IsStanding);
+	//	});
 
-		prepareActions.Add(() =>
-		{
-			_dashDirection = entity.controller.lookAtDirection;
-		});
+	//	exitConditions.Add(() =>
+	//	{
+	//		return movable.Velocity.magnitude <= entity.parameters.dashForce * _minProportion ||
+	//					 (!entity.controller.dashInputHold && Time.time > startTime + duration * _minProportion);
+	//	});
 
-		enterConditions.Add(() =>
-		{
-			return entity.controller.dash &&
-						 _dashDirection != Vector2.zero &&
-						 !(entity.checkers.touchingCeiling && !crouchable.IsStanding);
-		});
+	//	enterActions.Add(() =>
+	//	{
+	//		_gravityHolder = movable.HoldGravity(_dashGravity);
+	//		_velocityHolder = movable.HoldVelocity(entity.parameters.dashForce * _dashDirection);
+	//		movable.TryRotateIntoDirection(Mathf.RoundToInt(_dashDirection.x));
+	//		entity.controller.dash = false;
+	//		//movable.EnableTrail();
+	//	});
 
-		exitConditions.Add(() =>
-		{
-			return movable.Velocity.magnitude <= entity.parameters.dashForce * _minProportion ||
-						 (!entity.controller.dashInputHold && Time.time > startTime + duration * _minProportion);
-		});
-
-		enterActions.Add(() =>
-		{
-			_gravityHolder = movable.HoldGravity(_dashGravity);
-			_velocityHolder = movable.HoldVelocity(entity.parameters.dashForce * _dashDirection);
-			movable.TryRotateIntoDirection(Mathf.RoundToInt(_dashDirection.x));
-			entity.controller.dash = false;
-			//movable.EnableTrail();
-		});
-
-		exitActions.Add(() =>
-		{
-			movable.ReleaseGravity(_gravityHolder);
-			movable.ReleaseVelocity(_velocityHolder);
-			//movable.DisableTrail();
-			if (movable.Velocity.y > 0f)
-			{
-				movable.TrySetVelocityY(movable.Velocity.y * 0.1f);
-			}
-		});
-	}
-	public override void Initialize(GameObject origin)
-	{
-		base.Initialize(origin);
-		movable = origin.GetComponent<Movable>();
-		crouchable = origin.GetComponent<Crouchable>();
-	}
+	//	exitActions.Add(() =>
+	//	{
+	//		movable.ReleaseGravity(_gravityHolder);
+	//		movable.ReleaseVelocity(_velocityHolder);
+	//		//movable.DisableTrail();
+	//		if (movable.Velocity.y > 0f)
+	//		{
+	//			movable.TrySetVelocityY(movable.Velocity.y * 0.1f);
+	//		}
+	//	});
+	//}
+	//public override void Initialize(GameObject origin)
+	//{
+	//	base.Initialize(origin);
+	//	movable = origin.GetComponent<Movable>();
+	//	crouchable = origin.GetComponent<Crouchable>();
+	//}
 }

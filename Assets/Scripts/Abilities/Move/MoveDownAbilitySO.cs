@@ -2,26 +2,26 @@ using UnityEngine;
 
 public abstract class MoveDownAbilitySO : AbilitySO
 {
-	protected Movable movable;
+	//protected Movable movable;
 
-	protected override void OnEnable()
-	{
-		base.OnEnable();
+	//protected override void OnEnable()
+	//{
+	//	base.OnEnable();
 
-		enterConditions.Add(() => entity.controller.move.y == -1);
+	//	enterConditions.Add(() => entity.controller.move.y == -1);
 
-		exitConditions.Add(() => entity.controller.move.y != -1);
+	//	exitConditions.Add(() => entity.controller.move.y != -1);
 
-		updateActions.Add(() =>
-		{
-			movable.TrySetVelocityY(-movable.MoveDownSpeed);
-		});
-	}
+	//	updateActions.Add(() =>
+	//	{
+	//		movable.TrySetVelocityY(-movable.MoveDownSpeed);
+	//	});
+	//}
 
-	public override void Initialize(GameObject origin)
-	{
-		base.Initialize(origin);
-		movable = origin.GetComponent<Movable>();
-	}
+	//public override void Initialize(GameObject origin)
+	//{
+	//	base.Initialize(origin);
+	//	movable = origin.GetComponent<Movable>();
+	//}
 }
 

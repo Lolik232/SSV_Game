@@ -6,42 +6,38 @@ using UnityEngine;
 
 public class PlayerLedgeClimbAbilitySO : AbilitySO
 {
-	[HideInInspector] [NonSerialized] protected new PlayerSO entity;
+	//protected Movable movable;
 
-	protected Movable movable;
+	//private int _positionHolder;
+	//private int _directionHolder;
 
-	private int _positionHolder;
-	private int _directionHolder;
+	//protected override void OnEnable()
+	//{
+	//	base.OnEnable();
 
-	protected override void OnEnable()
-	{
-		entity = base.entity as PlayerSO;
+	//	enterConditions.Add(() => entity.checkers.touchingWall &&
+	//														!entity.checkers.touchingLedge &&
+	//														(entity.controller.move.x == movable.FacingDirection ||
+	//														 entity.controller.move.y == 1));
 
-		base.OnEnable();
+	//	enterActions.Add(() =>
+	//	{
+	//		entity.checkers.DetermineLedgePosition();
+	//		_directionHolder = movable.HoldDirection(-entity.checkers.wallDirection);
+	//		_positionHolder = movable.HoldPosition(entity.checkers.ledgeStartPosition);
+	//	});
 
-		enterConditions.Add(() => entity.checkers.touchingWall &&
-															!entity.checkers.touchingLedge &&
-															(entity.controller.move.x == movable.FacingDirection ||
-															 entity.controller.move.y == 1));
+	//	exitActions.Add(() =>
+	//	{
+	//		movable.ReleaseDirection(_directionHolder);
+	//		movable.ReleasePosition(_positionHolder);
+	//		movable.TrySetPosition(entity.checkers.ledgeEndPosition);
+	//	});
+	//}
 
-		enterActions.Add(() =>
-		{
-			entity.checkers.DetermineLedgePosition();
-			_directionHolder = movable.HoldDirection(-entity.checkers.wallDirection);
-			_positionHolder = movable.HoldPosition(entity.checkers.ledgeStartPosition);
-		});
-
-		exitActions.Add(() =>
-		{
-			movable.ReleaseDirection(_directionHolder);
-			movable.ReleasePosition(_positionHolder);
-			movable.TrySetPosition(entity.checkers.ledgeEndPosition);
-		});
-	}
-
-	public override void Initialize(GameObject origin)
-	{
-		base.Initialize(origin);
-		movable = origin.GetComponent<Movable>();
-	}
+	//public override void Initialize(GameObject origin)
+	//{
+	//	base.Initialize(origin);
+	//	movable = origin.GetComponent<Movable>();
+	//}
 }

@@ -16,7 +16,7 @@ public class RoomCam : MonoBehaviour
 
 	private void OnTriggerEnter2D(Collider2D col)
 	{
-		if (col.GetComponent<EntityBase>() == null)
+		if (col.GetComponent<Player>() == null)
 		{
 			return;
 		}
@@ -26,7 +26,7 @@ public class RoomCam : MonoBehaviour
 
 	private void OnTriggerExit2D(Collider2D col)
 	{
-		if (col.GetComponent<EntityBase>() == null)
+		if (col.GetComponent<Player>() == null)
 		{
 			return;
 		}

@@ -6,35 +6,31 @@ using UnityEngine;
 
 public class PlayerAttackAbilitySO : AbilitySO
 {
-	[HideInInspector] [NonSerialized] protected new PlayerSO entity;
+	//protected override void OnEnable()
+	//{
+	//	base.OnEnable();
 
-	protected override void OnEnable()
-	{
-		entity = (PlayerSO)base.entity;
+	//	enterConditions.Add(() => entity.controller.attack);
 
-		base.OnEnable();
+	//	enterActions.Add(() =>
+	//	{
+	//		entity.controller.attack = false;
+	//		//entity.weapons.Current.OnEnter();
+	//	});
 
-		enterConditions.Add(() => entity.controller.attack);
+	//	exitActions.Add(() =>
+	//	{
+	//		//entity.weapons.Current.OnExit();
+	//	});
+	//}
 
-		enterActions.Add(() =>
-		{
-			entity.controller.attack = false;
-			//entity.weapons.Current.OnEnter();
-		});
+	//public void HoldDirection(int direction)
+	//{
+	//	//entity.weapons.Current.HoldDirection(direction);
+	//}
 
-		exitActions.Add(() =>
-		{
-			//entity.weapons.Current.OnExit();
-		});
-	}
-
-	public void HoldDirection(int direction)
-	{
-		//entity.weapons.Current.HoldDirection(direction);
-	}
-
-	public void ReleaseDirection()
-	{
-		//entity.weapons.Current.ReleaseDirection();
-	}
+	//public void ReleaseDirection()
+	//{
+	//	//entity.weapons.Current.ReleaseDirection();
+	//}
 }

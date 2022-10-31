@@ -4,9 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public abstract class StateSO : BaseScriptableObject, IComponent, IBlockable
+[CreateAssetMenu(fileName = "State", menuName = "States/State")]
+
+public class StateSO : BaseScriptableObject, IComponent, IBlockable
 {
-	[SerializeField] private StateMachineSO _stateMachine;
 	[SerializeField] private List<AnimationBool> _animBools;
 	[Space]
 	[SerializeField] private List<PermitedAbility> _permitedAbilities;
@@ -14,7 +15,7 @@ public abstract class StateSO : BaseScriptableObject, IComponent, IBlockable
 
 	protected List<TransitionItem> transitions = new();
 
-	private StateSO _blockedTransition;
+	public StateSO blockedTransition;
 
 	private readonly Blocker _blocker = new();
 
@@ -47,63 +48,20 @@ public abstract class StateSO : BaseScriptableObject, IComponent, IBlockable
 		anim = origin.GetComponent<Animator>();
 	}
 
-	public override void OnUpdate()
-	{
-		if (!CheckIfNeedTransition())
-		{
-			base.OnUpdate();
-		}
-	}
-
-	private bool CheckIfNeedTransition()
-	{
-		if (!isActive)
-		{
-			return false;
-		}
-
-		foreach (var transition in transitions)
-		{
-			if (!transition.toState.IsLocked && transition.condition())
-			{
-				transition.action();
-				_stateMachine.GetNext(transition.toState);
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	public void SetBlockedTransition(StateSO blockedTransition)
 	{
-		_blockedTransition = blockedTransition;
+		this.blockedTransition = blockedTransition;
 	}
 
 	public void Block()
 	{
-		_stateMachine.GetNext(_blockedTransition);
 		_blocker.AddBlock();
 	}
 
 	public void Unlock()
 	{
-		_blockedTransition = null;
+		blockedTransition = null;
 		_blocker.RemoveBlock();
-	}
-}
-
-public struct TransitionItem
-{
-	public StateSO toState;
-	public Func<bool> condition;
-	public UnityAction action;
-
-	public TransitionItem(StateSO toState, Func<bool> condition, UnityAction action)
-	{
-		this.toState = toState;
-		this.condition = condition;
-		this.action = action;
 	}
 }
 
