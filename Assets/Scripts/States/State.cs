@@ -11,7 +11,7 @@ public abstract class State : MonoBehaviour, IState, IActivated, IBlockable
 	[Space]
 	[SerializeField] private List<TransitionItem> _transitions;
 	[Space]
-	[SerializeField] private List<PermitedAbility> _permitedAbilities;
+	[SerializeField] private List<BlockedAbility> _blockedAbilities;
 
 	private readonly Blocker _blocker = new();
 
@@ -98,7 +98,7 @@ public abstract class State : MonoBehaviour, IState, IActivated, IBlockable
 	protected virtual void ApplyEnterActions()
 	{
 		IsActive = true;
-		Utility.UnlockAll(_permitedAbilities);
+		Utility.BlockAll(_blockedAbilities);
 		Utility.SetAnimBoolsOnEnter(_anim, _animBools);
 		_startTime = Time.time;
 	}
@@ -106,7 +106,7 @@ public abstract class State : MonoBehaviour, IState, IActivated, IBlockable
 	protected virtual void ApplyExitActions()
 	{
 		IsActive = false;
-		Utility.BlockAll(_permitedAbilities);
+		Utility.UnlockAll(_blockedAbilities);
 		Utility.SetAnimBoolsOnExit(_anim, _animBools);
 		_endTime = Time.time;
 	}
@@ -115,14 +115,9 @@ public abstract class State : MonoBehaviour, IState, IActivated, IBlockable
 [Serializable]
 public struct BlockedState
 {
+	[SerializeField] private string _description;
 	public State component;
 	public State target;
-
-	public BlockedState(State component, State target)
-	{
-		this.component = component;
-		this.target = target;
-	}
 }
 
 [Serializable]

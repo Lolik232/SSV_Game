@@ -88,7 +88,7 @@ public static class Utility
 		}
 	}
 
-	static public void BlockAll(List<PermitedAbility> blockedAbilities)
+	static public void BlockAll(List<BlockedAbility> blockedAbilities)
 	{
 		foreach (var blockedAbility in blockedAbilities)
 		{
@@ -96,7 +96,7 @@ public static class Utility
 		}
 	}
 
-	static public void UnlockAll(List<PermitedAbility> blockedAbilities)
+	static public void UnlockAll(List<BlockedAbility> blockedAbilities)
 	{
 		foreach (var blockedAbility in blockedAbilities)
 		{

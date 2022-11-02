@@ -22,6 +22,7 @@ public class Condition : IComponent, ICondition
 	private AttackController _attackController;
 	private AbilityController _abilityController;
 	private Movable _movable;
+	private Rotateable _rotateable;
 
 	public bool DoChecks()
 	{
@@ -65,6 +66,7 @@ public class Condition : IComponent, ICondition
 		_attackController = origin.GetComponent<AttackController>();
 		_abilityController = origin.GetComponent<AbilityController>();
 		_movable = origin.GetComponent<Movable>();
+		_rotateable = origin.GetComponent<Rotateable>();
 	}
 	private bool Check(ExpectedBoolValue expected)
 	{
@@ -137,13 +139,17 @@ public class Condition : IComponent, ICondition
 		return expected == Vector2IntValue.Zero && got == Vector2Int.zero ||
 					 expected == Vector2IntValue.Up && got.y == 1 ||
 					 expected == Vector2IntValue.Down && got.y == -1 ||
-					 expected == Vector2IntValue.Forward && got.x == _movable.FacingDirection ||
-					 expected == Vector2IntValue.Backward && got.x == -_movable.FacingDirection ||
+					 expected == Vector2IntValue.Forward && got.x == _rotateable.FacingDirection ||
+					 expected == Vector2IntValue.Backward && got.x == -_rotateable.FacingDirection ||
 					 expected == Vector2IntValue.NotZero && got != Vector2Int.zero ||
 					 expected == Vector2IntValue.NotUp && got.y != 1 ||
 					 expected == Vector2IntValue.NotDown && got.y != -1 ||
-					 expected == Vector2IntValue.NotForward && got.x != _movable.FacingDirection ||
-					 expected == Vector2IntValue.NotBackward && got.x != -_movable.FacingDirection;
+					 expected == Vector2IntValue.NotForward && got.x != _rotateable.FacingDirection ||
+					 expected == Vector2IntValue.NotBackward && got.x != -_rotateable.FacingDirection ||
+					 expected == Vector2IntValue.Horizontal && got.x != 0 ||
+					 expected == Vector2IntValue.Vertical && got.y != 0 ||
+					 expected == Vector2IntValue.NotHorizontal && got.x == 0 ||
+					 expected == Vector2IntValue.NotVertical && got.y == 0;
 	}
 
 	private bool Check(FloatValue expected, float got)
@@ -167,7 +173,7 @@ public class Condition : IComponent, ICondition
 		Jump,
 		Dash,
 		Grab,
-		Attack, 
+		Attack,
 		Ability
 	}
 
@@ -189,8 +195,9 @@ public class Condition : IComponent, ICondition
 
 	private enum Vector2IntValue
 	{
-		Zero, Forward, Backward, Up, Down, 
-		NotZero, NotForward, NotBackward, NotUp, NotDown
+		Zero, Forward, Backward, Up, Down,
+		NotZero, NotForward, NotBackward, NotUp, NotDown,
+		Horizontal, Vertical, NotHorizontal, NotVertical
 	}
 
 	private enum ComparedValue
@@ -227,12 +234,6 @@ public class Condition : IComponent, ICondition
 	{
 		public ComparedValue value;
 		public float to;
-
-		public FloatValue(ComparedValue value, float to)
-		{
-			this.value = value;
-			this.to = to;
-		}
 
 		public static implicit operator ComparedValue(FloatValue floatValue) => floatValue.value;
 	}

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+
 using UnityEngine;
 
 public class Cacheable<T> : ICacheable<T>
@@ -12,25 +13,22 @@ public class Cacheable<T> : ICacheable<T>
 
 	private int Count
 	{
-		get
-		{
-			return _last + 1;
-		}
+		get => _last + 1;
 	}
-
 	public T Value
 	{
-		get
-		{
-			return _value;
-		}
+		get => _value;
+	}
+	public bool IsLocked
+	{
+		get => _blocker.IsLocked;
 	}
 
 	public int Hold(T value)
 	{
-		if (_cache.Capacity < Count + 1)
+		while (_cache.Count < Count + 1)
 		{
-			_cache.Capacity *= 2;
+			_cache.Add(new CachedValue<T>(default, _last));
 		}
 
 		_last++;

@@ -4,17 +4,9 @@ using UnityEngine;
 
 public class Movable : MonoBehaviour, IMovable
 {
-	[SerializeField] private Parameter _moveUpSpeed;
-	[SerializeField] private Parameter _moveDownSpeed;
-	[SerializeField] private Parameter _moveForwardSpeed;
-	[SerializeField] private Parameter _moveBackwardSpeed;
-
 	private readonly Cacheable<Vector2> _position = new();
 	private readonly Cacheable<Vector2> _velocity = new();
 	private readonly Cacheable<float> _gravity = new();
-	private readonly Cacheable<int> _facingDirection = new();
-
-	private int _bodyDirection;
 
 	private Rigidbody2D _rb;
 
@@ -30,123 +22,87 @@ public class Movable : MonoBehaviour, IMovable
 	{
 		get => _rb.gravityScale;
 	}
-	public int FacingDirection
-	{
-		get => _facingDirection.Value;
-	}
-	public int BodyDirection
-	{
-		get => _bodyDirection;
-	}
-	public float MoveUpSpeed
-	{
-		get => _moveUpSpeed.Current;
-		set => _moveUpSpeed.Set(value);
-	}
-	public float MoveDownSpeed
-	{
-		get => _moveDownSpeed.Current;
-		set => _moveDownSpeed.Set(value);
-	}
-	public float MoveForwardSpeed
-	{
-		get => _moveForwardSpeed.Current;
-		set => _moveForwardSpeed.Set(value);
-	}
-	public float MoveBackwardSpeed
-	{
-		get => _moveBackwardSpeed.Current;
-		set => _moveBackwardSpeed.Set(value);
-	}
 
 	private void Awake()
 	{
 		_rb = GetComponent<Rigidbody2D>();
-
-		_moveUpSpeed.Initialize();
-		_moveDownSpeed.Initialize();
-		_moveForwardSpeed.Initialize();
-		_moveBackwardSpeed.Initialize();
 	}
 
-	private void Start()
+	private void Update()
 	{
-		TryRotateIntoDirection(1);
-	}
-
-	public void TryRotateIntoDirection(int direction)
-	{
-		if (direction != 0)
+		if (_position.IsLocked)
 		{
-			if (_facingDirection.TrySet(direction))
-			{
-				RotateBodyIntoDirection(direction);
-			}
-		}
-	}
-
-	public void RotateBodyIntoDirection(int direction)
-	{
-		if (direction != 0)
-		{
-			_bodyDirection = direction;
-			switch (direction)
-			{
-				case 1:
-					transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-					break;
-				case -1:
-					transform.rotation = Quaternion.Euler(0f, 180f, 0f);
-					break;
-				default:
-					break;
-			}
+			transform.position = _position.Value;		
 		}
 	}
 
 	public void TrySetPosition(Vector2 position)
 	{
-		_position.TrySet(position);
+		if (_position.TrySet(position))
+		{
+			transform.position = _position.Value;
+		}
 	}
 
 	public void TrySetPositionX(float x)
 	{
-		_position.TrySet(new Vector2(x, Position.y));
+		if (_position.TrySet(new Vector2(x, Position.y)))
+		{
+			transform.position = _position.Value;
+		}
 	}
 
 	public void TrySetPositionY(float y)
 	{
-		_position.TrySet(new Vector2(Position.x, y));
+		if (_position.TrySet(new Vector2(Position.x, y)))
+		{
+			transform.position = _position.Value;
+		}
 	}
 
 	public void TrySetVelocity(Vector2 velocity)
 	{
-		_velocity.TrySet(velocity);
+		if (_velocity.TrySet(velocity))
+		{
+			_rb.velocity = _velocity.Value;
+		}
 	}
 
 	public void TrySetVelocity(float speed, Vector2 angle, int direction)
 	{
-		_velocity.TrySet(new Vector2(angle.normalized.x * speed * direction, angle.normalized.y * speed));
+		if (_velocity.TrySet(new Vector2(angle.normalized.x * speed * direction, angle.normalized.y * speed)))
+		{
+			_rb.velocity = _velocity.Value;
+		}
 	}
 
 	public void TrySetVelocityX(float x)
 	{
-		_velocity.TrySet(new Vector2(x, Velocity.y));
+		if (_velocity.TrySet(new Vector2(x, Velocity.y)))
+		{
+			_rb.velocity = _velocity.Value;
+		}
 	}
 
 	public void TrySetVelocityY(float y)
 	{
-		_velocity.TrySet(new Vector2(Velocity.x, y));
+		if (_velocity.TrySet(new Vector2(Velocity.x, y)))
+		{
+			_rb.velocity = _velocity.Value;
+		}
 	}
 
 	public void TrySetGravity(float gravity)
 	{
-		_gravity.TrySet(gravity);
+		if (_gravity.TrySet(gravity))
+		{
+			_rb.gravityScale = _gravity.Value;
+		}
 	}
 
 	public int HoldPosition(Vector2 position)
 	{
-		int id = _position.Hold(position);
+    int id = _position.Hold(position);
 		transform.position = _position.Value;
 		return id;
 	}
@@ -162,13 +118,6 @@ public class Movable : MonoBehaviour, IMovable
 	{
 		int id = _gravity.Hold(gravity);
 		_rb.gravityScale = _gravity.Value;
-		return id;
-	}
-
-	public int HoldDirection(int direction)
-	{
-		int id = _facingDirection.Hold(direction);
-		RotateBodyIntoDirection(direction);
 		return id;
 	}
 
@@ -188,12 +137,6 @@ public class Movable : MonoBehaviour, IMovable
 	{
 		_gravity.Release(id);
 		_rb.gravityScale = _gravity.Value;
-	}
-
-	public void ReleaseDirection(int id)
-	{
-		_facingDirection.Release(id);
-		RotateBodyIntoDirection(FacingDirection);
 	}
 
 	public int HoldVelocity(float speed, Vector2 angle, int direction)

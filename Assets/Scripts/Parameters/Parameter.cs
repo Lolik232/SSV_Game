@@ -50,7 +50,7 @@ public class Parameter : IParameter<float>
 
 	public void Set(float value)
 	{
-		Current = Mathf.Min(Min, Mathf.Max(Max, value));
+		Current = Mathf.Clamp(value, Min, Max);
 	}
 }
 
@@ -90,7 +90,7 @@ public class ParameterInt : IParameter<int>
 
 	public void Set(int value)
 	{
-		Current = Mathf.Min(Min, Mathf.Max(Max, value));
+		Current = Mathf.Clamp(value, Min, Max);
 	}
 }
 

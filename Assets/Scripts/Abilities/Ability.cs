@@ -1,7 +1,10 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
+
+[RequireComponent(typeof(AbilitiesManager))]
 
 public abstract class Ability : MonoBehaviour, IAbility, IActivated, IBlockable
 {
@@ -16,7 +19,7 @@ public abstract class Ability : MonoBehaviour, IAbility, IActivated, IBlockable
 	[SerializeField] private List<Condition> _enterConditions;
 	[SerializeField] private List<Condition> _exitConditions;
 	[Space]
-	[SerializeField] private List<PermitedAbility> _blockedAbilities;
+	[SerializeField] private List<BlockedAbility> _blockedAbilities;
 
 	private readonly Blocker _blocker = new();
 
@@ -63,6 +66,19 @@ public abstract class Ability : MonoBehaviour, IAbility, IActivated, IBlockable
 	{
 		_anim = GetComponent<Animator>();
 		_cooldown.value.Initialize();
+
+		_cooldown.value.Initialize();
+		_duration.value.Initialize();
+
+		foreach (var condition in _enterConditions)
+		{
+			condition.Initialize(gameObject);
+		}
+
+		foreach (var condition in _exitConditions)
+		{
+			condition.Initialize(gameObject);
+		}
 	}
 
 	public void Block()
@@ -76,21 +92,31 @@ public abstract class Ability : MonoBehaviour, IAbility, IActivated, IBlockable
 		_blocker.RemoveBlock();
 	}
 
-	public void OnEnter()
+	public void TryEnter()
 	{
-		if (IsActive)
+		if (IsActive || IsLocked)
 		{
 			return;
 		}
 
 		ApplyPrepareActions();
 
-		if (_amountOfUsages.required && AmountOfUsages == 0 || InactiveTime < Cooldown)
+		if (_amountOfUsages.required && AmountOfUsages == 0 || (_cooldown.required && InactiveTime < Cooldown))
 		{
 			return;
 		}
 
 		if (!DoEnterChecks())
+		{
+			return;
+		}
+
+		ApplyEnterActions();
+	}
+
+	public void OnEnter()
+	{
+		if (IsActive || IsLocked)
 		{
 			return;
 		}
@@ -139,17 +165,18 @@ public abstract class Ability : MonoBehaviour, IAbility, IActivated, IBlockable
 		IsActive = false;
 		Utility.UnlockAll(_blockedAbilities);
 		Utility.UnlockAll(_blockedStates);
+		Utility.SetAnimBoolsOnExit(_anim, _animBools);
 		_endTime = Time.time;
 	}
 
 	protected virtual void ApplyUpdateActions()
 	{
-	
+
 	}
 
 	protected virtual void ApplyPrepareActions()
 	{
-		
+
 	}
 
 	private bool DoEnterChecks()
@@ -167,6 +194,16 @@ public abstract class Ability : MonoBehaviour, IAbility, IActivated, IBlockable
 
 	private bool DoExitChecks()
 	{
+		if (!IsActive)
+		{
+			return false;
+		}
+
+		if (_duration.required && ActiveTime > Duration)
+		{
+			return true;
+		}
+
 		foreach (var condition in _exitConditions)
 		{
 			if (condition.DoChecks())
@@ -206,9 +243,8 @@ public struct AbilityParameterInt
 }
 
 [Serializable]
-public struct PermitedAbility
+public struct BlockedAbility
 {
 	[SerializeField] private string _description;
 	public Ability component;
-	public bool needHardExit;
 }

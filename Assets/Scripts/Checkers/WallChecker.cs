@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Movable), typeof(Physical))]
+[RequireComponent(typeof(Rotateable), typeof(Physical))]
 
 public class WallChecker : MonoBehaviour, IWallChecker
 {
@@ -18,7 +18,7 @@ public class WallChecker : MonoBehaviour, IWallChecker
 	private int _wallDirection;
 
 	private Physical _physical;
-	private Movable _movable;
+	private Rotateable _rotateable;
 
 	public bool TouchingWall
 	{
@@ -40,7 +40,7 @@ public class WallChecker : MonoBehaviour, IWallChecker
 	private void Awake()
 	{
 		_physical = GetComponent<Physical>();
-		_movable = GetComponent<Movable>();
+		_rotateable = GetComponent<Rotateable>();
 	}
 
 	private void FixedUpdate()
@@ -53,7 +53,7 @@ public class WallChecker : MonoBehaviour, IWallChecker
 	{
 		RaycastHit2D hit = Physics2D.Linecast(_wallCheckRay.a, _wallCheckRay.b, _whatIsTarget);
 		_touchingWall = hit;
-		_wallDirection = _touchingWall ? -_movable.FacingDirection : _movable.FacingDirection;
+		_wallDirection = _touchingWall ? -_rotateable.FacingDirection : _rotateable.FacingDirection;
 		if (_touchingWall)
 		{
 			_wallPosition = hit.point;
@@ -65,18 +65,18 @@ public class WallChecker : MonoBehaviour, IWallChecker
 	public void UpdateCheckersPosition()
 	{
 		Vector2 checkerOffset = _physical.Size / 2 - Vector2.one * IChecker.CHECK_OFFSET;
-		float rightCheckerPositionX = _physical.Center.x + _movable.FacingDirection * checkerOffset.x;
-		float leftCheckerPositionX = _physical.Center.x - _movable.FacingDirection * checkerOffset.x;
+		float rightCheckerPositionX = _physical.Center.x + _rotateable.FacingDirection * checkerOffset.x;
+		float leftCheckerPositionX = _physical.Center.x - _rotateable.FacingDirection * checkerOffset.x;
 
 		Vector2 workspace = new(rightCheckerPositionX, _physical.Position.y + _wallCheckerYOffset);
 		_wallCheckRay = new CheckArea(workspace.x,
 																	 workspace.y,
-																	 workspace.x + _movable.FacingDirection * _wallCheckDistance,
+																	 workspace.x + _rotateable.FacingDirection * _wallCheckDistance,
 																	 workspace.y);
 		workspace = new Vector2(leftCheckerPositionX, workspace.y);
 		_wallBackCheckRay = new CheckArea(workspace.x,
 																			 workspace.y,
-																			 workspace.x - _movable.FacingDirection * _wallCheckDistance,
+																			 workspace.x - _rotateable.FacingDirection * _wallCheckDistance,
 																			 workspace.y);
 	}
 

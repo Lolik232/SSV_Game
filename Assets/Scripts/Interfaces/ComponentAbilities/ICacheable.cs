@@ -1,10 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public interface ICacheable<T>
 {
 	public T Value
+	{
+		get;
+	}
+
+	public bool IsLocked
 	{
 		get;
 	}

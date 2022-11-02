@@ -1,4 +1,4 @@
-using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class StateMachine : MonoBehaviour
 {
-	[SerializeField] private List<NamedState> _states;
+	private List<State> _states = new();
 
 	private State _current;
 
@@ -16,14 +16,19 @@ public class StateMachine : MonoBehaviour
 		private set => _current = value;
 	}
 
+	private void Awake()
+	{
+		GetComponents(_states);
+	}
+
 	private void Start()
 	{
-		GetTransition(_states.First().state);
+		GetTransition(_states.First());
 	}
 
 	private void Update()
 	{
-		TryGetTransition();
+		StartCoroutine(WaitForChecks());
 	}
 
 	private void TryGetTransition()
@@ -59,11 +64,10 @@ public class StateMachine : MonoBehaviour
 		Current = target;
 		Current.OnEnter();
 	}
-}
 
-[Serializable]
-public struct NamedState
-{
-	[SerializeField] private string _description;
-	public State state;
+	private IEnumerator WaitForChecks()
+	{
+		yield return new WaitForFixedUpdate();
+		TryGetTransition();
+	}
 }

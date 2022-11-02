@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Movable), typeof(Physical))]
+[RequireComponent(typeof(Rotateable), typeof(Physical))]
 
 public class LedgeChecker : MonoBehaviour, ILedgeChecker
 {
@@ -13,7 +13,7 @@ public class LedgeChecker : MonoBehaviour, ILedgeChecker
 	private CheckArea _ledgeCheckRay;
 
 	private Physical _physical;
-	private Movable _movable;
+	private Rotateable _rotateable;
 
 	public bool TouchingLegde
 	{
@@ -23,7 +23,7 @@ public class LedgeChecker : MonoBehaviour, ILedgeChecker
 	private void Awake()
 	{
 		_physical = GetComponent<Physical>();
-		_movable = GetComponent<Movable>();
+		_rotateable = GetComponent<Rotateable>();
 	}
 
 	private void FixedUpdate()
@@ -45,12 +45,12 @@ public class LedgeChecker : MonoBehaviour, ILedgeChecker
 	public void UpdateCheckersPosition()
 	{
 		Vector2 checkerOffset = _physical.Size / 2 - Vector2.one * IChecker.CHECK_OFFSET;
-		float rightCheckerPositionX = _physical.Center.x + _movable.FacingDirection * checkerOffset.x;
+		float rightCheckerPositionX = _physical.Center.x + _rotateable.FacingDirection * checkerOffset.x;
 
 		Vector2 workspace = new(rightCheckerPositionX, _physical.Position.y + _ledgeCheckerYOffset);
 		_ledgeCheckRay = new CheckArea(workspace.x,
 																		workspace.y,
-																		workspace.x + _movable.FacingDirection * _ledgeCheckDistance,
+																		workspace.x + _rotateable.FacingDirection * _ledgeCheckDistance,
 																		workspace.y);
 	}
 }

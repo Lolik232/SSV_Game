@@ -28,9 +28,16 @@ GameObject:
   - component: {fileID: 8421440758656966385}
   - component: {fileID: 1981846926818204801}
   - component: {fileID: -7238836522169623474}
+  - component: {fileID: 3468277025689783209}
   - component: {fileID: 6947252983381312409}
   - component: {fileID: 3329624546924844578}
   - component: {fileID: -7384608792551618836}
+  - component: {fileID: 3504227672686135929}
+  - component: {fileID: 7526529738827503554}
+  - component: {fileID: 9174108980198039455}
+  - component: {fileID: 2539731355654125748}
+  - component: {fileID: 6041840438588976366}
+  - component: {fileID: 2086856307190248816}
   - component: {fileID: -2486400050515072108}
   m_Layer: 6
   m_Name: Player
@@ -394,13 +401,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efb4b94b81eb0ea4dbbdc6d7ea8c6765, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _states:
-  - _description: Grounded (Default)
-    state: {fileID: -6671134263038552869}
-  - _description: InAir
-    state: {fileID: -4974458489029642592}
-  - _description: TouchingWall
-    state: {fileID: -2804302636390980624}
 --- !u!114 &-6671134263038552869
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -446,7 +446,11 @@ MonoBehaviour:
         value: 0
       _vectors: []
       _floats: []
-  _permitedAbilities: []
+  _blockedAbilities:
+  - _description: Wall Grab Ability
+    component: {fileID: 6041840438588976366}
+  - _description: Wall Climb Ability
+    component: {fileID: 2086856307190248816}
 --- !u!114 &-4974458489029642592
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -512,7 +516,11 @@ MonoBehaviour:
         value:
           value: 2
           to: 0.01
-  _permitedAbilities: []
+  _blockedAbilities:
+  - _description: Wall Grab Ability
+    component: {fileID: 6041840438588976366}
+  - _description: Wall Climb Ability
+    component: {fileID: 6041840438588976366}
 --- !u!114 &-2804302636390980624
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -562,7 +570,13 @@ MonoBehaviour:
         type: 0
         value: 6
       _floats: []
-  _permitedAbilities: []
+  _blockedAbilities:
+  - _description: Move Forward Ability
+    component: {fileID: 7526529738827503554}
+  - _description: Move Backward Ability
+    component: {fileID: 9174108980198039455}
+  - _description: Stand Ability
+    component: {fileID: 2539731355654125748}
 --- !u!114 &4157396260338738249
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -708,6 +722,18 @@ MonoBehaviour:
     _g: 0.3
     _b: 0.1
     _a: 1
+--- !u!114 &3468277025689783209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16557013547266712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efd9fd42938651245b92d68336611965, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &6947252983381312409
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -720,18 +746,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e03cc57122ca7f488a7e89a51ee576d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveUpSpeed:
-    _min: 0
-    _max: 5
-  _moveDownSpeed:
-    _min: 0
-    _max: 6
-  _moveForwardSpeed:
-    _min: 0
-    _max: 10
-  _moveBackwardSpeed:
-    _min: 0
-    _max: 3
 --- !u!114 &3329624546924844578
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -776,6 +790,321 @@ MonoBehaviour:
     _g: 0.3
     _b: 0.1
     _a: 1
+--- !u!114 &3504227672686135929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16557013547266712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb9e4da560c61024ab3914e095a7ab17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7526529738827503554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16557013547266712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1027cb75bb80c224d926fb2b3c18b72d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cooldown:
+    value:
+      _min: 0
+      _max: 0
+    required: 0
+  _duration:
+    value:
+      _min: 0
+      _max: 0
+    required: 0
+  _amountOfUsages:
+    value:
+      _min: 0
+      _max: 0
+    required: 0
+  _animBools:
+  - name: move
+    mode: 2
+  _blockedStates: []
+  _enterConditions:
+  - _description: Move Towards Facing Direction
+    _bools: []
+    _vectors:
+    - _description: Move X Equals To Facing Direction
+      type: 0
+      value: 1
+    _floats: []
+  _exitConditions:
+  - _description: Not Move Towards Facing Direction
+    _bools: []
+    _vectors:
+    - _description: Move X Is Not Equal To Facing Direction
+      type: 0
+      value: 6
+    _floats: []
+  _blockedAbilities:
+  - _description: Move Backward Ability
+    component: {fileID: 9174108980198039455}
+  - _description: Stand Ability
+    component: {fileID: 2539731355654125748}
+  _acceleration:
+    value:
+      _min: 0
+      _max: 3
+    required: 1
+  _maxMoveSpeed: 10
+--- !u!114 &9174108980198039455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16557013547266712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98a0e3bd9469e2a46948a9168a395bc9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cooldown:
+    value:
+      _min: 0
+      _max: 0
+    required: 0
+  _duration:
+    value:
+      _min: 0
+      _max: 0
+    required: 0
+  _amountOfUsages:
+    value:
+      _min: 0
+      _max: 0
+    required: 0
+  _animBools:
+  - name: move
+    mode: 2
+  - name: backward
+    mode: 2
+  _blockedStates: []
+  _enterConditions:
+  - _description: Move Cowards Facing Direction
+    _bools: []
+    _vectors:
+    - _description: Move X Equals To Negative Facing Direction
+      type: 0
+      value: 2
+    _floats: []
+  _exitConditions:
+  - _description: Not Move Cowards Facing Direction
+    _bools: []
+    _vectors:
+    - _description: Move X Is Not Equal To Negative Facing Direction
+      type: 0
+      value: 7
+    _floats: []
+  _blockedAbilities:
+  - _description: Move Forward Ability
+    component: {fileID: 7526529738827503554}
+  - _description: Stand Ability
+    component: {fileID: 2539731355654125748}
+  _acceleration:
+    value:
+      _min: 0
+      _max: 3
+    required: 1
+  _maxMoveSpeed: 4
+--- !u!114 &2539731355654125748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16557013547266712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9aa23b731ea7f964aae655882b81959c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cooldown:
+    value:
+      _min: 0
+      _max: 0
+    required: 0
+  _duration:
+    value:
+      _min: 0
+      _max: 0
+    required: 0
+  _amountOfUsages:
+    value:
+      _min: 0
+      _max: 0
+    required: 0
+  _animBools: []
+  _blockedStates: []
+  _enterConditions:
+  - _description: Not Move Horizontal
+    _bools: []
+    _vectors:
+    - _description: Move X Equals To Zero
+      type: 0
+      value: 12
+    _floats: []
+  _exitConditions:
+  - _description: Move Horizontal
+    _bools: []
+    _vectors:
+    - _description: Move Is Not Equal To Zero
+      type: 0
+      value: 10
+    _floats: []
+  _blockedAbilities:
+  - _description: Move Forward Ability
+    component: {fileID: 7526529738827503554}
+  - _description: Move Backward Ability
+    component: {fileID: 9174108980198039455}
+  _deceleration:
+    value:
+      _min: 0
+      _max: 2
+    required: 1
+  _minMoveSpeed: 0
+--- !u!114 &6041840438588976366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16557013547266712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 777511d789a4bf544a3c9f33364959c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cooldown:
+    value:
+      _min: 0
+      _max: 0
+    required: 0
+  _duration:
+    value:
+      _min: 0
+      _max: 0
+    required: 0
+  _amountOfUsages:
+    value:
+      _min: 0
+      _max: 0
+    required: 0
+  _animBools:
+  - name: grab
+    mode: 2
+  _blockedStates: []
+  _enterConditions:
+  - _description: Grabbed
+    _bools:
+    - _description: Grabbed
+      type: 7
+      value: 0
+    _vectors: []
+    _floats: []
+  _exitConditions:
+  - _description: Not Grabbed
+    _bools:
+    - _description: Not Grabbed
+      type: 7
+      value: 1
+    _vectors: []
+    _floats: []
+  - _description: Move Vertical
+    _bools: []
+    _vectors:
+    - _description: Move Y Is Not Equal To Zero
+      type: 0
+      value: 11
+    _floats: []
+  _blockedAbilities:
+  - _description: Wall Climb Ability
+    component: {fileID: 2086856307190248816}
+  _deceleration:
+    value:
+      _min: 0
+      _max: 0
+    required: 0
+  _minMoveSpeed: 0
+--- !u!114 &2086856307190248816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16557013547266712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57f262be2e99ab947821c7c46f53016b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cooldown:
+    value:
+      _min: 0
+      _max: 0
+    required: 0
+  _duration:
+    value:
+      _min: 0
+      _max: 0
+    required: 0
+  _amountOfUsages:
+    value:
+      _min: 0
+      _max: 0
+    required: 0
+  _animBools:
+  - name: wallClimb
+    mode: 2
+  _blockedStates: []
+  _enterConditions:
+  - _description: Grabbed And Climbing
+    _bools:
+    - _description: Grabbed
+      type: 7
+      value: 0
+    _vectors:
+    - _description: Move Y Is Positive
+      type: 0
+      value: 3
+    _floats: []
+  _exitConditions:
+  - _description: Not Grabbed
+    _bools:
+    - _description: Not Grabbed
+      type: 7
+      value: 1
+    _vectors: []
+    _floats: []
+  - _description: Not Climbing
+    _bools: []
+    _vectors:
+    - _description: Move Y Is Not Positive
+      type: 0
+      value: 8
+    _floats: []
+  _blockedAbilities:
+  - _description: Wall Grab Ability
+    component: {fileID: 6041840438588976366}
+  _acceleration:
+    value:
+      _min: 0
+      _max: 2
+    required: 1
+  _maxMoveSpeed: 6
 --- !u!114 &-2486400050515072108
 MonoBehaviour:
   m_ObjectHideFlags: 0

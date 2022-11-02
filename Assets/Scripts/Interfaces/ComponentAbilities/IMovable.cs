@@ -14,34 +14,6 @@ public interface IMovable
 	{
 		get;
 	}
-	public int FacingDirection
-	{
-		get;
-	}
-	public int BodyDirection
-	{
-		get;
-	}
-
-	public float MoveUpSpeed
-	{
-		get; set;
-	}
-
-	public float MoveDownSpeed
-	{
-		get; set;
-	}
-
-	public float MoveForwardSpeed
-	{
-		get; set;
-	}
-
-	public float MoveBackwardSpeed
-	{
-		get; set;
-	}
 
 	public void TrySetPosition(Vector2 position);
 
@@ -59,10 +31,6 @@ public interface IMovable
 
 	public void TrySetGravity(float gravity);
 
-	public void TryRotateIntoDirection(int direction);
-
-	public void RotateBodyIntoDirection(int direction);
-
 	public int HoldPosition(Vector2 position);
 
 	public int HoldVelocity(Vector2 velocity);
@@ -71,13 +39,9 @@ public interface IMovable
 
 	public int HoldGravity(float gravity);
 
-	public int HoldDirection(int direction);
-
 	public void ReleasePosition(int id);
 
 	public void ReleaseVelocity(int id);
 
 	public void ReleaseGravity(int id);
-
-	public void ReleaseDirection(int id);
 }
