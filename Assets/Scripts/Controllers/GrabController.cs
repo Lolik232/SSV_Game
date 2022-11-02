@@ -1,8 +1,8 @@
-public class GrabController : BaseMonoBehaviour, IGrabController
+using UnityEngine;
+public class GrabController : MonoBehaviour, IGrabController
 {
 	public bool Grab
 	{
-		get;
-		set;
+		get; set;
 	}
 }

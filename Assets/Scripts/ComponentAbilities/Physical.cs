@@ -2,8 +2,10 @@ using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D), typeof(Rigidbody2D))]
 
-public class Physical : BaseMonoBehaviour, IPhysical
+public class Physical : MonoBehaviour, IPhysical
 {
+	[SerializeField] private PickableColor _color;
+
 	private BoxCollider2D _collider;
 	private Rigidbody2D _rb;
 
@@ -32,10 +34,15 @@ public class Physical : BaseMonoBehaviour, IPhysical
 		get => _rb.gravityScale;
 	}
 
-	protected override void Awake()
+	private void Awake()
 	{
-		base.Awake();
 		_collider = GetComponent<BoxCollider2D>();
 		_rb = GetComponent<Rigidbody2D>();
+	}
+
+	private void OnDrawGizmos()
+	{
+		Gizmos.color = _color.Color;
+		Gizmos.DrawWireCube(Center, Size);
 	}
 }

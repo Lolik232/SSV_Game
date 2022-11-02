@@ -6,8 +6,5 @@ using UnityEngine;
 
 public class PlayerMoveDownAbilitySO : MoveDownAbilitySO
 {
-		protected override void OnEnable()
-	{
-			base.OnEnable();
-	}
+	
 }

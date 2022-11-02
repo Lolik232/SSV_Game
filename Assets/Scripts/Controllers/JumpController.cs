@@ -1,8 +1,8 @@
-public class JumpController : BaseMonoBehaviour, IJumpController
+using UnityEngine;
+public class JumpController : MonoBehaviour, IJumpController
 {
 	public bool Jump
 	{
-		get;
-		set;
+		get; set;
 	}
 }

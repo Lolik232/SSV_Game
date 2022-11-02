@@ -6,8 +6,4 @@ using UnityEngine;
 
 public class PlayerMoveForwardAbilitySO : MoveForwardAbilitySO
 {
-	protected override void OnEnable()
-	{
-		base.OnEnable();
-	}
 }

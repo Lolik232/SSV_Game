@@ -2,10 +2,11 @@ using UnityEngine;
 
 [RequireComponent(typeof(Physical))]
 
-public class GroundChecker : BaseMonoBehaviour, IGroundChecker
+public class GroundChecker : MonoBehaviour, IGroundChecker
 {
 	[SerializeField] private LayerMask _whatIsTarget;
 	[SerializeField] private float _groundCheckDistance;
+	[SerializeField] private PickableColor _color;
 
 	private bool _grounded;
 	private CheckArea _groundCheckArea;
@@ -33,15 +34,19 @@ public class GroundChecker : BaseMonoBehaviour, IGroundChecker
 																		 workspace.y - _groundCheckDistance);
 	}
 
-	protected override void Awake()
+	private void Awake()
 	{
-		base.Awake();
 		_physical = GetComponent<Physical>();
 	}
 
-	protected override void OnDrawGizmos()
+	private void OnDrawGizmos()
 	{
-		base.OnDrawGizmos();
-		Utility.DrawArea(_groundCheckArea, Grounded, Color.gray);
+		Utility.DrawArea(_groundCheckArea, Grounded, _color.Color);
+	}
+
+	private void FixedUpdate()
+	{
+		UpdateCheckersPosition();
+		DoChecks();
 	}
 }

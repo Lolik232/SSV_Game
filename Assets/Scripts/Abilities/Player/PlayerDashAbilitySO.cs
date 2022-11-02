@@ -4,7 +4,7 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "PayerDashAbility", menuName = "Player/Abilities/Dash")]
 
-public class PlayerDashAbilitySO : AbilitySO
+public class PlayerDashAbilitySO : Ability
 {
 	//[SerializeField] private float _minProportion;
 	//[SerializeField] private float _dashGravity;

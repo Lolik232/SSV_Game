@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class MoveForwardAbilitySO : AbilitySO
+public abstract class MoveForwardAbilitySO : Ability
 {
 	//public Parameter accelerationTime;
 

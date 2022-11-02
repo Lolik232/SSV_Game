@@ -1,4 +1,6 @@
-public class AttackController : BaseMonoBehaviour, IAttackController
+using UnityEngine;
+
+public class AttackController : MonoBehaviour, IAttackController
 {
 	public bool Attack
 	{

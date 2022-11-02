@@ -1,21 +1,37 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Physical), typeof(Crouchable))]
+[RequireComponent(typeof(Physical))]
 
-public class CeilChecker : BaseMonoBehaviour, ICeilChecker
+public class CeilChecker : MonoBehaviour, ICeilChecker
 {
 	[SerializeField] private LayerMask _whatIsTarget;
 	[SerializeField] private float _ceilCheckDistance;
+	[SerializeField] private PickableColor _color;
 
 	private bool _touchingCeiling;
 	private CheckArea _ceilCheckArea;
 
 	private Physical _physical;
-	private Crouchable _crouchable;
 
 	public bool TouchingCeiling
 	{
 		get => _touchingCeiling;
+	}
+
+	private void Awake()
+	{
+		_physical = GetComponent<Physical>();
+	}
+
+	private void OnDrawGizmos()
+	{
+		Utility.DrawArea(_ceilCheckArea, TouchingCeiling, _color.Color);
+	}
+
+	private void FixedUpdate()
+	{
+		UpdateCheckersPosition();
+		DoChecks();
 	}
 
 	public void DoChecks()
@@ -29,21 +45,8 @@ public class CeilChecker : BaseMonoBehaviour, ICeilChecker
 
 		Vector2 workspace = _physical.Center + checkerOffset;
 		_ceilCheckArea = new CheckArea(_physical.Center.x - checkerOffset.x,
-																		_physical.Position.y + _crouchable.StandSize.y + _ceilCheckDistance,
+																		workspace.y + _ceilCheckDistance,
 																		workspace.x,
 																		workspace.y);
-	}
-
-	protected override void Awake()
-	{
-		base.Awake();
-		_physical = GetComponent<Physical>();
-		_crouchable = GetComponent<Crouchable>();
-	}
-
-	protected override void OnDrawGizmos()
-	{
-		base.OnDrawGizmos();
-		Utility.DrawArea(_ceilCheckArea, TouchingCeiling, Color.gray);
 	}
 }

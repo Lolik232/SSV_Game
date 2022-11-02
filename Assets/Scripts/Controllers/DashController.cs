@@ -1,4 +1,6 @@
-public class DashController : BaseMonoBehaviour, IDashContorller
+using UnityEngine;
+
+public class DashController : MonoBehaviour, IDashContorller
 {
 	public bool Dash
 	{

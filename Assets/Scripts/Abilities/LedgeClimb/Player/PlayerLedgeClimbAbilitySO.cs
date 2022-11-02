@@ -4,7 +4,7 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerLedgeClimbAbility", menuName = "Abilities/Ledge Climb/Player")]
 
-public class PlayerLedgeClimbAbilitySO : AbilitySO
+public class PlayerLedgeClimbAbilitySO : Ability
 {
 	//protected Movable movable;
 

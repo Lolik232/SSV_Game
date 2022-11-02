@@ -14,13 +14,24 @@ GameObject:
   - component: {fileID: 907170881316087725}
   - component: {fileID: 4705714146389201328}
   - component: {fileID: 1683216502060990014}
-  - component: {fileID: 1513043370842880158}
-  - component: {fileID: 2606607661349716601}
-  - component: {fileID: 7230647836380422776}
-  - component: {fileID: 555269937495351701}
-  - component: {fileID: 6196244349567121037}
-  - component: {fileID: 564648722980159971}
-  - component: {fileID: 8180083116093225675}
+  - component: {fileID: 1384476568285557170}
+  - component: {fileID: -6671134263038552869}
+  - component: {fileID: -4974458489029642592}
+  - component: {fileID: -2804302636390980624}
+  - component: {fileID: 4157396260338738249}
+  - component: {fileID: 1138017484249272076}
+  - component: {fileID: -343301264358261412}
+  - component: {fileID: -2184131174267877526}
+  - component: {fileID: -5271975368378814469}
+  - component: {fileID: 7201249416579630431}
+  - component: {fileID: 5018088709028288949}
+  - component: {fileID: 8421440758656966385}
+  - component: {fileID: 1981846926818204801}
+  - component: {fileID: -7238836522169623474}
+  - component: {fileID: 6947252983381312409}
+  - component: {fileID: 3329624546924844578}
+  - component: {fileID: -7384608792551618836}
+  - component: {fileID: -2486400050515072108}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -72,7 +83,7 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8180083116093225675}
+      - m_Target: {fileID: 5018088709028288949}
         m_TargetAssemblyTypeName: PlayerInputReader, Assembly-CSharp
         m_MethodName: OnMoveInput
         m_Mode: 0
@@ -88,7 +99,7 @@ MonoBehaviour:
     m_ActionName: Gameplay/Movement[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8180083116093225675}
+      - m_Target: {fileID: 5018088709028288949}
         m_TargetAssemblyTypeName: PlayerInputReader, Assembly-CSharp
         m_MethodName: OnJumpInput
         m_Mode: 0
@@ -104,7 +115,7 @@ MonoBehaviour:
     m_ActionName: Gameplay/Jump[/Keyboard/space]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8180083116093225675}
+      - m_Target: {fileID: 5018088709028288949}
         m_TargetAssemblyTypeName: PlayerInputReader, Assembly-CSharp
         m_MethodName: OnGrabInput
         m_Mode: 0
@@ -120,8 +131,8 @@ MonoBehaviour:
     m_ActionName: Gameplay/Grab[/Keyboard/ctrl]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11400000, guid: 3b322eb55e74fc14ba7db14e574b0519, type: 2}
-        m_TargetAssemblyTypeName: PlayerInputReaderSO, Assembly-CSharp
+      - m_Target: {fileID: 5018088709028288949}
+        m_TargetAssemblyTypeName: PlayerInputReader, Assembly-CSharp
         m_MethodName: OnDirectionInput
         m_Mode: 0
         m_Arguments:
@@ -136,8 +147,8 @@ MonoBehaviour:
     m_ActionName: Gameplay/Dash[/Keyboard/alt]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11400000, guid: 3b322eb55e74fc14ba7db14e574b0519, type: 2}
-        m_TargetAssemblyTypeName: PlayerInputReaderSO, Assembly-CSharp
+      - m_Target: {fileID: 5018088709028288949}
+        m_TargetAssemblyTypeName: PlayerInputReader, Assembly-CSharp
         m_MethodName: OnAbilityInput
         m_Mode: 0
         m_Arguments:
@@ -152,8 +163,8 @@ MonoBehaviour:
     m_ActionName: Gameplay/Dash[/Mouse/rightButton]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11400000, guid: 3b322eb55e74fc14ba7db14e574b0519, type: 2}
-        m_TargetAssemblyTypeName: PlayerInputReaderSO, Assembly-CSharp
+      - m_Target: {fileID: 5018088709028288949}
+        m_TargetAssemblyTypeName: PlayerInputReader, Assembly-CSharp
         m_MethodName: OnDashInput
         m_Mode: 0
         m_Arguments:
@@ -168,8 +179,8 @@ MonoBehaviour:
     m_ActionName: Gameplay/Dash[/Keyboard/e]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11400000, guid: 3b322eb55e74fc14ba7db14e574b0519, type: 2}
-        m_TargetAssemblyTypeName: PlayerInputReaderSO, Assembly-CSharp
+      - m_Target: {fileID: 5018088709028288949}
+        m_TargetAssemblyTypeName: PlayerInputReader, Assembly-CSharp
         m_MethodName: OnAttackInput
         m_Mode: 0
         m_Arguments:
@@ -371,7 +382,188 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 0
---- !u!114 &1513043370842880158
+--- !u!114 &1384476568285557170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16557013547266712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efb4b94b81eb0ea4dbbdc6d7ea8c6765, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _states:
+  - _description: Grounded (Default)
+    state: {fileID: -6671134263038552869}
+  - _description: InAir
+    state: {fileID: -4974458489029642592}
+  - _description: TouchingWall
+    state: {fileID: -2804302636390980624}
+--- !u!114 &-6671134263038552869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16557013547266712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 748e3b69d7a75ef4db92b2ba28d257a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animBools:
+  - name: grounded
+    mode: 2
+  _transitions:
+  - _description: To In Air State
+    target: {fileID: -4974458489029642592}
+    conditions:
+    - _description: Not Grounded
+      _bools:
+      - _description: Not Grounded
+        type: 0
+        value: 1
+      _vectors: []
+      _floats: []
+  - _description: To Touching Wall State
+    target: {fileID: -2804302636390980624}
+    conditions:
+    - _description: Grabbed
+      _bools:
+      - _description: Touching Wall
+        type: 2
+        value: 0
+      - _description: Touching Ledge
+        type: 4
+        value: 0
+      - _description: Not Touching Ceiling
+        type: 1
+        value: 1
+      - _description: Grabbed
+        type: 7
+        value: 0
+      _vectors: []
+      _floats: []
+  _permitedAbilities: []
+--- !u!114 &-4974458489029642592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16557013547266712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c03fb013cd151c74180b80e82227b1b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animBools:
+  - name: inAir
+    mode: 2
+  _transitions:
+  - _description: To Grounded State
+    target: {fileID: -6671134263038552869}
+    conditions:
+    - _description: Grounded
+      _bools:
+      - _description: Grounded
+        type: 0
+        value: 0
+      _vectors: []
+      _floats:
+      - _description: Velocity Y Is Negative
+        type: 1
+        value:
+          value: 2
+          to: 0.01
+  - _description: To TouchingWall State
+    target: {fileID: -2804302636390980624}
+    conditions:
+    - _description: Grabbed
+      _bools:
+      - _description: Touching Wall
+        type: 2
+        value: 0
+      - _description: Touching Ledge
+        type: 4
+        value: 0
+      - _description: Grabbed
+        type: 7
+        value: 0
+      _vectors: []
+      _floats: []
+    - _description: Sliding
+      _bools:
+      - _description: Touching Wall
+        type: 2
+        value: 0
+      - _description: Touching Ledge
+        type: 4
+        value: 0
+      _vectors:
+      - _description: Move X Equals To Facing Direction
+        type: 0
+        value: 1
+      _floats:
+      - _description: Velocity Y Is Negative
+        type: 1
+        value:
+          value: 2
+          to: 0.01
+  _permitedAbilities: []
+--- !u!114 &-2804302636390980624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16557013547266712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 885cbd5cc90b1f04b86dca7dd25f0665, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animBools:
+  - name: touchingWall
+    mode: 2
+  _transitions:
+  - _description: To Grounded State
+    target: {fileID: -6671134263038552869}
+    conditions:
+    - _description: Grounded And Not Grabbed
+      _bools:
+      - _description: Grounded
+        type: 0
+        value: 0
+      - _description: Not Grabbed
+        type: 7
+        value: 1
+      _vectors: []
+      _floats: []
+  - _description: To In Air State
+    target: {fileID: -4974458489029642592}
+    conditions:
+    - _description: Not Touching Wall
+      _bools:
+      - _description: Not Touching Wall
+        type: 2
+        value: 1
+      _vectors: []
+      _floats: []
+    - _description: Not Look At Wall
+      _bools:
+      - _description: Not Grabbed
+        type: 7
+        value: 1
+      _vectors:
+      - _description: Move X Is Not Equal To Facing Direction
+        type: 0
+        value: 6
+      _floats: []
+  _permitedAbilities: []
+--- !u!114 &4157396260338738249
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -383,7 +575,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df19a2b41cc720e4c86b1b84dfeb68c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2606607661349716601
+--- !u!114 &1138017484249272076
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -395,7 +587,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1eee34d0603d2aa4eb040e097a6e4e74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7230647836380422776
+--- !u!114 &-343301264358261412
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -407,7 +599,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06466cdda27577e4da0d4d70ba2a779b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &555269937495351701
+--- !u!114 &-2184131174267877526
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -419,7 +611,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 600ffbfc6dae9e143b6f68a376b4ac91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6196244349567121037
+--- !u!114 &-5271975368378814469
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -431,7 +623,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60be1e2ad591072429b00cff8bee616a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &564648722980159971
+--- !u!114 &7201249416579630431
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -443,7 +635,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a041ce7e572028429efdba0d67fc186, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8180083116093225675
+--- !u!114 &5018088709028288949
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -455,8 +647,147 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc84e82edc8e4bf428463fdd0d27981e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _jumpInputHoldTime: 0
-  _dashInputPressTime: 0
+  _jumpInputHoldTime: 0.1
+  _dashInputPressTime: 0.5
+--- !u!114 &8421440758656966385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16557013547266712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 810a4e763f57be147b1cbfada3e3989c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _color:
+    _r: 0.5
+    _g: 1
+    _b: 0.5
+    _a: 1
+--- !u!114 &1981846926818204801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16557013547266712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 240f2a70223170a4fa5038219c05722d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _whatIsTarget:
+    serializedVersion: 2
+    m_Bits: 8
+  _groundCheckDistance: 0.1
+  _color:
+    _r: 1
+    _g: 0.3
+    _b: 0.1
+    _a: 1
+--- !u!114 &-7238836522169623474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16557013547266712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d14ad87e07bc1043a5b9ea730b13a5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _whatIsTarget:
+    serializedVersion: 2
+    m_Bits: 8
+  _ceilCheckDistance: 0.1
+  _color:
+    _r: 1
+    _g: 0.3
+    _b: 0.1
+    _a: 1
+--- !u!114 &6947252983381312409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16557013547266712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e03cc57122ca7f488a7e89a51ee576d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _moveUpSpeed:
+    _min: 0
+    _max: 5
+  _moveDownSpeed:
+    _min: 0
+    _max: 6
+  _moveForwardSpeed:
+    _min: 0
+    _max: 10
+  _moveBackwardSpeed:
+    _min: 0
+    _max: 3
+--- !u!114 &3329624546924844578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16557013547266712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc78c47fd534d7e4ab3847de7e0254c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _whatIsTarget:
+    serializedVersion: 2
+    m_Bits: 8
+  _wallCheckDistance: 0.2
+  _wallCheckerYOffset: 0.8
+  _color:
+    _r: 1
+    _g: 0.3
+    _b: 0.1
+    _a: 1
+--- !u!114 &-7384608792551618836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16557013547266712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bbc3207eb6e4f94fb88acf99faa9386, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _whatIsTarget:
+    serializedVersion: 2
+    m_Bits: 8
+  _ledgeCheckDistance: 0.25
+  _ledgeCheckerYOffset: 1.8
+  _color:
+    _r: 1
+    _g: 0.3
+    _b: 0.1
+    _a: 1
+--- !u!114 &-2486400050515072108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16557013547266712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5bc956ee196fa34d9849921a1018d1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2858492609654353185
 GameObject:
   m_ObjectHideFlags: 0
@@ -467,7 +798,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2858492609654353186}
   - component: {fileID: 2858492609654353187}
-  - component: {fileID: 6332324685682563826}
   - component: {fileID: 5533673985491799931}
   m_Layer: 6
   m_Name: Hit
@@ -543,19 +873,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6332324685682563826
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2858492609654353185}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32719b1ed6ed6894f9d697b446eab9d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  component: {fileID: 11400000, guid: 04df1f8d5a660944ba8e09e55ff9f301, type: 2}
 --- !u!95 &5533673985491799931
 Animator:
   serializedVersion: 4
@@ -620,7 +937,6 @@ GameObject:
   - component: {fileID: 2858492608893098124}
   - component: {fileID: 2858492608893098127}
   - component: {fileID: 2858492608893098355}
-  - component: {fileID: 1052486119766645686}
   m_Layer: 6
   m_Name: Sword
   m_TagString: Untagged
@@ -737,18 +1053,6 @@ MonoBehaviour:
   m_UseBatching: 1
   m_AlwaysUpdate: 1
   m_AutoRebind: 0
---- !u!114 &1052486119766645686
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3726055780271160078}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d75d6837d51b384893dd798faf595d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1677854725844204535
 PrefabInstance:
   m_ObjectHideFlags: 0

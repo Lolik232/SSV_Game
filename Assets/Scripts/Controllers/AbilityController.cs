@@ -1,4 +1,6 @@
-public class AbilityController : BaseMonoBehaviour, IAbilityControlller
+using UnityEngine;
+
+public class AbilityController : MonoBehaviour, IAbilityControlller
 {
 	public bool Ability
 	{

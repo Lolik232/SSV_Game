@@ -2,11 +2,12 @@ using UnityEngine;
 
 [RequireComponent(typeof(Movable), typeof(Physical))]
 
-public class WallChecker : BaseMonoBehaviour, IWallChecker
+public class WallChecker : MonoBehaviour, IWallChecker
 {
 	[SerializeField] private LayerMask _whatIsTarget;
 	[SerializeField] private float _wallCheckDistance;
 	[SerializeField] private float _wallCheckerYOffset;
+	[SerializeField] private PickableColor _color;
 
 	private bool _touchingWall;
 	private bool _touchingWallBack;
@@ -36,11 +37,16 @@ public class WallChecker : BaseMonoBehaviour, IWallChecker
 		get => _wallDirection;
 	}
 
-	protected override void Awake()
+	private void Awake()
 	{
-		base.Awake();
 		_physical = GetComponent<Physical>();
 		_movable = GetComponent<Movable>();
+	}
+
+	private void FixedUpdate()
+	{
+		UpdateCheckersPosition();
+		DoChecks();
 	}
 
 	public void DoChecks()
@@ -74,10 +80,9 @@ public class WallChecker : BaseMonoBehaviour, IWallChecker
 																			 workspace.y);
 	}
 
-	protected override void OnDrawGizmos()
+	private void OnDrawGizmos()
 	{
-		base.OnDrawGizmos();
-		Utility.DrawArea(_wallCheckRay, TouchingWall, Color.gray);
-		Utility.DrawArea(_wallBackCheckRay, TouchingWallBack, Color.gray);
+		Utility.DrawArea(_wallCheckRay, TouchingWall, _color.Color);
+		Utility.DrawArea(_wallBackCheckRay, TouchingWallBack, _color.Color);
 	}
 }

@@ -1,28 +1,20 @@
 using System;
+using System.Collections.Generic;
 
 using UnityEngine;
 
 [Serializable]
-public struct Condition : IComponent, ICondition
+public class Condition : IComponent, ICondition
 {
-	[SerializeField] private BoolValue _expectedGrounded;
-	[SerializeField] private BoolValue _expectedTouchingCeiling;
-	[SerializeField] private BoolValue _expectedTouchingWall;
-	[SerializeField] private BoolValue _expectedTouchingWallBack;
-	[Space]
-	[SerializeField] private Vector2IntValue _expectedMove;
-	[SerializeField] private BoolValue _expectedJump;
-	[SerializeField] private BoolValue _expectedDash;
-	[SerializeField] private BoolValue _expectedGrab;
-	[SerializeField] private BoolValue _expectedAttack;
-	[SerializeField] private BoolValue _expectedAbility;
-	[Space]
-	[SerializeField] private FloatValue _expectedVelocityX;
-	[SerializeField] private FloatValue _expectedVelocityY;
+	[SerializeField] private string _description;
+	[SerializeField] private List<ExpectedBoolValue> _bools;
+	[SerializeField] private List<ExpectedVector2IntValue> _vectors;
+	[SerializeField] private List<ExpectedFloatValue> _floats;
 
 	private GroundChecker _groundChecker;
 	private CeilChecker _ceilChecker;
 	private WallChecker _wallChecker;
+	private LedgeChecker _ledgeChecker;
 	private MoveController _moveController;
 	private JumpController _jumpController;
 	private DashController _dashController;
@@ -33,57 +25,130 @@ public struct Condition : IComponent, ICondition
 
 	public bool DoChecks()
 	{
-		return CheckBool(_expectedGrounded, _groundChecker.Grounded) &&
-					 CheckBool(_expectedTouchingCeiling, _ceilChecker.TouchingCeiling) &&
-					 CheckBool(_expectedTouchingWall, _wallChecker.TouchingWall) &&
-					 CheckBool(_expectedTouchingWallBack, _wallChecker.TouchingWallBack) &&
+		foreach (var el in _bools)
+		{
+			if (!Check(el))
+			{
+				return false;
+			}
+		}
 
-					 CheckVector2Int(_expectedMove, _moveController.Move) &&
-					 CheckBool(_expectedJump, _jumpController.Jump) &&
-					 CheckBool(_expectedDash, _dashController.Dash) &&
-					 CheckBool(_expectedGrab, _grabController.Grab) &&
-					 CheckBool(_expectedAttack, _attackController.Attack) &&
-					 CheckBool(_expectedAbility, _abilityController.Ability) &&
+		foreach (var el in _vectors)
+		{
+			if (!Check(el))
+			{
+				return false;
+			}
+		}
 
-					 CheckFloat(_expectedVelocityX, _movable.Velocity.x) &&
-					 CheckFloat(_expectedVelocityY, _movable.Velocity.y);
+		foreach (var el in _floats)
+		{
+			if (!Check(el))
+			{
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	public void Initialize(GameObject origin)
 	{
-		_movable = origin.GetComponent<Movable>();
 		_groundChecker = origin.GetComponent<GroundChecker>();
 		_ceilChecker = origin.GetComponent<CeilChecker>();
 		_wallChecker = origin.GetComponent<WallChecker>();
+		_ledgeChecker = origin.GetComponent<LedgeChecker>();
 		_moveController = origin.GetComponent<MoveController>();
 		_jumpController = origin.GetComponent<JumpController>();
 		_dashController = origin.GetComponent<DashController>();
 		_grabController = origin.GetComponent<GrabController>();
 		_attackController = origin.GetComponent<AttackController>();
 		_abilityController = origin.GetComponent<AbilityController>();
+		_movable = origin.GetComponent<Movable>();
+	}
+	private bool Check(ExpectedBoolValue expected)
+	{
+		switch (expected.type)
+		{
+			case ExpectedBoolValueType.Grounded:
+				return Check(expected.value, _groundChecker.Grounded);
+			case ExpectedBoolValueType.TouchingWall:
+				return Check(expected.value, _wallChecker.TouchingWall);
+			case ExpectedBoolValueType.TouchingWallBack:
+				return Check(expected.value, _wallChecker.TouchingWallBack);
+			case ExpectedBoolValueType.TouchingCeiling:
+				return Check(expected.value, _ceilChecker.TouchingCeiling);
+			case ExpectedBoolValueType.TouchingLedge:
+				return Check(expected.value, _ledgeChecker.TouchingLegde);
+
+			case ExpectedBoolValueType.Jump:
+				return Check(expected.value, _jumpController.Jump);
+			case ExpectedBoolValueType.Dash:
+				return Check(expected.value, _dashController.Dash);
+			case ExpectedBoolValueType.Grab:
+				return Check(expected.value, _grabController.Grab);
+			case ExpectedBoolValueType.Attack:
+				return Check(expected.value, _attackController.Attack);
+			case ExpectedBoolValueType.Ability:
+				return Check(expected.value, _abilityController.Ability);
+
+			default:
+				Debug.Log("Type \"" + expected.type.ToString() + "\" doesn`t exist");
+				return false;
+		}
 	}
 
-	private bool CheckBool(BoolValue expected, bool got)
+	private bool Check(ExpectedVector2IntValue expected)
 	{
-		return expected == BoolValue.None ||
-					 got && expected == BoolValue.True ||
+		switch (expected.type)
+		{
+			case ExpectedVector2IntValueType.Move:
+				return Check(expected.value, _moveController.Move);
+
+			default:
+				Debug.Log("Type \"" + expected.type.ToString() + "\" doesn`t exist");
+				return false;
+		}
+	}
+
+	private bool Check(ExpectedFloatValue expected)
+	{
+		switch (expected.type)
+		{
+			case ExpectedFloatValueType.VelocityX:
+				return Check(expected.value, _movable.Velocity.x);
+			case ExpectedFloatValueType.VelocityY:
+				return Check(expected.value, _movable.Velocity.y);
+
+			default:
+				Debug.Log("Type \"" + expected.type.ToString() + "\" doesn`t exist");
+				return false;
+		}
+	}
+
+	private bool Check(BoolValue expected, bool got)
+	{
+		return got && expected == BoolValue.True ||
 					 !got && expected == BoolValue.False;
 	}
 
-	private bool CheckVector2Int(Vector2IntValue expected, Vector2Int got)
+	private bool Check(Vector2IntValue expected, Vector2Int got)
 	{
-		return expected == Vector2IntValue.None ||
-					 expected == Vector2IntValue.Zero && got == Vector2Int.zero ||
+		return expected == Vector2IntValue.Zero && got == Vector2Int.zero ||
 					 expected == Vector2IntValue.Up && got.y == 1 ||
 					 expected == Vector2IntValue.Down && got.y == -1 ||
 					 expected == Vector2IntValue.Forward && got.x == _movable.FacingDirection ||
-					 expected == Vector2IntValue.Backward && got.x == -_movable.FacingDirection;
+					 expected == Vector2IntValue.Backward && got.x == -_movable.FacingDirection ||
+					 expected == Vector2IntValue.NotZero && got != Vector2Int.zero ||
+					 expected == Vector2IntValue.NotUp && got.y != 1 ||
+					 expected == Vector2IntValue.NotDown && got.y != -1 ||
+					 expected == Vector2IntValue.NotForward && got.x != _movable.FacingDirection ||
+					 expected == Vector2IntValue.NotBackward && got.x != -_movable.FacingDirection;
 	}
 
-	private bool CheckFloat(FloatValue expected, float got)
+	private bool Check(FloatValue expected, float got)
 	{
-		return expected == ComparedValue.None ||
-					 expected == ComparedValue.Equal && got == expected.to ||
+		return expected == ComparedValue.Equal && got == expected.to ||
 					 expected == ComparedValue.NotEqual && got != expected.to ||
 					 expected == ComparedValue.Greater && got > expected.to ||
 					 expected == ComparedValue.NotLower && got >= expected.to ||
@@ -91,19 +156,70 @@ public struct Condition : IComponent, ICondition
 					 expected == ComparedValue.NotGreater && got <= expected.to;
 	}
 
+	private enum ExpectedBoolValueType
+	{
+		Grounded,
+		TouchingCeiling,
+		TouchingWall,
+		TouchingWallBack,
+		TouchingLedge,
+
+		Jump,
+		Dash,
+		Grab,
+		Attack, 
+		Ability
+	}
+
+	private enum ExpectedFloatValueType
+	{
+		VelocityX,
+		VelocityY,
+	}
+
+	private enum ExpectedVector2IntValueType
+	{
+		Move
+	}
+
 	private enum BoolValue
 	{
-		None, True, False
+		True, False
 	}
 
 	private enum Vector2IntValue
 	{
-		None, Zero, Forward, Backward, Up, Down
+		Zero, Forward, Backward, Up, Down, 
+		NotZero, NotForward, NotBackward, NotUp, NotDown
 	}
 
 	private enum ComparedValue
 	{
-		None, Greater, NotGreater, Lower, NotLower, Equal, NotEqual
+		Greater, NotGreater, Lower, NotLower, Equal, NotEqual
+	}
+
+	[Serializable]
+	private struct ExpectedBoolValue
+	{
+		[SerializeField] private string _description;
+		public ExpectedBoolValueType type;
+		public BoolValue value;
+	}
+
+	[Serializable]
+	private struct ExpectedVector2IntValue
+	{
+		[SerializeField] private string _description;
+		public ExpectedVector2IntValueType type;
+		public Vector2IntValue value;
+	}
+
+	[Serializable]
+	private struct ExpectedFloatValue
+	{
+		[SerializeField] private string _description;
+		public ExpectedFloatValueType type;
+		public FloatValue value;
 	}
 
 	[Serializable]

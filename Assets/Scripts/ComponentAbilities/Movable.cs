@@ -2,7 +2,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 
-public class Movable : BaseMonoBehaviour, IMovable
+public class Movable : MonoBehaviour, IMovable
 {
 	[SerializeField] private Parameter _moveUpSpeed;
 	[SerializeField] private Parameter _moveDownSpeed;
@@ -40,28 +40,27 @@ public class Movable : BaseMonoBehaviour, IMovable
 	}
 	public float MoveUpSpeed
 	{
-		get => _moveUpSpeed;
+		get => _moveUpSpeed.Current;
 		set => _moveUpSpeed.Set(value);
 	}
 	public float MoveDownSpeed
 	{
-		get => _moveDownSpeed;
+		get => _moveDownSpeed.Current;
 		set => _moveDownSpeed.Set(value);
 	}
 	public float MoveForwardSpeed
 	{
-		get => _moveForwardSpeed;
+		get => _moveForwardSpeed.Current;
 		set => _moveForwardSpeed.Set(value);
 	}
 	public float MoveBackwardSpeed
 	{
-		get => _moveBackwardSpeed;
+		get => _moveBackwardSpeed.Current;
 		set => _moveBackwardSpeed.Set(value);
 	}
 
-	protected override void Awake()
+	private void Awake()
 	{
-		base.Awake();
 		_rb = GetComponent<Rigidbody2D>();
 
 		_moveUpSpeed.Initialize();
@@ -70,10 +69,8 @@ public class Movable : BaseMonoBehaviour, IMovable
 		_moveBackwardSpeed.Initialize();
 	}
 
-	protected override void Start()
+	private void Start()
 	{
-		base.Start();
-
 		TryRotateIntoDirection(1);
 	}
 

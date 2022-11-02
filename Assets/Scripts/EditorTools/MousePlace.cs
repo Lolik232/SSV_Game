@@ -8,7 +8,7 @@ using UnityEditor;
 [AddComponentMenu("LostInDarkness/Tools/Mouse Place")]
 public class MousePlace : MonoBehaviour
 {
-	[SerializeField] private bool m_isTargeting = false;
+	[HideInInspector] [SerializeField] private bool m_isTargeting = false;
 	public bool IsTargeting
 	{
 		get => m_isTargeting; private set => m_isTargeting = value;

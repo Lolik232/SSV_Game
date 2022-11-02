@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class MoveUpAbilitySO : AbilitySO
+public abstract class MoveUpAbilitySO : Ability
 {
 	//protected Movable movable;
 

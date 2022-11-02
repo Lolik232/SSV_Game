@@ -6,6 +6,28 @@ using UnityEngine.Events;
 
 public static class Utility
 {
+
+	static public bool CheckAll(List<Condition> conditions)
+	{
+		foreach (var condition in conditions)
+		{
+			if (!condition.DoChecks())
+			{
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	static public void ConnectComponent<T>(ref T component, GameObject origin) where T : MonoBehaviour
+	{
+		if (component is null)
+		{
+			component = origin.GetComponent<T>();
+		}
+	}
+
 	static public void ApplyActions(List<UnityAction> actions)
 	{
 		foreach (var action in actions)
@@ -127,13 +149,13 @@ public static class Utility
 
 	static private Color SetTargetDetectedColor(bool detected, Color color)
 	{
-		if (!detected)
+		if (detected)
 		{
 			return color;
 		}
 		else
 		{
-			return new Color(color.r * 2, color.g * 2, color.b * 2);
+			return Color.black;
 		}
 	}
 }

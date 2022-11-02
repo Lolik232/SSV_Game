@@ -4,7 +4,7 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "PayerJumpAbility", menuName = "Player/Abilities/Jump")]
 
-public class PlayerJumpAbilitySO : AbilitySO
+public class PlayerJumpAbilitySO : Ability
 {
 	//[SerializeField] private float _coyoteTime;
 

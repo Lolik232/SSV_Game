@@ -4,7 +4,7 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "PayerWallJumpAbility", menuName = "Player/Abilities/Wall Jump")]
 
-public class PlayerWallJumpAbilitySO : AbilitySO
+public class PlayerWallJumpAbilitySO : Ability
 {
 	//[SerializeField] private float _coyoteTime;
 	//[SerializeField] private float _wallExitTime;

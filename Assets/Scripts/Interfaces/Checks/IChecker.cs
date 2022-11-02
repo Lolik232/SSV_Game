@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 
 public interface IChecker
@@ -27,5 +29,25 @@ public struct CheckArea
 	{
 		a = new Vector2(aX, aY);
 		b = new Vector2(bX, bY);
+	}
+}
+
+[Serializable]
+public struct PickableColor
+{
+	[SerializeField] private float _r;
+	[SerializeField] private float _g;
+	[SerializeField] private float _b;
+	[SerializeField] private float _a;
+
+	public Color Color
+	{
+		get => new Color(_r, _g, _b, _a);
+		set  {
+			_r = value.r;
+			_g = value.g;
+			_b = value.b;
+			_a = value.a;
+		}
 	}
 }

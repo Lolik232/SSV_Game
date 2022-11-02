@@ -4,7 +4,7 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerAttackAbility", menuName = "Abilities/Attack/Player")]
 
-public class PlayerAttackAbilitySO : AbilitySO
+public class PlayerAttackAbilitySO : Ability
 {
 	//protected override void OnEnable()
 	//{

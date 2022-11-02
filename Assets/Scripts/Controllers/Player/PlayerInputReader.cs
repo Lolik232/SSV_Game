@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(GrabController), typeof(AttackController), typeof(AbilityController))]
 [RequireComponent(typeof(PlayerInput))]
 
-public class PlayerInputReader : BaseMonoBehaviour
+public class PlayerInputReader : MonoBehaviour
 {
 	[SerializeField] private float _jumpInputHoldTime;
 	[SerializeField] private float _dashInputPressTime;
@@ -24,9 +24,8 @@ public class PlayerInputReader : BaseMonoBehaviour
 	private float _jumpInputStartTime;
 	private float _dashInputStartTime;
 
-	protected override void Awake()
+	private void Awake()
 	{
-		base.Awake();
 		_camera = Camera.main;
 		_playerInput = GetComponent<PlayerInput>();
 		_moveController = GetComponent<MoveController>();
@@ -37,9 +36,8 @@ public class PlayerInputReader : BaseMonoBehaviour
 		_abilityController = GetComponent<AbilityController>();
 	}
 
-	protected override void Update()
+	private void Update()
 	{
-		base.Update();
 		_moveController.LookAt = _camera.ScreenToWorldPoint(_mouseInputPosition);
 		_jumpController.Jump &= Time.time < _jumpInputStartTime + _jumpInputHoldTime;
 		_dashController.Dash &= Time.time < _dashInputStartTime + _dashInputPressTime;

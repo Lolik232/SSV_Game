@@ -6,8 +6,5 @@ using UnityEngine;
 
 public class PlayerMoveBackwardAbilitySO : MoveBackwardAbilitySO
 {
-		protected override void OnEnable()
-	{
-		base.OnEnable();
-	}
+		
 }
