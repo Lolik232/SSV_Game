@@ -3,12 +3,13 @@ using All.Interfaces;
 using Spells.Actions;
 using Spells.Actions.ScriptableObjects;
 using Systems.SpellSystem.SpellLiveCycle;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Spells
 {
     [Serializable]
-    public class Effect
+    public class Effect : ICloneable
     {
         [SerializeField] private EffectSO            _effectSO;
         [SerializeField] private EffectApplyStrategy _applyStrategy;
@@ -32,6 +33,13 @@ namespace Spells
             if (!_applyStrategy.CanApply()) return;
 
             _effectAction.Apply(visitor);
+        }
+
+        public object Clone()
+        {
+            return new Effect(_effectSO,
+                              (EffectApplyStrategy)_applyStrategy.Clone(),
+                              _effectAction);
         }
     }
 }

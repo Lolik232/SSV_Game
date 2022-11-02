@@ -15,8 +15,8 @@ namespace Spells
             : base(applyStrategySO) => SetPeriod(period);
 
         public PeriodicApplyStrategy(EffectApplyStrategySO applyStrategySO) : base(applyStrategySO) { }
-        
-        
+
+
         public void SetPeriod(float period)
         {
             if (period < 0)
@@ -39,6 +39,11 @@ namespace Spells
         {
             // изначально всегда можно использовать эффект
             return _started == false || Time.time - _lastUsedTime >= _period;
+        }
+
+        public override object Clone()
+        {
+            return new PeriodicApplyStrategy(ApplyStrategySO, _period);
         }
     }
 }

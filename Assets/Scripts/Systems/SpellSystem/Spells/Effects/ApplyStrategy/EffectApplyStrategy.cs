@@ -3,7 +3,7 @@ using All.Interfaces;
 
 namespace Spells
 {
-    public abstract class EffectApplyStrategy
+    public abstract class EffectApplyStrategy : ICloneable
     {
         private EffectApplyStrategySO _applyStrategySO;
         public  EffectApplyStrategySO ApplyStrategySO => _applyStrategySO;
@@ -18,5 +18,6 @@ namespace Spells
         public abstract bool CanApply();
 
         // public abstract void LogicUpdate();
+        public abstract object Clone();
     }
 }
