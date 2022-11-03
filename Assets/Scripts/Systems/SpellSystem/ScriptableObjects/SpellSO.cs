@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using All.BaseClasses;
 using All.Interfaces;
 using Spells.SpellLiveCycle;
+using Systems.SpellSystem.Spells;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Spells
@@ -22,5 +25,10 @@ namespace Spells
         }
 
         public string Name => _name;
+
+        public Spell CreateSpell()
+        {
+            return new Spell(this, _liveCycle.CreateLiveCycle(), _effects.ToArray());
+        }
     }
 }

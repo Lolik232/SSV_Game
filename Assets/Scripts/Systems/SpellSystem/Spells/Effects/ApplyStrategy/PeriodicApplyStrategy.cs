@@ -1,4 +1,5 @@
 ﻿using System;
+using All.Interfaces;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -15,8 +16,7 @@ namespace Spells
             : base(applyStrategySO) => SetPeriod(period);
 
         public PeriodicApplyStrategy(EffectApplyStrategySO applyStrategySO) : base(applyStrategySO) { }
-
-
+        
         public void SetPeriod(float period)
         {
             if (period < 0)
