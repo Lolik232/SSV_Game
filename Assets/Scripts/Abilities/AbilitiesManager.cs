@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class AbilitiesManager : MonoBehaviour
 {
-	private List<Ability> _abilities = new();
+	private readonly List<Ability> _abilities = new();
 
 	private StateMachine _stateMachine;
 

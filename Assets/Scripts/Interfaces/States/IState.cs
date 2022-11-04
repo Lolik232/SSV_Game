@@ -2,11 +2,7 @@ using System.Collections.Generic;
 
 public interface IState
 {
-	public State Default
-	{
-		get;
-	}
-	public List<TransitionItem> Transitions
+	public List<StateTransitionItem> Transitions
 	{
 		get;
 	}

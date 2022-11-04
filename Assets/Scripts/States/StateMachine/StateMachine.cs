@@ -8,7 +8,8 @@ public class StateMachine : MonoBehaviour
 {
 	private bool _transitionChecked;
 
-	private List<State> _states = new();
+	private readonly List<State> _states = new();
+	private readonly List<IChecker> _checkers = new();
 
 	private State _current;
 
@@ -27,6 +28,7 @@ public class StateMachine : MonoBehaviour
 	private void Awake()
 	{
 		GetComponents(_states);
+		GetComponents(_checkers);
 	}
 
 	private void Start()
@@ -36,7 +38,8 @@ public class StateMachine : MonoBehaviour
 
 	private void Update()
 	{
-		StartCoroutine(TryGetTransitions());
+		TryGetTransition();
+		TransitionsChecked = true;
 	}
 
 	private void TryGetTransition()
@@ -46,17 +49,11 @@ public class StateMachine : MonoBehaviour
 			return;
 		}
 
-		if (Current.IsLocked)
-		{
-			GetTransition(Current, Current.Default);
-			return;
-		}
-
 		foreach (var transition in Current.Transitions)
 		{
 			if (transition.DoChecks())
 			{
-				GetTransition(Current, transition.target);
+				GetTransition(transition.target);
 				return;
 			}
 		}
@@ -73,6 +70,11 @@ public class StateMachine : MonoBehaviour
 		Current.OnEnter();
 	}
 
+	public void GetTransition(State target)
+	{
+		GetTransition(Current, target);
+	}
+
 	private void GetTransition(State origin, State target)
 	{
 		Current.OnExit();
@@ -86,6 +88,13 @@ public class StateMachine : MonoBehaviour
 
 		Current = target;
 		Current.OnEnter();
+
+		foreach (var checker in _checkers)
+		{
+			checker.UpdateCheckersPosition();
+			checker.DoChecks();
+		}
+
 		foreach (var ability in target.PermitedAbilities)
 		{
 			if (!origin.PermitedAbilities.Contains(ability))
@@ -93,12 +102,5 @@ public class StateMachine : MonoBehaviour
 				ability.component.Unlock();
 			}
 		}
-	}
-
-	private IEnumerator TryGetTransitions()
-	{
-		yield return new WaitForFixedUpdate();
-		TryGetTransition();
-		TransitionsChecked = true;
 	}
 }

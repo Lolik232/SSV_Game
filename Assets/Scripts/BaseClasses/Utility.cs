@@ -104,23 +104,6 @@ public static class Utility
 		}
 	}
 
-	static public void BlockAll(List<BlockedState> blockedStates)
-	{
-		foreach (var blockedState in blockedStates)
-		{
-			blockedState.component.SetBlockedTransition(blockedState.target);
-			blockedState.component.Block();
-		}
-	}
-
-	static public void UnlockAll(List<BlockedState> blockedStates)
-	{
-		foreach (var blockedState in blockedStates)
-		{
-			blockedState.component.Unlock();
-		}
-	}
-
 	public static T Check<T>(Func<Vector2, Vector2, int, T> checkFunction, Tuple<Vector2, Vector2> points, LayerMask whatIsTarget)
 	{
 		return checkFunction(points.Item1, points.Item2, whatIsTarget);

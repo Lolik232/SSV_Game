@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PlayerLedgeClimbAbility : Ability
 {
+	[SerializeField] private State _ledgeEndState;
+
 	private Vector2 _startPosition;
 	private Vector2 _endPosition;
 
@@ -12,6 +14,7 @@ public class PlayerLedgeClimbAbility : Ability
 	private LedgeChecker _ledgeChecker;
 	private Physical _physical;
 	private Movable _movable;
+	private StateMachine _stateMachine;
 
 	protected override void Awake()
 	{
@@ -20,6 +23,7 @@ public class PlayerLedgeClimbAbility : Ability
 		_ledgeChecker = GetComponent<LedgeChecker>();
 		_physical = GetComponent<Physical>();
 		_movable = GetComponent<Movable>();
+		_stateMachine = GetComponent<StateMachine>();
 	}
 
 	protected override void ApplyPrepareActions()

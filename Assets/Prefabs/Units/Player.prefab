@@ -448,19 +448,6 @@ MonoBehaviour:
         value: 0
       _vectors: []
       _floats: []
-    - _description: Touching Stair
-      _bools:
-      - _description: Touching Wall
-        type: 2
-        value: 0
-      - _description: Not Touching Ledge
-        type: 4
-        value: 1
-      _vectors:
-      - _description: Move Forward Or Up
-        type: 0
-        value: 14
-      _floats: []
   _permitedAbilities:
   - _description: Move Forward Ability
     component: {fileID: 7526529738827503554}
@@ -468,6 +455,8 @@ MonoBehaviour:
     component: {fileID: 9174108980198039455}
   - _description: Stand Ability
     component: {fileID: 2539731355654125748}
+  - _description: Ledge Climb Ability
+    component: {fileID: 8231683736357438395}
 --- !u!114 &-4974458489029642592
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -533,16 +522,6 @@ MonoBehaviour:
         value:
           value: 2
           to: 0.01
-    - _description: Touching Ledge
-      _bools:
-      - _description: Touching Wall
-        type: 2
-        value: 0
-      - _description: Not Touching Ledge
-        type: 4
-        value: 1
-      _vectors: []
-      _floats: []
   _permitedAbilities:
   - _description: Move Backward Ability
     component: {fileID: 7526529738827503554}
@@ -550,6 +529,8 @@ MonoBehaviour:
     component: {fileID: 9174108980198039455}
   - _description: Stand Ability
     component: {fileID: 2539731355654125748}
+  - _description: Ledge Climb Ability
+    component: {fileID: 8231683736357438395}
 --- !u!114 &-2804302636390980624
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -873,7 +854,6 @@ MonoBehaviour:
   _animBools:
   - name: move
     mode: 2
-  _blockedStates: []
   _enterConditions: []
   _exitConditions: []
   _requiredConditions:
@@ -925,7 +905,6 @@ MonoBehaviour:
     mode: 2
   - name: backward
     mode: 2
-  _blockedStates: []
   _enterConditions: []
   _exitConditions: []
   _requiredConditions:
@@ -973,7 +952,6 @@ MonoBehaviour:
     value: 0
     required: 0
   _animBools: []
-  _blockedStates: []
   _enterConditions: []
   _exitConditions: []
   _requiredConditions:
@@ -1022,7 +1000,6 @@ MonoBehaviour:
   _animBools:
   - name: grab
     mode: 2
-  _blockedStates: []
   _enterConditions: []
   _exitConditions: []
   _requiredConditions:
@@ -1030,6 +1007,9 @@ MonoBehaviour:
     _bools:
     - _description: Grabbed
       type: 7
+      value: 0
+    - _description: Touching Wall
+      type: 2
       value: 0
     - _description: Touching Ledge
       type: 4
@@ -1077,7 +1057,6 @@ MonoBehaviour:
   _animBools:
   - name: wallClimb
     mode: 2
-  _blockedStates: []
   _enterConditions: []
   _exitConditions: []
   _requiredConditions:
@@ -1085,6 +1064,9 @@ MonoBehaviour:
     _bools:
     - _description: Grabbed
       type: 7
+      value: 0
+    - _description: Touching Wall
+      type: 2
       value: 0
     - _description: Touching Ledge
       type: 4
@@ -1133,7 +1115,6 @@ MonoBehaviour:
   _animBools:
   - name: wallSlide
     mode: 2
-  _blockedStates: []
   _enterConditions:
   - _description: Sliding
     _bools:
@@ -1166,6 +1147,9 @@ MonoBehaviour:
   _requiredConditions:
   - _description: Can Move
     _bools:
+    - _description: Touching Wall
+      type: 2
+      value: 0
     - _description: Touching Ledge
       type: 4
       value: 0
@@ -1210,10 +1194,12 @@ MonoBehaviour:
   _animBools:
   - name: ledgeClimb
     mode: 2
-  _blockedStates: []
   _enterConditions:
   - _description: Touching Ledge
     _bools:
+    - _description: Touching Wall
+      type: 2
+      value: 0
     - _description: Not Touching Ledge
       type: 4
       value: 1
@@ -1238,6 +1224,13 @@ MonoBehaviour:
     component: {fileID: 2086856307190248816}
   - _description: Wall Grab Ability
     component: {fileID: 6041840438588976366}
+  - _description: Move Forward Ability
+    component: {fileID: 7526529738827503554}
+  - _description: Move Backward Ability
+    component: {fileID: 9174108980198039455}
+  - _description: Stand Ability
+    component: {fileID: 2539731355654125748}
+  _ledgeEndState: {fileID: -6671134263038552869}
 --- !u!114 &-2486400050515072108
 MonoBehaviour:
   m_ObjectHideFlags: 0

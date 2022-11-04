@@ -2,44 +2,30 @@ using System;
 using System.Collections.Generic;
 
 using UnityEngine;
-using UnityEngine.Serialization;
 
 [RequireComponent(typeof(StateMachine))]
 
-public abstract class State : MonoBehaviour, IState, IActivated, IBlockable
+public abstract class State : MonoBehaviour, IState, IActivated
 {
 	[SerializeField] private List<AnimationBool> _animBools;
 	[Space]
-	[SerializeField] private List<TransitionItem> _transitions;
+	[SerializeField] private List<StateTransitionItem> _transitions;
 	[Space]
 	[SerializeField] private List<BlockedAbility> _permitedAbilities;
 
-	private readonly Blocker _blocker = new();
-
 	private Animator _anim;
 
-	private State _defaultTransition;
-
-	private bool _isActive;
 	private float _startTime;
 	private float _endTime;
 
-	public State Default
-	{
-		get => _defaultTransition;
-	}
-	public List<TransitionItem> Transitions
+	public List<StateTransitionItem> Transitions
 	{
 		get => _transitions;
 	}
-	public bool IsLocked
-	{
-		get => _blocker.IsLocked;
-	}
 	public bool IsActive
 	{
-		get => _isActive;
-		private set => _isActive = value;
+		get;
+		private set;
 	}
 	public float ActiveTime
 	{
@@ -84,22 +70,6 @@ public abstract class State : MonoBehaviour, IState, IActivated, IBlockable
 		ApplyExitActions();
 	}
 
-	public void SetBlockedTransition(State blockedTransition)
-	{
-		_defaultTransition = blockedTransition;
-	}
-
-	public void Block()
-	{
-		_blocker.AddBlock();
-	}
-
-	public void Unlock()
-	{
-		_defaultTransition = null;
-		_blocker.RemoveBlock();
-	}
-
 	protected virtual void ApplyEnterActions()
 	{
 		IsActive = true;
@@ -113,14 +83,6 @@ public abstract class State : MonoBehaviour, IState, IActivated, IBlockable
 		Utility.SetAnimBoolsOnExit(_anim, _animBools);
 		_endTime = Time.time;
 	}
-}
-
-[Serializable]
-public struct BlockedState
-{
-	[SerializeField] private string _description;
-	public State component;
-	public State target;
 }
 
 [Serializable]
@@ -145,19 +107,19 @@ public struct AnimationBool
 }
 
 [Serializable]
-public class TransitionItem : IComponent, ICondition
+public class StateTransitionItem : TransitionItem<State>
+{
+}
+
+[Serializable]
+public class TransitionItem<T> : IComponent, ICondition
 {
 	[SerializeField] private string _description;
-	public State target;
+	public T target;
 	public List<Condition> conditions;
 
 	public bool DoChecks()
 	{
-		if (target.IsLocked)
-		{
-			return false;
-		}
-
 		foreach (var condition in conditions)
 		{
 			if (condition.DoChecks())

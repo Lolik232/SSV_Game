@@ -13,8 +13,6 @@ public abstract class Ability : MonoBehaviour, IAbility, IActivated, IBlockable
 	[Space]
 	[SerializeField] private List<AnimationBool> _animBools;
 	[Space]
-	[SerializeField] private List<BlockedState> _blockedStates;
-	[Space]
 	[SerializeField] private List<Condition> _enterConditions;
 	[SerializeField] private List<Condition> _exitConditions;
 	[SerializeField] private List<Condition> _requiredConditions;
@@ -24,6 +22,7 @@ public abstract class Ability : MonoBehaviour, IAbility, IActivated, IBlockable
 	private readonly Blocker _blocker = new();
 
 	private Animator _anim;
+	private StateMachine _stateMachine;
 
 	private bool _isActive;
 	private float _startTime;
@@ -63,6 +62,7 @@ public abstract class Ability : MonoBehaviour, IAbility, IActivated, IBlockable
 	protected virtual void Awake()
 	{
 		_anim = GetComponent<Animator>();
+		_stateMachine = GetComponent<StateMachine>();
 
 		_blocker.AddBlock();
 
@@ -160,7 +160,6 @@ public abstract class Ability : MonoBehaviour, IAbility, IActivated, IBlockable
 		}
 		
 		Utility.BlockAll(_blockedAbilities);
-		Utility.BlockAll(_blockedStates);
 		Utility.SetAnimBoolsOnEnter(_anim, _animBools);
 		_startTime = Time.time;
 	}
@@ -169,7 +168,6 @@ public abstract class Ability : MonoBehaviour, IAbility, IActivated, IBlockable
 	{
 		IsActive = false;
 		Utility.UnlockAll(_blockedAbilities);
-		Utility.UnlockAll(_blockedStates);
 		Utility.SetAnimBoolsOnExit(_anim, _animBools);
 		_endTime = Time.time;
 	}
