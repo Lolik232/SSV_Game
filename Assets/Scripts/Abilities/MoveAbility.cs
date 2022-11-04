@@ -1,26 +1,26 @@
+using System.Collections;
+
 using UnityEngine;
 
 [RequireComponent(typeof(Movable), typeof(Rotateable))]
 
-public abstract class MoveAbility : Ability, IMoveAbility
+public abstract class MoveAbility : Ability
 {
 	[SerializeField] private AbilityParameter _acceleration;
-	[SerializeField] private float _maxMoveSpeed;
+	[SerializeField] private float _maxSpeed;
 
-	private float _moveSpeed;
+	protected float realAcceleration;
+	protected float moveSpeed;
+	protected float startSpeed;
+	protected float endSpeed;
+	protected int moveDirection;
 
 	protected Movable movable;
 	protected Rotateable rotateable;
 
 	private float Acceleration
 	{
-		get => _acceleration.value.Current;
-	}
-
-	public float MoveSpeed
-	{
-		get => _moveSpeed;
-		set => _moveSpeed = Mathf.Min(_maxMoveSpeed, value);
+		get => _acceleration.value;
 	}
 
 	protected override void Awake()
@@ -28,34 +28,30 @@ public abstract class MoveAbility : Ability, IMoveAbility
 		base.Awake();
 		movable = GetComponent<Movable>();
 		rotateable = GetComponent<Rotateable>();
-
-		_acceleration.value.Initialize();
 	}
 
 	protected override void ApplyEnterActions()
 	{
 		base.ApplyEnterActions();
-		MoveSpeed = movable.Velocity.x;
+		endSpeed = moveDirection * _maxSpeed;
+		moveSpeed = startSpeed;
+		realAcceleration = Mathf.Sign(endSpeed - startSpeed) * Mathf.Abs(Acceleration);
+
+		StartCoroutine(Accelerate());
 	}
 
-	protected override void ApplyUpdateActions()
+	private IEnumerator Accelerate()
 	{
-		base.ApplyUpdateActions();
-		Accelerate();
-	}
-
-	private void Accelerate()
-	{
-		if (MoveSpeed < _maxMoveSpeed)
+		if (!_acceleration.required)
 		{
-			if (_acceleration.required)
-			{
-				MoveSpeed += Acceleration;
-			}
-			else
-			{
-				MoveSpeed = _maxMoveSpeed;
-			}
+			moveSpeed = endSpeed;
+			yield break;
+		}
+
+		while (IsActive && moveSpeed != endSpeed)
+		{
+			yield return null;
+			moveSpeed = Mathf.Lerp(startSpeed, endSpeed, (moveSpeed + realAcceleration - startSpeed) / (endSpeed - startSpeed));
 		}
 	}
 }

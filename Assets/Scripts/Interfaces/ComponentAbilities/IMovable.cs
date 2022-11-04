@@ -14,34 +14,42 @@ public interface IMovable
 	{
 		get;
 	}
+	public bool IsPositionLocked
+	{
+		get;
+	}
+	public bool IsVelocityLocked
+	{
+		get;
+	}
 
-	public void TrySetPosition(Vector2 position);
+	public void SetPosition(Vector2 position);
 
-	public void TrySetPositionX(float x);
+	public void SetPosition(float x, float y);
 
-	public void TrySetPositionY(float y);
+	public void SetpositionX(float x);
 
-	public void TrySetVelocity(Vector2 velocity);
+	public void SetpositionY(float y);
 
-	public void TrySetVelocity(float speed, Vector2 angle, int direction);
+	public void SetVelocity(Vector2 velocity);
 
-	public void TrySetVelocityX(float x);
+	public void SetVelocity(float x, float y);
 
-	public void TrySetVelocityY(float y);
+	public void SetVelocity(float spped, Vector2 angle, int direction);
 
-	public void TrySetGravity(float gravity);
+	public void SetVelocityX(float x);
 
-	public int HoldPosition(Vector2 position);
+	public void SetVelocityY(float Y);
 
-	public int HoldVelocity(Vector2 velocity);
+	public void SetGravity(float gravity);
 
-	public int HoldVelocity(float speed, Vector2 angle, int direction);
+	public void ResetGravity();
 
-	public int HoldGravity(float gravity);
+	public void BlockPosition();
 
-	public void ReleasePosition(int id);
+	public void BlockVelocity();
 
-	public void ReleaseVelocity(int id);
+	public void UnlockPosition();
 
-	public void ReleaseGravity(int id);
+	public void UnlockVelocity();
 }

@@ -1,5 +1,3 @@
-using System;
-
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerLedgeClimbAbility", menuName = "Abilities/Ledge Climb/Player")]

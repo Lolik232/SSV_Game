@@ -11,11 +11,17 @@ public class PlayerMoveBackwardAbility : MoveAbility
 		base.Awake();
 		_moveController = GetComponent<MoveController>();
 	}
+	protected override void ApplyPrepareActions()
+	{
+		base.ApplyPrepareActions();
+		startSpeed = movable.Velocity.x;
+		moveDirection = -rotateable.FacingDirection;
+	}
 
 	protected override void ApplyUpdateActions()
 	{
 		base.ApplyUpdateActions();
-		movable.TrySetVelocityX(-rotateable.FacingDirection * MoveSpeed);
-		rotateable.TryRotateIntoDirection(_moveController.Move.x);
+		movable.SetVelocityX(moveSpeed);
+		rotateable.RotateIntoDirection(_moveController.Move.x);
 	}
 }

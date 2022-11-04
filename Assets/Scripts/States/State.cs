@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [RequireComponent(typeof(StateMachine))]
 
@@ -11,7 +12,7 @@ public abstract class State : MonoBehaviour, IState, IActivated, IBlockable
 	[Space]
 	[SerializeField] private List<TransitionItem> _transitions;
 	[Space]
-	[SerializeField] private List<BlockedAbility> _blockedAbilities;
+	[SerializeField] private List<BlockedAbility> _permitedAbilities;
 
 	private readonly Blocker _blocker = new();
 
@@ -47,6 +48,10 @@ public abstract class State : MonoBehaviour, IState, IActivated, IBlockable
 	public float InactiveTime
 	{
 		get => Time.time - _endTime;
+	}
+	public List<BlockedAbility> PermitedAbilities
+	{
+		get => _permitedAbilities;
 	}
 
 	protected virtual void Awake()
@@ -98,7 +103,6 @@ public abstract class State : MonoBehaviour, IState, IActivated, IBlockable
 	protected virtual void ApplyEnterActions()
 	{
 		IsActive = true;
-		Utility.BlockAll(_blockedAbilities);
 		Utility.SetAnimBoolsOnEnter(_anim, _animBools);
 		_startTime = Time.time;
 	}
@@ -106,7 +110,6 @@ public abstract class State : MonoBehaviour, IState, IActivated, IBlockable
 	protected virtual void ApplyExitActions()
 	{
 		IsActive = false;
-		Utility.UnlockAll(_blockedAbilities);
 		Utility.SetAnimBoolsOnExit(_anim, _animBools);
 		_endTime = Time.time;
 	}

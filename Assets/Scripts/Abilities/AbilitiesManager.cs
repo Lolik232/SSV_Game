@@ -3,23 +3,30 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
+[RequireComponent(typeof(StateMachine))]
+
 public class AbilitiesManager : MonoBehaviour
 {
 	private List<Ability> _abilities = new();
 
+	private StateMachine _stateMachine;
+
 	private void Awake()
 	{
 		GetComponents(_abilities);
+		_stateMachine = GetComponent<StateMachine>();
 	}
 
 	private void Update()
 	{
-		StartCoroutine(WaitForChecks());
+		StartCoroutine(ApplyAbilities());
 	}
 
-	private IEnumerator WaitForChecks()
+	private IEnumerator ApplyAbilities()
 	{
-		yield return new WaitForFixedUpdate();
+		yield return new WaitUntil(() => _stateMachine.TransitionsChecked);
+
+		_stateMachine.TransitionsChecked = false;
 		foreach (var ability in _abilities)
 		{
 			ability.TryEnter();

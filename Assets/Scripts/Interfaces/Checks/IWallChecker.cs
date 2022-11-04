@@ -13,8 +13,12 @@ public interface IWallChecker : IChecker
 	public Vector2 WallPosition
 	{
 		get;
-	} 
+	}
 	public int WallDirection
+	{
+		get;
+	}
+	public float YOffset
 	{
 		get;
 	}

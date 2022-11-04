@@ -1,5 +1,3 @@
-using System;
-
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PayerJumpAbility", menuName = "Player/Abilities/Jump")]
@@ -31,14 +29,14 @@ public class PlayerJumpAbilitySO : Ability
 	//	enterActions.Add(() =>
 	//	{
 	//		entity.controller.jump = false;
-	//		movable.TrySetVelocityY(entity.parameters.jumpForce);
+	//		movable.SetVelocityY(entity.parameters.jumpForce);
 	//	});
 
 	//	exitActions.Add(() =>
 	//	{
 	//		if (movable.Velocity.y > 0f)
 	//		{
-	//			movable.TrySetVelocityY(movable.Velocity.y * 0.5f);
+	//			movable.SetVelocityY(movable.Velocity.y * 0.5f);
 	//		}
 	//	});
 	//}

@@ -1,5 +1,3 @@
-using System;
-
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PayerWallJumpAbility", menuName = "Player/Abilities/Wall Jump")]

@@ -4,12 +4,12 @@ public interface IMoveController
 {
 	public Vector2Int Move
 	{
-		get; 
+		get;
 		set;
 	}
 	public Vector2 LookAt
 	{
-		get; 
+		get;
 		set;
-	} 
+	}
 }

@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
@@ -18,6 +17,7 @@ public abstract class Ability : MonoBehaviour, IAbility, IActivated, IBlockable
 	[Space]
 	[SerializeField] private List<Condition> _enterConditions;
 	[SerializeField] private List<Condition> _exitConditions;
+	[SerializeField] private List<Condition> _requiredConditions;
 	[Space]
 	[SerializeField] private List<BlockedAbility> _blockedAbilities;
 
@@ -48,27 +48,23 @@ public abstract class Ability : MonoBehaviour, IAbility, IActivated, IBlockable
 	}
 	public float Cooldown
 	{
-		get => _cooldown.value.Current;
-		set => _cooldown.value.Set(value);
+		get => _cooldown.value;
 	}
 	public float Duration
 	{
-		get => _duration.value.Current;
-		set => _duration.value.Set(value);
+		get => _duration.value;
 	}
 	public int AmountOfUsages
 	{
-		get => _amountOfUsages.value.Current;
-		set => _duration.value.Set(value);
+		get => _amountOfUsages.value;
+		private set => _amountOfUsages.value = value;
 	}
 
 	protected virtual void Awake()
 	{
 		_anim = GetComponent<Animator>();
-		_cooldown.value.Initialize();
 
-		_cooldown.value.Initialize();
-		_duration.value.Initialize();
+		_blocker.AddBlock();
 
 		foreach (var condition in _enterConditions)
 		{
@@ -76,6 +72,11 @@ public abstract class Ability : MonoBehaviour, IAbility, IActivated, IBlockable
 		}
 
 		foreach (var condition in _exitConditions)
+		{
+			condition.Initialize(gameObject);
+		}
+
+		foreach (var condition in _requiredConditions)
 		{
 			condition.Initialize(gameObject);
 		}
@@ -153,7 +154,11 @@ public abstract class Ability : MonoBehaviour, IAbility, IActivated, IBlockable
 	protected virtual void ApplyEnterActions()
 	{
 		IsActive = true;
-		AmountOfUsages--;
+		if (_amountOfUsages.required)
+		{
+			AmountOfUsages--;
+		}
+		
 		Utility.BlockAll(_blockedAbilities);
 		Utility.BlockAll(_blockedStates);
 		Utility.SetAnimBoolsOnEnter(_anim, _animBools);
@@ -181,25 +186,55 @@ public abstract class Ability : MonoBehaviour, IAbility, IActivated, IBlockable
 
 	private bool DoEnterChecks()
 	{
-		foreach (var condition in _enterConditions)
+		bool canEnter = _requiredConditions.Count == 0;
+
+		foreach (var condition in _requiredConditions)
 		{
-			if (!condition.DoChecks())
+			if (condition.DoChecks())
 			{
-				return false;
+				canEnter = true;
+				break;
 			}
 		}
 
-		return true;
-	}
-
-	private bool DoExitChecks()
-	{
-		if (!IsActive)
+		if (!canEnter)
 		{
 			return false;
 		}
 
+		canEnter = _enterConditions.Count == 0;
+
+		foreach (var condition in _enterConditions)
+		{
+			if (condition.DoChecks())
+			{
+				canEnter = true;
+				break;
+			}
+		}
+
+		return canEnter;
+	}
+
+	private bool DoExitChecks()
+	{
 		if (_duration.required && ActiveTime > Duration)
+		{
+			return true;
+		}
+
+		bool needExit = _requiredConditions.Count > 0;
+
+		foreach (var condition in _requiredConditions)
+		{
+			if (condition.DoChecks())
+			{
+				needExit = false;
+				break;
+			}
+		}
+
+		if (needExit)
 		{
 			return true;
 		}
@@ -208,38 +243,27 @@ public abstract class Ability : MonoBehaviour, IAbility, IActivated, IBlockable
 		{
 			if (condition.DoChecks())
 			{
-				return true;
+				needExit = true;
+				break;
 			}
 		}
 
-		return false;
+		return needExit;
 	}
 }
 
 [Serializable]
 public struct AbilityParameter
 {
-	public Parameter value;
+	public float value;
 	public bool required;
-
-	public AbilityParameter(Parameter value, bool required)
-	{
-		this.value = value;
-		this.required = required;
-	}
 }
 
 [Serializable]
 public struct AbilityParameterInt
 {
-	public ParameterInt value;
+	public int value;
 	public bool required;
-
-	public AbilityParameterInt(ParameterInt value, bool required)
-	{
-		this.value = value;
-		this.required = required;
-	}
 }
 
 [Serializable]

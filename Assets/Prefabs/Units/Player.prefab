@@ -38,6 +38,8 @@ GameObject:
   - component: {fileID: 2539731355654125748}
   - component: {fileID: 6041840438588976366}
   - component: {fileID: 2086856307190248816}
+  - component: {fileID: 407245510653006277}
+  - component: {fileID: 8231683736357438395}
   - component: {fileID: -2486400050515072108}
   m_Layer: 6
   m_Name: Player
@@ -446,11 +448,26 @@ MonoBehaviour:
         value: 0
       _vectors: []
       _floats: []
-  _blockedAbilities:
-  - _description: Wall Grab Ability
-    component: {fileID: 6041840438588976366}
-  - _description: Wall Climb Ability
-    component: {fileID: 2086856307190248816}
+    - _description: Touching Stair
+      _bools:
+      - _description: Touching Wall
+        type: 2
+        value: 0
+      - _description: Not Touching Ledge
+        type: 4
+        value: 1
+      _vectors:
+      - _description: Move Forward Or Up
+        type: 0
+        value: 14
+      _floats: []
+  _permitedAbilities:
+  - _description: Move Forward Ability
+    component: {fileID: 7526529738827503554}
+  - _description: Move Backward Ability
+    component: {fileID: 9174108980198039455}
+  - _description: Stand Ability
+    component: {fileID: 2539731355654125748}
 --- !u!114 &-4974458489029642592
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -507,7 +524,7 @@ MonoBehaviour:
         type: 4
         value: 0
       _vectors:
-      - _description: Move X Equals To Facing Direction
+      - _description: Move Forward
         type: 0
         value: 1
       _floats:
@@ -516,11 +533,23 @@ MonoBehaviour:
         value:
           value: 2
           to: 0.01
-  _blockedAbilities:
-  - _description: Wall Grab Ability
-    component: {fileID: 6041840438588976366}
-  - _description: Wall Climb Ability
-    component: {fileID: 6041840438588976366}
+    - _description: Touching Ledge
+      _bools:
+      - _description: Touching Wall
+        type: 2
+        value: 0
+      - _description: Not Touching Ledge
+        type: 4
+        value: 1
+      _vectors: []
+      _floats: []
+  _permitedAbilities:
+  - _description: Move Backward Ability
+    component: {fileID: 7526529738827503554}
+  - _description: Move Forward Ability
+    component: {fileID: 9174108980198039455}
+  - _description: Stand Ability
+    component: {fileID: 2539731355654125748}
 --- !u!114 &-2804302636390980624
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -548,6 +577,22 @@ MonoBehaviour:
       - _description: Not Grabbed
         type: 7
         value: 1
+      - _description: Not Touching Wall
+        type: 2
+        value: 1
+      _vectors: []
+      _floats: []
+    - _description: Grounded And Not Grabbed
+      _bools:
+      - _description: Grounded
+        type: 0
+        value: 0
+      - _description: Not Grabbed
+        type: 7
+        value: 1
+      - _description: Touching Ledge
+        type: 4
+        value: 0
       _vectors: []
       _floats: []
   - _description: To In Air State
@@ -570,13 +615,15 @@ MonoBehaviour:
         type: 0
         value: 6
       _floats: []
-  _blockedAbilities:
-  - _description: Move Forward Ability
-    component: {fileID: 7526529738827503554}
-  - _description: Move Backward Ability
-    component: {fileID: 9174108980198039455}
-  - _description: Stand Ability
-    component: {fileID: 2539731355654125748}
+  _permitedAbilities:
+  - _description: Wall Grab Ability
+    component: {fileID: 6041840438588976366}
+  - _description: Wall Climb Ability
+    component: {fileID: 2086856307190248816}
+  - _description: Wall Slide Ability
+    component: {fileID: 407245510653006277}
+  - _description: Ledge Climb Ability
+    component: {fileID: 8231683736357438395}
 --- !u!114 &4157396260338738249
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -762,7 +809,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   _wallCheckDistance: 0.2
-  _wallCheckerYOffset: 0.8
+  _wallCheckerYOffset: 0.5
   _color:
     _r: 1
     _g: 0.3
@@ -784,7 +831,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   _ledgeCheckDistance: 0.25
-  _ledgeCheckerYOffset: 1.8
+  _ledgeCheckerYOffset: 1.025
   _color:
     _r: 1
     _g: 0.3
@@ -815,39 +862,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cooldown:
-    value:
-      _min: 0
-      _max: 0
+    value: 0
     required: 0
   _duration:
-    value:
-      _min: 0
-      _max: 0
+    value: 0
     required: 0
   _amountOfUsages:
-    value:
-      _min: 0
-      _max: 0
+    value: 0
     required: 0
   _animBools:
   - name: move
     mode: 2
   _blockedStates: []
-  _enterConditions:
+  _enterConditions: []
+  _exitConditions: []
+  _requiredConditions:
   - _description: Move Towards Facing Direction
-    _bools: []
+    _bools:
+    - _description: Position Not Locked
+      type: 10
+      value: 1
+    - _description: Velocity Not Locked
+      type: 11
+      value: 1
     _vectors:
-    - _description: Move X Equals To Facing Direction
+    - _description: Move Forward
       type: 0
       value: 1
-    _floats: []
-  _exitConditions:
-  - _description: Not Move Towards Facing Direction
-    _bools: []
-    _vectors:
-    - _description: Move X Is Not Equal To Facing Direction
-      type: 0
-      value: 6
     _floats: []
   _blockedAbilities:
   - _description: Move Backward Ability
@@ -855,11 +896,9 @@ MonoBehaviour:
   - _description: Stand Ability
     component: {fileID: 2539731355654125748}
   _acceleration:
-    value:
-      _min: 0
-      _max: 3
+    value: 2
     required: 1
-  _maxMoveSpeed: 10
+  _maxSpeed: 10
 --- !u!114 &9174108980198039455
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -873,19 +912,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cooldown:
-    value:
-      _min: 0
-      _max: 0
+    value: 0
     required: 0
   _duration:
-    value:
-      _min: 0
-      _max: 0
+    value: 0
     required: 0
   _amountOfUsages:
-    value:
-      _min: 0
-      _max: 0
+    value: 0
     required: 0
   _animBools:
   - name: move
@@ -893,21 +926,21 @@ MonoBehaviour:
   - name: backward
     mode: 2
   _blockedStates: []
-  _enterConditions:
+  _enterConditions: []
+  _exitConditions: []
+  _requiredConditions:
   - _description: Move Cowards Facing Direction
-    _bools: []
+    _bools:
+    - _description: Position Not Locked
+      type: 10
+      value: 1
+    - _description: Velocity Not Locked
+      type: 11
+      value: 1
     _vectors:
-    - _description: Move X Equals To Negative Facing Direction
+    - _description: Move Bakward
       type: 0
       value: 2
-    _floats: []
-  _exitConditions:
-  - _description: Not Move Cowards Facing Direction
-    _bools: []
-    _vectors:
-    - _description: Move X Is Not Equal To Negative Facing Direction
-      type: 0
-      value: 7
     _floats: []
   _blockedAbilities:
   - _description: Move Forward Ability
@@ -915,11 +948,9 @@ MonoBehaviour:
   - _description: Stand Ability
     component: {fileID: 2539731355654125748}
   _acceleration:
-    value:
-      _min: 0
-      _max: 3
+    value: 1
     required: 1
-  _maxMoveSpeed: 4
+  _maxSpeed: 4
 --- !u!114 &2539731355654125748
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -933,37 +964,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cooldown:
-    value:
-      _min: 0
-      _max: 0
+    value: 0
     required: 0
   _duration:
-    value:
-      _min: 0
-      _max: 0
+    value: 0
     required: 0
   _amountOfUsages:
-    value:
-      _min: 0
-      _max: 0
+    value: 0
     required: 0
   _animBools: []
   _blockedStates: []
-  _enterConditions:
+  _enterConditions: []
+  _exitConditions: []
+  _requiredConditions:
   - _description: Not Move Horizontal
-    _bools: []
+    _bools:
+    - _description: Position Not Locked
+      type: 10
+      value: 1
+    - _description: Velocity Not Locked
+      type: 11
+      value: 1
     _vectors:
-    - _description: Move X Equals To Zero
+    - _description: Not Move Horizontal
       type: 0
       value: 12
-    _floats: []
-  _exitConditions:
-  - _description: Move Horizontal
-    _bools: []
-    _vectors:
-    - _description: Move Is Not Equal To Zero
-      type: 0
-      value: 10
     _floats: []
   _blockedAbilities:
   - _description: Move Forward Ability
@@ -971,11 +996,8 @@ MonoBehaviour:
   - _description: Move Backward Ability
     component: {fileID: 9174108980198039455}
   _deceleration:
-    value:
-      _min: 0
-      _max: 2
+    value: 1
     required: 1
-  _minMoveSpeed: 0
 --- !u!114 &6041840438588976366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -989,56 +1011,48 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cooldown:
-    value:
-      _min: 0
-      _max: 0
+    value: 0
     required: 0
   _duration:
-    value:
-      _min: 0
-      _max: 0
+    value: 0
     required: 0
   _amountOfUsages:
-    value:
-      _min: 0
-      _max: 0
+    value: 0
     required: 0
   _animBools:
   - name: grab
     mode: 2
   _blockedStates: []
-  _enterConditions:
+  _enterConditions: []
+  _exitConditions: []
+  _requiredConditions:
   - _description: Grabbed
     _bools:
     - _description: Grabbed
       type: 7
       value: 0
-    _vectors: []
-    _floats: []
-  _exitConditions:
-  - _description: Not Grabbed
-    _bools:
-    - _description: Not Grabbed
-      type: 7
+    - _description: Touching Ledge
+      type: 4
+      value: 0
+    - _description: Position Not Locked
+      type: 10
       value: 1
-    _vectors: []
-    _floats: []
-  - _description: Move Vertical
-    _bools: []
+    - _description: Velocity Not Locked
+      type: 11
+      value: 1
     _vectors:
-    - _description: Move Y Is Not Equal To Zero
+    - _description: Not Move Vertical
       type: 0
-      value: 11
+      value: 13
     _floats: []
   _blockedAbilities:
   - _description: Wall Climb Ability
     component: {fileID: 2086856307190248816}
+  - _description: Wall Slide Ability
+    component: {fileID: 407245510653006277}
   _deceleration:
-    value:
-      _min: 0
-      _max: 0
+    value: 0
     required: 0
-  _minMoveSpeed: 0
 --- !u!114 &2086856307190248816
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1052,59 +1066,178 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cooldown:
-    value:
-      _min: 0
-      _max: 0
+    value: 0
     required: 0
   _duration:
-    value:
-      _min: 0
-      _max: 0
+    value: 0
     required: 0
   _amountOfUsages:
-    value:
-      _min: 0
-      _max: 0
+    value: 0
     required: 0
   _animBools:
   - name: wallClimb
     mode: 2
   _blockedStates: []
+  _enterConditions: []
+  _exitConditions: []
+  _requiredConditions:
+  - _description: Climbing
+    _bools:
+    - _description: Grabbed
+      type: 7
+      value: 0
+    - _description: Touching Ledge
+      type: 4
+      value: 0
+    - _description: Position Not Locked
+      type: 10
+      value: 1
+    - _description: Velocity Not Locked
+      type: 11
+      value: 1
+    _vectors:
+    - _description: Move Up
+      type: 0
+      value: 3
+    _floats: []
+  _blockedAbilities:
+  - _description: Wall Grab Ability
+    component: {fileID: 6041840438588976366}
+  - _description: Wall Slide Ability
+    component: {fileID: 407245510653006277}
+  _acceleration:
+    value: 2
+    required: 1
+  _maxSpeed: 6
+--- !u!114 &407245510653006277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16557013547266712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 116864320dcf6ad439624d12e781d1a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cooldown:
+    value: 0
+    required: 0
+  _duration:
+    value: 0
+    required: 0
+  _amountOfUsages:
+    value: 0
+    required: 0
+  _animBools:
+  - name: wallSlide
+    mode: 2
+  _blockedStates: []
   _enterConditions:
-  - _description: Grabbed And Climbing
+  - _description: Sliding
     _bools:
     - _description: Grabbed
       type: 7
       value: 0
     _vectors:
-    - _description: Move Y Is Positive
+    - _description: Move Down
       type: 0
-      value: 3
+      value: 4
     _floats: []
-  _exitConditions:
-  - _description: Not Grabbed
-    _bools:
-    - _description: Not Grabbed
-      type: 7
-      value: 1
-    _vectors: []
-    _floats: []
-  - _description: Not Climbing
+  - _description: Pressed To Wall
     _bools: []
     _vectors:
-    - _description: Move Y Is Not Positive
+    - _description: Move Forward
       type: 0
-      value: 8
+      value: 1
+    _floats: []
+  _exitConditions:
+  - _description: Not Sliding
+    _bools:
+    - _description: Grabbed
+      type: 7
+      value: 0
+    _vectors:
+    - _description: Not Move Down
+      type: 0
+      value: 9
+    _floats: []
+  _requiredConditions:
+  - _description: Can Move
+    _bools:
+    - _description: Touching Ledge
+      type: 4
+      value: 0
+    - _description: Position Not Locked
+      type: 10
+      value: 1
+    - _description: Velocity Not Locked
+      type: 11
+      value: 1
+    _vectors: []
     _floats: []
   _blockedAbilities:
   - _description: Wall Grab Ability
     component: {fileID: 6041840438588976366}
+  - _description: Wall Climb Ability
+    component: {fileID: 2086856307190248816}
   _acceleration:
-    value:
-      _min: 0
-      _max: 2
+    value: 1
     required: 1
-  _maxMoveSpeed: 6
+  _maxSpeed: 6
+--- !u!114 &8231683736357438395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16557013547266712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa9856511d9cdb64dbb6869d4ab35738, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cooldown:
+    value: 0
+    required: 0
+  _duration:
+    value: 1
+    required: 1
+  _amountOfUsages:
+    value: 0
+    required: 0
+  _animBools:
+  - name: ledgeClimb
+    mode: 2
+  _blockedStates: []
+  _enterConditions:
+  - _description: Touching Ledge
+    _bools:
+    - _description: Not Touching Ledge
+      type: 4
+      value: 1
+    _vectors: []
+    _floats: []
+  _exitConditions: []
+  _requiredConditions:
+  - _description: Can Move
+    _bools:
+    - _description: Position Not Locked
+      type: 10
+      value: 1
+    - _description: Velocity Not Locked
+      type: 11
+      value: 1
+    _vectors: []
+    _floats: []
+  _blockedAbilities:
+  - _description: Wall Slide Ability
+    component: {fileID: 407245510653006277}
+  - _description: Wall Climb Ability
+    component: {fileID: 2086856307190248816}
+  - _description: Wall Grab Ability
+    component: {fileID: 6041840438588976366}
 --- !u!114 &-2486400050515072108
 MonoBehaviour:
   m_ObjectHideFlags: 0

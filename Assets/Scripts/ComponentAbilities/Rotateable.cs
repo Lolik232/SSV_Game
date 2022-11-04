@@ -1,15 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Rotateable : MonoBehaviour, IRotateable
 {
-	private readonly Cacheable<int> _facingDirection = new();
+	private int _facingDirection;
 	private int _bodyDirection;
 
 	public int FacingDirection
 	{
-		get => _facingDirection.Value;
+		get => _facingDirection;
 	}
 	public int BodyDirection
 	{
@@ -18,13 +16,7 @@ public class Rotateable : MonoBehaviour, IRotateable
 
 	private void Start()
 	{
-		TryRotateIntoDirection(-1);
-	}
-
-	public void ReleaseDirection(int id)
-	{
-		_facingDirection.Release(id);
-		RotateBodyIntoDirection(FacingDirection);
+		RotateIntoDirection(-1);
 	}
 
 	public void RotateBodyIntoDirection(int direction)
@@ -46,21 +38,12 @@ public class Rotateable : MonoBehaviour, IRotateable
 		}
 	}
 
-	public void TryRotateIntoDirection(int direction)
+	public void RotateIntoDirection(int direction)
 	{
 		if (direction != 0)
 		{
-			if (_facingDirection.TrySet(direction))
-			{
-				RotateBodyIntoDirection(direction);
-			}
+			_facingDirection = direction;
+			RotateBodyIntoDirection(direction);
 		}
-	}
-
-	public int HoldDirection(int direction)
-	{
-		int id = _facingDirection.Hold(direction);
-		RotateBodyIntoDirection(direction);
-		return id;
 	}
 }

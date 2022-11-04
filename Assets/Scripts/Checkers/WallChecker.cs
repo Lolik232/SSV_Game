@@ -9,32 +9,31 @@ public class WallChecker : MonoBehaviour, IWallChecker
 	[SerializeField] private float _wallCheckerYOffset;
 	[SerializeField] private PickableColor _color;
 
-	private bool _touchingWall;
-	private bool _touchingWallBack;
 	private CheckArea _wallCheckRay;
 	private CheckArea _wallBackCheckRay;
-
-	private Vector2 _wallPosition;
-	private int _wallDirection;
 
 	private Physical _physical;
 	private Rotateable _rotateable;
 
 	public bool TouchingWall
 	{
-		get => _touchingWall;
+		get; private set;
 	}
 	public bool TouchingWallBack
 	{
-		get => _touchingWallBack;
+		get; private set;
 	}
 	public Vector2 WallPosition
 	{
-		get => _wallPosition;
+		get; private set;
 	}
 	public int WallDirection
 	{
-		get => _wallDirection;
+		get; private set;
+	}
+	public float YOffset
+	{
+		get => _wallCheckerYOffset;
 	}
 
 	private void Awake()
@@ -52,14 +51,14 @@ public class WallChecker : MonoBehaviour, IWallChecker
 	public void DoChecks()
 	{
 		RaycastHit2D hit = Physics2D.Linecast(_wallCheckRay.a, _wallCheckRay.b, _whatIsTarget);
-		_touchingWall = hit;
-		_wallDirection = _touchingWall ? -_rotateable.FacingDirection : _rotateable.FacingDirection;
-		if (_touchingWall)
+		TouchingWall = hit;
+		WallDirection = TouchingWall ? -_rotateable.FacingDirection : _rotateable.FacingDirection;
+		if (TouchingWall)
 		{
-			_wallPosition = hit.point;
+			WallPosition = hit.point;
 		}
 
-		_touchingWallBack = Physics2D.Linecast(_wallBackCheckRay.a, _wallBackCheckRay.b, _whatIsTarget);
+		TouchingWallBack = Physics2D.Linecast(_wallBackCheckRay.a, _wallBackCheckRay.b, _whatIsTarget);
 	}
 
 	public void UpdateCheckersPosition()

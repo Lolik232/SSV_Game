@@ -10,4 +10,9 @@ public interface IState
 	{
 		get;
 	}
+
+	public List<BlockedAbility> PermitedAbilities
+	{
+		get;
+	}
 }

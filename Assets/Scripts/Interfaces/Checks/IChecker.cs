@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 
 using UnityEngine;
 
@@ -43,7 +41,8 @@ public struct PickableColor
 	public Color Color
 	{
 		get => new Color(_r, _g, _b, _a);
-		set  {
+		set
+		{
 			_r = value.r;
 			_g = value.g;
 			_b = value.b;

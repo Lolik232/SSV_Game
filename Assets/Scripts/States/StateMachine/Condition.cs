@@ -94,6 +94,11 @@ public class Condition : IComponent, ICondition
 			case ExpectedBoolValueType.Ability:
 				return Check(expected.value, _abilityController.Ability);
 
+			case ExpectedBoolValueType.PositionLocked:
+				return Check(expected.value, _movable.IsPositionLocked);
+			case ExpectedBoolValueType.VelocityLocked:
+				return Check(expected.value, _movable.IsVelocityLocked);
+
 			default:
 				Debug.Log("Type \"" + expected.type.ToString() + "\" doesn`t exist");
 				return false;
@@ -136,20 +141,25 @@ public class Condition : IComponent, ICondition
 
 	private bool Check(Vector2IntValue expected, Vector2Int got)
 	{
+		int direction = _rotateable.FacingDirection;
 		return expected == Vector2IntValue.Zero && got == Vector2Int.zero ||
 					 expected == Vector2IntValue.Up && got.y == 1 ||
 					 expected == Vector2IntValue.Down && got.y == -1 ||
-					 expected == Vector2IntValue.Forward && got.x == _rotateable.FacingDirection ||
-					 expected == Vector2IntValue.Backward && got.x == -_rotateable.FacingDirection ||
+					 expected == Vector2IntValue.Forward && got.x == direction ||
+					 expected == Vector2IntValue.Backward && got.x == -direction ||
 					 expected == Vector2IntValue.NotZero && got != Vector2Int.zero ||
 					 expected == Vector2IntValue.NotUp && got.y != 1 ||
 					 expected == Vector2IntValue.NotDown && got.y != -1 ||
-					 expected == Vector2IntValue.NotForward && got.x != _rotateable.FacingDirection ||
-					 expected == Vector2IntValue.NotBackward && got.x != -_rotateable.FacingDirection ||
+					 expected == Vector2IntValue.NotForward && got.x != direction ||
+					 expected == Vector2IntValue.NotBackward && got.x != -direction ||
 					 expected == Vector2IntValue.Horizontal && got.x != 0 ||
 					 expected == Vector2IntValue.Vertical && got.y != 0 ||
 					 expected == Vector2IntValue.NotHorizontal && got.x == 0 ||
-					 expected == Vector2IntValue.NotVertical && got.y == 0;
+					 expected == Vector2IntValue.NotVertical && got.y == 0 ||
+					 expected == Vector2IntValue.ForwardOrUp && (got.y == 1 || got.x == direction) ||
+					 expected == Vector2IntValue.ForwardOrDown && (got.y == -1 || got.x == direction) ||
+					 expected == Vector2IntValue.BackwardOrUp && (got.y == 1 || got.x == -direction) ||
+					 expected == Vector2IntValue.BackwardOrDown && (got.y == -1 || got.x == -direction);
 	}
 
 	private bool Check(FloatValue expected, float got)
@@ -174,7 +184,11 @@ public class Condition : IComponent, ICondition
 		Dash,
 		Grab,
 		Attack,
-		Ability
+		Ability,
+
+		PositionLocked,
+		VelocityLocked,
+		DirectionLocked
 	}
 
 	private enum ExpectedFloatValueType
@@ -197,7 +211,8 @@ public class Condition : IComponent, ICondition
 	{
 		Zero, Forward, Backward, Up, Down,
 		NotZero, NotForward, NotBackward, NotUp, NotDown,
-		Horizontal, Vertical, NotHorizontal, NotVertical
+		Horizontal, Vertical, NotHorizontal, NotVertical,
+		ForwardOrUp, ForwardOrDown, BackwardOrUp, BackwardOrDown
 	}
 
 	private enum ComparedValue

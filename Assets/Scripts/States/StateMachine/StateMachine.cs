@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class StateMachine : MonoBehaviour
 {
+	private bool _transitionChecked;
+
 	private List<State> _states = new();
 
 	private State _current;
@@ -16,6 +18,12 @@ public class StateMachine : MonoBehaviour
 		private set => _current = value;
 	}
 
+	public bool TransitionsChecked
+	{
+		get => _transitionChecked;
+		set => _transitionChecked = value;
+	}
+
 	private void Awake()
 	{
 		GetComponents(_states);
@@ -23,12 +31,12 @@ public class StateMachine : MonoBehaviour
 
 	private void Start()
 	{
-		GetTransition(_states.First());
+		Initialize(_states.First());
 	}
 
 	private void Update()
 	{
-		StartCoroutine(WaitForChecks());
+		StartCoroutine(TryGetTransitions());
 	}
 
 	private void TryGetTransition()
@@ -40,7 +48,7 @@ public class StateMachine : MonoBehaviour
 
 		if (Current.IsLocked)
 		{
-			GetTransition(Current.Default);
+			GetTransition(Current, Current.Default);
 			return;
 		}
 
@@ -48,26 +56,49 @@ public class StateMachine : MonoBehaviour
 		{
 			if (transition.DoChecks())
 			{
-				GetTransition(transition.target);
+				GetTransition(Current, transition.target);
 				return;
 			}
 		}
 	}
 
-	private void GetTransition(State target)
+	private void Initialize(State target)
 	{
-		if (Current is not null)
+		foreach (var ability in target.PermitedAbilities)
 		{
-			Current.OnExit();
+			ability.component.Unlock();
 		}
 
 		Current = target;
 		Current.OnEnter();
 	}
 
-	private IEnumerator WaitForChecks()
+	private void GetTransition(State origin, State target)
+	{
+		Current.OnExit();
+		foreach (var ability in origin.PermitedAbilities)
+		{
+			if (!target.PermitedAbilities.Contains(ability))
+			{
+				ability.component.Block();
+			}
+		}
+
+		Current = target;
+		Current.OnEnter();
+		foreach (var ability in target.PermitedAbilities)
+		{
+			if (!origin.PermitedAbilities.Contains(ability))
+			{
+				ability.component.Unlock();
+			}
+		}
+	}
+
+	private IEnumerator TryGetTransitions()
 	{
 		yield return new WaitForFixedUpdate();
 		TryGetTransition();
+		TransitionsChecked = true;
 	}
 }

@@ -2,7 +2,7 @@ public interface IJumpController
 {
 	public bool Jump
 	{
-		get; 
+		get;
 		set;
 	}
 }

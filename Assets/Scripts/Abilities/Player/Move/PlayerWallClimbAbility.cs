@@ -19,18 +19,27 @@ public class PlayerWallClimbAbility : MoveAbility
 	protected override void ApplyPrepareActions()
 	{
 		base.ApplyPrepareActions();
-		_holdPosition = new Vector2(_wallChecker.WallPosition.x - rotateable.FacingDirection * (_physical.Size.x / 2 + 0.01f), _physical.Position.y);
+		_holdPosition = new Vector2(_wallChecker.WallPosition.x + _wallChecker.WallDirection * (_physical.Size.x / 2 + 0.01f), _physical.Position.y);
+		startSpeed = movable.Velocity.y;
+		moveDirection = 1;
 	}
 
 	protected override void ApplyEnterActions()
 	{
 		base.ApplyEnterActions();
-		movable.TrySetPosition(_holdPosition);
+		movable.SetPosition(_holdPosition);
+		movable.SetGravity(0f);
 	}
 
 	protected override void ApplyUpdateActions()
 	{
 		base.ApplyUpdateActions();
-		movable.TrySetVelocityY(MoveSpeed);
+		movable.SetVelocityY(moveSpeed);
+	}
+
+	protected override void ApplyExitActions()
+	{
+		base.ApplyExitActions();
+		movable.ResetGravity();
 	}
 }

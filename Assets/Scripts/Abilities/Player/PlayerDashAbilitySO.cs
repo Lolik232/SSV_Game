@@ -1,5 +1,3 @@
-using System;
-
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PayerDashAbility", menuName = "Player/Abilities/Dash")]
@@ -55,7 +53,7 @@ public class PlayerDashAbilitySO : Ability
 	//		//movable.DisableTrail();
 	//		if (movable.Velocity.y > 0f)
 	//		{
-	//			movable.TrySetVelocityY(movable.Velocity.y * 0.1f);
+	//			movable.SetVelocityY(movable.Velocity.y * 0.1f);
 	//		}
 	//	});
 	//}

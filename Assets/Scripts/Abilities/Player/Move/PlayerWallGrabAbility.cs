@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerWallGrabAbility : MoveStopAbility
 {
-	private int _positionHolder;
 	private Vector2 _holdPosition;
 
 	private WallChecker _wallChecker;
@@ -20,24 +19,26 @@ public class PlayerWallGrabAbility : MoveStopAbility
 	protected override void ApplyPrepareActions()
 	{
 		base.ApplyPrepareActions();
-		_holdPosition = new Vector2(_wallChecker.WallPosition.x - rotateable.FacingDirection * (_physical.Size.x / 2 + 0.01f), _physical.Position.y);
+		_holdPosition = new Vector2(_wallChecker.WallPosition.x + _wallChecker.WallDirection * (_physical.Size.x / 2 + 0.01f), _physical.Position.y);
+		startSpeed = movable.Velocity.y;
 	}
 
 	protected override void ApplyEnterActions()
 	{
 		base.ApplyEnterActions();
-		_positionHolder = movable.HoldPosition(_holdPosition);
+		movable.SetPosition(_holdPosition);
+		movable.SetGravity(0f);
 	}
 
 	protected override void ApplyUpdateActions()
 	{
 		base.ApplyUpdateActions();
-		movable.TrySetVelocityY(MoveSpeed);
+		movable.SetVelocityY(moveSpeed);
 	}
 
 	protected override void ApplyExitActions()
 	{
 		base.ApplyExitActions();
-		movable.ReleasePosition(_positionHolder);
+		movable.ResetGravity();
 	}
 }

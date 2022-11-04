@@ -6,4 +6,16 @@ public interface ILedgeChecker : IChecker
 	{
 		get;
 	}
+	public bool TouchingGround
+	{
+		get;
+	}
+	public Vector2 GroundPosition
+	{
+		get;
+	}
+	public float YOffset
+	{
+		get;
+	}
 }

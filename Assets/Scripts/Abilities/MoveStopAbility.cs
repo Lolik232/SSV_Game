@@ -1,26 +1,24 @@
+using System.Collections;
+
 using UnityEngine;
 
 [RequireComponent(typeof(Movable), typeof(Rotateable))]
 
-public class MoveStopAbility : Ability, IMoveAbility
+public class MoveStopAbility : Ability
 {
 	[SerializeField] private AbilityParameter _deceleration;
-	[SerializeField] private float _minMoveSpeed;
 
-	private float _moveSpeed;
+	protected float realDeceleration;
+	protected float moveSpeed;
+	protected float startSpeed;
+	protected float endSpeed;
 
 	protected Movable movable;
 	protected Rotateable rotateable;
 
-	private float Deceleration
+	protected float Deceleration
 	{
-		get => _deceleration.value.Current;
-	}
-
-	public float MoveSpeed
-	{
-		get => _moveSpeed;
-		set => _moveSpeed = Mathf.Max(_minMoveSpeed, value);
+		get => _deceleration.value;
 	}
 
 	protected override void Awake()
@@ -28,34 +26,30 @@ public class MoveStopAbility : Ability, IMoveAbility
 		base.Awake();
 		movable = GetComponent<Movable>();
 		rotateable = GetComponent<Rotateable>();
-
-		_deceleration.value.Initialize();
 	}
 
 	protected override void ApplyEnterActions()
 	{
 		base.ApplyEnterActions();
-		MoveSpeed = movable.Velocity.x;
+		endSpeed = 0f;
+		moveSpeed = startSpeed;
+		realDeceleration = Mathf.Sign(startSpeed) * Mathf.Abs(Deceleration);
+
+		StartCoroutine(Decelerate());
 	}
 
-	protected override void ApplyUpdateActions()
+	private IEnumerator Decelerate()
 	{
-		base.ApplyUpdateActions();
-		Decelerate();
-	}
-
-	private void Decelerate()
-	{
-		if (MoveSpeed > _minMoveSpeed)
+		if (!_deceleration.required)
 		{
-			if (_deceleration.required)
-			{
-				MoveSpeed -= Deceleration;
-			}
-			else
-			{
-				MoveSpeed = _minMoveSpeed;
-			}
+			moveSpeed = endSpeed;
+			yield break;
+		}
+
+		while (IsActive && moveSpeed != endSpeed)
+		{
+			yield return null;
+			moveSpeed = Mathf.Lerp(startSpeed, endSpeed, (moveSpeed - realDeceleration - startSpeed) / (endSpeed - startSpeed));
 		}
 	}
 }

@@ -1,5 +1,3 @@
-using System;
-
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerGrabAbility", menuName = "Abilities/Grab/Player")]
