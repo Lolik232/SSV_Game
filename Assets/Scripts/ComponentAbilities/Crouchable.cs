@@ -10,8 +10,6 @@ public class Crouchable : MonoBehaviour, ICrouchable
 	[SerializeField] private Vector2 _crouchSize;
 	[SerializeField] private Vector2 _crouchOffset;
 
-	private bool _isStanding;
-
 	private BoxCollider2D _collider;
 
 	public Vector2 StandSize
@@ -40,19 +38,25 @@ public class Crouchable : MonoBehaviour, ICrouchable
 	}
 	public bool IsStanding
 	{
-		get => _isStanding;
+		get;
+		private set;
+	}
+	public bool CanStand
+	{
+		get;
+		set;
 	}
 
 	public void Crouch()
 	{
-		_isStanding = false;
+		IsStanding = false;
 		_collider.size = CrouchSize;
 		_collider.offset = CrouchOffset;
 	}
 
 	public void Stand()
 	{
-		_isStanding = true;
+		IsStanding = true;
 		_collider.size = StandSize;
 		_collider.offset = StandOffset;
 	}
@@ -64,6 +68,13 @@ public class Crouchable : MonoBehaviour, ICrouchable
 
 	private void Start()
 	{
-		Stand();
+		if (CanStand)
+		{
+			Stand();
+		}
+		else
+		{
+			Crouch();
+		}
 	}
 }

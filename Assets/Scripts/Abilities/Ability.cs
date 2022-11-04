@@ -13,16 +13,14 @@ public abstract class Ability : MonoBehaviour, IAbility, IActivated, IBlockable
 	[Space]
 	[SerializeField] private List<AnimationBool> _animBools;
 	[Space]
-	[SerializeField] private List<Condition> _enterConditions;
-	[SerializeField] private List<Condition> _exitConditions;
-	[SerializeField] private List<Condition> _requiredConditions;
-	[Space]
 	[SerializeField] private List<BlockedAbility> _blockedAbilities;
+
+	protected List<Func<bool>> enterConditions = new();
+	protected List<Func<bool>> exitConditions = new();
 
 	private readonly Blocker _blocker = new();
 
 	private Animator _anim;
-	private StateMachine _stateMachine;
 
 	private bool _isActive;
 	private float _startTime;
@@ -62,29 +60,12 @@ public abstract class Ability : MonoBehaviour, IAbility, IActivated, IBlockable
 	protected virtual void Awake()
 	{
 		_anim = GetComponent<Animator>();
-		_stateMachine = GetComponent<StateMachine>();
 
 		_blocker.AddBlock();
-
-		foreach (var condition in _enterConditions)
-		{
-			condition.Initialize(gameObject);
-		}
-
-		foreach (var condition in _exitConditions)
-		{
-			condition.Initialize(gameObject);
-		}
-
-		foreach (var condition in _requiredConditions)
-		{
-			condition.Initialize(gameObject);
-		}
 	}
 
 	public void Block()
 	{
-		OnExit();
 		_blocker.AddBlock();
 	}
 
@@ -142,7 +123,7 @@ public abstract class Ability : MonoBehaviour, IAbility, IActivated, IBlockable
 			return;
 		}
 
-		if (DoExitChecks())
+		if (_duration.required && ActiveTime > Duration || DoExitChecks())
 		{
 			OnExit();
 			return;
@@ -184,69 +165,28 @@ public abstract class Ability : MonoBehaviour, IAbility, IActivated, IBlockable
 
 	private bool DoEnterChecks()
 	{
-		bool canEnter = _requiredConditions.Count == 0;
-
-		foreach (var condition in _requiredConditions)
+		foreach (var condition in enterConditions)
 		{
-			if (condition.DoChecks())
+			if (condition())
 			{
-				canEnter = true;
-				break;
+				return true;
 			}
 		}
 
-		if (!canEnter)
-		{
-			return false;
-		}
-
-		canEnter = _enterConditions.Count == 0;
-
-		foreach (var condition in _enterConditions)
-		{
-			if (condition.DoChecks())
-			{
-				canEnter = true;
-				break;
-			}
-		}
-
-		return canEnter;
+		return false;
 	}
 
 	private bool DoExitChecks()
 	{
-		if (_duration.required && ActiveTime > Duration)
+		foreach (var condition in exitConditions)
 		{
-			return true;
-		}
-
-		bool needExit = _requiredConditions.Count > 0;
-
-		foreach (var condition in _requiredConditions)
-		{
-			if (condition.DoChecks())
+			if (condition())
 			{
-				needExit = false;
-				break;
+				return true;
 			}
 		}
 
-		if (needExit)
-		{
-			return true;
-		}
-
-		foreach (var condition in _exitConditions)
-		{
-			if (condition.DoChecks())
-			{
-				needExit = true;
-				break;
-			}
-		}
-
-		return needExit;
+		return false;
 	}
 }
 

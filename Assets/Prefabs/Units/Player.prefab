@@ -16,8 +16,9 @@ GameObject:
   - component: {fileID: 1683216502060990014}
   - component: {fileID: 1384476568285557170}
   - component: {fileID: -6671134263038552869}
-  - component: {fileID: -4974458489029642592}
-  - component: {fileID: -2804302636390980624}
+  - component: {fileID: 7902129646207279936}
+  - component: {fileID: 3004036328540394443}
+  - component: {fileID: 8486657550753348944}
   - component: {fileID: 4157396260338738249}
   - component: {fileID: 1138017484249272076}
   - component: {fileID: -343301264358261412}
@@ -418,46 +419,7 @@ MonoBehaviour:
   _animBools:
   - name: grounded
     mode: 2
-  _transitions:
-  - _description: To In Air State
-    target: {fileID: -4974458489029642592}
-    conditions:
-    - _description: Not Grounded
-      _bools:
-      - _description: Not Grounded
-        type: 0
-        value: 1
-      _vectors: []
-      _floats: []
-  - _description: To Touching Wall State
-    target: {fileID: -2804302636390980624}
-    conditions:
-    - _description: Grabbed
-      _bools:
-      - _description: Touching Wall
-        type: 2
-        value: 0
-      - _description: Touching Ledge
-        type: 4
-        value: 0
-      - _description: Not Touching Ceiling
-        type: 1
-        value: 1
-      - _description: Grabbed
-        type: 7
-        value: 0
-      _vectors: []
-      _floats: []
-  _permitedAbilities:
-  - _description: Move Forward Ability
-    component: {fileID: 7526529738827503554}
-  - _description: Move Backward Ability
-    component: {fileID: 9174108980198039455}
-  - _description: Stand Ability
-    component: {fileID: 2539731355654125748}
-  - _description: Ledge Climb Ability
-    component: {fileID: 8231683736357438395}
---- !u!114 &-4974458489029642592
+--- !u!114 &7902129646207279936
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -466,145 +428,42 @@ MonoBehaviour:
   m_GameObject: {fileID: 16557013547266712}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c03fb013cd151c74180b80e82227b1b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _animBools:
-  - name: inAir
-    mode: 2
-  _transitions:
-  - _description: To Grounded State
-    target: {fileID: -6671134263038552869}
-    conditions:
-    - _description: Grounded
-      _bools:
-      - _description: Grounded
-        type: 0
-        value: 0
-      _vectors: []
-      _floats:
-      - _description: Velocity Y Is Negative
-        type: 1
-        value:
-          value: 2
-          to: 0.01
-  - _description: To TouchingWall State
-    target: {fileID: -2804302636390980624}
-    conditions:
-    - _description: Grabbed
-      _bools:
-      - _description: Touching Wall
-        type: 2
-        value: 0
-      - _description: Touching Ledge
-        type: 4
-        value: 0
-      - _description: Grabbed
-        type: 7
-        value: 0
-      _vectors: []
-      _floats: []
-    - _description: Sliding
-      _bools:
-      - _description: Touching Wall
-        type: 2
-        value: 0
-      - _description: Touching Ledge
-        type: 4
-        value: 0
-      _vectors:
-      - _description: Move Forward
-        type: 0
-        value: 1
-      _floats:
-      - _description: Velocity Y Is Negative
-        type: 1
-        value:
-          value: 2
-          to: 0.01
-  _permitedAbilities:
-  - _description: Move Backward Ability
-    component: {fileID: 7526529738827503554}
-  - _description: Move Forward Ability
-    component: {fileID: 9174108980198039455}
-  - _description: Stand Ability
-    component: {fileID: 2539731355654125748}
-  - _description: Ledge Climb Ability
-    component: {fileID: 8231683736357438395}
---- !u!114 &-2804302636390980624
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 16557013547266712}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 885cbd5cc90b1f04b86dca7dd25f0665, type: 3}
+  m_Script: {fileID: 11500000, guid: 627fd927892916544b4de8d41da445f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _animBools:
   - name: touchingWall
     mode: 2
-  _transitions:
-  - _description: To Grounded State
-    target: {fileID: -6671134263038552869}
-    conditions:
-    - _description: Grounded And Not Grabbed
-      _bools:
-      - _description: Grounded
-        type: 0
-        value: 0
-      - _description: Not Grabbed
-        type: 7
-        value: 1
-      - _description: Not Touching Wall
-        type: 2
-        value: 1
-      _vectors: []
-      _floats: []
-    - _description: Grounded And Not Grabbed
-      _bools:
-      - _description: Grounded
-        type: 0
-        value: 0
-      - _description: Not Grabbed
-        type: 7
-        value: 1
-      - _description: Touching Ledge
-        type: 4
-        value: 0
-      _vectors: []
-      _floats: []
-  - _description: To In Air State
-    target: {fileID: -4974458489029642592}
-    conditions:
-    - _description: Not Touching Wall
-      _bools:
-      - _description: Not Touching Wall
-        type: 2
-        value: 1
-      _vectors: []
-      _floats: []
-    - _description: Not Look At Wall
-      _bools:
-      - _description: Not Grabbed
-        type: 7
-        value: 1
-      _vectors:
-      - _description: Move X Is Not Equal To Facing Direction
-        type: 0
-        value: 6
-      _floats: []
-  _permitedAbilities:
-  - _description: Wall Grab Ability
-    component: {fileID: 6041840438588976366}
-  - _description: Wall Climb Ability
-    component: {fileID: 2086856307190248816}
-  - _description: Wall Slide Ability
-    component: {fileID: 407245510653006277}
-  - _description: Ledge Climb Ability
-    component: {fileID: 8231683736357438395}
+--- !u!114 &3004036328540394443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16557013547266712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d86c436d8855b154886723a88b2ba092, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animBools:
+  - name: inAir
+    mode: 2
+--- !u!114 &8486657550753348944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16557013547266712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6de302ed1874bc1468b1b57392b2a3be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animBools:
+  - name: onLedge
+    mode: 2
 --- !u!114 &4157396260338738249
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -854,22 +713,6 @@ MonoBehaviour:
   _animBools:
   - name: move
     mode: 2
-  _enterConditions: []
-  _exitConditions: []
-  _requiredConditions:
-  - _description: Move Towards Facing Direction
-    _bools:
-    - _description: Position Not Locked
-      type: 10
-      value: 1
-    - _description: Velocity Not Locked
-      type: 11
-      value: 1
-    _vectors:
-    - _description: Move Forward
-      type: 0
-      value: 1
-    _floats: []
   _blockedAbilities:
   - _description: Move Backward Ability
     component: {fileID: 9174108980198039455}
@@ -905,22 +748,6 @@ MonoBehaviour:
     mode: 2
   - name: backward
     mode: 2
-  _enterConditions: []
-  _exitConditions: []
-  _requiredConditions:
-  - _description: Move Cowards Facing Direction
-    _bools:
-    - _description: Position Not Locked
-      type: 10
-      value: 1
-    - _description: Velocity Not Locked
-      type: 11
-      value: 1
-    _vectors:
-    - _description: Move Bakward
-      type: 0
-      value: 2
-    _floats: []
   _blockedAbilities:
   - _description: Move Forward Ability
     component: {fileID: 7526529738827503554}
@@ -952,22 +779,6 @@ MonoBehaviour:
     value: 0
     required: 0
   _animBools: []
-  _enterConditions: []
-  _exitConditions: []
-  _requiredConditions:
-  - _description: Not Move Horizontal
-    _bools:
-    - _description: Position Not Locked
-      type: 10
-      value: 1
-    - _description: Velocity Not Locked
-      type: 11
-      value: 1
-    _vectors:
-    - _description: Not Move Horizontal
-      type: 0
-      value: 12
-    _floats: []
   _blockedAbilities:
   - _description: Move Forward Ability
     component: {fileID: 7526529738827503554}
@@ -1000,31 +811,6 @@ MonoBehaviour:
   _animBools:
   - name: grab
     mode: 2
-  _enterConditions: []
-  _exitConditions: []
-  _requiredConditions:
-  - _description: Grabbed
-    _bools:
-    - _description: Grabbed
-      type: 7
-      value: 0
-    - _description: Touching Wall
-      type: 2
-      value: 0
-    - _description: Touching Ledge
-      type: 4
-      value: 0
-    - _description: Position Not Locked
-      type: 10
-      value: 1
-    - _description: Velocity Not Locked
-      type: 11
-      value: 1
-    _vectors:
-    - _description: Not Move Vertical
-      type: 0
-      value: 13
-    _floats: []
   _blockedAbilities:
   - _description: Wall Climb Ability
     component: {fileID: 2086856307190248816}
@@ -1057,31 +843,6 @@ MonoBehaviour:
   _animBools:
   - name: wallClimb
     mode: 2
-  _enterConditions: []
-  _exitConditions: []
-  _requiredConditions:
-  - _description: Climbing
-    _bools:
-    - _description: Grabbed
-      type: 7
-      value: 0
-    - _description: Touching Wall
-      type: 2
-      value: 0
-    - _description: Touching Ledge
-      type: 4
-      value: 0
-    - _description: Position Not Locked
-      type: 10
-      value: 1
-    - _description: Velocity Not Locked
-      type: 11
-      value: 1
-    _vectors:
-    - _description: Move Up
-      type: 0
-      value: 3
-    _floats: []
   _blockedAbilities:
   - _description: Wall Grab Ability
     component: {fileID: 6041840438588976366}
@@ -1115,52 +876,6 @@ MonoBehaviour:
   _animBools:
   - name: wallSlide
     mode: 2
-  _enterConditions:
-  - _description: Sliding
-    _bools:
-    - _description: Grabbed
-      type: 7
-      value: 0
-    _vectors:
-    - _description: Move Down
-      type: 0
-      value: 4
-    _floats: []
-  - _description: Pressed To Wall
-    _bools: []
-    _vectors:
-    - _description: Move Forward
-      type: 0
-      value: 1
-    _floats: []
-  _exitConditions:
-  - _description: Not Sliding
-    _bools:
-    - _description: Grabbed
-      type: 7
-      value: 0
-    _vectors:
-    - _description: Not Move Down
-      type: 0
-      value: 9
-    _floats: []
-  _requiredConditions:
-  - _description: Can Move
-    _bools:
-    - _description: Touching Wall
-      type: 2
-      value: 0
-    - _description: Touching Ledge
-      type: 4
-      value: 0
-    - _description: Position Not Locked
-      type: 10
-      value: 1
-    - _description: Velocity Not Locked
-      type: 11
-      value: 1
-    _vectors: []
-    _floats: []
   _blockedAbilities:
   - _description: Wall Grab Ability
     component: {fileID: 6041840438588976366}
@@ -1186,7 +901,7 @@ MonoBehaviour:
     value: 0
     required: 0
   _duration:
-    value: 1
+    value: 0.15
     required: 1
   _amountOfUsages:
     value: 0
@@ -1194,43 +909,7 @@ MonoBehaviour:
   _animBools:
   - name: ledgeClimb
     mode: 2
-  _enterConditions:
-  - _description: Touching Ledge
-    _bools:
-    - _description: Touching Wall
-      type: 2
-      value: 0
-    - _description: Not Touching Ledge
-      type: 4
-      value: 1
-    _vectors: []
-    _floats: []
-  _exitConditions: []
-  _requiredConditions:
-  - _description: Can Move
-    _bools:
-    - _description: Position Not Locked
-      type: 10
-      value: 1
-    - _description: Velocity Not Locked
-      type: 11
-      value: 1
-    _vectors: []
-    _floats: []
-  _blockedAbilities:
-  - _description: Wall Slide Ability
-    component: {fileID: 407245510653006277}
-  - _description: Wall Climb Ability
-    component: {fileID: 2086856307190248816}
-  - _description: Wall Grab Ability
-    component: {fileID: 6041840438588976366}
-  - _description: Move Forward Ability
-    component: {fileID: 7526529738827503554}
-  - _description: Move Backward Ability
-    component: {fileID: 9174108980198039455}
-  - _description: Stand Ability
-    component: {fileID: 2539731355654125748}
-  _ledgeEndState: {fileID: -6671134263038552869}
+  _blockedAbilities: []
 --- !u!114 &-2486400050515072108
 MonoBehaviour:
   m_ObjectHideFlags: 0

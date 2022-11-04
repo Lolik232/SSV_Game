@@ -5,22 +5,23 @@ using UnityEngine;
 
 [RequireComponent(typeof(StateMachine))]
 
-public abstract class State : MonoBehaviour, IState, IActivated
+public abstract class State : MonoBehaviour
 {
 	[SerializeField] private List<AnimationBool> _animBools;
-	[Space]
-	[SerializeField] private List<StateTransitionItem> _transitions;
-	[Space]
-	[SerializeField] private List<BlockedAbility> _permitedAbilities;
+
+	protected List<StateTransitionItem> transitions = new();
+
+	private List<IChecker> _checkers = new();
 
 	private Animator _anim;
+	private StateMachine _stateMachine;
 
 	private float _startTime;
 	private float _endTime;
 
 	public List<StateTransitionItem> Transitions
 	{
-		get => _transitions;
+		get => transitions;
 	}
 	public bool IsActive
 	{
@@ -35,18 +36,24 @@ public abstract class State : MonoBehaviour, IState, IActivated
 	{
 		get => Time.time - _endTime;
 	}
-	public List<BlockedAbility> PermitedAbilities
-	{
-		get => _permitedAbilities;
-	}
 
 	protected virtual void Awake()
 	{
 		_anim = GetComponent<Animator>();
+		_stateMachine = GetComponent<StateMachine>();
+		GetComponents(_checkers);
+	}
 
-		foreach (var transition in _transitions)
+	private void TryGetTransition()
+	{
+		foreach (var transition in Transitions)
 		{
-			transition.Initialize(gameObject);
+			if (transition.condition())
+			{
+				_stateMachine.GetTransition(transition.target);
+				transition.action?.Invoke();
+				return;
+			}
 		}
 	}
 
@@ -58,6 +65,12 @@ public abstract class State : MonoBehaviour, IState, IActivated
 		}
 
 		ApplyEnterActions();
+
+		foreach (var checker in _checkers)
+		{
+			checker.UpdateCheckersPosition();
+			checker.DoChecks();
+		}
 	}
 
 	public void OnExit()
@@ -68,6 +81,23 @@ public abstract class State : MonoBehaviour, IState, IActivated
 		}
 
 		ApplyExitActions();
+	}
+
+	public void OnUpdate()
+	{
+		if (!IsActive)
+		{
+			return;
+		}
+
+		TryGetTransition();
+
+		if (!IsActive)
+		{
+			return;
+		}
+
+		ApplyUpdateActions();
 	}
 
 	protected virtual void ApplyEnterActions()
@@ -82,6 +112,11 @@ public abstract class State : MonoBehaviour, IState, IActivated
 		IsActive = false;
 		Utility.SetAnimBoolsOnExit(_anim, _animBools);
 		_endTime = Time.time;
+	}
+
+	protected virtual void ApplyUpdateActions()
+	{
+
 	}
 }
 
@@ -106,36 +141,16 @@ public struct AnimationBool
 	}
 }
 
-[Serializable]
-public class StateTransitionItem : TransitionItem<State>
+public struct StateTransitionItem
 {
-}
+	public State target;
+	public Func<bool> condition;
+	public Action action;
 
-[Serializable]
-public class TransitionItem<T> : IComponent, ICondition
-{
-	[SerializeField] private string _description;
-	public T target;
-	public List<Condition> conditions;
-
-	public bool DoChecks()
+	public StateTransitionItem(State target, Func<bool> condition, Action action = null)
 	{
-		foreach (var condition in conditions)
-		{
-			if (condition.DoChecks())
-			{
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	public void Initialize(GameObject origin)
-	{
-		foreach (var condition in conditions)
-		{
-			condition.Initialize(origin);
-		}
+		this.target = target;
+		this.condition = condition;
+		this.action = action;
 	}
 }

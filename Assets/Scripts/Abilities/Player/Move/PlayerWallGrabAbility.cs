@@ -1,44 +1,31 @@
 using UnityEngine;
 
-[RequireComponent(typeof(WallChecker), typeof(Physical))]
+[RequireComponent(typeof(MoveController), typeof(GrabController))]
 
 public class PlayerWallGrabAbility : MoveStopAbility
 {
-	private Vector2 _holdPosition;
-
-	private WallChecker _wallChecker;
-	private Physical _physical;
+	private MoveController _moveController;
+	private GrabController _grabController;
 
 	protected override void Awake()
 	{
 		base.Awake();
-		_wallChecker = GetComponent<WallChecker>();
-		_physical = GetComponent<Physical>();
+		_moveController = GetComponent<MoveController>();
+		_grabController = GetComponent<GrabController>();
+
+		enterConditions.Add(() => _moveController.Move.y == 0 && _grabController.Grab);
+		exitConditions.Add(() => _moveController.Move.y != 0 || !_grabController.Grab);
 	}
 
 	protected override void ApplyPrepareActions()
 	{
 		base.ApplyPrepareActions();
-		_holdPosition = new Vector2(_wallChecker.WallPosition.x + _wallChecker.WallDirection * (_physical.Size.x / 2 + 0.01f), _physical.Position.y);
 		startSpeed = movable.Velocity.y;
-	}
-
-	protected override void ApplyEnterActions()
-	{
-		base.ApplyEnterActions();
-		movable.SetPosition(_holdPosition);
-		movable.SetGravity(0f);
 	}
 
 	protected override void ApplyUpdateActions()
 	{
 		base.ApplyUpdateActions();
 		movable.SetVelocityY(moveSpeed);
-	}
-
-	protected override void ApplyExitActions()
-	{
-		base.ApplyExitActions();
-		movable.ResetGravity();
 	}
 }

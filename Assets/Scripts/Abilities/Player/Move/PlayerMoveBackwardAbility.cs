@@ -10,7 +10,11 @@ public class PlayerMoveBackwardAbility : MoveAbility
 	{
 		base.Awake();
 		_moveController = GetComponent<MoveController>();
+
+		enterConditions.Add(() => _moveController.Move.x == -rotateable.FacingDirection);
+		exitConditions.Add(() => _moveController.Move.x != -rotateable.FacingDirection);
 	}
+
 	protected override void ApplyPrepareActions()
 	{
 		base.ApplyPrepareActions();

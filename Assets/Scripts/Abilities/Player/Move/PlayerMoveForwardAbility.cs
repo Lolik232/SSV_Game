@@ -1,5 +1,20 @@
+using UnityEngine;
+
+[RequireComponent(typeof(MoveController))]
+
 public class PlayerMoveForwardAbility : MoveAbility
 {
+	private MoveController _moveController;
+
+	protected override void Awake()
+	{
+		base.Awake();
+		_moveController = GetComponent<MoveController>();
+
+		enterConditions.Add(() => _moveController.Move.x == rotateable.FacingDirection);
+		exitConditions.Add(() => _moveController.Move.x != rotateable.FacingDirection);
+	}
+
 	protected override void ApplyPrepareActions()
 	{
 		base.ApplyPrepareActions();
