@@ -41,6 +41,9 @@ GameObject:
   - component: {fileID: 2086856307190248816}
   - component: {fileID: 407245510653006277}
   - component: {fileID: 8231683736357438395}
+  - component: {fileID: 3877217982774676464}
+  - component: {fileID: 4215832142076598245}
+  - component: {fileID: 7722846243474180352}
   - component: {fileID: -2486400050515072108}
   m_Layer: 6
   m_Name: Player
@@ -671,7 +674,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   _ledgeCheckDistance: 0.25
-  _ledgeCheckerYOffset: 1.025
+  _ledgeCheckerYOffset: 1.1
   _color:
     _r: 1
     _g: 0.3
@@ -701,15 +704,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1027cb75bb80c224d926fb2b3c18b72d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cooldown:
-    value: 0
-    required: 0
-  _duration:
-    value: 0
-    required: 0
-  _amountOfUsages:
-    value: 0
-    required: 0
   _animBools:
   - name: move
     mode: 2
@@ -718,9 +712,7 @@ MonoBehaviour:
     component: {fileID: 9174108980198039455}
   - _description: Stand Ability
     component: {fileID: 2539731355654125748}
-  _acceleration:
-    value: 2
-    required: 1
+  _acceleration: 0
   _maxSpeed: 10
 --- !u!114 &9174108980198039455
 MonoBehaviour:
@@ -734,15 +726,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98a0e3bd9469e2a46948a9168a395bc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cooldown:
-    value: 0
-    required: 0
-  _duration:
-    value: 0
-    required: 0
-  _amountOfUsages:
-    value: 0
-    required: 0
   _animBools:
   - name: move
     mode: 2
@@ -753,9 +736,7 @@ MonoBehaviour:
     component: {fileID: 7526529738827503554}
   - _description: Stand Ability
     component: {fileID: 2539731355654125748}
-  _acceleration:
-    value: 1
-    required: 1
+  _acceleration: 0
   _maxSpeed: 4
 --- !u!114 &2539731355654125748
 MonoBehaviour:
@@ -766,27 +747,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 16557013547266712}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9aa23b731ea7f964aae655882b81959c, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e8d8dc9f79f0f7458c84663bd885652, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cooldown:
-    value: 0
-    required: 0
-  _duration:
-    value: 0
-    required: 0
-  _amountOfUsages:
-    value: 0
-    required: 0
   _animBools: []
   _blockedAbilities:
   - _description: Move Forward Ability
     component: {fileID: 7526529738827503554}
   - _description: Move Backward Ability
     component: {fileID: 9174108980198039455}
-  _deceleration:
-    value: 1
-    required: 1
+  _deceleration: 0
 --- !u!114 &6041840438588976366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -799,15 +769,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 777511d789a4bf544a3c9f33364959c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cooldown:
-    value: 0
-    required: 0
-  _duration:
-    value: 0
-    required: 0
-  _amountOfUsages:
-    value: 0
-    required: 0
   _animBools:
   - name: grab
     mode: 2
@@ -816,9 +777,7 @@ MonoBehaviour:
     component: {fileID: 2086856307190248816}
   - _description: Wall Slide Ability
     component: {fileID: 407245510653006277}
-  _deceleration:
-    value: 0
-    required: 0
+  _deceleration: 0
 --- !u!114 &2086856307190248816
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -831,15 +790,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57f262be2e99ab947821c7c46f53016b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cooldown:
-    value: 0
-    required: 0
-  _duration:
-    value: 0
-    required: 0
-  _amountOfUsages:
-    value: 0
-    required: 0
   _animBools:
   - name: wallClimb
     mode: 2
@@ -848,9 +798,7 @@ MonoBehaviour:
     component: {fileID: 6041840438588976366}
   - _description: Wall Slide Ability
     component: {fileID: 407245510653006277}
-  _acceleration:
-    value: 2
-    required: 1
+  _acceleration: 0
   _maxSpeed: 6
 --- !u!114 &407245510653006277
 MonoBehaviour:
@@ -864,15 +812,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 116864320dcf6ad439624d12e781d1a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cooldown:
-    value: 0
-    required: 0
-  _duration:
-    value: 0
-    required: 0
-  _amountOfUsages:
-    value: 0
-    required: 0
   _animBools:
   - name: wallSlide
     mode: 2
@@ -881,9 +820,7 @@ MonoBehaviour:
     component: {fileID: 6041840438588976366}
   - _description: Wall Climb Ability
     component: {fileID: 2086856307190248816}
-  _acceleration:
-    value: 1
-    required: 1
+  _acceleration: 0
   _maxSpeed: 6
 --- !u!114 &8231683736357438395
 MonoBehaviour:
@@ -897,18 +834,57 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa9856511d9cdb64dbb6869d4ab35738, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cooldown:
-    value: 0
-    required: 0
-  _duration:
-    value: 0.15
-    required: 1
-  _amountOfUsages:
-    value: 0
-    required: 0
   _animBools:
   - name: ledgeClimb
     mode: 2
+  _blockedAbilities: []
+  _duration: 0.2
+--- !u!114 &3877217982774676464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16557013547266712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e8d8dc9f79f0f7458c84663bd885652, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animBools: []
+  _blockedAbilities: []
+  _deceleration: 1
+--- !u!114 &4215832142076598245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16557013547266712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef0bd6ff90a0db24a98ddba9fc94042d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _staySize: {x: 0.4, y: 1.95}
+  _stayOffset: {x: 0, y: 0.975}
+  _crouchSize: {x: 0.4, y: 0.95}
+  _crouchOffset: {x: 0, y: 0.475}
+--- !u!114 &7722846243474180352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16557013547266712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c27074410493c3d44b72d058a335d124, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animBools:
+  - name: stand
+    mode: 3
   _blockedAbilities: []
 --- !u!114 &-2486400050515072108
 MonoBehaviour:

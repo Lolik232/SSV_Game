@@ -13,8 +13,8 @@ public class PlayerWallClimbAbility : MoveAbility
 		_moveController = GetComponent<MoveController>();
 		_grabController = GetComponent<GrabController>();
 
-		enterConditions.Add(() => _moveController.Move.y == 1 && _grabController.Grab);
-		exitConditions.Add(() => _moveController.Move.y != 1 || !_grabController.Grab);
+		enterConditions.Add(() => _moveController.Move.y == 1);
+		exitConditions.Add(() => _moveController.Move.y != 1);
 	}
 
 	protected override void ApplyPrepareActions()

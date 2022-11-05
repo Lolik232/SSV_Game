@@ -15,12 +15,11 @@ public sealed class PlayerInAirState : State
 	private GrabController _grabController;
 	private MoveController _moveController;
 
-	private Rotateable _rotateable;
 	private Movable _movable;
 
 	private PlayerMoveForwardAbility _moveForward;
 	private PlayerMoveBackwardAbility _moveBackward;
-	private PlayerStandAbility _stand;
+	private PlayerStayAbility _stay;
 
 	protected override void Awake()
 	{
@@ -36,18 +35,17 @@ public sealed class PlayerInAirState : State
 		_grabController = GetComponent<GrabController>();
 		_moveController = GetComponent<MoveController>();
 
-		_rotateable = GetComponent<Rotateable>();
 		_movable = GetComponent<Movable>();
 
 		_moveForward = GetComponent<PlayerMoveForwardAbility>();
 		_moveBackward = GetComponent<PlayerMoveBackwardAbility>();
-		_stand = GetComponent<PlayerStandAbility>();
+		_stay = GetComponent<PlayerStayAbility>();
 
 		bool GroundedCondition() => _groundChecker.Grounded && _movable.Velocity.y < 0.01f;
 
 		bool TouchingWallCondition() => _wallChecker.TouchingWall &&
 																		 _ledgeChecker.TouchingLegde &&
-																		 (_grabController.Grab || _moveController.Move.x == _rotateable.FacingDirection && _movable.Velocity.y < 0.01f);
+																		 _grabController.Grab;
 
 		bool OnLedgeCondition() => _wallChecker.TouchingWall && !_ledgeChecker.TouchingLegde;
 
@@ -55,14 +53,14 @@ public sealed class PlayerInAirState : State
 		{
 			_moveForward.OnExit();
 			_moveBackward.OnExit();
-			_stand.OnExit();
+			_stay.OnExit();
 		}
 
 		void OnLedgeAction()
 		{
 			_moveForward.OnExit();
 			_moveBackward.OnExit();
-			_stand.OnExit();
+			_stay.OnExit();
 		}
 
 		transitions.Add(new StateTransitionItem(_grounded, GroundedCondition));
@@ -75,7 +73,7 @@ public sealed class PlayerInAirState : State
 		base.ApplyEnterActions();
 		_moveForward.Unlock();
 		_moveBackward.Unlock();
-		_stand.Unlock();
+		_stay.Unlock();
 	}
 
 	protected override void ApplyExitActions()
@@ -83,6 +81,6 @@ public sealed class PlayerInAirState : State
 		base.ApplyExitActions();
 		_moveForward.Block();
 		_moveBackward.Block();
-		_stand.Block();
+		_stay.Block();
 	}
 }

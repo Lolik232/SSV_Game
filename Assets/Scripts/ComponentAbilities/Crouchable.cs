@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Crouchable : MonoBehaviour, ICrouchable
 {
-	[SerializeField] private Vector2 _standSize;
-	[SerializeField] private Vector2 _standOffset;
+	[SerializeField] private Vector2 _staySize;
+	[SerializeField] private Vector2 _stayOffset;
 	[Space]
 	[SerializeField] private Vector2 _crouchSize;
 	[SerializeField] private Vector2 _crouchOffset;
@@ -14,15 +14,15 @@ public class Crouchable : MonoBehaviour, ICrouchable
 
 	public Vector2 StandSize
 	{
-		get => _standSize;
+		get => _staySize;
 	}
 	public Vector2 StandOffset
 	{
-		get => _standOffset;
+		get => _stayOffset;
 	}
 	public Vector2 StandCenter
 	{
-		get => (Vector2)transform.position + _standOffset;
+		get => (Vector2)transform.position + _stayOffset;
 	}
 	public Vector2 CrouchSize
 	{
@@ -68,13 +68,6 @@ public class Crouchable : MonoBehaviour, ICrouchable
 
 	private void Start()
 	{
-		if (CanStand)
-		{
-			Stand();
-		}
-		else
-		{
-			Crouch();
-		}
+		Stand();
 	}
 }

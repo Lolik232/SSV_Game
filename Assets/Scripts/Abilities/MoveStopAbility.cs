@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class MoveStopAbility : Ability
 {
-	[SerializeField] private AbilityParameter _deceleration;
+	[SerializeField] private float _deceleration;
 
 	protected float realDeceleration;
 	protected float moveSpeed;
@@ -18,7 +18,7 @@ public class MoveStopAbility : Ability
 
 	protected float Deceleration
 	{
-		get => _deceleration.value;
+		get => _deceleration;
 	}
 
 	protected override void Awake()
@@ -40,7 +40,7 @@ public class MoveStopAbility : Ability
 
 	private IEnumerator Decelerate()
 	{
-		if (!_deceleration.required)
+		if (Deceleration == 0f)
 		{
 			moveSpeed = endSpeed;
 			yield break;

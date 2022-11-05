@@ -6,17 +6,14 @@ public class PlayerOnLedgeState : State
 {
 	private PlayerGroundedState _grounded;
 
-	private GroundChecker _groundChecker;
 	private WallChecker _wallChecker;
 	private LedgeChecker _ledgeChecker;
-
-	private GrabController _grabController;
-	private MoveController _moveController;
 
 	private Physical _physical;
 	private Movable _movable;
 
 	private PlayerLedgeClimbAbility _ledgeClimb;
+	private PlayerCrouchAbility _crouch;
 
 	private Vector2 _startPosition;
 	private Vector2 _endPosition;
@@ -26,30 +23,32 @@ public class PlayerOnLedgeState : State
 		base.Awake();
 		_grounded = GetComponent<PlayerGroundedState>();
 
-		_groundChecker = GetComponent<GroundChecker>();
 		_wallChecker = GetComponent<WallChecker>();
 		_ledgeChecker = GetComponent<LedgeChecker>();
-
-		_grabController = GetComponent<GrabController>();
-		_moveController = GetComponent<MoveController>();
 
 		_physical = GetComponent<Physical>();
 		_movable = GetComponent<Movable>();
 
 		_ledgeClimb = GetComponent<PlayerLedgeClimbAbility>();
+		_crouch = GetComponent<PlayerCrouchAbility>();
 
 		bool GroundedCondition() => !_ledgeClimb.IsActive;
 
-		transitions.Add(new StateTransitionItem(_grounded, GroundedCondition));
+		void GroundedAction()
+		{
+			_crouch.OnEnter();
+		}
+
+		transitions.Add(new StateTransitionItem(_grounded, GroundedCondition, GroundedAction));
 	}
 
 	protected override void ApplyEnterActions()
 	{
 		base.ApplyEnterActions();
-		_startPosition = new Vector2(_wallChecker.WallPosition.x + _wallChecker.WallDirection * _physical.Size.x / 2,
+		_startPosition = new Vector2(_wallChecker.WallPosition.x + _wallChecker.WallDirection * (_physical.Size.x / 2 + IChecker.CHECK_OFFSET),
 																 _ledgeChecker.GroundPosition.y - 1f);
-		_endPosition = new Vector2(_wallChecker.WallPosition.x - _wallChecker.WallDirection * _physical.Size.x / 2,
-																 _ledgeChecker.GroundPosition.y);
+		_endPosition = new Vector2(_wallChecker.WallPosition.x - _wallChecker.WallDirection * (_physical.Size.x / 2 + IChecker.CHECK_OFFSET),
+																 _ledgeChecker.GroundPosition.y + IChecker.CHECK_OFFSET);
 		_movable.SetPosition(_startPosition);
 		_movable.SetVelocity(Vector2.zero);
 		_movable.SetGravity(0f);
@@ -65,5 +64,11 @@ public class PlayerOnLedgeState : State
 		_movable.ResetGravity();
 
 		_ledgeClimb.Block();
+	}
+
+	private void OnDrawGizmos()
+	{
+		Gizmos.DrawWireCube(_startPosition + _physical.Offset, _physical.Size);
+		Gizmos.DrawWireCube(_endPosition + _physical.Offset, _physical.Size);
 	}
 }

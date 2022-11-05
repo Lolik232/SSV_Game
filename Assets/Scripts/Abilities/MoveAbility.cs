@@ -6,7 +6,7 @@ using UnityEngine;
 
 public abstract class MoveAbility : Ability
 {
-	[SerializeField] private AbilityParameter _acceleration;
+	[SerializeField] private float _acceleration;
 	[SerializeField] private float _maxSpeed;
 
 	protected float realAcceleration;
@@ -20,7 +20,7 @@ public abstract class MoveAbility : Ability
 
 	private float Acceleration
 	{
-		get => _acceleration.value;
+		get => _acceleration;
 	}
 
 	protected override void Awake()
@@ -42,7 +42,7 @@ public abstract class MoveAbility : Ability
 
 	private IEnumerator Accelerate()
 	{
-		if (!_acceleration.required)
+		if (Acceleration == 0f)
 		{
 			moveSpeed = endSpeed;
 			yield break;

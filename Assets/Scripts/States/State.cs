@@ -50,8 +50,8 @@ public abstract class State : MonoBehaviour
 		{
 			if (transition.condition())
 			{
-				_stateMachine.GetTransition(transition.target);
 				transition.action?.Invoke();
+				_stateMachine.GetTransition(transition.target);
 				return;
 			}
 		}

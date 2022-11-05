@@ -68,7 +68,7 @@ public class LedgeChecker : MonoBehaviour, ILedgeChecker
 		Vector2 checkerOffset = _physical.Size / 2 - Vector2.one * IChecker.CHECK_OFFSET;
 		float rightCheckerPositionX = _physical.Center.x + _rotateable.FacingDirection * checkerOffset.x;
 
-		Vector2 workspace = new(rightCheckerPositionX, _physical.Position.y + _ledgeCheckerYOffset);
+		Vector2 workspace = new(rightCheckerPositionX, _physical.Position.y + YOffset);
 		_ledgeCheckRay = new CheckArea(workspace.x,
 																		workspace.y,
 																		workspace.x + _rotateable.FacingDirection * _ledgeCheckDistance,
@@ -77,7 +77,7 @@ public class LedgeChecker : MonoBehaviour, ILedgeChecker
 		_groundCheckRay = new CheckArea(workspace.x,
 																		workspace.y,
 																		workspace.x,
-																		workspace.y - _wallChecker.YOffset);
+																		workspace.y - (YOffset - _wallChecker.YOffset + IChecker.CHECK_OFFSET));
 	}
 }
 

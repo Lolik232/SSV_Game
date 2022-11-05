@@ -5,12 +5,8 @@ using UnityEngine;
 
 [RequireComponent(typeof(AbilitiesManager))]
 
-public abstract class Ability : MonoBehaviour, IAbility, IActivated, IBlockable
+public abstract class Ability : MonoBehaviour
 {
-	[SerializeField] private AbilityParameter _cooldown;
-	[SerializeField] private AbilityParameter _duration;
-	[SerializeField] private AbilityParameterInt _amountOfUsages;
-	[Space]
 	[SerializeField] private List<AnimationBool> _animBools;
 	[Space]
 	[SerializeField] private List<BlockedAbility> _blockedAbilities;
@@ -20,7 +16,7 @@ public abstract class Ability : MonoBehaviour, IAbility, IActivated, IBlockable
 
 	private readonly Blocker _blocker = new();
 
-	private Animator _anim;
+	protected Animator anim;
 
 	private bool _isActive;
 	private float _startTime;
@@ -43,23 +39,10 @@ public abstract class Ability : MonoBehaviour, IAbility, IActivated, IBlockable
 	{
 		get => Time.time - _endTime;
 	}
-	public float Cooldown
-	{
-		get => _cooldown.value;
-	}
-	public float Duration
-	{
-		get => _duration.value;
-	}
-	public int AmountOfUsages
-	{
-		get => _amountOfUsages.value;
-		private set => _amountOfUsages.value = value;
-	}
 
 	protected virtual void Awake()
 	{
-		_anim = GetComponent<Animator>();
+		anim = GetComponent<Animator>();
 
 		_blocker.AddBlock();
 	}
@@ -83,11 +66,6 @@ public abstract class Ability : MonoBehaviour, IAbility, IActivated, IBlockable
 
 		ApplyPrepareActions();
 
-		if (_amountOfUsages.required && AmountOfUsages == 0 || (_cooldown.required && InactiveTime < Cooldown))
-		{
-			return;
-		}
-
 		if (!DoEnterChecks())
 		{
 			return;
@@ -98,7 +76,7 @@ public abstract class Ability : MonoBehaviour, IAbility, IActivated, IBlockable
 
 	public void OnEnter()
 	{
-		if (IsActive || IsLocked)
+		if (IsActive)
 		{
 			return;
 		}
@@ -123,7 +101,7 @@ public abstract class Ability : MonoBehaviour, IAbility, IActivated, IBlockable
 			return;
 		}
 
-		if (_duration.required && ActiveTime > Duration || DoExitChecks())
+		if (DoExitChecks())
 		{
 			OnExit();
 			return;
@@ -135,13 +113,8 @@ public abstract class Ability : MonoBehaviour, IAbility, IActivated, IBlockable
 	protected virtual void ApplyEnterActions()
 	{
 		IsActive = true;
-		if (_amountOfUsages.required)
-		{
-			AmountOfUsages--;
-		}
-		
 		Utility.BlockAll(_blockedAbilities);
-		Utility.SetAnimBoolsOnEnter(_anim, _animBools);
+		Utility.SetAnimBoolsOnEnter(anim, _animBools);
 		_startTime = Time.time;
 	}
 
@@ -149,7 +122,7 @@ public abstract class Ability : MonoBehaviour, IAbility, IActivated, IBlockable
 	{
 		IsActive = false;
 		Utility.UnlockAll(_blockedAbilities);
-		Utility.SetAnimBoolsOnExit(_anim, _animBools);
+		Utility.SetAnimBoolsOnExit(anim, _animBools);
 		_endTime = Time.time;
 	}
 
@@ -188,20 +161,6 @@ public abstract class Ability : MonoBehaviour, IAbility, IActivated, IBlockable
 
 		return false;
 	}
-}
-
-[Serializable]
-public struct AbilityParameter
-{
-	public float value;
-	public bool required;
-}
-
-[Serializable]
-public struct AbilityParameterInt
-{
-	public int value;
-	public bool required;
 }
 
 [Serializable]

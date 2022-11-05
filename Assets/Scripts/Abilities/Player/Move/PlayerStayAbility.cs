@@ -2,7 +2,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(MoveController))]
 
-public class PlayerStandAbility : MoveStopAbility
+public class PlayerStayAbility : MoveStopAbility
 {
 	private MoveController _moveController;
 

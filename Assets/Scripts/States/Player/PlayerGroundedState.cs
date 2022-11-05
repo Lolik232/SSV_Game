@@ -14,10 +14,12 @@ public sealed class PlayerGroundedState : State
 	private LedgeChecker _ledgeChecker;
 
 	private GrabController _grabController;
+	private MoveController _moveController;
 
 	private PlayerMoveForwardAbility _moveForward;
 	private PlayerMoveBackwardAbility _moveBackward;
-	private PlayerStandAbility _stand;
+	private PlayerStayAbility _stay;
+	private PlayerCrouchAbility _crouch;
 
 	protected override void Awake()
 	{
@@ -32,17 +34,20 @@ public sealed class PlayerGroundedState : State
 		_ledgeChecker = GetComponent<LedgeChecker>();
 
 		_grabController = GetComponent<GrabController>();
+		_moveController = GetComponent<MoveController>();
 
 		_moveForward = GetComponent<PlayerMoveForwardAbility>();
 		_moveBackward = GetComponent<PlayerMoveBackwardAbility>();
-		_stand = GetComponent<PlayerStandAbility>();
+		_stay = GetComponent<PlayerStayAbility>();
+		_crouch = GetComponent<PlayerCrouchAbility>();
 
 		bool InAirCondition() => !_groundChecker.Grounded;
 
 		bool TouchingWallCondition() => _wallChecker.TouchingWall &&
 																		 _ledgeChecker.TouchingLegde &&
 																		 !_ceilChecker.TouchingCeiling &&
-																		 _grabController.Grab;
+																		 _grabController.Grab &&
+																		 _moveController.Move.y != -1;
 
 		bool OnLedgeCondition() => _wallChecker.TouchingWall && !_ledgeChecker.TouchingLegde;
 
@@ -50,14 +55,14 @@ public sealed class PlayerGroundedState : State
 		{
 			_moveForward.OnExit();
 			_moveBackward.OnExit();
-			_stand.OnExit();
+			_stay.OnExit();
 		}
 
 		void OnLedgeAction()
 		{
 			_moveForward.OnExit();
 			_moveBackward.OnExit();
-			_stand.OnExit();
+			_stay.OnExit();
 		}
 
 		transitions.Add(new StateTransitionItem(_inAir, InAirCondition));
@@ -70,7 +75,8 @@ public sealed class PlayerGroundedState : State
 		base.ApplyEnterActions();
 		_moveForward.Unlock();
 		_moveBackward.Unlock();
-		_stand.Unlock();
+		_stay.Unlock();
+		_crouch.Unlock();
 	}
 
 	protected override void ApplyExitActions()
@@ -78,6 +84,9 @@ public sealed class PlayerGroundedState : State
 		base.ApplyExitActions();
 		_moveForward.Block();
 		_moveBackward.Block();
-		_stand.Block();
+		_stay.Block();
+		_crouch.Block();
+
+		_crouch.OnExit();
 	}
 }

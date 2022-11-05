@@ -15,8 +15,8 @@ public class PlayerWallSlideAbility : MoveAbility
 		_grabController = GetComponent<GrabController>();
 		_wallChecker = GetComponent<WallChecker>();
 
-		enterConditions.Add(() => _moveController.Move.y == -1 && _grabController.Grab || _moveController.Move.x == rotateable.FacingDirection);
-		exitConditions.Add(() => _moveController.Move.y != -1 && _grabController.Grab);
+		enterConditions.Add(() => _moveController.Move.y == -1);
+		exitConditions.Add(() => _moveController.Move.y != -1);
 	}
 
 	protected override void ApplyPrepareActions()

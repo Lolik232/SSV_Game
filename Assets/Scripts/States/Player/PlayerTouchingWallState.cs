@@ -15,7 +15,6 @@ public class PlayerTouchingWallState : State
 	private GrabController _grabController;
 	private MoveController _moveController;
 
-	private Rotateable _rotateable;
 	private Physical _physical;
 	private Movable _movable;
 
@@ -37,7 +36,6 @@ public class PlayerTouchingWallState : State
 		_grabController = GetComponent<GrabController>();
 		_moveController = GetComponent<MoveController>();
 
-		_rotateable = GetComponent<Rotateable>();
 		_physical = GetComponent<Physical>();
 		_movable = GetComponent<Movable>();
 
@@ -47,9 +45,8 @@ public class PlayerTouchingWallState : State
 
 		bool GroundedCondition() => _groundChecker.Grounded && (_moveController.Move.y == -1 || !_grabController.Grab);
 
-		bool InAirCondition() => !_wallChecker.TouchingWall ||
-														 (_moveController.Move.x != _rotateable.FacingDirection && !_grabController.Grab);
-		
+		bool InAirCondition() => !_wallChecker.TouchingWall || !_grabController.Grab;
+
 		bool OnLedgeCondition() => _wallChecker.TouchingWall && !_ledgeChecker.TouchingLegde;
 
 		void OnLedgeAction()
@@ -67,7 +64,7 @@ public class PlayerTouchingWallState : State
 	protected override void ApplyEnterActions()
 	{
 		base.ApplyEnterActions();
-		var holdPosition = new Vector2(_wallChecker.WallPosition.x + _wallChecker.WallDirection * (_physical.Size.x / 2 + 0.01f), _physical.Position.y);
+		var holdPosition = new Vector2(_wallChecker.WallPosition.x + _wallChecker.WallDirection * (_physical.Size.x / 2 + IChecker.CHECK_OFFSET), _physical.Position.y);
 		_movable.SetPosition(holdPosition);
 		_movable.SetGravity(0f);
 

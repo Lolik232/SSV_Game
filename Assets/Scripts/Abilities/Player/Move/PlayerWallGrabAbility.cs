@@ -13,8 +13,8 @@ public class PlayerWallGrabAbility : MoveStopAbility
 		_moveController = GetComponent<MoveController>();
 		_grabController = GetComponent<GrabController>();
 
-		enterConditions.Add(() => _moveController.Move.y == 0 && _grabController.Grab);
-		exitConditions.Add(() => _moveController.Move.y != 0 || !_grabController.Grab);
+		enterConditions.Add(() => _moveController.Move.y == 0);
+		exitConditions.Add(() => _moveController.Move.y != 0);
 	}
 
 	protected override void ApplyPrepareActions()
