@@ -1,6 +1,8 @@
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerGroundedState), typeof(PlayerInAirState), typeof(PlayerOnLedgeState))]
+[RequireComponent(typeof(GroundChecker), typeof(WallChecker), typeof(LedgeChecker))]
+[RequireComponent(typeof(GrabController), typeof(MoveController), typeof(Physical))]
+[RequireComponent(typeof(Movable))]
 
 public class PlayerTouchingWallState : State
 {
@@ -17,10 +19,9 @@ public class PlayerTouchingWallState : State
 
 	private Physical _physical;
 	private Movable _movable;
+	private Rotateable _rotateable;
 
-	private PlayerWallClimbAbility _wallClimb;
-	private PlayerWallSlideAbility _wallSlide;
-	private PlayerWallGrabAbility _wallGrab;
+	private PlayerMoveVerticalAbility _moveVertical;
 
 	protected override void Awake()
 	{
@@ -38,27 +39,20 @@ public class PlayerTouchingWallState : State
 
 		_physical = GetComponent<Physical>();
 		_movable = GetComponent<Movable>();
+		_rotateable = GetComponent<Rotateable>();
+		_rotateable = GetComponent<Rotateable>();
 
-		_wallClimb = GetComponent<PlayerWallClimbAbility>();
-		_wallSlide = GetComponent<PlayerWallSlideAbility>();
-		_wallGrab = GetComponent<PlayerWallGrabAbility>();
+		_moveVertical = GetComponent<PlayerMoveVerticalAbility>();
 
 		bool GroundedCondition() => _groundChecker.Grounded && (_moveController.Move.y == -1 || !_grabController.Grab);
 
-		bool InAirCondition() => !_wallChecker.TouchingWall || !_grabController.Grab;
+		bool InAirCondition() => !_wallChecker.TouchingWall || (!_grabController.Grab && _moveController.Move.x != _rotateable.FacingDirection);
 
 		bool OnLedgeCondition() => _wallChecker.TouchingWall && !_ledgeChecker.TouchingLegde;
 
-		void OnLedgeAction()
-		{
-			_wallClimb.OnExit();
-			_wallSlide.OnExit();
-			_wallGrab.OnExit();
-		}
-
-		transitions.Add(new StateTransitionItem(_grounded, GroundedCondition));
-		transitions.Add(new StateTransitionItem(_inAir, InAirCondition));
-		transitions.Add(new StateTransitionItem(_onLedge, OnLedgeCondition, OnLedgeAction));
+		Transitions.Add(new(_grounded, GroundedCondition));
+		Transitions.Add(new(_inAir, InAirCondition));
+		Transitions.Add(new(_onLedge, OnLedgeCondition));
 	}
 
 	protected override void ApplyEnterActions()
@@ -68,9 +62,7 @@ public class PlayerTouchingWallState : State
 		_movable.SetPosition(holdPosition);
 		_movable.SetGravity(0f);
 
-		_wallClimb.Unlock();
-		_wallSlide.Unlock();
-		_wallGrab.Unlock();
+		_moveVertical.Unlock();
 	}
 
 	protected override void ApplyExitActions()
@@ -78,12 +70,7 @@ public class PlayerTouchingWallState : State
 		base.ApplyExitActions();
 		_movable.ResetGravity();
 
-		_wallClimb.Block();
-		_wallSlide.Block();
-		_wallGrab.Block();
-
-		_wallClimb.OnExit();
-		_wallSlide.OnExit();
-		_wallGrab.OnExit();
+		_moveVertical.Block();
+		_moveVertical.OnExit();
 	}
 }

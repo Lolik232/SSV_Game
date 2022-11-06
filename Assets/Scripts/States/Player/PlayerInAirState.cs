@@ -1,6 +1,8 @@
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerGroundedState), typeof(PlayerTouchingWallState), typeof(PlayerOnLedgeState))]
+[RequireComponent(typeof(GroundChecker), typeof(WallChecker), typeof(LedgeChecker))]
+[RequireComponent(typeof(GrabController), typeof(MoveController), typeof(Movable))]
+[RequireComponent(typeof(Rotateable))]
 
 public sealed class PlayerInAirState : State
 {
@@ -16,10 +18,9 @@ public sealed class PlayerInAirState : State
 	private MoveController _moveController;
 
 	private Movable _movable;
+	private Rotateable _rotateable;
 
-	private PlayerMoveForwardAbility _moveForward;
-	private PlayerMoveBackwardAbility _moveBackward;
-	private PlayerStayAbility _stay;
+	private PlayerMoveHorizontalAbility _moveHorizontal;
 
 	protected override void Awake()
 	{
@@ -36,51 +37,42 @@ public sealed class PlayerInAirState : State
 		_moveController = GetComponent<MoveController>();
 
 		_movable = GetComponent<Movable>();
+		_rotateable = GetComponent<Rotateable>();
 
-		_moveForward = GetComponent<PlayerMoveForwardAbility>();
-		_moveBackward = GetComponent<PlayerMoveBackwardAbility>();
-		_stay = GetComponent<PlayerStayAbility>();
+		_moveHorizontal = GetComponent<PlayerMoveHorizontalAbility>();
 
 		bool GroundedCondition() => _groundChecker.Grounded && _movable.Velocity.y < 0.01f;
 
 		bool TouchingWallCondition() => _wallChecker.TouchingWall &&
 																		 _ledgeChecker.TouchingLegde &&
-																		 _grabController.Grab;
+																		 (_grabController.Grab || _moveController.Move.x == _rotateable.FacingDirection);
 
 		bool OnLedgeCondition() => _wallChecker.TouchingWall && !_ledgeChecker.TouchingLegde;
 
 		void TouchingWallAction()
 		{
-			_moveForward.OnExit();
-			_moveBackward.OnExit();
-			_stay.OnExit();
+			_moveHorizontal.OnExit();
 		}
 
 		void OnLedgeAction()
 		{
-			_moveForward.OnExit();
-			_moveBackward.OnExit();
-			_stay.OnExit();
+			_moveHorizontal.OnExit();
 		}
 
-		transitions.Add(new StateTransitionItem(_grounded, GroundedCondition));
-		transitions.Add(new StateTransitionItem(_touchingWall, TouchingWallCondition, TouchingWallAction));
-		transitions.Add(new StateTransitionItem(_onLedge, OnLedgeCondition, OnLedgeAction));
+		Transitions.Add(new(_grounded, GroundedCondition));
+		Transitions.Add(new(_touchingWall, TouchingWallCondition, TouchingWallAction));
+		Transitions.Add(new(_onLedge, OnLedgeCondition, OnLedgeAction));
 	}
 
 	protected override void ApplyEnterActions()
 	{
 		base.ApplyEnterActions();
-		_moveForward.Unlock();
-		_moveBackward.Unlock();
-		_stay.Unlock();
+		_moveHorizontal.Unlock();
 	}
 
 	protected override void ApplyExitActions()
 	{
 		base.ApplyExitActions();
-		_moveForward.Block();
-		_moveBackward.Block();
-		_stay.Block();
+		_moveHorizontal.Block();
 	}
 }

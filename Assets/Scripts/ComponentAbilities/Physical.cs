@@ -20,6 +20,7 @@ public class Physical : MonoBehaviour, IPhysical
 	public Vector2 Center
 	{
 		get => (Vector2)transform.position + _collider.offset;
+
 	}
 	public Vector2 Position
 	{

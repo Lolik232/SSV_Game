@@ -1,49 +1,44 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using UnityEngine;
 
 [RequireComponent(typeof(AbilitiesManager))]
 
-public abstract class Ability : MonoBehaviour
+public abstract class Ability : ComponentBase
 {
-	[SerializeField] private List<AnimationBool> _animBools;
-	[Space]
-	[SerializeField] private List<BlockedAbility> _blockedAbilities;
+	private List<dynamic> _abilityStates = new();
 
 	protected List<Func<bool>> enterConditions = new();
 	protected List<Func<bool>> exitConditions = new();
 
 	private readonly Blocker _blocker = new();
 
-	protected Animator anim;
-
-	private bool _isActive;
-	private float _startTime;
-	private float _endTime;
+	public dynamic Current
+	{
+		get;
+		private set;
+	}
 
 	public bool IsLocked
 	{
 		get => _blocker.IsLocked;
-	}
-	public bool IsActive
-	{
-		get => _isActive;
-		private set => _isActive = value;
-	}
-	public float ActiveTime
-	{
-		get => Time.time - _startTime;
-	}
-	public float InactiveTime
-	{
-		get => Time.time - _endTime;
+		set
+		{
+			if (value)
+			{
+				Block();
+			}
+			else
+			{
+				Unlock();
+			}
+		}
 	}
 
 	protected virtual void Awake()
 	{
-		anim = GetComponent<Animator>();
-
 		_blocker.AddBlock();
 	}
 
@@ -59,14 +54,7 @@ public abstract class Ability : MonoBehaviour
 
 	public void TryEnter()
 	{
-		if (IsActive || IsLocked)
-		{
-			return;
-		}
-
-		ApplyPrepareActions();
-
-		if (!DoEnterChecks())
+		if (IsActive || IsLocked || !CheckForEnter())
 		{
 			return;
 		}
@@ -74,7 +62,7 @@ public abstract class Ability : MonoBehaviour
 		ApplyEnterActions();
 	}
 
-	public void OnEnter()
+	public override void OnEnter()
 	{
 		if (IsActive)
 		{
@@ -84,7 +72,7 @@ public abstract class Ability : MonoBehaviour
 		ApplyEnterActions();
 	}
 
-	public void OnExit()
+	public override void OnExit()
 	{
 		if (!IsActive)
 		{
@@ -94,14 +82,14 @@ public abstract class Ability : MonoBehaviour
 		ApplyExitActions();
 	}
 
-	public void OnUpdate()
+	public override void OnUpdate()
 	{
 		if (!IsActive)
 		{
 			return;
 		}
 
-		if (DoExitChecks())
+		if (CheckForExit())
 		{
 			OnExit();
 			return;
@@ -110,33 +98,25 @@ public abstract class Ability : MonoBehaviour
 		ApplyUpdateActions();
 	}
 
-	protected virtual void ApplyEnterActions()
+	protected override void ApplyEnterActions()
 	{
-		IsActive = true;
-		Utility.BlockAll(_blockedAbilities);
-		Utility.SetAnimBoolsOnEnter(anim, _animBools);
-		_startTime = Time.time;
+		base.ApplyEnterActions();
+		Initialize(_abilityStates.First());
 	}
 
-	protected virtual void ApplyExitActions()
+	protected override void ApplyExitActions()
 	{
-		IsActive = false;
-		Utility.UnlockAll(_blockedAbilities);
-		Utility.SetAnimBoolsOnExit(anim, _animBools);
-		_endTime = Time.time;
+		base.ApplyExitActions();
+		Current.OnExit();
 	}
 
-	protected virtual void ApplyUpdateActions()
+	protected override void ApplyUpdateActions()
 	{
-
+		base.ApplyUpdateActions();
+		Current.OnUpdate();
 	}
 
-	protected virtual void ApplyPrepareActions()
-	{
-
-	}
-
-	private bool DoEnterChecks()
+	private bool CheckForEnter()
 	{
 		foreach (var condition in enterConditions)
 		{
@@ -149,7 +129,7 @@ public abstract class Ability : MonoBehaviour
 		return false;
 	}
 
-	private bool DoExitChecks()
+	private bool CheckForExit()
 	{
 		foreach (var condition in exitConditions)
 		{
@@ -161,11 +141,27 @@ public abstract class Ability : MonoBehaviour
 
 		return false;
 	}
-}
 
-[Serializable]
-public struct BlockedAbility
-{
-	[SerializeField] private string _description;
-	public Ability component;
+	private void Initialize(dynamic target)
+	{
+		Current = target;
+		Current.OnEnter();
+	}
+
+	public void GetTransition(dynamic target)
+	{
+		Current.OnExit();
+		Current = target;
+		Current.OnEnter();
+	}
+
+	protected void GetAbilityStates<AbilityT>() where AbilityT : Ability
+	{
+		List<AbilityState<AbilityT>> states  = new();
+		GetComponents(states);
+		foreach (var state in states)
+		{
+			_abilityStates.Add(state);
+		}
+	}
 }

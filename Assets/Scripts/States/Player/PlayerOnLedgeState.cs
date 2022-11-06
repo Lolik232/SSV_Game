@@ -1,6 +1,7 @@
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerGroundedState))]
+[RequireComponent(typeof(WallChecker), typeof(LedgeChecker), typeof(Physical))]
+[RequireComponent(typeof(Movable))]
 
 public class PlayerOnLedgeState : State
 {
@@ -36,10 +37,10 @@ public class PlayerOnLedgeState : State
 
 		void GroundedAction()
 		{
-			_crouch.OnEnter();
+			//_crouch.OnEnter();
 		}
 
-		transitions.Add(new StateTransitionItem(_grounded, GroundedCondition, GroundedAction));
+		Transitions.Add(new(_grounded, GroundedCondition, GroundedAction));
 	}
 
 	protected override void ApplyEnterActions()

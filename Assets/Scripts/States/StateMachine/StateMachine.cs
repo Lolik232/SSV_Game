@@ -7,20 +7,16 @@ using UnityEngine;
 public class StateMachine : MonoBehaviour
 {
 	private readonly List<State> _states = new();
-	private readonly List<IChecker> _checkers = new();
-
-	private State _current;
 
 	public State Current
 	{
-		get => _current;
-		private set => _current = value;
+		get;
+		private set;
 	}
 
 	private void Awake()
 	{
 		GetComponents(_states);
-		GetComponents(_checkers);
 	}
 
 	private void Start()
@@ -40,11 +36,6 @@ public class StateMachine : MonoBehaviour
 	}
 
 	public void GetTransition(State target)
-	{
-		GetTransition(Current, target);
-	}
-
-	private void GetTransition(State origin, State target)
 	{
 		Current.OnExit();
 		Current = target;
