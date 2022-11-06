@@ -11,5 +11,9 @@ namespace FSM
 		public virtual void OnEnter(BaseStateMachine machine)
 		{
 		}
+		
+		public virtual void OnExit(BaseStateMachine machine)
+		{
+		}
 	}
 }

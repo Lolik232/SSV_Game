@@ -15,6 +15,12 @@ namespace FSM
 				action.OnEnter(machine);
 		}
 		
+		public override void OnExit(BaseStateMachine machine)
+		{
+			foreach (var action in Action)
+				action.OnExit(machine);
+		}
+		
 		public override void Execute(BaseStateMachine machine)
 		{
 			foreach (var action in Action)

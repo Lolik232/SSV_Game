@@ -12,11 +12,11 @@ public class StartScreenAction : FSMAction
 	{
 		stateMachine.menuAnim.SetBool("isTextHidden", false);
 		stateMachine.textAnim.SetBool("isTextHidden", false);
-
-		foreach (var btn in stateMachine.buttons)
-		{
-			btn.interactable = false;
-		}
+	}
+	
+	public override void OnExit(BaseStateMachine stateMachine)
+	{
+		
 	}
 	
 	public override void Execute(BaseStateMachine stateMachine)

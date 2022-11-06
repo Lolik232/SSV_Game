@@ -13,11 +13,14 @@ public class MenuAction : FSMAction
 		stateMachine.textAnim.SetBool("isTextHidden", true);
 		stateMachine.menuAnim.SetBool("isTextHidden", true);
 		
-		foreach (var btn in stateMachine.buttons)
-		{
-			btn.interactable = true;
-		}
+		stateMachine.menuGroup.interactable = true;
 	}
+	
+	public override void OnExit(BaseStateMachine stateMachine)
+	{
+		stateMachine.menuGroup.interactable = false;
+	}
+	
 	public override void Execute(BaseStateMachine stateMachine)
 	{
 		

@@ -7,5 +7,7 @@ namespace FSM
 		public abstract void Execute(BaseStateMachine stateMachine);
 		
 		public abstract void OnEnter(BaseStateMachine stateMachine);
+		
+		public abstract void OnExit(BaseStateMachine stateMachine);
 	}
 }

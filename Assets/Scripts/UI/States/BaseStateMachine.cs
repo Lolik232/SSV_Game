@@ -1,10 +1,6 @@
 using System.Collections.Generic;
 
 using UnityEngine;
-using UnityEngine.InputSystem.Controls;
-using UnityEngine.InputSystem.HID;
-using UnityEngine.Serialization;
-using UnityEngine.UI;
 
 namespace FSM
 {
@@ -14,8 +10,9 @@ namespace FSM
 		[SerializeField] private UIInputSO _uiInputSO;
 		[SerializeField] private Animator _textAnim;
 		[SerializeField] private Animator _menuAnim;
-		[SerializeField] private List<Button> _buttons;
-
+		[SerializeField] private Animator _optionsAnim;
+		[SerializeField] private CanvasGroup _menuGroup;
+		[SerializeField] private CanvasGroup _optionsGroup;
 		private void Awake()
 		{
 			CurrentState = _initialState;
@@ -33,7 +30,11 @@ namespace FSM
 
 		public Animator textAnim => _textAnim;
 
-		public List<Button> buttons => _buttons;
+		public Animator optionsAnim => _optionsAnim;
+
+		public CanvasGroup menuGroup => _menuGroup;
+		
+		public CanvasGroup optionsGroup => _optionsGroup;
 
 		private void Update()
 		{
@@ -42,6 +43,8 @@ namespace FSM
 
 		public void ChangeState(BaseState newState)
 		{
+			CurrentState.OnExit(this);
+			
 			CurrentState = newState;
 
 			CurrentState.OnEnter(this);

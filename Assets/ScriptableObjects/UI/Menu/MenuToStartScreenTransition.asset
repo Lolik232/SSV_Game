@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9716599d0f784a048b791f042431b073, type: 3}
   m_Name: MenuToStartScreenTransition
   m_EditorClassIdentifier: 
-  Decision: {fileID: 11400000, guid: 13e925f46809e77459d1e032646498fe, type: 2}
+  Decision: {fileID: 11400000, guid: e22bd93673260df4282584f3b6a7987e, type: 2}
   TrueState: {fileID: 11400000, guid: 9c64f1c553e380b43a6dc842b15e296c, type: 2}
   FalseState: {fileID: 11400000, guid: e86c2e5f5bc2ab14e9236d4d4a0e05fe, type: 2}

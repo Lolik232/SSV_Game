@@ -16,3 +16,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 986130970ad337b4295d6d247c1ea999, type: 2}
   Transitions:
   - {fileID: 11400000, guid: 1feb914f0a301b84b83843f29d6cd8d7, type: 2}
+  - {fileID: 11400000, guid: 91ff0ade227a7ca489a6055fc0a7c909, type: 2}

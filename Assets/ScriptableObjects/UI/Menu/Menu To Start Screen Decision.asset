@@ -9,6 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf6fc9f4a2f706041b548f91375ecb2f, type: 3}
+  m_Script: {fileID: 11500000, guid: 1da76c37dbca0c049a21b4c82faa4322, type: 3}
   m_Name: Menu To Start Screen Decision
   m_EditorClassIdentifier: 

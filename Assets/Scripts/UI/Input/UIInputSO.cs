@@ -12,6 +12,7 @@ public class UIInputSO : ScriptableObject
 {
 	[NonSerialized] public bool enterPressed;
 	[NonSerialized] public bool escPressed;
+	[NonSerialized] public bool optionsPressed;
 
 	[SerializeField] private GameSceneSO locationToLoad;
 	[SerializeField] private LoadEventChannelSO loadLocationChannel;
@@ -48,5 +49,15 @@ public class UIInputSO : ScriptableObject
 	public void OnNewGameButton()
 	{
 		loadLocationChannel.RaiseEvent(locationToLoad, false, true);
+	}
+	
+	public void OnOptionsButton()
+	{
+		optionsPressed = true;
+	}
+
+	public void OnOptionsBackButton()
+	{
+		escPressed = true;
 	}
 }
