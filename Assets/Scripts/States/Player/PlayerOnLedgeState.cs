@@ -32,12 +32,16 @@ public class PlayerOnLedgeState : State
 
 		_ledgeClimb = GetComponent<PlayerLedgeClimbAbility>();
 		_crouch = GetComponent<PlayerCrouchAbility>();
+	}
 
+	private void Start()
+	{
 		bool GroundedCondition() => !_ledgeClimb.IsActive;
 
 		void GroundedAction()
 		{
-			//_crouch.OnEnter();
+			_crouch.Restore();
+			_crouch.OnEnter(_crouch.Crouch);
 		}
 
 		Transitions.Add(new(_grounded, GroundedCondition, GroundedAction));
@@ -54,7 +58,7 @@ public class PlayerOnLedgeState : State
 		_movable.SetVelocity(Vector2.zero);
 		_movable.SetGravity(0f);
 
-		_ledgeClimb.Unlock();
+		_ledgeClimb.Restore();
 		_ledgeClimb.OnEnter();
 	}
 
@@ -64,7 +68,7 @@ public class PlayerOnLedgeState : State
 		_movable.SetPosition(_endPosition);
 		_movable.ResetGravity();
 
-		_ledgeClimb.Block();
+		_ledgeClimb.SetEmpty();
 	}
 
 	private void OnDrawGizmos()

@@ -45,6 +45,11 @@ GameObject:
   - component: {fileID: 4159290662058916998}
   - component: {fileID: 7311644396788237840}
   - component: {fileID: 7883576283590339899}
+  - component: {fileID: 97826728177380232}
+  - component: {fileID: 4528472029670340703}
+  - component: {fileID: 7722846243474180352}
+  - component: {fileID: 5450313350551176671}
+  - component: {fileID: 1429368474823133692}
   - component: {fileID: 4839718794917041577}
   m_Layer: 6
   m_Name: Player
@@ -714,8 +719,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e8d8dc9f79f0f7458c84663bd885652, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: 
-  _deceleration: 1
+  _name: stay
+  _deceleration: 70
 --- !u!114 &3659420203593496856
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -729,7 +734,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: move
-  _acceleration: 2
+  _acceleration: 100
   _maxSpeed: 10
 --- !u!114 &5821533407110167460
 MonoBehaviour:
@@ -744,7 +749,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: move
-  _acceleration: 1.5
+  _acceleration: 30
   _maxSpeed: 4
 --- !u!114 &5663374532752945875
 MonoBehaviour:
@@ -758,6 +763,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05474aa6d9b85f748a9b79ae92f54298, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _amountOfUsages: 1
 --- !u!114 &3971873209930756927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -771,7 +777,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: wallGrab
-  _deceleration: 0
+  _deceleration: 70
 --- !u!114 &8506503740370134317
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -785,7 +791,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: wallClimb
-  _acceleration: 1
+  _acceleration: 60
   _maxSpeed: 6
 --- !u!114 &6771338866353387929
 MonoBehaviour:
@@ -800,8 +806,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: wallSlide
-  _acceleration: 1
-  _maxSpeed: 6
+  _acceleration: 20
+  _maxSpeed: 4
 --- !u!114 &4159290662058916998
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -814,6 +820,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28eec5f14b88eac4ba781c5c85454851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _amountOfUsages: 1
 --- !u!114 &7311644396788237840
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -840,6 +847,74 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecd3f07fda17d074f89dcc9d4a3dcf65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _amountOfUsages: 1
+--- !u!114 &97826728177380232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16557013547266712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a1e023b399ba804fb9c6c1ef8a7c928, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _name: stand
+--- !u!114 &4528472029670340703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16557013547266712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80e430766d5eecd4b8b81b69eadbd121, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _name: crouch
+--- !u!114 &7722846243474180352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16557013547266712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c27074410493c3d44b72d058a335d124, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _amountOfUsages: 1
+--- !u!114 &5450313350551176671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16557013547266712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c91be7a4e6aa2bc4f811537103b7288d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _name: jump
+  _coyoteTime: 0.1
+  _jumpForse: 20
+--- !u!114 &1429368474823133692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16557013547266712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 604f3a07e5525714ca7c351deba9fbc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _amountOfUsages: 2
 --- !u!114 &4839718794917041577
 MonoBehaviour:
   m_ObjectHideFlags: 0

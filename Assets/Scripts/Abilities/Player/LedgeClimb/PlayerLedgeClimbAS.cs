@@ -1,19 +1,11 @@
-using System.Collections;
-
 using UnityEngine;
 
 public class PlayerLedgeClimbAS : AbilityState<PlayerLedgeClimbAbility>
 {
 	[SerializeField] private float _duration;
 
-	private PlayerLedgeClimbAbility _ability;
-
-	protected override void Awake()
+	private void Start()
 	{
-		base.Awake();
-
-		_ability = GetComponent<PlayerLedgeClimbAbility>();
-
 		SetAnimationSpeed(_duration);
 	}
 
@@ -23,7 +15,7 @@ public class PlayerLedgeClimbAS : AbilityState<PlayerLedgeClimbAbility>
 
 		if (ActiveTime > _duration)
 		{
-			_ability.OnExit();
+			Ability.OnExit();
 		}
 	}
 }

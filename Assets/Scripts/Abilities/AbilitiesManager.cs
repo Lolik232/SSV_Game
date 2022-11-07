@@ -15,7 +15,7 @@ public class AbilitiesManager : MonoBehaviour
 	{
 		foreach (var ability in _abilities)
 		{
-			ability.TryEnter();
+			ability.OnEnter();
 			ability.OnUpdate();
 		}
 	}

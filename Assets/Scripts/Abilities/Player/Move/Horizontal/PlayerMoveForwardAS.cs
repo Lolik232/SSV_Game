@@ -8,21 +8,21 @@ public class PlayerMoveForwardAS : MoveAS<PlayerMoveHorizontalAbility>
 	private Movable _movable;
 	private Rotateable _rotateable;
 
-	private PlayerStayAS _stay;
-
 	protected override void Awake()
 	{
 		base.Awake();
 		_moveController = GetComponent<MoveController>();
 		_movable = GetComponent<Movable>();
 		_rotateable = GetComponent<Rotateable>();
+	}
 
-		_stay = GetComponent<PlayerStayAS>();
-
+	private void Start()
+	{
 		bool StayCondition() => _moveController.Move.x != _rotateable.FacingDirection;
 
-		Transitions.Add(new(_stay, StayCondition));
+		Transitions.Add(new(Ability.Stay, StayCondition));
 	}
+
 
 	protected override void ApplyEnterActions()
 	{
@@ -36,6 +36,4 @@ public class PlayerMoveForwardAS : MoveAS<PlayerMoveHorizontalAbility>
 		base.ApplyUpdateActions();
 		_movable.SetVelocityX(MoveSpeed);
 	}
-
-	public static implicit operator AbilityState<Ability>(PlayerMoveForwardAS aS) => aS;
 }

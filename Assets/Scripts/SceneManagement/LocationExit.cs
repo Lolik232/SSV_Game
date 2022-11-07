@@ -27,10 +27,5 @@ namespace SceneManagement
 				m_loadLocationChannel.RaiseEvent(m_locationToLoad, false, true);
 			}
 		}
-
-		// private void OnCollisionEnter2D(Collision2D col)
-		// {
-		//     throw new NotImplementedException();
-		// }
 	}
 }

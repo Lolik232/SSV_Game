@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Physical), typeof(Crouchable))]
+[RequireComponent(typeof(Physical))]
 
 public class CeilChecker : MonoBehaviour, ICeilChecker
 {
@@ -11,7 +11,6 @@ public class CeilChecker : MonoBehaviour, ICeilChecker
 	private CheckArea _ceilCheckArea;
 
 	private Physical _physical;
-	private Crouchable _crouchable;
 
 	public bool TouchingCeiling
 	{
@@ -22,7 +21,6 @@ public class CeilChecker : MonoBehaviour, ICeilChecker
 	private void Awake()
 	{
 		_physical = GetComponent<Physical>();
-		_crouchable = GetComponent<Crouchable>();
 	}
 
 	private void OnDrawGizmos()
@@ -39,10 +37,6 @@ public class CeilChecker : MonoBehaviour, ICeilChecker
 	public void DoChecks()
 	{
 		TouchingCeiling = Physics2D.OverlapArea(_ceilCheckArea.a, _ceilCheckArea.b, _whatIsTarget);
-		if (!_crouchable.IsStanding)
-		{
-			_crouchable.CanStand = !TouchingCeiling;
-		}
 	}
 
 	public void UpdateCheckersPosition()

@@ -5,6 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerInputReader))]
 [RequireComponent(typeof(PlayerMoveHorizontalAbility), typeof(PlayerMoveVerticalAbility))]
 [RequireComponent(typeof(PlayerLedgeClimbAbility))]
+[RequireComponent(typeof(PlayerCrouchAbility))]
+[RequireComponent(typeof(PlayerJumpAbility))]
 
 public class Player : MonoBehaviour
 {

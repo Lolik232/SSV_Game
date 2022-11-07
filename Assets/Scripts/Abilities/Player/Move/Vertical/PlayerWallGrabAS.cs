@@ -8,25 +8,22 @@ public class PlayerWallGrabAS : StayAS<PlayerMoveVerticalAbility>
 	private GrabController _grabController;
 	private Movable _movable;
 
-	private PlayerWallClimbAS _climb;
-	private PlayerWallSlideAS _slide;
-
 	protected override void Awake()
 	{
 		base.Awake();
 		_moveController = GetComponent<MoveController>();
 		_grabController = GetComponent<GrabController>();
 		_movable = GetComponent<Movable>();
+	}
 
-		_climb = GetComponent<PlayerWallClimbAS>();
-		_slide = GetComponent<PlayerWallSlideAS>();
+	private void Start()
+	{
+		bool ClimbCondition() => _grabController.Grab && _moveController.Move.y == 1 && _movable.Velocity.y == 0;
 
-		bool ClimbCondition() => _grabController.Grab && _moveController.Move.y == 1;
+		bool SlideCondition() => (_grabController.Grab && _moveController.Move.y == -1 || !_grabController.Grab) && _movable.Velocity.y == 0;
 
-		bool SlideCondition() => _grabController.Grab && _moveController.Move.y == -1 || !_grabController.Grab;
-
-		Transitions.Add(new(_climb, ClimbCondition));
-		Transitions.Add(new(_slide, SlideCondition));
+		Transitions.Add(new(Ability.Climb, ClimbCondition));
+		Transitions.Add(new(Ability.Slide, SlideCondition));
 	}
 
 	protected override void ApplyEnterActions()

@@ -1,22 +1,26 @@
-using Unity.VisualScripting;
-
 using UnityEngine;
 
-[RequireComponent(typeof(Movable), typeof(PlayerLedgeClimbAS))]
+[RequireComponent(typeof(PlayerLedgeClimbAS))]
 
 public class PlayerLedgeClimbAbility : Ability
 {
-	private Movable _movable;
+	public PlayerLedgeClimbAS Climb
+	{
+		get;
+		private set;
+	}
 
 	protected override void Awake()
 	{
 		base.Awake();
-		_movable = GetComponent<Movable>();
-
-		bool StayCondition() => !_movable.IsVelocityLocked && !_movable.IsPositionLocked;
-
-		enterConditions.Add(()=> StayCondition());
+		Default = Climb = GetComponent<PlayerLedgeClimbAS>();
 
 		GetAbilityStates<PlayerLedgeClimbAbility>();
+	}
+
+	private void Start()
+	{
+		enterConditions.Add(() => true);
+		enterConditions.Add(() => false);
 	}
 }

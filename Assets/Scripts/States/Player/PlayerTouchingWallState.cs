@@ -43,7 +43,10 @@ public class PlayerTouchingWallState : State
 		_rotateable = GetComponent<Rotateable>();
 
 		_moveVertical = GetComponent<PlayerMoveVerticalAbility>();
+	}
 
+	private void Start()
+	{
 		bool GroundedCondition() => _groundChecker.Grounded && (_moveController.Move.y == -1 || !_grabController.Grab);
 
 		bool InAirCondition() => !_wallChecker.TouchingWall || (!_grabController.Grab && _moveController.Move.x != _rotateable.FacingDirection);
@@ -62,7 +65,7 @@ public class PlayerTouchingWallState : State
 		_movable.SetPosition(holdPosition);
 		_movable.SetGravity(0f);
 
-		_moveVertical.Unlock();
+		_moveVertical.Restore();
 	}
 
 	protected override void ApplyExitActions()
@@ -70,7 +73,6 @@ public class PlayerTouchingWallState : State
 		base.ApplyExitActions();
 		_movable.ResetGravity();
 
-		_moveVertical.Block();
-		_moveVertical.OnExit();
+		_moveVertical.SetEmpty();
 	}
 }

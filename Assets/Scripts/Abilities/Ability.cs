@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 using UnityEngine;
 
@@ -8,6 +7,8 @@ using UnityEngine;
 
 public abstract class Ability : ComponentBase
 {
+	[SerializeField] private int _amountOfUsages;
+
 	private List<dynamic> _abilityStates = new();
 
 	protected List<Func<bool>> enterConditions = new();
@@ -19,6 +20,12 @@ public abstract class Ability : ComponentBase
 	{
 		get;
 		private set;
+	}
+
+	public dynamic Default
+	{
+		get;
+		protected set;
 	}
 
 	public bool IsLocked
@@ -37,13 +44,26 @@ public abstract class Ability : ComponentBase
 		}
 	}
 
+	public int AmountOfUsages
+	{
+		get;
+		private set;
+	}
+
+	protected bool IsContinuous
+	{
+		private get;
+		set;
+	}
+
 	protected virtual void Awake()
 	{
-		_blocker.AddBlock();
+		SetEmpty();
 	}
 
 	public void Block()
 	{
+		OnExit();
 		_blocker.AddBlock();
 	}
 
@@ -52,24 +72,20 @@ public abstract class Ability : ComponentBase
 		_blocker.RemoveBlock();
 	}
 
-	public void TryEnter()
-	{
-		if (IsActive || IsLocked || !CheckForEnter())
-		{
-			return;
-		}
-
-		ApplyEnterActions();
-	}
-
 	public override void OnEnter()
 	{
-		if (IsActive)
+		OnEnter(Default);
+	}
+
+	public void OnEnter<AbilityT>(AbilityState<AbilityT> aS) where AbilityT : Ability
+	{
+		if (IsActive || IsLocked || AmountOfUsages <= 0 || !CheckForEnter())
 		{
 			return;
 		}
 
 		ApplyEnterActions();
+		Initialize(aS);
 	}
 
 	public override void OnExit()
@@ -89,7 +105,7 @@ public abstract class Ability : ComponentBase
 			return;
 		}
 
-		if (CheckForExit())
+		if ((IsContinuous && AmountOfUsages <= 0) || CheckForExit())
 		{
 			OnExit();
 			return;
@@ -98,15 +114,14 @@ public abstract class Ability : ComponentBase
 		ApplyUpdateActions();
 	}
 
-	protected override void ApplyEnterActions()
-	{
-		base.ApplyEnterActions();
-		Initialize(_abilityStates.First());
-	}
-
 	protected override void ApplyExitActions()
 	{
 		base.ApplyExitActions();
+		if (!IsContinuous)
+		{
+			DecreaseAmountOfUsages();
+		}
+
 		Current.OnExit();
 	}
 
@@ -162,6 +177,24 @@ public abstract class Ability : ComponentBase
 		foreach (var state in states)
 		{
 			_abilityStates.Add(state);
+		}
+	}
+
+	public void Restore()
+	{
+		AmountOfUsages = _amountOfUsages;
+	}
+
+	public void SetEmpty()
+	{
+		AmountOfUsages = 0;
+	}
+
+	public void DecreaseAmountOfUsages()
+	{
+		if (AmountOfUsages > 0)
+		{
+			AmountOfUsages--;
 		}
 	}
 }

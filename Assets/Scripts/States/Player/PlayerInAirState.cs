@@ -1,3 +1,5 @@
+using System.Collections;
+
 using UnityEngine;
 
 [RequireComponent(typeof(GroundChecker), typeof(WallChecker), typeof(LedgeChecker))]
@@ -21,6 +23,8 @@ public sealed class PlayerInAirState : State
 	private Rotateable _rotateable;
 
 	private PlayerMoveHorizontalAbility _moveHorizontal;
+	private PlayerMoveVerticalAbility _moveVertical;
+	private PlayerJumpAbility _jump;
 
 	protected override void Awake()
 	{
@@ -40,7 +44,12 @@ public sealed class PlayerInAirState : State
 		_rotateable = GetComponent<Rotateable>();
 
 		_moveHorizontal = GetComponent<PlayerMoveHorizontalAbility>();
+		_moveVertical = GetComponent<PlayerMoveVerticalAbility>();
+		_jump = GetComponent<PlayerJumpAbility>();
+	}
 
+	private void Start()
+	{
 		bool GroundedCondition() => _groundChecker.Grounded && _movable.Velocity.y < 0.01f;
 
 		bool TouchingWallCondition() => _wallChecker.TouchingWall &&
@@ -51,12 +60,21 @@ public sealed class PlayerInAirState : State
 
 		void TouchingWallAction()
 		{
-			_moveHorizontal.OnExit();
+			_moveHorizontal.SetEmpty();
+			_moveVertical.Restore();
+			if (_grabController.Grab)
+			{
+				_moveVertical.OnEnter(_moveVertical.Grab);
+			}
+			else
+			{
+				_moveVertical.OnEnter(_moveVertical.Slide);
+			}
 		}
 
 		void OnLedgeAction()
 		{
-			_moveHorizontal.OnExit();
+			_moveHorizontal.SetEmpty();
 		}
 
 		Transitions.Add(new(_grounded, GroundedCondition));
@@ -67,12 +85,29 @@ public sealed class PlayerInAirState : State
 	protected override void ApplyEnterActions()
 	{
 		base.ApplyEnterActions();
-		_moveHorizontal.Unlock();
+		_moveHorizontal.Restore();
 	}
 
 	protected override void ApplyExitActions()
 	{
 		base.ApplyExitActions();
-		_moveHorizontal.Block();
+	}
+
+	public IEnumerator CheckJumpCoyoteTime()
+	{
+		while (IsActive && ActiveTime < _jump.Jump.CoyoteTime)
+		{
+			yield return null;
+
+			if (_jump.IsActive)
+			{
+				yield break;
+			}
+		}
+
+		if (IsActive)
+		{
+			_jump.SetEmpty();
+		}
 	}
 }

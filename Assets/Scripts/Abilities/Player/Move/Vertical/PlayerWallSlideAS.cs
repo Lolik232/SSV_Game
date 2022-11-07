@@ -10,8 +10,6 @@ public class PlayerWallSlideAS : MoveAS<PlayerMoveVerticalAbility>
 	private Rotateable _rotateable;
 	private Movable _movable;
 
-	private PlayerWallGrabAS _grab;
-
 	protected override void Awake()
 	{
 		base.Awake();
@@ -19,12 +17,13 @@ public class PlayerWallSlideAS : MoveAS<PlayerMoveVerticalAbility>
 		_grabController = GetComponent<GrabController>();
 		_rotateable = GetComponent<Rotateable>();
 		_movable = GetComponent<Movable>();
+	}
 
-		_grab = GetComponent<PlayerWallGrabAS>();
-
+	private void Start()
+	{
 		bool GrabCondition() => _grabController.Grab && _moveController.Move.y != -1;
 
-		Transitions.Add(new(_grab, GrabCondition));
+		Transitions.Add(new(Ability.Grab, GrabCondition));
 	}
 
 	protected override void ApplyEnterActions()
