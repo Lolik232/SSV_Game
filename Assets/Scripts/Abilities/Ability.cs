@@ -7,8 +7,6 @@ using UnityEngine;
 
 public abstract class Ability : ComponentBase
 {
-	[SerializeField] private int _amountOfUsages;
-
 	private List<dynamic> _abilityStates = new();
 
 	protected List<Func<bool>> enterConditions = new();
@@ -44,22 +42,16 @@ public abstract class Ability : ComponentBase
 		}
 	}
 
-	public int AmountOfUsages
+	public bool Permited
 	{
 		get;
-		private set;
-	}
-
-	protected bool IsContinuous
-	{
-		private get;
 		set;
 	}
 
 	protected virtual void Awake()
 	{
-		SetEmpty();
-	}
+
+	} 
 
 	public void Block()
 	{
@@ -79,7 +71,7 @@ public abstract class Ability : ComponentBase
 
 	public void OnEnter<AbilityT>(AbilityState<AbilityT> aS) where AbilityT : Ability
 	{
-		if (IsActive || IsLocked || AmountOfUsages <= 0 || !CheckForEnter())
+		if (IsActive || IsLocked || !Permited || !CheckForEnter())
 		{
 			return;
 		}
@@ -105,7 +97,7 @@ public abstract class Ability : ComponentBase
 			return;
 		}
 
-		if ((IsContinuous && AmountOfUsages <= 0) || CheckForExit())
+		if (IsLocked || !Permited || CheckForExit())
 		{
 			OnExit();
 			return;
@@ -117,11 +109,6 @@ public abstract class Ability : ComponentBase
 	protected override void ApplyExitActions()
 	{
 		base.ApplyExitActions();
-		if (!IsContinuous)
-		{
-			DecreaseAmountOfUsages();
-		}
-
 		Current.OnExit();
 	}
 
@@ -177,24 +164,6 @@ public abstract class Ability : ComponentBase
 		foreach (var state in states)
 		{
 			_abilityStates.Add(state);
-		}
-	}
-
-	public void Restore()
-	{
-		AmountOfUsages = _amountOfUsages;
-	}
-
-	public void SetEmpty()
-	{
-		AmountOfUsages = 0;
-	}
-
-	public void DecreaseAmountOfUsages()
-	{
-		if (AmountOfUsages > 0)
-		{
-			AmountOfUsages--;
 		}
 	}
 }

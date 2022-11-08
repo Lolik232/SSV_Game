@@ -1,13 +1,26 @@
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerJumpAS), typeof(Movable), typeof(JumpController))]
+[RequireComponent(typeof(PlayerJumpAS), typeof(CeilChecker))]
 
 public class PlayerJumpAbility : Ability
 {
-	private JumpController _jumpController;
-	private Movable _movable;
+	[SerializeField] private int _amountOfJumps;
 
-	public PlayerJumpAS Jump
+	private CeilChecker _ceilChecker;
+
+	public Player Player
+	{
+		get;
+		private set;
+	}
+
+	public PlayerJumpAS NormalJump
+	{
+		get;
+		private set;
+	}
+
+	public int AmountOfJumps
 	{
 		get;
 		private set;
@@ -16,23 +29,48 @@ public class PlayerJumpAbility : Ability
 	protected override void Awake()
 	{
 		base.Awake();
-		_jumpController = GetComponent<JumpController>();
-		_movable = GetComponent<Movable>();
+		Player = GetComponent<Player>();
 
-		Default = Jump = GetComponent<PlayerJumpAS>();
+		_ceilChecker = GetComponent<CeilChecker>();
+		
+		Default = NormalJump = GetComponent<PlayerJumpAS>();
 
 		GetAbilityStates<PlayerJumpAbility>();
 	}
 
 	private void Start()
 	{
-		enterConditions.Add(() => _jumpController.Jump && !_movable.IsVelocityLocked && !_movable.IsPositionLocked);
+		enterConditions.Add(() => Player.Input.Jump && !Player.IsVelocityLocked && !Player.IsPositionLocked && AmountOfJumps > 0 && !_ceilChecker.TouchingCeiling);
 		exitConditions.Add(() => false);
+	}
+
+	protected override void ApplyEnterActions()
+	{
+		base.ApplyEnterActions();
+		AmountOfJumps--;
 	}
 
 	protected override void ApplyExitActions()
 	{
 		base.ApplyExitActions();
-		_jumpController.Jump = false;
+		Player.Input.Jump = false;
+	}
+
+	public void Restore()
+	{
+		AmountOfJumps = _amountOfJumps;
+	}
+
+	public void SetEmpty()
+	{
+		AmountOfJumps = 0;
+	}
+
+	public void DecreaseJumps()
+	{
+		if (AmountOfJumps > 0)
+		{
+			AmountOfJumps--;
+		}
 	}
 }

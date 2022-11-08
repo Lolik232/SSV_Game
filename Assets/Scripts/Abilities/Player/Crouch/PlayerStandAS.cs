@@ -1,22 +1,10 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Crouchable), typeof(MoveController))]
-
 public class PlayerStandAS : AbilityState<PlayerCrouchAbility>
 {
-	private Crouchable _crouchable;
-	private MoveController _moveController;
-
-	protected override void Awake()
-	{
-		base.Awake();
-		_crouchable = GetComponent<Crouchable>();
-		_moveController = GetComponent<MoveController>();
-	}
-
 	private void Start()
 	{
-		bool CrouchCondition() => _moveController.Move.y == -1;
+		bool CrouchCondition() => Ability.Player.Input.Move.y == -1;
 
 		Transitions.Add(new(Ability.Crouch, CrouchCondition));
 	}
@@ -24,6 +12,6 @@ public class PlayerStandAS : AbilityState<PlayerCrouchAbility>
 	protected override void ApplyEnterActions()
 	{
 		base.ApplyEnterActions();
-		_crouchable.Stand();
+		Ability.Player.Stand();
 	}
 }

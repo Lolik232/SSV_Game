@@ -6,10 +6,11 @@ using UnityEngine;
 
 public class PlayerMoveVerticalAbility : Ability
 {
-	private Movable _movable;
-	private Rotateable _rotateable;
-	private GrabController _grabController;
-	private MoveController _moveController;
+	public Player Player
+	{
+		get;
+		private set;
+	}
 
 	public PlayerWallSlideAS Slide
 	{
@@ -30,25 +31,19 @@ public class PlayerMoveVerticalAbility : Ability
 	protected override void Awake()
 	{
 		base.Awake();
-		_movable = GetComponent<Movable>();
-		_rotateable = GetComponent<Rotateable>();
-		_grabController = GetComponent<GrabController>();
-		_moveController = GetComponent<MoveController>();
+		Player = GetComponent<Player>();
 
 		Default = Grab = GetComponent<PlayerWallGrabAS>();
 		Climb = GetComponent<PlayerWallClimbAS>();
 		Slide = GetComponent<PlayerWallSlideAS>();
 
-
 		GetAbilityStates<PlayerMoveVerticalAbility>();
-
-		IsContinuous = true;
 	}
 
 	private void Start()
 	{
-		bool StayCondition() => !_movable.IsVelocityLocked && !_movable.IsPositionLocked &&
-															(_grabController.Grab || _moveController.Move.x == _rotateable.FacingDirection);
+		bool StayCondition() => !Player.IsVelocityLocked && !Player.IsPositionLocked &&
+															(Player.Input.Grab || Player.Input.Move.x == Player.FacingDirection);
 
 		enterConditions.Add(() => StayCondition());
 		exitConditions.Add(() => !StayCondition());

@@ -1,24 +1,20 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Crouchable), typeof(MoveController), typeof(CeilChecker))]
+[RequireComponent(typeof(CeilChecker))]
 
 public class PlayerCrouchAS : AbilityState<PlayerCrouchAbility>
 {
-	private Crouchable _crouchable;
 	private CeilChecker _ceilChecker;
-	private MoveController _moveController;
 
 	protected override void Awake()
 	{
 		base.Awake();
-		_crouchable = GetComponent<Crouchable>();
-		_ceilChecker = GetComponent<CeilChecker>();
-		_moveController = GetComponent<MoveController>();
+		Checkers.Add(_ceilChecker = GetComponent<CeilChecker>());
 	}
 
 	private void Start()
 	{
-		bool StandCondition() => !_ceilChecker.TouchingCeiling && _moveController.Move.y != -1;
+		bool StandCondition() => !_ceilChecker.TouchingCeiling && Ability.Player.Input.Move.y != -1;
 
 		Transitions.Add(new(Ability.Stand, StandCondition));
 	}
@@ -26,6 +22,6 @@ public class PlayerCrouchAS : AbilityState<PlayerCrouchAbility>
 	protected override void ApplyEnterActions()
 	{
 		base.ApplyEnterActions();
-		_crouchable.Crouch();
+		Ability.Player.Crouch();
 	}
 }

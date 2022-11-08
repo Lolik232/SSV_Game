@@ -3,103 +3,59 @@ using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(GroundChecker), typeof(WallChecker), typeof(LedgeChecker))]
-[RequireComponent(typeof(GrabController), typeof(MoveController), typeof(Movable))]
-[RequireComponent(typeof(Rotateable))]
 
 public sealed class PlayerInAirState : State
 {
-	private PlayerGroundedState _grounded;
-	private PlayerTouchingWallState _touchingWall;
-	private PlayerOnLedgeState _onLedge;
+	private Player _player;
 
 	private GroundChecker _groundChecker;
 	private WallChecker _wallChecker;
 	private LedgeChecker _ledgeChecker;
 
-	private GrabController _grabController;
-	private MoveController _moveController;
-
-	private Movable _movable;
-	private Rotateable _rotateable;
-
-	private PlayerMoveHorizontalAbility _moveHorizontal;
-	private PlayerMoveVerticalAbility _moveVertical;
-	private PlayerJumpAbility _jump;
-
 	protected override void Awake()
 	{
 		base.Awake();
-		_grounded = GetComponent<PlayerGroundedState>();
-		_touchingWall = GetComponent<PlayerTouchingWallState>();
-		_onLedge = GetComponent<PlayerOnLedgeState>();
+		_player = GetComponent<Player>();
 
-		_groundChecker = GetComponent<GroundChecker>();
-		_wallChecker = GetComponent<WallChecker>();
-		_ledgeChecker = GetComponent<LedgeChecker>();
-
-		_grabController = GetComponent<GrabController>();
-		_moveController = GetComponent<MoveController>();
-
-		_movable = GetComponent<Movable>();
-		_rotateable = GetComponent<Rotateable>();
-
-		_moveHorizontal = GetComponent<PlayerMoveHorizontalAbility>();
-		_moveVertical = GetComponent<PlayerMoveVerticalAbility>();
-		_jump = GetComponent<PlayerJumpAbility>();
+		Checkers.Add(_groundChecker = GetComponent<GroundChecker>());
+		Checkers.Add(_wallChecker = GetComponent<WallChecker>());
+		Checkers.Add(_ledgeChecker = GetComponent<LedgeChecker>());
 	}
 
 	private void Start()
 	{
-		bool GroundedCondition() => _groundChecker.Grounded && _movable.Velocity.y < 0.01f;
+		bool GroundedCondition() => _groundChecker.Grounded && _player.Velocity.y < 0.01f;
 
 		bool TouchingWallCondition() => _wallChecker.TouchingWall &&
 																		 _ledgeChecker.TouchingLegde &&
-																		 (_grabController.Grab || _moveController.Move.x == _rotateable.FacingDirection);
+																		 (_player.Input.Grab || _player.Input.Move.x == _player.FacingDirection);
 
-		bool OnLedgeCondition() => _wallChecker.TouchingWall && !_ledgeChecker.TouchingLegde;
+		bool OnLedgeCondition() => _wallChecker.TouchingWall && !_ledgeChecker.TouchingLegde && _player.Input.Move.y != -1;
 
-		void TouchingWallAction()
-		{
-			_moveHorizontal.SetEmpty();
-			_moveVertical.Restore();
-			if (_grabController.Grab)
-			{
-				_moveVertical.OnEnter(_moveVertical.Grab);
-			}
-			else
-			{
-				_moveVertical.OnEnter(_moveVertical.Slide);
-			}
-		}
-
-		void OnLedgeAction()
-		{
-			_moveHorizontal.SetEmpty();
-		}
-
-		Transitions.Add(new(_grounded, GroundedCondition));
-		Transitions.Add(new(_touchingWall, TouchingWallCondition, TouchingWallAction));
-		Transitions.Add(new(_onLedge, OnLedgeCondition, OnLedgeAction));
+		Transitions.Add(new(_player.GroundedState, GroundedCondition));
+		Transitions.Add(new(_player.TouchingWallState, TouchingWallCondition));
+		Transitions.Add(new(_player.OnLedgeState, OnLedgeCondition));
 	}
 
 	protected override void ApplyEnterActions()
 	{
 		base.ApplyEnterActions();
-		_moveHorizontal.Restore();
-	}
-
-	protected override void ApplyExitActions()
-	{
-		base.ApplyExitActions();
+		_player.MoveHorizontalAbility.Permited = true;
+		_player.MoveVerticalAbility.Permited = false;
+		_player.LedgeClimbAbility.Permited = false;
+		_player.CrouchAbility.Permited = false;
+		_player.JumpAbility.Permited = true;
 	}
 
 	public IEnumerator CheckJumpCoyoteTime()
 	{
-		while (IsActive && ActiveTime < _jump.Jump.CoyoteTime)
+		yield return new WaitUntil(() => IsActive);
+
+		while (IsActive && ActiveTime < _player.JumpAbility.NormalJump.CoyoteTime)
 		{
 			yield return null;
 
-			if (_jump.IsActive)
+			if (_player.JumpAbility.IsActive)
 			{
 				yield break;
 			}
@@ -107,7 +63,7 @@ public sealed class PlayerInAirState : State
 
 		if (IsActive)
 		{
-			_jump.SetEmpty();
+			_player.JumpAbility.DecreaseJumps();
 		}
 	}
 }

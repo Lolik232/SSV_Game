@@ -1,11 +1,14 @@
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerStayAS), typeof(PlayerMoveForwardAS), typeof(PlayerMoveBackwardAS))]
-[RequireComponent(typeof(Movable))]
 
 public class PlayerMoveHorizontalAbility : Ability
 {
-	private Movable _movable;
+	public Player Player
+	{
+		get;
+		private set;
+	}
 
 	public PlayerMoveForwardAS Forward
 	{
@@ -26,20 +29,18 @@ public class PlayerMoveHorizontalAbility : Ability
 	protected override void Awake()
 	{
 		base.Awake();
-		_movable = GetComponent<Movable>();
+		Player = GetComponent<Player>();
 
 		Forward = GetComponent<PlayerMoveForwardAS>();
 		Backward = GetComponent<PlayerMoveBackwardAS>();
 		Default = Stay = GetComponent<PlayerStayAS>();
 
 		GetAbilityStates<PlayerMoveHorizontalAbility>();
-
-		IsContinuous = true;
 	}
 
 	private void Start()
 	{
-		bool StayCondition() => !_movable.IsVelocityLocked && !_movable.IsPositionLocked;
+		bool StayCondition() => !Player.IsVelocityLocked && !Player.IsPositionLocked;
 
 		enterConditions.Add(() => StayCondition());
 		exitConditions.Add(() => !StayCondition());

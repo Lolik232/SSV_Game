@@ -31,4 +31,6 @@ public interface IPhysical
 	{
 		get;
 	}
+
+	public void Push(float force, Vector2 angle);
 }

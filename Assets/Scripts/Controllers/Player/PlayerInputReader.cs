@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(GrabController), typeof(AttackController), typeof(AbilityController))]
 [RequireComponent(typeof(PlayerInput))]
 
-public class PlayerInputReader : MonoBehaviour
+public class PlayerInputReader : MonoBehaviour, IMoveController, IJumpController, IGrabController, IAttackController, IDashContorller, IAbilityControlller 
 {
 	[SerializeField] private float _jumpInputHoldTime;
 	[SerializeField] private float _dashInputPressTime;
@@ -14,6 +14,10 @@ public class PlayerInputReader : MonoBehaviour
 
 	private Camera _camera;
 	private PlayerInput _playerInput;
+
+	private float _jumpInputStartTime;
+	private float _dashInputStartTime;
+
 	private MoveController _moveController;
 	private JumpController _jumpController;
 	private DashController _dashController;
@@ -21,8 +25,45 @@ public class PlayerInputReader : MonoBehaviour
 	private AttackController _attackController;
 	private AbilityController _abilityController;
 
-	private float _jumpInputStartTime;
-	private float _dashInputStartTime;
+	public Vector2Int Move
+	{
+		get => _moveController.Move;
+		set => _moveController.Move = value;
+	}
+
+	public Vector2 LookAt
+	{
+		get => _moveController.LookAt;
+		set => _moveController.LookAt = value;
+	} 
+
+	public bool Jump
+	{
+		get => _jumpController.Jump;
+		set => _jumpController.Jump = value;
+	}
+
+	public bool Grab
+	{
+		get => _grabController.Grab;
+		set => _grabController.Grab = value;
+	}
+
+	public bool Dash
+	{
+		get => _dashController.Dash;
+		set => _dashController.Dash = value;
+	}
+	public bool Attack
+	{
+		get => _attackController.Attack;
+		set => _attackController.Attack = value;
+	}
+	public bool Ability
+	{
+		get => _abilityController.Ability;
+		set => _abilityController.Ability = value;
+	}
 
 	private void Awake()
 	{

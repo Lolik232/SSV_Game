@@ -1,48 +1,29 @@
-using UnityEngine;
-
-[RequireComponent(typeof(MoveController), typeof(GrabController), typeof(Rotateable))]
-[RequireComponent(typeof(Movable))]
-
 public class PlayerWallSlideAS : MoveAS<PlayerMoveVerticalAbility>
 {
-	private MoveController _moveController;
-	private GrabController _grabController;
-	private Rotateable _rotateable;
-	private Movable _movable;
-
-	protected override void Awake()
-	{
-		base.Awake();
-		_moveController = GetComponent<MoveController>();
-		_grabController = GetComponent<GrabController>();
-		_rotateable = GetComponent<Rotateable>();
-		_movable = GetComponent<Movable>();
-	}
-
 	private void Start()
 	{
-		bool GrabCondition() => _grabController.Grab && _moveController.Move.y != -1;
+		bool GrabCondition() => Ability.Player.Input.Grab && Ability.Player.Input.Move.y != -1;
 
 		Transitions.Add(new(Ability.Grab, GrabCondition));
 	}
 
 	protected override void ApplyEnterActions()
 	{
-		StartSpeed = _movable.Velocity.y;
+		StartSpeed = Ability.Player.Velocity.y;
 		MoveDirection = -1;
 		base.ApplyEnterActions();
-		_rotateable.RotateBodyIntoDirection(-_rotateable.FacingDirection);
+		Ability.Player.RotateBodyIntoDirection(-Ability.Player.FacingDirection);
 	}
 
 	protected override void ApplyUpdateActions()
 	{
 		base.ApplyUpdateActions();
-		_movable.SetVelocityY(MoveSpeed);
+		Ability.Player.SetVelocityY(MoveSpeed);
 	}
 
 	protected override void ApplyExitActions()
 	{
 		base.ApplyExitActions();
-		_rotateable.RotateBodyIntoDirection(_rotateable.FacingDirection);
+		Ability.Player.RotateBodyIntoDirection(Ability.Player.FacingDirection);
 	}
 }

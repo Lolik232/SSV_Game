@@ -1,78 +1,55 @@
 using UnityEngine;
 
 [RequireComponent(typeof(GroundChecker), typeof(WallChecker), typeof(LedgeChecker))]
-[RequireComponent(typeof(GrabController), typeof(MoveController), typeof(Physical))]
-[RequireComponent(typeof(Movable))]
 
 public class PlayerTouchingWallState : State
 {
-	private PlayerGroundedState _grounded;
-	private PlayerInAirState _inAir;
-	private PlayerOnLedgeState _onLedge;
+	private  Player _player;
 
 	private GroundChecker _groundChecker;
 	private WallChecker _wallChecker;
 	private LedgeChecker _ledgeChecker;
 
-	private GrabController _grabController;
-	private MoveController _moveController;
-
-	private Physical _physical;
-	private Movable _movable;
-	private Rotateable _rotateable;
-
-	private PlayerMoveVerticalAbility _moveVertical;
-
 	protected override void Awake()
 	{
 		base.Awake();
-		_grounded = GetComponent<PlayerGroundedState>();
-		_inAir = GetComponent<PlayerInAirState>();
-		_onLedge = GetComponent<PlayerOnLedgeState>();
+		_player = GetComponent<Player>();
 
-		_groundChecker = GetComponent<GroundChecker>();
-		_wallChecker = GetComponent<WallChecker>();
-		_ledgeChecker = GetComponent<LedgeChecker>();
-
-		_grabController = GetComponent<GrabController>();
-		_moveController = GetComponent<MoveController>();
-
-		_physical = GetComponent<Physical>();
-		_movable = GetComponent<Movable>();
-		_rotateable = GetComponent<Rotateable>();
-		_rotateable = GetComponent<Rotateable>();
-
-		_moveVertical = GetComponent<PlayerMoveVerticalAbility>();
+		Checkers.Add(_groundChecker = GetComponent<GroundChecker>());
+		Checkers.Add(_wallChecker = GetComponent<WallChecker>());
+		Checkers.Add(_ledgeChecker = GetComponent<LedgeChecker>());
 	}
 
 	private void Start()
 	{
-		bool GroundedCondition() => _groundChecker.Grounded && (_moveController.Move.y == -1 || !_grabController.Grab);
+		bool GroundedCondition() => _groundChecker.Grounded && (_player.Input.Move.y == -1 || !_player.Input.Grab);
 
-		bool InAirCondition() => !_wallChecker.TouchingWall || (!_grabController.Grab && _moveController.Move.x != _rotateable.FacingDirection);
+		bool InAirCondition() => !_wallChecker.TouchingWall || (!_player.Input.Grab && _player.Input.Move.x != _player.FacingDirection);
 
 		bool OnLedgeCondition() => _wallChecker.TouchingWall && !_ledgeChecker.TouchingLegde;
 
-		Transitions.Add(new(_grounded, GroundedCondition));
-		Transitions.Add(new(_inAir, InAirCondition));
-		Transitions.Add(new(_onLedge, OnLedgeCondition));
+		Transitions.Add(new(_player.GroundedState, GroundedCondition));
+		Transitions.Add(new(_player.InAirState, InAirCondition));
+		Transitions.Add(new(_player.OnLedgeState, OnLedgeCondition));
 	}
 
 	protected override void ApplyEnterActions()
 	{
 		base.ApplyEnterActions();
-		var holdPosition = new Vector2(_wallChecker.WallPosition.x + _wallChecker.WallDirection * (_physical.Size.x / 2 + IChecker.CHECK_OFFSET), _physical.Position.y);
-		_movable.SetPosition(holdPosition);
-		_movable.SetGravity(0f);
+		var holdPosition = new Vector2(_wallChecker.WallPosition.x + _wallChecker.WallDirection * (_player.Size.x / 2 + IChecker.CHECK_OFFSET), _player.Position.y);
+		_player.SetPosition(holdPosition);
+		_player.SetGravity(0f);
 
-		_moveVertical.Restore();
+		_player.MoveHorizontalAbility.Permited = false;
+		_player.MoveVerticalAbility.Permited = true;
+		_player.LedgeClimbAbility.Permited = false;
+		_player.CrouchAbility.Permited = false;
+		_player.JumpAbility.Permited = false;
 	}
 
 	protected override void ApplyExitActions()
 	{
 		base.ApplyExitActions();
-		_movable.ResetGravity();
-
-		_moveVertical.SetEmpty();
+		_player.ResetGravity();
 	}
 }

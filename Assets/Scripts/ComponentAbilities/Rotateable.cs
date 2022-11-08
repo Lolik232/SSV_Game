@@ -2,16 +2,15 @@ using UnityEngine;
 
 public class Rotateable : MonoBehaviour, IRotateable
 {
-	private int _facingDirection;
-	private int _bodyDirection;
-
 	public int FacingDirection
 	{
-		get => _facingDirection;
+		get;
+		private set;
 	}
 	public int BodyDirection
 	{
-		get => _bodyDirection;
+		get;
+		private set;
 	}
 
 	private void Start()
@@ -23,7 +22,7 @@ public class Rotateable : MonoBehaviour, IRotateable
 	{
 		if (direction != 0)
 		{
-			_bodyDirection = direction;
+			BodyDirection = direction;
 			switch (direction)
 			{
 				case 1:
@@ -42,7 +41,7 @@ public class Rotateable : MonoBehaviour, IRotateable
 	{
 		if (direction != 0)
 		{
-			_facingDirection = direction;
+			FacingDirection = direction;
 			RotateBodyIntoDirection(direction);
 		}
 	}

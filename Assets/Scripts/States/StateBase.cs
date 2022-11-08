@@ -7,7 +7,11 @@ public abstract class StateBase : ComponentBase
 {
 	[SerializeField] private string _name;
 
-	private List<IChecker> _checkers = new();
+	protected List<IChecker> Checkers
+	{
+		get;
+		private set;
+	} = new();
 
 	protected Animator Anim
 	{
@@ -22,7 +26,6 @@ public abstract class StateBase : ComponentBase
 	protected virtual void Awake()
 	{
 		Anim = GetComponent<Animator>();
-		GetComponents(_checkers);
 	}
 
 	public override void OnEnter()
@@ -34,7 +37,7 @@ public abstract class StateBase : ComponentBase
 
 		ApplyEnterActions();
 
-		foreach (var checker in _checkers)
+		foreach (var checker in Checkers)
 		{
 			checker.UpdateCheckersPosition();
 			checker.DoChecks();
@@ -74,6 +77,7 @@ public abstract class StateBase : ComponentBase
 		if (Name != string.Empty)
 		{
 			Anim.SetBool(Name, true);
+			Debug.Log(Name);
 		}
 	}
 

@@ -280,7 +280,7 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 3
   m_Material: {fileID: 6200000, guid: 6601d3cd1fec93444960aabf6f4a1873, type: 2}
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
@@ -763,7 +763,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05474aa6d9b85f748a9b79ae92f54298, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _amountOfUsages: 1
 --- !u!114 &3971873209930756927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -777,7 +776,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: wallGrab
-  _deceleration: 70
+  _deceleration: 150
 --- !u!114 &8506503740370134317
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -820,7 +819,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28eec5f14b88eac4ba781c5c85454851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _amountOfUsages: 1
 --- !u!114 &7311644396788237840
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -847,7 +845,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecd3f07fda17d074f89dcc9d4a3dcf65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _amountOfUsages: 1
 --- !u!114 &97826728177380232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -886,7 +883,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c27074410493c3d44b72d058a335d124, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _amountOfUsages: 1
 --- !u!114 &5450313350551176671
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -901,7 +897,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: jump
   _coyoteTime: 0.1
-  _jumpForse: 20
+  _jumpForse: 15
 --- !u!114 &1429368474823133692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -914,7 +910,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 604f3a07e5525714ca7c351deba9fbc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _amountOfUsages: 2
+  _amountOfJumps: 2
 --- !u!114 &4839718794917041577
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -2,7 +2,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
 
-public class Crouchable : MonoBehaviour
+public class Crouchable : MonoBehaviour, ICrouchable
 {
 	[SerializeField] private Vector2 _staySize;
 	[SerializeField] private Vector2 _stayOffset;
@@ -59,10 +59,5 @@ public class Crouchable : MonoBehaviour
 	private void Awake()
 	{
 		_collider = GetComponent<BoxCollider2D>();
-	}
-
-	private void Start()
-	{
-		Stand();
 	}
 }

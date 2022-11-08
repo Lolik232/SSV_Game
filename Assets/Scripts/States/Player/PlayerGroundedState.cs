@@ -3,29 +3,18 @@ using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(CeilChecker), typeof(GroundChecker), typeof(WallChecker))]
-[RequireComponent(typeof(LedgeChecker), typeof(GrabController), typeof(MoveController))]
-[RequireComponent(typeof(Rotateable), typeof(Crouchable))]
+[RequireComponent(typeof(LedgeChecker))]
 
 public sealed class PlayerGroundedState : State
 {
 	[SerializeField] private float _waitForLedgeClimbTime;
 
-	private PlayerInAirState _inAir;
-	private PlayerTouchingWallState _touchingWall;
-	private PlayerOnLedgeState _onLedge;
+	private Player _player;
 
 	private GroundChecker _groundChecker;
 	private WallChecker _wallChecker;
 	private LedgeChecker _ledgeChecker;
-
-	private GrabController _grabController;
-	private MoveController _moveController;
-	private Rotateable _rotateable;
-	private Crouchable _crouchable;
-
-	private PlayerMoveHorizontalAbility _moveHorizontal;
-	private PlayerJumpAbility _jump;
-	private PlayerCrouchAbility _crouch;
+	private CeilChecker _ceilChecker;
 
 	private bool _tryingLedgeClimb;
 	private bool _ledgeClimbTimeOut;
@@ -40,22 +29,12 @@ public sealed class PlayerGroundedState : State
 	protected override void Awake()
 	{
 		base.Awake();
-		_inAir = GetComponent<PlayerInAirState>();
-		_touchingWall = GetComponent<PlayerTouchingWallState>();
-		_onLedge = GetComponent<PlayerOnLedgeState>();
+		_player = GetComponent<Player>();
 
-		_groundChecker = GetComponent<GroundChecker>();
-		_wallChecker = GetComponent<WallChecker>();
-		_ledgeChecker = GetComponent<LedgeChecker>();
-
-		_grabController = GetComponent<GrabController>();
-		_moveController = GetComponent<MoveController>();
-		_rotateable = GetComponent<Rotateable>();
-		_crouchable = GetComponent<Crouchable>();
-
-		_moveHorizontal = GetComponent<PlayerMoveHorizontalAbility>();
-		_crouch = GetComponent<PlayerCrouchAbility>();
-		_jump = GetComponent<PlayerJumpAbility>();
+		Checkers.Add(_groundChecker = GetComponent<GroundChecker>());
+		Checkers.Add(_wallChecker = GetComponent<WallChecker>());
+		Checkers.Add(_ledgeChecker = GetComponent<LedgeChecker>());
+		Checkers.Add(_ceilChecker = GetComponent<CeilChecker>());
 	}
 
 	private void Start()
@@ -63,53 +42,39 @@ public sealed class PlayerGroundedState : State
 		bool InAirCondition() => !_groundChecker.Grounded;
 
 		bool TouchingWallCondition() => _wallChecker.TouchingWall &&
-																		 _ledgeChecker.TouchingLegde &&
-																		 _crouchable.IsStanding &&
-																		 _grabController.Grab &&
-																		 _moveController.Move.y != -1;
+																		_ledgeChecker.TouchingLegde &&
+																		_player.IsStanding &&
+																		_player.Input.Grab &&
+																		_player.Input.Move.y != -1;
 
 		bool OnLedgeCondition() => _ledgeClimbTimeOut;
 
 		void InAirAction()
 		{
-			if (!_jump.IsActive)
+			if (!_player.JumpAbility.IsActive)
 			{
-				StartCoroutine(_inAir.CheckJumpCoyoteTime());
+				StartCoroutine(_player.InAirState.CheckJumpCoyoteTime());
 			}
 		}
 
-		void TouchingWallAction()
-		{
-			_jump.SetEmpty();
-			_moveHorizontal.SetEmpty();
-		}
-
-		void OnLedgeAction()
-		{
-			_jump.SetEmpty();
-			_moveHorizontal.SetEmpty();
-		}
-
-		Transitions.Add(new(_inAir, InAirCondition, InAirAction));
-		Transitions.Add(new(_touchingWall, TouchingWallCondition, TouchingWallAction));
-		Transitions.Add(new(_onLedge, OnLedgeCondition, OnLedgeAction));
+		Transitions.Add(new(_player.InAirState, InAirCondition, InAirAction));
+		Transitions.Add(new(_player.TouchingWallState, TouchingWallCondition));
+		Transitions.Add(new(_player.OnLedgeState, OnLedgeCondition));
 	}
 
 	protected override void ApplyEnterActions()
 	{
 		base.ApplyEnterActions();
-		_jump.Restore();
-		_moveHorizontal.Restore();
-		_crouch.Restore();
+		_player.MoveHorizontalAbility.Permited = true;
+		_player.MoveVerticalAbility.Permited = false;
+		_player.LedgeClimbAbility.Permited = false;
+		_player.CrouchAbility.Permited = true;
+		_player.JumpAbility.Permited = true;
+
+		_player.JumpAbility.Restore();
 
 		_tryingLedgeClimb = false;
 		_ledgeClimbTimeOut = false;
-	}
-
-	protected override void ApplyExitActions()
-	{
-		base.ApplyExitActions();
-		_crouch.SetEmpty();
 	}
 
 	protected override void ApplyUpdateActions()
@@ -126,8 +91,8 @@ public sealed class PlayerGroundedState : State
 	{
 		return _wallChecker.TouchingWall &&
 					 !_ledgeChecker.TouchingLegde &&
-					 (_moveController.Move.x == _rotateable.FacingDirection ||
-						_moveController.Move.y == 1);
+					 (_player.Input.Move.x == _player.FacingDirection ||
+						_player.Input.Move.y == 1);
 	}
 
 	private IEnumerator CheckOnLedgeCondition()

@@ -1,10 +1,14 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Crouchable), typeof(PlayerCrouchAS), typeof(PlayerStandAS))]
+[RequireComponent(typeof(PlayerCrouchAS), typeof(PlayerStandAS))]
 
 public class PlayerCrouchAbility : Ability
 {
-	private Crouchable _crouchable;
+	public Player Player
+	{
+		get;
+		private set;
+	}
 
 	public PlayerCrouchAS Crouch
 	{
@@ -21,14 +25,12 @@ public class PlayerCrouchAbility : Ability
 	protected override void Awake()
 	{
 		base.Awake();
-		_crouchable = GetComponent<Crouchable>();
+		Player = GetComponent<Player>();
 
-		Crouch = GetComponent<PlayerCrouchAS>();
-		Default = Stand = GetComponent<PlayerStandAS>();
+		Default = Crouch = GetComponent<PlayerCrouchAS>();
+		Stand = GetComponent<PlayerStandAS>();
 
 		GetAbilityStates<PlayerCrouchAbility>();
-
-		IsContinuous = true;
 	}
 
 	private void Start()
@@ -40,6 +42,6 @@ public class PlayerCrouchAbility : Ability
 	protected override void ApplyExitActions()
 	{
 		base.ApplyExitActions();
-		_crouchable.Stand();
+		Player.Stand();
 	}
 }

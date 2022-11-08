@@ -6,9 +6,6 @@ public class StayAS<AbilityT> : AbilityState<AbilityT> where AbilityT : Ability
 {
 	[SerializeField] private float _deceleration;
 
-	private float _decelerationTime;
-	private float _decelerationStartTime;
-
 	protected float MoveSpeed
 	{
 		get;
@@ -24,10 +21,10 @@ public class StayAS<AbilityT> : AbilityState<AbilityT> where AbilityT : Ability
 		private get;
 		set;
 	}
-	private float DecelerationTime
+	private float Deceleration
 	{
-		get => Time.time - _decelerationStartTime;
-		set => _decelerationStartTime = value;
+		get;
+		set;
 	}
 
 	protected override void ApplyEnterActions()
@@ -35,24 +32,23 @@ public class StayAS<AbilityT> : AbilityState<AbilityT> where AbilityT : Ability
 		base.ApplyEnterActions();
 		EndSpeed = 0f;
 		MoveSpeed = StartSpeed;
-		DecelerationTime = Time.time;
-		if (_deceleration != 0f)
-		{
-			_decelerationTime = Mathf.Abs((EndSpeed - StartSpeed) / _deceleration);
-			StartCoroutine(Decelerate());
-		}
-		else
-		{
-			MoveSpeed = EndSpeed;
-		}
+		Deceleration = Mathf.Sign(StartSpeed) * Mathf.Abs(_deceleration);
+
+		StartCoroutine(Decelerate());
 	}
 
 	private IEnumerator Decelerate()
 	{
+		if (Deceleration == 0f)
+		{
+			MoveSpeed = EndSpeed;
+			yield break;
+		}
+
 		while (IsActive && MoveSpeed != EndSpeed)
 		{
 			yield return null;
-			MoveSpeed = Mathf.Lerp(StartSpeed, EndSpeed, DecelerationTime / _decelerationTime);
+			MoveSpeed = Mathf.Lerp(StartSpeed, EndSpeed, (MoveSpeed - Deceleration * Time.deltaTime - StartSpeed) / (EndSpeed - StartSpeed));
 		}
 	}
 }

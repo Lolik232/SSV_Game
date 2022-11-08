@@ -41,6 +41,11 @@ public class Physical : MonoBehaviour, IPhysical
 		_rb = GetComponent<Rigidbody2D>();
 	}
 
+	public void Push(float force, Vector2 angle)
+	{
+		_rb.AddForce(force * angle.normalized);
+	}
+
 	private void OnDrawGizmos()
 	{
 		Gizmos.color = _color.Color;

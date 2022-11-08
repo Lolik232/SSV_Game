@@ -7,9 +7,6 @@ public abstract class MoveAS<AbilityT> : AbilityState<AbilityT> where AbilityT :
 	[SerializeField] private float _acceleration;
 	[SerializeField] private float _maxSpeed;
 
-	private float _accelerationTime;
-	private float _accelerationStartTime;
-
 	protected float MoveSpeed
 	{
 		get;
@@ -31,10 +28,10 @@ public abstract class MoveAS<AbilityT> : AbilityState<AbilityT> where AbilityT :
 		set;
 	}
 
-	private float AccelerationTime
+	private float Acceleration
 	{
-		get => Time.time - _accelerationStartTime;
-		set => _accelerationStartTime = value;
+		get;
+		set;
 	}
 
 	protected override void ApplyEnterActions()
@@ -42,24 +39,23 @@ public abstract class MoveAS<AbilityT> : AbilityState<AbilityT> where AbilityT :
 		base.ApplyEnterActions();
 		EndSpeed = MoveDirection * _maxSpeed;
 		MoveSpeed = StartSpeed;
-		AccelerationTime = Time.time;
-		if (_acceleration != 0f)
-		{
-			_accelerationTime = Mathf.Abs((EndSpeed - StartSpeed) / _acceleration);
-			StartCoroutine(Accelerate());
-		}
-		else
-		{
-			MoveSpeed = EndSpeed;
-		}
+		Acceleration = Mathf.Sign(EndSpeed - StartSpeed) * Mathf.Abs(_acceleration);
+
+		StartCoroutine(Accelerate());
 	}
 
 	private IEnumerator Accelerate()
 	{
+		if (Acceleration == 0f)
+		{
+			MoveSpeed = EndSpeed;
+			yield break;
+		}
+
 		while (IsActive && MoveSpeed != EndSpeed)
 		{
 			yield return null;
-			MoveSpeed = Mathf.Lerp(StartSpeed, EndSpeed, AccelerationTime / _accelerationTime);
+			MoveSpeed = Mathf.Lerp(StartSpeed, EndSpeed, (MoveSpeed + Acceleration * Time.deltaTime - StartSpeed) / (EndSpeed - StartSpeed));
 		}
 	}
 }
