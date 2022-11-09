@@ -3,8 +3,12 @@ using System.Linq;
 
 using UnityEngine;
 
+[RequireComponent(typeof(AbilitiesManager))]
+
 public class StateMachine : MonoBehaviour
 {
+	private AbilitiesManager _abilitiesManager;
+
 	private readonly List<State> _states = new();
 
 	public State Current
@@ -15,6 +19,7 @@ public class StateMachine : MonoBehaviour
 
 	private void Awake()
 	{
+		_abilitiesManager = GetComponent<AbilitiesManager>();
 		GetComponents(_states);
 	}
 
@@ -39,5 +44,6 @@ public class StateMachine : MonoBehaviour
 		Current.OnExit();
 		Current = target;
 		Current.OnEnter();
+		_abilitiesManager.TryUseAbilities();
 	}
 }

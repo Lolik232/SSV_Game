@@ -39,6 +39,8 @@ namespace All.Gameplay
 
 			m_transformEventChannel.RaiseEvent(playerInstance.transform);
 
+			Debug.Log("Player spawned");
+
 			//TODO: send message to PlayerSpawnedChannel for enable input, UI etc.
 		}
 	}

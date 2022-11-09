@@ -71,7 +71,7 @@ public class Movable : MonoBehaviour, IMovable
 		Position = new Vector2(x, Position.y);
 	}
 
-	public void SetpositionY(float y)
+	public void SetPositionY(float y)
 	{
 		Position = new Vector2(Position.x, y);
 	}
@@ -108,7 +108,7 @@ public class Movable : MonoBehaviour, IMovable
 
 	public void UnlockVelocity()
 	{
-		_positionBlocker.AddBlock();
+		_velocityBlocker.RemoveBlock();
 	}
 
 	private void Awake()

@@ -3,15 +3,16 @@ using UnityEngine;
 [RequireComponent(typeof(Physical), typeof(Movable), typeof(Crouchable))]
 [RequireComponent(typeof(Rotateable))]
 
+[RequireComponent(typeof(PlayerInputReader))]
+
 [RequireComponent(typeof(PlayerGroundedState), typeof(PlayerInAirState), typeof(PlayerTouchingWallState))]
 [RequireComponent(typeof(PlayerOnLedgeState))]
-
-[RequireComponent(typeof(PlayerInputReader))]
 
 [RequireComponent(typeof(PlayerMoveHorizontalAbility), typeof(PlayerMoveVerticalAbility))]
 [RequireComponent(typeof(PlayerLedgeClimbAbility))]
 [RequireComponent(typeof(PlayerCrouchAbility))]
 [RequireComponent(typeof(PlayerJumpAbility))]
+[RequireComponent(typeof(PlayerDashAbility))]
 
 public class Player : MonoBehaviour, IPhysical, IMovable, ICrouchable, IRotateable
 {
@@ -68,6 +69,12 @@ public class Player : MonoBehaviour, IPhysical, IMovable, ICrouchable, IRotateab
 		private set;
 	}
 	public PlayerLedgeClimbAbility LedgeClimbAbility
+	{
+		get;
+		private set;
+	}
+
+	public PlayerDashAbility DashAbility
 	{
 		get;
 		private set;
@@ -157,9 +164,9 @@ public class Player : MonoBehaviour, IPhysical, IMovable, ICrouchable, IRotateab
 		_movable.SetpositionX(x);
 	}
 
-	public void SetpositionY(float y)
+	public void SetPositionY(float y)
 	{
-		_movable.SetpositionY(y);
+		_movable.SetPositionY(y);
 	}
 
 	public void SetVelocity(Vector2 velocity)
@@ -172,9 +179,9 @@ public class Player : MonoBehaviour, IPhysical, IMovable, ICrouchable, IRotateab
 		_movable.SetVelocity(x, y);
 	}
 
-	public void SetVelocity(float spped, Vector2 angle, int direction)
+	public void SetVelocity(float speed, Vector2 angle, int direction)
 	{
-		_movable.SetVelocity(spped, angle, direction);
+		_movable.SetVelocity(speed, angle, direction);
 	}
 
 	public void SetVelocityX(float x)
@@ -226,5 +233,12 @@ public class Player : MonoBehaviour, IPhysical, IMovable, ICrouchable, IRotateab
 		JumpAbility = GetComponent<PlayerJumpAbility>();
 		CrouchAbility = GetComponent<PlayerCrouchAbility>();
 		LedgeClimbAbility = GetComponent<PlayerLedgeClimbAbility>();
+		DashAbility = GetComponent<PlayerDashAbility>();
+	}
+
+	private void Start()
+	{
+		RotateIntoDirection(1);
+		Stand();
 	}
 }

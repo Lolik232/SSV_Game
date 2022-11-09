@@ -27,14 +27,15 @@ public class PlayerCrouchAbility : Ability
 		base.Awake();
 		Player = GetComponent<Player>();
 
-		Default = Crouch = GetComponent<PlayerCrouchAS>();
-		Stand = GetComponent<PlayerStandAS>();
+		Crouch = GetComponent<PlayerCrouchAS>();
+		Default = Stand = GetComponent<PlayerStandAS>();
 
 		GetAbilityStates<PlayerCrouchAbility>();
 	}
 
-	private void Start()
+	protected override void Start()
 	{
+		base.Start();
 		enterConditions.Add(() => true);
 		exitConditions.Add(() => false);
 	}

@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class PlayerLedgeClimbAbility : Ability
 {
+	public Player Player
+	{
+		get; private set;
+	}
+
 	public PlayerLedgeClimbAS Climb
 	{
 		get;
@@ -13,14 +18,17 @@ public class PlayerLedgeClimbAbility : Ability
 	protected override void Awake()
 	{
 		base.Awake();
+		Player = GetComponent<Player>();
+
 		Default = Climb = GetComponent<PlayerLedgeClimbAS>();
 
 		GetAbilityStates<PlayerLedgeClimbAbility>();
 	}
 
-	private void Start()
+	protected override void Start()
 	{
+		base.Start();
 		enterConditions.Add(() => true);
-		enterConditions.Add(() => false);
+		exitConditions.Add(() => false);
 	}
 }

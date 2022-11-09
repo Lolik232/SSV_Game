@@ -13,11 +13,6 @@ public class Rotateable : MonoBehaviour, IRotateable
 		private set;
 	}
 
-	private void Start()
-	{
-		RotateIntoDirection(-1);
-	}
-
 	public void RotateBodyIntoDirection(int direction)
 	{
 		if (direction != 0)

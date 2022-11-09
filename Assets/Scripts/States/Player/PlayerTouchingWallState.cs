@@ -28,23 +28,39 @@ public class PlayerTouchingWallState : State
 
 		bool OnLedgeCondition() => _wallChecker.TouchingWall && !_ledgeChecker.TouchingLegde;
 
+		void OnLedgeAction()
+		{
+			_player.OnLedgeState.DetermineLedgePosition();
+		}
+
+		void InAirAction()
+		{
+			if (!_player.JumpAbility.IsActive)
+			{
+				_player.InAirState.CheckJumpCoyoteTime();
+			}
+		}
+
 		Transitions.Add(new(_player.GroundedState, GroundedCondition));
-		Transitions.Add(new(_player.InAirState, InAirCondition));
-		Transitions.Add(new(_player.OnLedgeState, OnLedgeCondition));
+		Transitions.Add(new(_player.InAirState, InAirCondition, InAirAction));
+		Transitions.Add(new(_player.OnLedgeState, OnLedgeCondition, OnLedgeAction));
 	}
 
 	protected override void ApplyEnterActions()
 	{
 		base.ApplyEnterActions();
-		var holdPosition = new Vector2(_wallChecker.WallPosition.x + _wallChecker.WallDirection * (_player.Size.x / 2 + IChecker.CHECK_OFFSET), _player.Position.y);
-		_player.SetPosition(holdPosition);
-		_player.SetGravity(0f);
-
 		_player.MoveHorizontalAbility.Permited = false;
 		_player.MoveVerticalAbility.Permited = true;
 		_player.LedgeClimbAbility.Permited = false;
 		_player.CrouchAbility.Permited = false;
-		_player.JumpAbility.Permited = false;
+		_player.JumpAbility.Permited = true;
+		_player.DashAbility.Permited = true;
+
+		_player.JumpAbility.Request(_player.JumpAbility.WallJump);
+
+		var holdPosition = new Vector2(_wallChecker.WallPosition.x + _wallChecker.WallDirection * (_player.Size.x / 2 + IChecker.CHECK_OFFSET), _player.Position.y);
+		_player.SetPosition(holdPosition);
+		_player.SetGravity(0f);
 	}
 
 	protected override void ApplyExitActions()

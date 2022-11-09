@@ -29,13 +29,13 @@ public interface IMovable
 
 	public void SetpositionX(float x);
 
-	public void SetpositionY(float y);
+	public void SetPositionY(float y);
 
 	public void SetVelocity(Vector2 velocity);
 
 	public void SetVelocity(float x, float y);
 
-	public void SetVelocity(float spped, Vector2 angle, int direction);
+	public void SetVelocity(float speed, Vector2 angle, int direction);
 
 	public void SetVelocityX(float x);
 

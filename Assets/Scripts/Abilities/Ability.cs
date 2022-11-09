@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
+using static UnityEngine.Rendering.DebugUI;
+
 [RequireComponent(typeof(AbilitiesManager))]
 
 public abstract class Ability : ComponentBase
@@ -13,6 +15,8 @@ public abstract class Ability : ComponentBase
 	protected List<Func<bool>> exitConditions = new();
 
 	private readonly Blocker _blocker = new();
+
+	private dynamic _requested;
 
 	public dynamic Current
 	{
@@ -51,7 +55,29 @@ public abstract class Ability : ComponentBase
 	protected virtual void Awake()
 	{
 
-	} 
+	}
+
+	protected virtual void Start()
+	{
+		CancelRequest();
+	}
+
+	public void Request<AbilityT>(AbilityState<AbilityT> aS) where AbilityT : Ability
+	{
+		if (aS.Ability == Default.Ability)
+		{
+			_requested = aS;
+		}
+		else
+		{
+			throw new ArgumentException("Ability State " + aS + " Doesn`t Relate To " + Default.Ability);
+		}
+	}
+
+	public void CancelRequest()
+	{
+		_requested = Default;
+	}
 
 	public void Block()
 	{
@@ -66,18 +92,14 @@ public abstract class Ability : ComponentBase
 
 	public override void OnEnter()
 	{
-		OnEnter(Default);
-	}
-
-	public void OnEnter<AbilityT>(AbilityState<AbilityT> aS) where AbilityT : Ability
-	{
 		if (IsActive || IsLocked || !Permited || !CheckForEnter())
 		{
 			return;
 		}
 
 		ApplyEnterActions();
-		Initialize(aS);
+		Initialize(_requested);
+		CancelRequest();
 	}
 
 	public override void OnExit()

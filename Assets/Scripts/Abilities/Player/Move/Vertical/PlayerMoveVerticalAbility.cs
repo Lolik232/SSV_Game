@@ -40,8 +40,9 @@ public class PlayerMoveVerticalAbility : Ability
 		GetAbilityStates<PlayerMoveVerticalAbility>();
 	}
 
-	private void Start()
+	protected override void Start()
 	{
+		base.Start();
 		bool StayCondition() => !Player.IsVelocityLocked && !Player.IsPositionLocked &&
 															(Player.Input.Grab || Player.Input.Move.x == Player.FacingDirection);
 

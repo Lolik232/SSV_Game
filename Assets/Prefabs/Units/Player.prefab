@@ -49,11 +49,14 @@ GameObject:
   - component: {fileID: 4528472029670340703}
   - component: {fileID: 7722846243474180352}
   - component: {fileID: 5450313350551176671}
+  - component: {fileID: 9124192385287355590}
   - component: {fileID: 1429368474823133692}
   - component: {fileID: 4839718794917041577}
+  - component: {fileID: 1545915187109840561}
+  - component: {fileID: 2830016451526626549}
   m_Layer: 6
   m_Name: Player
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -607,6 +610,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: inAir
+  _waitForLedgeClimbTime: 0.1
 --- !u!114 &653056635547427079
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -720,7 +724,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: stay
-  _deceleration: 70
+  _deceleration: 200
 --- !u!114 &3659420203593496856
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -734,7 +738,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: move
-  _acceleration: 100
+  _acceleration: 170
   _maxSpeed: 10
 --- !u!114 &5821533407110167460
 MonoBehaviour:
@@ -749,7 +753,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: move
-  _acceleration: 30
+  _acceleration: 60
   _maxSpeed: 4
 --- !u!114 &5663374532752945875
 MonoBehaviour:
@@ -776,7 +780,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: wallGrab
-  _deceleration: 150
+  _deceleration: 0
 --- !u!114 &8506503740370134317
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -790,7 +794,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: wallClimb
-  _acceleration: 60
+  _acceleration: 80
   _maxSpeed: 6
 --- !u!114 &6771338866353387929
 MonoBehaviour:
@@ -805,8 +809,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: wallSlide
-  _acceleration: 20
-  _maxSpeed: 4
+  _acceleration: 40
+  _maxSpeed: 5
 --- !u!114 &4159290662058916998
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -898,6 +902,23 @@ MonoBehaviour:
   _name: jump
   _coyoteTime: 0.1
   _jumpForse: 15
+--- !u!114 &9124192385287355590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16557013547266712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb97372fa0836a946bdf93cb6e4ba27d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _name: jump
+  _coyoteTime: 0.1
+  _jumpForse: 15
+  _angle: {x: 1, y: 1}
+  _duration: 0.2
 --- !u!114 &1429368474823133692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -923,6 +944,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5bc956ee196fa34d9849921a1018d1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1545915187109840561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16557013547266712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02297809ad90e6b4d80da7dba30a199e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _name: dash
+  _duration: 0.4
+  _dashForse: 30
+--- !u!114 &2830016451526626549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16557013547266712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d541773bc69cec94cb2473791c31925c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _amountOfDashes: 1
+  _cooldown: 1.5
 --- !u!1 &2858492609654353185
 GameObject:
   m_ObjectHideFlags: 0

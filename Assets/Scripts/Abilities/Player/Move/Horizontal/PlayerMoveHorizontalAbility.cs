@@ -38,8 +38,9 @@ public class PlayerMoveHorizontalAbility : Ability
 		GetAbilityStates<PlayerMoveHorizontalAbility>();
 	}
 
-	private void Start()
+	protected override void Start()
 	{
+		base.Start();
 		bool StayCondition() => !Player.IsVelocityLocked && !Player.IsPositionLocked;
 
 		enterConditions.Add(() => StayCondition());

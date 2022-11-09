@@ -13,6 +13,13 @@ public class PlayerJumpAS : AbilityState<PlayerJumpAbility>
 	protected override void ApplyEnterActions()
 	{
 		base.ApplyEnterActions();
+		if (Ability.AmountOfJumps == 0)
+		{
+			Ability.OnExit();
+			return;
+		}
+
+		Ability.DecreaseJumps();
 		Ability.Player.SetVelocityY(_jumpForse);
 	}
 
@@ -24,7 +31,7 @@ public class PlayerJumpAS : AbilityState<PlayerJumpAbility>
 		{
 			if (Ability.Player.Velocity.y > 0f)
 			{
-				Ability.Player.SetVelocityY(Ability.Player.Velocity.y / 3);
+				Ability.Player.SetVelocityY(Ability.Player.Velocity.y / 2);
 			}
 
 			Ability.OnExit();

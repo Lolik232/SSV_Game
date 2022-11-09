@@ -13,6 +13,11 @@ public class AbilitiesManager : MonoBehaviour
 
 	private void Update()
 	{
+		TryUseAbilities();
+	}
+
+	public void TryUseAbilities()
+	{
 		foreach (var ability in _abilities)
 		{
 			ability.OnEnter();

@@ -5,10 +5,10 @@ public class PlayerStayAS : StayAS<PlayerMoveHorizontalAbility>
 	private void Start()
 	{
 		bool ForwardCondition() => Ability.Player.Input.Move.x == Ability.Player.FacingDirection && 
-														   (Ability.Player.Velocity.x == 0 || Mathf.Sign(Ability.Player.Input.Move.x) == Mathf.Sign(Ability.Player.Velocity.x));
+														   (Mathf.Abs(Ability.Player.Velocity.x) < 0.01f || Mathf.Sign(Ability.Player.Input.Move.x) == Mathf.Sign(Ability.Player.Velocity.x));
 
-		bool BackwardCondition() => Ability.Player.Input.Move.x == -Ability.Player.FacingDirection && 
-																(Ability.Player.Velocity.x == 0 || Mathf.Sign(Ability.Player.Input.Move.x) == Mathf.Sign(Ability.Player.Velocity.x));
+		bool BackwardCondition() => Ability.Player.Input.Move.x == -Ability.Player.FacingDirection &&
+																(Mathf.Abs(Ability.Player.Velocity.x) < 0.01f || Mathf.Sign(Ability.Player.Input.Move.x) == Mathf.Sign(Ability.Player.Velocity.x));
 
 		Transitions.Add(new(Ability.Forward, ForwardCondition));
 		Transitions.Add(new(Ability.Backward, BackwardCondition));

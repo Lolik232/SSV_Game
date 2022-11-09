@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 
 using UnityEngine;
@@ -15,16 +16,6 @@ public sealed class PlayerGroundedState : State
 	private WallChecker _wallChecker;
 	private LedgeChecker _ledgeChecker;
 	private CeilChecker _ceilChecker;
-
-	private bool _tryingLedgeClimb;
-	private bool _ledgeClimbTimeOut;
-	private float _tryingLedgeClimbStartTime;
-
-	private float TryingLedgeClimbTime
-	{
-		get => Time.time - _tryingLedgeClimbStartTime;
-		set => _tryingLedgeClimbStartTime = value;
-	}
 
 	protected override void Awake()
 	{
@@ -47,19 +38,21 @@ public sealed class PlayerGroundedState : State
 																		_player.Input.Grab &&
 																		_player.Input.Move.y != -1;
 
-		bool OnLedgeCondition() => _ledgeClimbTimeOut;
-
 		void InAirAction()
 		{
+			if (!_player.IsStanding && _ceilChecker.TouchingCeiling)
+			{
+				_player.SetPositionY(_player.Position.y - (_player.StandSize.y - _player.CrouchSize.y));
+			}
+
 			if (!_player.JumpAbility.IsActive)
 			{
-				StartCoroutine(_player.InAirState.CheckJumpCoyoteTime());
+				_player.InAirState.CheckJumpCoyoteTime();
 			}
 		}
 
 		Transitions.Add(new(_player.InAirState, InAirCondition, InAirAction));
 		Transitions.Add(new(_player.TouchingWallState, TouchingWallCondition));
-		Transitions.Add(new(_player.OnLedgeState, OnLedgeCondition));
 	}
 
 	protected override void ApplyEnterActions()
@@ -70,43 +63,18 @@ public sealed class PlayerGroundedState : State
 		_player.LedgeClimbAbility.Permited = false;
 		_player.CrouchAbility.Permited = true;
 		_player.JumpAbility.Permited = true;
+		_player.DashAbility.Permited = true;
 
-		_player.JumpAbility.Restore();
+		_player.JumpAbility.RestoreJumps();
+		_player.JumpAbility.CancelRequest();
+		_player.DashAbility.RestoreDashes();
 
-		_tryingLedgeClimb = false;
-		_ledgeClimbTimeOut = false;
+		_player.InAirState.TerminateTryingLedgeClimb();
 	}
 
 	protected override void ApplyUpdateActions()
 	{
 		base.ApplyUpdateActions();
-		if (!_tryingLedgeClimb && !_ledgeClimbTimeOut)
-		{
-			TryingLedgeClimbTime = Time.time;
-			StartCoroutine(CheckOnLedgeCondition());
-		}
-	}
-
-	private bool CheckIfTryingLedgeClimb()
-	{
-		return _wallChecker.TouchingWall &&
-					 !_ledgeChecker.TouchingLegde &&
-					 (_player.Input.Move.x == _player.FacingDirection ||
-						_player.Input.Move.y == 1);
-	}
-
-	private IEnumerator CheckOnLedgeCondition()
-	{
-		while (IsActive && (_tryingLedgeClimb = CheckIfTryingLedgeClimb()))
-		{
-			yield return null;
-
-			if (TryingLedgeClimbTime > _waitForLedgeClimbTime)
-			{
-				_ledgeClimbTimeOut = true;
-				_tryingLedgeClimb = false;
-				yield break;
-			}
-		}
+		_player.InAirState.TryLedgeClimb();
 	}
 }
