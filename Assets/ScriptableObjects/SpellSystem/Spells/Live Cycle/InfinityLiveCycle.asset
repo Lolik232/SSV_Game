@@ -9,8 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a872cdd023643cea7acaf3d031f11fb, type: 3}
-  m_Name: Effect1
+  m_Script: {fileID: 11500000, guid: ebbad9e67c8943afbeeda80ac955ae89, type: 3}
+  m_Name: InfinityLiveCycle
   m_EditorClassIdentifier: 
-  _effectActionSO: {fileID: 0}
-  _effectApplyStrategyS0: {fileID: 0}

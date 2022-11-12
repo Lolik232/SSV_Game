@@ -9,8 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a872cdd023643cea7acaf3d031f11fb, type: 3}
-  m_Name: Effect1
+  m_Script: {fileID: 11500000, guid: 321f9ff3b1b84481893416e978bd95a6, type: 3}
+  m_Name: PeriodicApplyStrategy
   m_EditorClassIdentifier: 
-  _effectActionSO: {fileID: 0}
-  _effectApplyStrategyS0: {fileID: 0}
+  _period: 2

@@ -9,8 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a872cdd023643cea7acaf3d031f11fb, type: 3}
-  m_Name: Effect1
+  m_Script: {fileID: 11500000, guid: adaddf89b0034c5eb8e90d6ed7181145, type: 3}
+  m_Name: Damage
   m_EditorClassIdentifier: 
-  _effectActionSO: {fileID: 0}
-  _effectApplyStrategyS0: {fileID: 0}
+  _guid: b347cc31dd4e4104f85b2299fb0fd7ff
+  description: Damage
+  _value: 50

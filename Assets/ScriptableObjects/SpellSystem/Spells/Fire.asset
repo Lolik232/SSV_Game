@@ -10,10 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7d65a8e80ce647e8ba00eded152ad67c, type: 3}
-  m_Name: Spell1
+  m_Name: Fire
   m_EditorClassIdentifier: 
-  _guid: dbdb553bd6b18dd4fb122aac2f453874
-  description: 
-  _name: spell
-  _liveCycle: {fileID: 0}
+  _guid: af7be2ed6a277094184d16932038e6b0
+  description: bla bla bla
+  _name: Fire
+  _liveCycleSO: {fileID: 11400000, guid: 57033f6ce22ec2d469d6e2bdd8a10eff, type: 2}
+  _effectsSO:
+  - {fileID: 11400000, guid: c329cfee489a641438befd23fbb15c35, type: 2}
   _effects: []
