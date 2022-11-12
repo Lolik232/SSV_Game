@@ -29,4 +29,26 @@ public static class Utility
 			return Color.black;
 		}
 	}
+
+	static public void SetAnimationSpeed(Animator anim, string name, float duration)
+	{
+		string animationName = name.Remove(1).ToUpper() + name.Remove(0, 1);
+		string speedName = name + "Speed";
+		anim.SetFloat(speedName, 1f);
+
+		AnimationClip[] clips = anim.runtimeAnimatorController.animationClips;
+		foreach (var clip in clips)
+		{
+			if (clip.name == animationName)
+			{
+				anim.SetFloat(speedName, clip.length / duration);
+				return;
+			}
+		}
+	}
+
+	static public Vector2 Rotate(this Vector2 v, float degrees)
+	{
+		return Quaternion.Euler(0f, 0f, degrees) * v;
+	}
 }

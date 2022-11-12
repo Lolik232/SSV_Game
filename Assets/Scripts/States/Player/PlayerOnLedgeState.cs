@@ -37,6 +37,7 @@ public class PlayerOnLedgeState : State
 		_player.CrouchAbility.Permited = false;
 		_player.JumpAbility.Permited = false;
 		_player.DashAbility.Permited = false;
+		_player.AttackAbility.Permited = false;
 
 		_player.SetPosition(_startPosition);
 		_player.SetVelocity(Vector2.zero);

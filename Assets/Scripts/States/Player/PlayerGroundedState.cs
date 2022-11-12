@@ -64,6 +64,7 @@ public sealed class PlayerGroundedState : State
 		_player.CrouchAbility.Permited = true;
 		_player.JumpAbility.Permited = true;
 		_player.DashAbility.Permited = true;
+		_player.AttackAbility.Permited = true;
 
 		_player.JumpAbility.RestoreJumps();
 		_player.JumpAbility.CancelRequest();

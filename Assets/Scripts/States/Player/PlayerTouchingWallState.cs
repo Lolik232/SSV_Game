@@ -55,6 +55,7 @@ public class PlayerTouchingWallState : State
 		_player.CrouchAbility.Permited = false;
 		_player.JumpAbility.Permited = true;
 		_player.DashAbility.Permited = true;
+		_player.AttackAbility.Permited = true;
 
 		_player.JumpAbility.Request(_player.JumpAbility.WallJump);
 

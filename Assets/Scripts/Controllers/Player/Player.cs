@@ -1,5 +1,7 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Animator))]
+
 [RequireComponent(typeof(Physical), typeof(Movable), typeof(Crouchable))]
 [RequireComponent(typeof(Rotateable))]
 
@@ -13,8 +15,9 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerCrouchAbility))]
 [RequireComponent(typeof(PlayerJumpAbility))]
 [RequireComponent(typeof(PlayerDashAbility))]
+[RequireComponent(typeof(PlayerAttackAbility))]
 
-public class Player : MonoBehaviour, IPhysical, IMovable, ICrouchable, IRotateable
+public class Player : Entity, IPhysical, IMovable, ICrouchable, IRotateable
 {
 	private Physical _physical;
 	private Movable _movable;
@@ -75,6 +78,12 @@ public class Player : MonoBehaviour, IPhysical, IMovable, ICrouchable, IRotateab
 	}
 
 	public PlayerDashAbility DashAbility
+	{
+		get;
+		private set;
+	}
+
+	public PlayerAttackAbility AttackAbility
 	{
 		get;
 		private set;
@@ -234,6 +243,7 @@ public class Player : MonoBehaviour, IPhysical, IMovable, ICrouchable, IRotateab
 		CrouchAbility = GetComponent<PlayerCrouchAbility>();
 		LedgeClimbAbility = GetComponent<PlayerLedgeClimbAbility>();
 		DashAbility = GetComponent<PlayerDashAbility>();
+		AttackAbility = GetComponent<PlayerAttackAbility>();
 	}
 
 	private void Start()

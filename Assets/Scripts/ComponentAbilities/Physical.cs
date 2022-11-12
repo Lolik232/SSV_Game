@@ -43,7 +43,7 @@ public class Physical : MonoBehaviour, IPhysical
 
 	public void Push(float force, Vector2 angle)
 	{
-		_rb.AddForce(force * angle.normalized);
+		_rb.velocity = force * angle.normalized + force * Vector2.up;
 	}
 
 	private void OnDrawGizmos()

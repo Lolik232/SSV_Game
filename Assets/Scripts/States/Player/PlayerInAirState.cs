@@ -68,6 +68,7 @@ public sealed class PlayerInAirState : State
 		_player.CrouchAbility.Permited = false;
 		_player.JumpAbility.Permited = true;
 		_player.DashAbility.Permited = true;
+		_player.AttackAbility.Permited = true;
 	}
 
 	protected override void ApplyUpdateActions()
@@ -118,7 +119,7 @@ public sealed class PlayerInAirState : State
 
 	public void TryLedgeClimb()
 	{
-		if (!_tryingLedgeClimb && _wallChecker.TouchingWall && !_ledgeChecker.TouchingLegde && _player.Velocity.y < 0.01f)
+		if (!_tryingLedgeClimb && _wallChecker.TouchingWall && !_ledgeChecker.TouchingLegde)
 		{
 			TryingLedgeClimbTime = Time.time;
 			_player.OnLedgeState.DetermineLedgePosition();

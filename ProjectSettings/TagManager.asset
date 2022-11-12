@@ -15,7 +15,7 @@ TagManager:
   - Room
   - Camera
   - Edge
-  - 
+  - Enemy
   - 
   - 
   - 
@@ -41,6 +41,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Dummy
+    uniqueID: 2784915397
+    locked: 0
   - name: Player
     uniqueID: 1007895109
+    locked: 0
+  - name: Effects
+    uniqueID: 1579864801
     locked: 0

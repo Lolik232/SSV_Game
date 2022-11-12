@@ -94,19 +94,7 @@ public abstract class StateBase : ComponentBase
 
 	protected void SetAnimationSpeed(float duration)
 	{
-		string animationName = Name.Remove(1).ToUpper() + Name.Remove(0, 1);
-		string speedName = Name + "Speed";
-		Anim.SetFloat(speedName, 1f);
-
-		AnimationClip[] clips = Anim.runtimeAnimatorController.animationClips;
-		foreach (var clip in clips)
-		{
-			if (clip.name == animationName)
-			{
-				Anim.SetFloat(speedName, clip.length / duration);
-				return;
-			}
-		}
+		Utility.SetAnimationSpeed(Anim, Name, duration);
 	}
 }
 
