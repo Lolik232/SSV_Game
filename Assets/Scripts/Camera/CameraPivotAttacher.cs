@@ -1,16 +1,23 @@
-﻿using All.Events;
+﻿using System;
+
+using All.Events;
 
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class CameraPivotAttacher : MonoBehaviour
 {
 	[Header("Listen to")]
-	[SerializeField] private TransformEventChannel m_playerInstantiatedChannel = default;
-	[SerializeField] private TransformEventChannel m_enterPivotChannel = default;
-	[SerializeField] private TransformEventChannel m_exitPivotChannel  = default;
+	[FormerlySerializedAs("m_playerInstantiatedChannel")]
+	[SerializeField] private TransformEventChannel _playerInstantiatedChannel = default;
+	[FormerlySerializedAs("m_enterPivotChannel")]
+	[SerializeField] private TransformEventChannel _enterPivotChannel = default;
+	[FormerlySerializedAs("m_exitPivotChannel")]
+	[SerializeField] private TransformEventChannel _exitPivotChannel = default;
 
 	[Header("Broadcasting")]
-	[SerializeField] private TransformEventChannel m_cameraTargetChannel = default;
+	[FormerlySerializedAs("m_cameraTargetChannel")]
+	[SerializeField] private TransformEventChannel _cameraTargetChannel = default;
 
 	private Transform m_currentCameraTarget = default;
 	private Transform m_playerTransform     = default;
@@ -22,27 +29,27 @@ public class CameraPivotAttacher : MonoBehaviour
 		set
 		{
 			m_currentCameraTarget = value;
-			m_cameraTargetChannel.RaiseEvent(value);
+			_cameraTargetChannel.RaiseEvent(value);
 		}
 	}
 
 	private void OnEnable()
 	{
-		m_playerInstantiatedChannel.OnEventRaised += OnPlayerInstantiated;
-		m_enterPivotChannel.OnEventRaised += OnEnterPivot;
-		m_exitPivotChannel.OnEventRaised += OnExitPivot;
+		_playerInstantiatedChannel.OnEventRaised += OnPlayerInstantiated;
+		_enterPivotChannel.OnEventRaised         += OnEnterPivot;
+		_exitPivotChannel.OnEventRaised          += OnExitPivot;
 	}
 
 	private void OnDisable()
 	{
-		m_playerInstantiatedChannel.OnEventRaised -= OnPlayerInstantiated;
-		m_enterPivotChannel.OnEventRaised -= OnEnterPivot;
-		m_exitPivotChannel.OnEventRaised -= OnExitPivot;
+		_playerInstantiatedChannel.OnEventRaised -= OnPlayerInstantiated;
+		_enterPivotChannel.OnEventRaised         -= OnEnterPivot;
+		_exitPivotChannel.OnEventRaised          -= OnExitPivot;
 	}
 
 	private void OnPlayerInstantiated(Transform playerTransform)
 	{
-		m_playerTransform = playerTransform;
+		m_playerTransform   = playerTransform;
 		CurrentCameraTarget = playerTransform; // only when location loaded
 	}
 

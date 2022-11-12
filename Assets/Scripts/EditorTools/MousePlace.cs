@@ -1,5 +1,9 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEditor.Rendering;
 using UnityEngine;
-
+using UnityEngine.Serialization;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -8,47 +12,47 @@ using UnityEditor;
 [AddComponentMenu("LostInDarkness/Tools/Mouse Place")]
 public class MousePlace : MonoBehaviour
 {
-	[HideInInspector] [SerializeField] private bool m_isTargeting = false;
-	public bool IsTargeting
-	{
-		get => m_isTargeting; private set => m_isTargeting = value;
-	}
+    [FormerlySerializedAs("m_isTargeting")]
+    [SerializeField] private bool _isTargeting = false;
 
-	[SerializeField] private Vector3 m_targetPosition;
+    public bool IsTargeting { get => _isTargeting; private set => _isTargeting = value; }
 
-	private void OnDrawGizmos()
-	{
-		if (IsTargeting)
-		{
-			Gizmos.color = Color.green;
-			Gizmos.DrawCube(m_targetPosition, Vector2.one * 0.3f);
-		}
-	}
+    [FormerlySerializedAs("m_targetPosition")]
+    [SerializeField] private Vector3 _targetPosition;
 
-	public void BeginTargeting()
-	{
-		IsTargeting = true;
-		m_targetPosition = transform.position;
-	}
+    private void OnDrawGizmos()
+    {
+        if (IsTargeting)
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawCube(_targetPosition, Vector2.one * 0.3f);
+        }
+    }
 
-	public void UpdateTargeting(Vector2 spawnPosition)
-	{
-		m_targetPosition.x = spawnPosition.x;
-		m_targetPosition.y = spawnPosition.y;
-	}
+    public void BeginTargeting()
+    {
+        IsTargeting      = true;
+        _targetPosition = transform.position;
+    }
 
-	public void EndTargeting()
-	{
-		IsTargeting = false;
+    public void UpdateTargeting(Vector2 spawnPosition)
+    {
+        _targetPosition.x = spawnPosition.x;
+        _targetPosition.y = spawnPosition.y;
+    }
+
+    public void EndTargeting()
+    {
+        IsTargeting = false;
 #if UNITY_EDITOR
-		Undo.RecordObject(transform, $"{gameObject.name} spawn by Mouse Place");
+        Undo.RecordObject(transform, $"{gameObject.name} spawn by Mouse Place");
 #endif
-		transform.position = m_targetPosition;
-	}
+        transform.position = _targetPosition;
+    }
 
-	public void Cancel()
-	{
-		IsTargeting = false;
-		m_targetPosition = transform.position;
-	}
+    public void Cancel()
+    {
+        IsTargeting      = false;
+        _targetPosition = transform.position;
+    }
 }

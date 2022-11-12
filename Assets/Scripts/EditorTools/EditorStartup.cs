@@ -1,10 +1,13 @@
-﻿using All.Events;
+﻿using System;
+
+using All.Events;
 
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 namespace EditorTools
 {
@@ -12,18 +15,22 @@ namespace EditorTools
 	{
 #if UNITY_EDITOR
 
-		[SerializeField] private GameSceneSO m_thisScene = default;
-		[SerializeField] private GameSceneSO m_managers = default;
-		[SerializeField] private AssetReference m_notifyEditorStartupChannel = default;
-		[SerializeField] private VoidEventChannelSO m_onReadySceneChannel = default;
+		[FormerlySerializedAs("m_thisScene")]
+		[SerializeField] private GameSceneSO _thisScene = default;
+		[FormerlySerializedAs("m_managers")]
+		[SerializeField] private GameSceneSO _managers = default;
+		[FormerlySerializedAs("m_notifyEditorStartupChannel")]
+		[SerializeField] private AssetReference _notifyEditorStartupChannel = default;
+		[FormerlySerializedAs("m_onReadySceneChannel")]
+		[SerializeField] private VoidEventChannelSO _onReadySceneChannel = default;
 
-		private AsyncOperationHandle<SceneInstance> m_managersSceneLoadingOpHandle = default;
+		private AsyncOperationHandle<SceneInstance> _managersSceneLoadingOpHandle = default;
 
 		private bool m_editorStartup = false;
 
 		private void Awake()
 		{
-			if (SceneManager.GetSceneByName(m_managers.sceneReference.editorAsset.name).isLoaded == false)
+			if (SceneManager.GetSceneByName(_managers.sceneReference.editorAsset.name).isLoaded == false)
 			{
 				m_editorStartup = true;
 			}
@@ -33,24 +40,24 @@ namespace EditorTools
 		{
 			if (m_editorStartup)
 			{
-				m_managers.sceneReference.LoadSceneAsync(LoadSceneMode.Additive, true).Completed += OnLoadManagers;
+				_managers.sceneReference.LoadSceneAsync(LoadSceneMode.Additive, true).Completed += OnLoadManagers;
 			}
 		}
 
 		private void OnLoadManagers(AsyncOperationHandle<SceneInstance> obj)
 		{
-			m_notifyEditorStartupChannel.LoadAssetAsync<LoadEventChannelSO>().Completed += OnNotifyChannelLoad;
+			_notifyEditorStartupChannel.LoadAssetAsync<LoadEventChannelSO>().Completed += OnNotifyChannelLoad;
 		}
 
 		private void OnNotifyChannelLoad(AsyncOperationHandle<LoadEventChannelSO> obj)
 		{
-			if (m_thisScene != null)
+			if (_thisScene != null)
 			{
-				obj.Result.RaiseEvent(m_thisScene);
+				obj.Result.RaiseEvent(_thisScene);
 			}
 			else
 			{
-				m_onReadySceneChannel.RaiseEvent();
+				_onReadySceneChannel.RaiseEvent();
 			}
 		}
 #endif

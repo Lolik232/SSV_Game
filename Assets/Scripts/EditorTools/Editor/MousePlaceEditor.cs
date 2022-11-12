@@ -1,59 +1,61 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEditor;
-
 using UnityEngine;
 
 [CustomEditor(typeof(MousePlace))]
 public class MousePlaceEditor : Editor
 {
-	private MousePlace m_mousePlace => target as MousePlace;
+    private MousePlace _mousePlace => target as MousePlace;
 
-	public override void OnInspectorGUI()
-	{
-		base.OnInspectorGUI();
+    public override void OnInspectorGUI()
+    {
+        base.OnInspectorGUI();
 
-		if (GUILayout.Button("Place at mouse cursor") && !m_mousePlace.IsTargeting)
-		{
-			m_mousePlace.BeginTargeting();
-			SceneView.duringSceneGui += OnDuringSceneGui;
-		}
-	}
+        if (GUILayout.Button("Place at mouse cursor") && !_mousePlace.IsTargeting)
+        {
+            _mousePlace.BeginTargeting();
+            SceneView.duringSceneGui += OnDuringSceneGui;
+        }
+    }
 
-	private void OnDuringSceneGui(SceneView sceneView)
-	{
-		Event currentGUIEvent = Event.current;
+    private void OnDuringSceneGui(SceneView sceneView)
+    {
+        Event currentGUIEvent = Event.current;
 
-		Vector2 mousePos = currentGUIEvent.mousePosition;
+        Vector2 mousePos = currentGUIEvent.mousePosition;
 
-		float pixelsPerPoint = EditorGUIUtility.pixelsPerPoint;
-		mousePos.y = sceneView.camera.pixelHeight - mousePos.y * pixelsPerPoint;
-		mousePos.x *= pixelsPerPoint;
-
-
-		mousePos = sceneView.camera.ScreenToWorldPoint(mousePos);
-
-		m_mousePlace.UpdateTargeting(mousePos);
+        float pixelsPerPoint = EditorGUIUtility.pixelsPerPoint;
+        mousePos.y = sceneView.camera.pixelHeight - mousePos.y * pixelsPerPoint;
+        mousePos.x *= pixelsPerPoint;
 
 
-		switch (currentGUIEvent.type)
-		{
-			case EventType.MouseMove:
-				HandleUtility.Repaint();
-				break;
+        mousePos = sceneView.camera.ScreenToWorldPoint(mousePos);
 
-			case EventType.MouseDown:
-				switch (currentGUIEvent.button)
-				{
-					case 0:
-						m_mousePlace.EndTargeting();
-						break;
-					case 1:
-						m_mousePlace.Cancel();
-						break;
-				}
+        _mousePlace.UpdateTargeting(mousePos);
+ 
 
-				SceneView.duringSceneGui -= OnDuringSceneGui;
-				currentGUIEvent.Use();
-				break;
-		}
-	}
+        switch (currentGUIEvent.type)
+        {
+            case EventType.MouseMove:
+                HandleUtility.Repaint();
+                break;
+
+            case EventType.MouseDown:
+                switch (currentGUIEvent.button)
+                {
+                    case 0:
+                        _mousePlace.EndTargeting();
+                        break;
+                    case 1:
+                        _mousePlace.Cancel();
+                        break;
+                }
+
+                SceneView.duringSceneGui -= OnDuringSceneGui;
+                currentGUIEvent.Use();
+                break;
+        }
+    }
 }

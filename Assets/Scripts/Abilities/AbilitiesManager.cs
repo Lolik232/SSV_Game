@@ -9,7 +9,7 @@ public class AbilitiesManager : MonoBehaviour
 	private void Awake()
 	{
 		GetComponents(_abilities);
-	}
+    }
 
 	private void Update()
 	{
