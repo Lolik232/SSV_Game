@@ -1,6 +1,4 @@
-﻿using System;
-
-using All.Events;
+﻿using All.Events;
 
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -10,7 +8,7 @@ namespace All.Gameplay
 	public class PlayerSpawnManager : MonoBehaviour
 	{
 		[FormerlySerializedAs("m_playerPrefab")] 
-		[SerializeField] private EntityBase _playerPrefab = default;
+		[SerializeField] private Player _playerPrefab = default;
 
 		[Header("Broadcasting")]
 		[FormerlySerializedAs("m_onSceneReadyChan")]
@@ -43,10 +41,12 @@ namespace All.Gameplay
 
 		private void SpawnPlayer()
 		{
-			Transform spawnLocation = _defaultSpawnPoint;
+			Transform spawnLocation = m_defaultSpawnPoint;
 			EntityBase playerInstance = Instantiate(_playerPrefab, spawnLocation.position, spawnLocation.rotation);
 
 			_transformEventChannel.RaiseEvent(playerInstance.transform);
+
+			Debug.Log("Player spawned");
 
 			//TODO: send message to PlayerSpawnedChannel for enable input, UI etc.
 		}

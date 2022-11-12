@@ -38,7 +38,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Unit/UnitSkeleton/Body2_
+    path: Skin/SkinSkeleton/Body2_
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -72,7 +72,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Unit/UnitSkeleton/Body2_/Body1_/Shoulder1_
+    path: Skin/SkinSkeleton/Body2_/Body1_/Shoulder1_
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -106,7 +106,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Unit/UnitSkeleton/Body2_/Body1_/Shoulder2_
+    path: Skin/SkinSkeleton/Body2_/Body1_/Shoulder2_
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -140,7 +140,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Unit/UnitSkeleton/Body2_/Leg1_
+    path: Skin/SkinSkeleton/Body2_/Leg1_
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -174,7 +174,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Unit/UnitSkeleton/Body2_/Leg2_
+    path: Skin/SkinSkeleton/Body2_/Leg2_
   m_PositionCurves:
   - curve:
       serializedVersion: 2
@@ -209,7 +209,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Unit/Arm1/Arm1_Target
+    path: Skin/Arm1/Arm1_Target
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -243,7 +243,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Unit/Arm2/Arm2_Target
+    path: Skin/Arm2/Arm2_Target
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -268,7 +268,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Unit/Head/Head_Target
+    path: Skin/Head/Head_Target
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -302,7 +302,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Unit/Leg1/Leg1_Target
+    path: Skin/Leg1/Leg1_Target
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -336,7 +336,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Unit/Leg2/Leg2_Target
+    path: Skin/Leg2/Leg2_Target
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -388,7 +388,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Unit/UnitSkeleton/Body2_
+    path: Skin/SkinSkeleton/Body2_
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -422,7 +422,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Unit/UnitSkeleton/Body2_/Body1_/Shoulder1_
+    path: Skin/SkinSkeleton/Body2_/Body1_/Shoulder1_
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -456,7 +456,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Unit/UnitSkeleton/Body2_/Body1_/Shoulder2_
+    path: Skin/SkinSkeleton/Body2_/Body1_/Shoulder2_
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -490,7 +490,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Unit/UnitSkeleton/Body2_/Leg1_
+    path: Skin/SkinSkeleton/Body2_/Leg1_
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -524,7 +524,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Unit/UnitSkeleton/Body2_/Leg2_
+    path: Skin/SkinSkeleton/Body2_/Leg2_
   m_ScaleCurves: []
   m_FloatCurves: []
   m_PPtrCurves: []
@@ -696,7 +696,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.x
-    path: Unit/Arm1/Arm1_Target
+    path: Skin/Arm1/Arm1_Target
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -733,7 +733,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.y
-    path: Unit/Arm1/Arm1_Target
+    path: Skin/Arm1/Arm1_Target
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -770,7 +770,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.z
-    path: Unit/Arm1/Arm1_Target
+    path: Skin/Arm1/Arm1_Target
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -807,7 +807,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.x
-    path: Unit/Arm2/Arm2_Target
+    path: Skin/Arm2/Arm2_Target
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -844,7 +844,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.y
-    path: Unit/Arm2/Arm2_Target
+    path: Skin/Arm2/Arm2_Target
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -881,7 +881,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.z
-    path: Unit/Arm2/Arm2_Target
+    path: Skin/Arm2/Arm2_Target
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -909,7 +909,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.x
-    path: Unit/Head/Head_Target
+    path: Skin/Head/Head_Target
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -937,7 +937,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.y
-    path: Unit/Head/Head_Target
+    path: Skin/Head/Head_Target
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -965,7 +965,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.z
-    path: Unit/Head/Head_Target
+    path: Skin/Head/Head_Target
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -1002,7 +1002,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.x
-    path: Unit/Leg1/Leg1_Target
+    path: Skin/Leg1/Leg1_Target
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -1039,7 +1039,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.y
-    path: Unit/Leg1/Leg1_Target
+    path: Skin/Leg1/Leg1_Target
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -1076,7 +1076,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.z
-    path: Unit/Leg1/Leg1_Target
+    path: Skin/Leg1/Leg1_Target
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -1113,7 +1113,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.x
-    path: Unit/Leg2/Leg2_Target
+    path: Skin/Leg2/Leg2_Target
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -1150,7 +1150,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.y
-    path: Unit/Leg2/Leg2_Target
+    path: Skin/Leg2/Leg2_Target
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -1187,7 +1187,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.z
-    path: Unit/Leg2/Leg2_Target
+    path: Skin/Leg2/Leg2_Target
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -1242,7 +1242,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.x
-    path: Unit/UnitSkeleton/Body2_
+    path: Skin/SkinSkeleton/Body2_
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -1297,7 +1297,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.y
-    path: Unit/UnitSkeleton/Body2_
+    path: Skin/SkinSkeleton/Body2_
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -1352,7 +1352,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.z
-    path: Unit/UnitSkeleton/Body2_
+    path: Skin/SkinSkeleton/Body2_
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -1380,7 +1380,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.x
-    path: Unit/UnitSkeleton/Body2_
+    path: Skin/SkinSkeleton/Body2_
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -1408,7 +1408,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.y
-    path: Unit/UnitSkeleton/Body2_
+    path: Skin/SkinSkeleton/Body2_
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -1436,7 +1436,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.z
-    path: Unit/UnitSkeleton/Body2_
+    path: Skin/SkinSkeleton/Body2_
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -1473,7 +1473,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.x
-    path: Unit/UnitSkeleton/Body2_/Body1_/Shoulder1_
+    path: Skin/SkinSkeleton/Body2_/Body1_/Shoulder1_
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -1510,7 +1510,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.y
-    path: Unit/UnitSkeleton/Body2_/Body1_/Shoulder1_
+    path: Skin/SkinSkeleton/Body2_/Body1_/Shoulder1_
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -1547,7 +1547,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.z
-    path: Unit/UnitSkeleton/Body2_/Body1_/Shoulder1_
+    path: Skin/SkinSkeleton/Body2_/Body1_/Shoulder1_
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -1584,7 +1584,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.x
-    path: Unit/UnitSkeleton/Body2_/Body1_/Shoulder1_
+    path: Skin/SkinSkeleton/Body2_/Body1_/Shoulder1_
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -1621,7 +1621,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.y
-    path: Unit/UnitSkeleton/Body2_/Body1_/Shoulder1_
+    path: Skin/SkinSkeleton/Body2_/Body1_/Shoulder1_
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -1658,7 +1658,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.z
-    path: Unit/UnitSkeleton/Body2_/Body1_/Shoulder1_
+    path: Skin/SkinSkeleton/Body2_/Body1_/Shoulder1_
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -1695,7 +1695,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.x
-    path: Unit/UnitSkeleton/Body2_/Body1_/Shoulder2_
+    path: Skin/SkinSkeleton/Body2_/Body1_/Shoulder2_
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -1732,7 +1732,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.y
-    path: Unit/UnitSkeleton/Body2_/Body1_/Shoulder2_
+    path: Skin/SkinSkeleton/Body2_/Body1_/Shoulder2_
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -1769,7 +1769,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.z
-    path: Unit/UnitSkeleton/Body2_/Body1_/Shoulder2_
+    path: Skin/SkinSkeleton/Body2_/Body1_/Shoulder2_
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -1806,7 +1806,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.x
-    path: Unit/UnitSkeleton/Body2_/Body1_/Shoulder2_
+    path: Skin/SkinSkeleton/Body2_/Body1_/Shoulder2_
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -1843,7 +1843,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.y
-    path: Unit/UnitSkeleton/Body2_/Body1_/Shoulder2_
+    path: Skin/SkinSkeleton/Body2_/Body1_/Shoulder2_
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -1880,7 +1880,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.z
-    path: Unit/UnitSkeleton/Body2_/Body1_/Shoulder2_
+    path: Skin/SkinSkeleton/Body2_/Body1_/Shoulder2_
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -1917,7 +1917,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.x
-    path: Unit/UnitSkeleton/Body2_/Leg1_
+    path: Skin/SkinSkeleton/Body2_/Leg1_
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -1954,7 +1954,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.y
-    path: Unit/UnitSkeleton/Body2_/Leg1_
+    path: Skin/SkinSkeleton/Body2_/Leg1_
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -1991,7 +1991,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.z
-    path: Unit/UnitSkeleton/Body2_/Leg1_
+    path: Skin/SkinSkeleton/Body2_/Leg1_
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2028,7 +2028,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.x
-    path: Unit/UnitSkeleton/Body2_/Leg1_
+    path: Skin/SkinSkeleton/Body2_/Leg1_
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2065,7 +2065,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.y
-    path: Unit/UnitSkeleton/Body2_/Leg1_
+    path: Skin/SkinSkeleton/Body2_/Leg1_
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2102,7 +2102,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.z
-    path: Unit/UnitSkeleton/Body2_/Leg1_
+    path: Skin/SkinSkeleton/Body2_/Leg1_
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2139,7 +2139,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.x
-    path: Unit/UnitSkeleton/Body2_/Leg2_
+    path: Skin/SkinSkeleton/Body2_/Leg2_
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2176,7 +2176,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.y
-    path: Unit/UnitSkeleton/Body2_/Leg2_
+    path: Skin/SkinSkeleton/Body2_/Leg2_
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2213,7 +2213,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.z
-    path: Unit/UnitSkeleton/Body2_/Leg2_
+    path: Skin/SkinSkeleton/Body2_/Leg2_
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2250,7 +2250,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.x
-    path: Unit/UnitSkeleton/Body2_/Leg2_
+    path: Skin/SkinSkeleton/Body2_/Leg2_
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2287,7 +2287,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.y
-    path: Unit/UnitSkeleton/Body2_/Leg2_
+    path: Skin/SkinSkeleton/Body2_/Leg2_
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2324,7 +2324,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.z
-    path: Unit/UnitSkeleton/Body2_/Leg2_
+    path: Skin/SkinSkeleton/Body2_/Leg2_
     classID: 4
     script: {fileID: 0}
   m_EulerEditorCurves:
@@ -2335,7 +2335,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: Unit/UnitSkeleton/Body2_/Body1_/Shoulder1_
+    path: Skin/SkinSkeleton/Body2_/Body1_/Shoulder1_
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2345,7 +2345,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Unit/UnitSkeleton/Body2_/Body1_/Shoulder1_
+    path: Skin/SkinSkeleton/Body2_/Body1_/Shoulder1_
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2355,7 +2355,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: Unit/UnitSkeleton/Body2_/Body1_/Shoulder1_
+    path: Skin/SkinSkeleton/Body2_/Body1_/Shoulder1_
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2365,7 +2365,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: Unit/UnitSkeleton/Body2_/Leg1_
+    path: Skin/SkinSkeleton/Body2_/Leg1_
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2375,7 +2375,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Unit/UnitSkeleton/Body2_/Leg1_
+    path: Skin/SkinSkeleton/Body2_/Leg1_
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2385,7 +2385,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: Unit/UnitSkeleton/Body2_/Leg1_
+    path: Skin/SkinSkeleton/Body2_/Leg1_
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2395,7 +2395,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: Unit/UnitSkeleton/Body2_
+    path: Skin/SkinSkeleton/Body2_
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2405,7 +2405,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Unit/UnitSkeleton/Body2_
+    path: Skin/SkinSkeleton/Body2_
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2415,7 +2415,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: Unit/UnitSkeleton/Body2_
+    path: Skin/SkinSkeleton/Body2_
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2425,7 +2425,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: Unit/UnitSkeleton/Body2_/Body1_/Shoulder2_
+    path: Skin/SkinSkeleton/Body2_/Body1_/Shoulder2_
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2435,7 +2435,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Unit/UnitSkeleton/Body2_/Body1_/Shoulder2_
+    path: Skin/SkinSkeleton/Body2_/Body1_/Shoulder2_
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2445,7 +2445,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: Unit/UnitSkeleton/Body2_/Body1_/Shoulder2_
+    path: Skin/SkinSkeleton/Body2_/Body1_/Shoulder2_
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2455,7 +2455,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: Unit/UnitSkeleton/Body2_/Leg2_
+    path: Skin/SkinSkeleton/Body2_/Leg2_
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2465,7 +2465,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Unit/UnitSkeleton/Body2_/Leg2_
+    path: Skin/SkinSkeleton/Body2_/Leg2_
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2475,7 +2475,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: Unit/UnitSkeleton/Body2_/Leg2_
+    path: Skin/SkinSkeleton/Body2_/Leg2_
     classID: 4
     script: {fileID: 0}
   m_HasGenericRootTransform: 0

@@ -17,20 +17,8 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: d40e3ee99b5d30b4081817de5dd26550
   m_SerializeEntries:
-  - m_GUID: e46872bf4c729b940bb75d3e90a35383
-    m_Address: Assets/Scenes/Level2.unity
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 2cda990e2423bbf4892e6590ba056729
-    m_Address: Assets/Scenes/SampleScene.unity
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: 08db377ca0e9af343b85c9e43d0cd15e
     m_Address: Assets/ScriptableObjects/Channels/SceneManagement/ColdStartupChannel.asset
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 00a55256bc8251942a5e1d8bee5d06ef
-    m_Address: Assets/Scenes/Managers.unity
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

@@ -1,5 +1,5 @@
 {
-    "name": "Player",
+    "name": "GameInput",
     "maps": [
         {
             "name": "Gameplay",
