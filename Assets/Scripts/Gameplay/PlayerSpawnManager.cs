@@ -41,8 +41,8 @@ namespace All.Gameplay
 
 		private void SpawnPlayer()
 		{
-			Transform spawnLocation = m_defaultSpawnPoint;
-			EntityBase playerInstance = Instantiate(_playerPrefab, spawnLocation.position, spawnLocation.rotation);
+			Transform  spawnLocation  = _defaultSpawnPoint;
+			Player playerInstance = Instantiate(_playerPrefab, spawnLocation.position, spawnLocation.rotation);
 
 			_transformEventChannel.RaiseEvent(playerInstance.transform);
 

@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class Damageable : MonoBehaviour, IDamageable
 {
-.
-
-	public float MaxHealth
+    public float MaxHealth
 	{
 		get;
 		set;
