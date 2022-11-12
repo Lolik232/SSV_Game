@@ -1,10 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class Damageable : MonoBehaviour, IDamageable
 {
-.
+	[SerializeField] private float _health;
 
 	public float MaxHealth
 	{
@@ -17,13 +16,31 @@ public class Damageable : MonoBehaviour, IDamageable
 		private set;
 	}
 
+	private void Awake()
+	{
+		MaxHealth = _health;
+		Health = _health;
+	}
+
 	public void RestoreHealth(float regeneration)
 	{
-		throw new System.NotImplementedException();
+		if (regeneration < 0)
+		{
+			throw new Exception("Regeneration Cannot Be Negative");
+		}
+
+		Health = Mathf.Clamp(Health + regeneration, 0, MaxHealth);
+		Debug.Log(this + " Health: " + Health);
 	}
 
 	public void TakeDamage(float damage)
 	{
-		throw new System.NotImplementedException();
+		if (damage < 0)
+		{
+			throw new Exception("Damage Cannot Be Negative");
+		}
+
+		Health = Mathf.Clamp(Health - damage, 0, MaxHealth);
+		Debug.Log(this + " Health: " + Health);
 	}
 }
