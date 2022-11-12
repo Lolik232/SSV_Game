@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9716599d0f784a048b791f042431b073, type: 3}
+  m_Name: MenuToStartScreenTransition
+  m_EditorClassIdentifier: 
+  Decision: {fileID: 11400000, guid: e22bd93673260df4282584f3b6a7987e, type: 2}
+  TrueState: {fileID: 11400000, guid: 9c64f1c553e380b43a6dc842b15e296c, type: 2}
+  FalseState: {fileID: 11400000, guid: e86c2e5f5bc2ab14e9236d4d4a0e05fe, type: 2}
