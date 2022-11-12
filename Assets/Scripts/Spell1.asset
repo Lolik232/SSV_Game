@@ -16,6 +16,4 @@ MonoBehaviour:
   description: 
   _name: spell
   _liveCycle: {fileID: 0}
-  _effects:
-  - _effectSO: {fileID: 0}
-  - _effectSO: {fileID: 0}
+  _effects: []

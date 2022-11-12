@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d65a8e80ce647e8ba00eded152ad67c, type: 3}
+  m_Name: Fire
+  m_EditorClassIdentifier: 
+  _guid: af7be2ed6a277094184d16932038e6b0
+  description: bla bla bla
+  _name: Fire
+  _liveCycleSO: {fileID: 11400000, guid: 57033f6ce22ec2d469d6e2bdd8a10eff, type: 2}
+  _effectsSO:
+  - {fileID: 11400000, guid: c329cfee489a641438befd23fbb15c35, type: 2}
+  _effects: []

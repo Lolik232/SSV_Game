@@ -3,20 +3,20 @@ using All.Interfaces;
 using Unity.VisualScripting;
 using UnityEngine;
 
-namespace Spells
+namespace Systems.SpellSystem.SpellEffect
 {
     [Serializable]
     public class PeriodicApplyStrategy : EffectApplyStrategy
     {
-        private float _lastUsedTime = 0f;
-        private float _period       = 0f;
-        private bool  _started      = false;
+        [SerializeField] private float _lastUsedTime = 0f;
+        [SerializeField] private float _period       = 0f;
+        [SerializeField] private bool  _started      = false;
 
         public PeriodicApplyStrategy(EffectApplyStrategySO applyStrategySO, float period)
             : base(applyStrategySO) => SetPeriod(period);
 
         public PeriodicApplyStrategy(EffectApplyStrategySO applyStrategySO) : base(applyStrategySO) { }
-        
+
         public void SetPeriod(float period)
         {
             if (period < 0)

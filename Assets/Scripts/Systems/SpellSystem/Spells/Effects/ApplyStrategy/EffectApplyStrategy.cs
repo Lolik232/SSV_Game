@@ -1,12 +1,14 @@
 ﻿using System;
 using All.Interfaces;
+using UnityEngine;
 
-namespace Spells
+namespace Systems.SpellSystem.SpellEffect
 {
+    [Serializable]
     public abstract class EffectApplyStrategy : ICloneable
     {
-        private EffectApplyStrategySO _applyStrategySO;
-        public  EffectApplyStrategySO ApplyStrategySO => _applyStrategySO;
+        [SerializeField] private EffectApplyStrategySO _applyStrategySO;
+        public                   EffectApplyStrategySO ApplyStrategySO => _applyStrategySO;
 
 
         protected EffectApplyStrategy(EffectApplyStrategySO applyStrategySo)

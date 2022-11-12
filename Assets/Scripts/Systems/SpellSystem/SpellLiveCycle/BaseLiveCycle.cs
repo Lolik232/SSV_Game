@@ -1,7 +1,9 @@
-﻿using All.Interfaces;
+﻿using System;
+using All.Interfaces;
 
-namespace Systems.SpellSystem.SpellLiveCycle
+namespace Systems.SpellSystem.SpellEffect.SpellLiveCycle
 {
+    [Serializable]
     public abstract class BaseLiveCycle : ILiveCycle
     {
         public abstract void LogicUpdate();

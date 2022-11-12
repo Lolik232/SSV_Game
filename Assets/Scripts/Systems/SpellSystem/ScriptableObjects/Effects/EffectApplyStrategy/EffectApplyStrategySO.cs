@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Spells
+namespace Systems.SpellSystem.SpellEffect
 {
     public abstract class EffectApplyStrategySO : ScriptableObject
     {

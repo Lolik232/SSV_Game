@@ -1,9 +1,9 @@
-﻿using Systems.SpellSystem.SpellLiveCycle;
+﻿using Systems.SpellSystem.SpellEffect.SpellLiveCycle;
 using UnityEngine;
 
-namespace Spells.SpellLiveCycle
+namespace Systems.SpellSystem.SpellEffect.SpellLiveCycle
 {
-    [CreateAssetMenu(fileName = "Spells/Live Cycle/Infinity", menuName = "livecycle")]
+    [CreateAssetMenu(menuName = "Spell/Live Cycle/Infinity", fileName = "InfinityLiveCycle")]
     public class InfinityLiveCycleSO : LiveCycleSO
     {
         public override BaseLiveCycle CreateLiveCycle()

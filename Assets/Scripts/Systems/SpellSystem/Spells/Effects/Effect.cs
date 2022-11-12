@@ -1,12 +1,12 @@
 ﻿using System;
 using All.Interfaces;
-using Spells.Actions;
-using Spells.Actions.ScriptableObjects;
-using Systems.SpellSystem.SpellLiveCycle;
+using Systems.SpellSystem.SpellEffect.Actions;
+using Systems.SpellSystem.SpellEffect.Actions.ScriptableObjects;
+using Systems.SpellSystem.SpellEffect.SpellLiveCycle;
 using Unity.VisualScripting;
 using UnityEngine;
 
-namespace Spells
+namespace Systems.SpellSystem.SpellEffect
 {
     [Serializable]
     public class Effect : ICloneable

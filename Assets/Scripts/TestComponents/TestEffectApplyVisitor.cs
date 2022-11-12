@@ -1,5 +1,5 @@
 ﻿using All.Interfaces;
-using Spells.Actions;
+using Systems.SpellSystem.SpellEffect.Actions;
 using UnityEngine;
 
 namespace TestComponents
@@ -13,7 +13,7 @@ namespace TestComponents
 
         public void Visit(BlockAbilityAction blockAbilityAction)
         {
-            Debug.Log($"EFFECT ACTION BLOCK AB {blockAbilityAction.AbilitiesToBlock[0]}");
+            Debug.Log($"EFFECT ACTION BLOCK AB {blockAbilityAction.AbilitiesToBlock[0].name}");
         }
     }
 }

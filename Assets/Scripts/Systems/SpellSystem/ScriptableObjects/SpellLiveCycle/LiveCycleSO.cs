@@ -1,7 +1,7 @@
-﻿using Systems.SpellSystem.SpellLiveCycle;
+﻿using Systems.SpellSystem.SpellEffect.SpellLiveCycle;
 using UnityEngine;
 
-namespace Spells.SpellLiveCycle
+namespace Systems.SpellSystem.SpellEffect.SpellLiveCycle
 {
     public abstract class LiveCycleSO : ScriptableObject
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using All.Interfaces;
 using UnityEngine;
 
-namespace Spells.Actions
+namespace Systems.SpellSystem.SpellEffect.Actions
 {
     [Serializable]
     public class BlockAbilityAction : EffectAction

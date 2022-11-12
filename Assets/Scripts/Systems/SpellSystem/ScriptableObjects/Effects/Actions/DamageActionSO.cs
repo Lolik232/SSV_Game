@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-namespace Spells.Actions.ScriptableObjects
+namespace Systems.SpellSystem.SpellEffect.Actions.ScriptableObjects
 {
-    [CreateAssetMenu(fileName = "Spells/Effects/Damage", menuName = "damage")]
+    [CreateAssetMenu(menuName = "Spell/Effect/Action/Damage")]
     public class DamageActionSO : EffectActionSO
     {
         [SerializeField] private float _value = 0f;

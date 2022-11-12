@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-namespace Spells
+namespace Systems.SpellSystem.SpellEffect
 {
-    [CreateAssetMenu(fileName = "Mutually exclusive table", menuName = "Spells", order = 0)]
+    [CreateAssetMenu(menuName = "Spell/Mutually exclusive table", fileName = "Mutually Exclusive Table")]
     public class MutuallyExclusiveTableSO : ScriptableObject
     {
         

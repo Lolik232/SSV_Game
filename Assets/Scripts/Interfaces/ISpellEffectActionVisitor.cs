@@ -1,4 +1,4 @@
-﻿using Spells.Actions;
+﻿using Systems.SpellSystem.SpellEffect.Actions;
 
 namespace All.Interfaces
 {

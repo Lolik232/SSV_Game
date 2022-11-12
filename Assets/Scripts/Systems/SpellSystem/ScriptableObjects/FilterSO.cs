@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Spells
+namespace Systems.SpellSystem.SpellEffect
 {
-    [CreateAssetMenu(fileName = "Spell/Filter", menuName = "filter")]
+    [CreateAssetMenu(fileName = "Filter", menuName = "Spell/Filter")]
     public class FilterSO : ScriptableObject
     {
         private List<SpellSO>                _spellBlackList = new();

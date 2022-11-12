@@ -1,11 +1,14 @@
-﻿using All.Interfaces;
+﻿using System;
+using All.Interfaces;
+using UnityEngine;
 
-namespace Spells
+namespace Systems.SpellSystem.SpellEffect
 {
+    [Serializable]
     public abstract class EffectAction
     {
-        private EffectActionSO _effectActionSO;
-        public  EffectActionSO EffectActionSO => _effectActionSO;
+        [SerializeField] private EffectActionSO _effectActionSO;
+        public                   EffectActionSO EffectActionSO => _effectActionSO;
 
         protected EffectAction(EffectActionSO effectActionSo)
         {

@@ -1,7 +1,7 @@
 ﻿using All.BaseClasses;
 using UnityEngine;
 
-namespace Spells
+namespace Systems.SpellSystem.SpellEffect
 {
     public abstract class EffectActionSO : BaseDescriptionSO
     {

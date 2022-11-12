@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-namespace Spells
+namespace Systems.SpellSystem.SpellEffect
 {
-    [CreateAssetMenu(fileName = "Spell/Effect/Apply Strategy/Periodic Time", menuName = "apply strategy")]
+    [CreateAssetMenu(menuName = "Spell/Effect/Apply Strategy/Periodic Time")]
     public class PeriodicApplyStrategySO : EffectApplyStrategySO
     {
         [SerializeField] private float _period = 0f;

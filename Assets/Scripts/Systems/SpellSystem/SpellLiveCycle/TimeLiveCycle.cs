@@ -2,8 +2,9 @@
 using System.Data;
 using UnityEngine;
 
-namespace Systems.SpellSystem.SpellLiveCycle
+namespace Systems.SpellSystem.SpellEffect.SpellLiveCycle
 {
+    [Serializable]
     public class TimeLiveCycle : BaseLiveCycle
     {
         /*  TODO: отдельный объект таймера

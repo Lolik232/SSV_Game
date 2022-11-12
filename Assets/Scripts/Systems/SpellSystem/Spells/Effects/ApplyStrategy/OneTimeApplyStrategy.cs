@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Spells
+namespace Systems.SpellSystem.SpellEffect
 {
     [Serializable]
     public class OneTimeApplyStrategy : EffectApplyStrategy

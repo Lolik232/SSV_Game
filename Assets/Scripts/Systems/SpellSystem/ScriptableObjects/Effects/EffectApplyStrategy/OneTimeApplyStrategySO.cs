@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-namespace Spells
+namespace Systems.SpellSystem.SpellEffect
 {
-    [CreateAssetMenu(fileName = "Spell/Effect/Apply Strategy/One Time", menuName = "apply strategy")]
+    [CreateAssetMenu(menuName = "Spell/Effect/Apply Strategy/One Time")]
     public class OneTimeApplyStrategySO : EffectApplyStrategySO
     {
         public override EffectApplyStrategy CreateStrategy()

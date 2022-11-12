@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Spells.Actions.ScriptableObjects
+namespace Systems.SpellSystem.SpellEffect.Actions.ScriptableObjects
 {
-    [CreateAssetMenu(fileName = "Spells/Effects/Block Ability", menuName = "block ability")]
+    [CreateAssetMenu(menuName = "Spell/Effect/Action/Block Ability")]
     public class BlockAbilityActionSO : EffectActionSO
     {
         [SerializeField] private List<AbilitySO> _abilitiesToBlock = new();

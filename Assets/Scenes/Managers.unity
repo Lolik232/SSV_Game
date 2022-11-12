@@ -152,12 +152,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa559d2d02dd4b679ef9c9367a94393b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_scene: {fileID: 0}
-  m_loadLocationChan: {fileID: 11400000, guid: efcd5361b4da801408cb91de1a0effaa, type: 2}
-  m_loadFromEditorChan: {fileID: 11400000, guid: 08db377ca0e9af343b85c9e43d0cd15e, type: 2}
-  m_toggleLoadingScreenChan: {fileID: 11400000, guid: ddb08b9d7f05b5449abcf1c4d3cd1fa3, type: 2}
-  m_onSceneReadyChan: {fileID: 11400000, guid: c78296a871062f34e9879fa67fe14abd, type: 2}
-  m_fadeRequestChan: {fileID: 11400000, guid: 3756d3b60ad9cc6439774583674d223c, type: 2}
+  _scene: {fileID: 0}
+  _loadLocationChan: {fileID: 11400000, guid: efcd5361b4da801408cb91de1a0effaa, type: 2}
+  _loadFromEditorChan: {fileID: 11400000, guid: 08db377ca0e9af343b85c9e43d0cd15e, type: 2}
+  _toggleLoadingScreenChan: {fileID: 11400000, guid: ddb08b9d7f05b5449abcf1c4d3cd1fa3, type: 2}
+  _onSceneReadyChan: {fileID: 11400000, guid: c78296a871062f34e9879fa67fe14abd, type: 2}
+  _fadeRequestChan: {fileID: 11400000, guid: 3756d3b60ad9cc6439774583674d223c, type: 2}
 --- !u!4 &1598221720
 Transform:
   m_ObjectHideFlags: 0

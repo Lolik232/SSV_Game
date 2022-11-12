@@ -1,5 +1,8 @@
-﻿namespace Systems.SpellSystem.SpellLiveCycle
+﻿using System;
+
+namespace Systems.SpellSystem.SpellEffect.SpellLiveCycle
 {
+    [Serializable]
     public class InfinityLiveCycle : BaseLiveCycle
     {
         public InfinityLiveCycle() { }

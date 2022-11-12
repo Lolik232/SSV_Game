@@ -2,24 +2,39 @@
 using System.Collections.Generic;
 using System.Linq;
 using All.Interfaces;
-using Spells;
-using Systems.SpellSystem.Spells;
+using Systems.SpellSystem.SpellEffect;
 using UnityEngine;
 
-namespace Systems.SpellSystem
+namespace Systems.SpellSystem.SpellEffect
 {
+    [RequireComponent(typeof(ISpellEffectActionVisitor))]
     public class SpellHolder : MonoBehaviour, ILogicUpdate
     {
-        [SerializeField] private List<Spell>               _spells         = new();
-        [SerializeField] private FilterSO                  _spellFilter    = default;
-        private                  List<Spell>               _spellsToRemove = new();
-        private                  ISpellEffectActionVisitor _visitor;
+        [SerializeField] private List<Spell>              _spells           = new();
+        [SerializeField] private FilterSO                 _spellFilterSO    ;
+        [SerializeField] private MutuallyExclusiveTableSO _exclusiveTableSO;
+
+        private List<Spell>               _spellsToRemove = new();
+        private ISpellEffectActionVisitor _visitor;
+
+        private void Awake()
+        {
+            _visitor = GetComponent<ISpellEffectActionVisitor>();
+        }
 
         public void AddSpell(SpellSO spell)
         {
-            if (_spellFilter.InBlackList(spell)) return;
+            if (_spellFilterSO.InBlackList(spell)) return;
 
             _spells.Add(spell.CreateSpell());
+        }
+
+        public void AddSpells(List<SpellSO> spells)
+        {
+            foreach (var spell in spells)
+            {
+                AddSpell(spell);
+            }
         }
 
         private void Update()
@@ -39,7 +54,10 @@ namespace Systems.SpellSystem
 
         private void ApplyAllSpells()
         {
-            
+            foreach (var spell in _spells)
+            {
+                spell.ApplyEffects(_visitor);
+            }
         }
 
         private void CheckLiveCycle()
@@ -47,8 +65,6 @@ namespace Systems.SpellSystem
             _spellsToRemove = _spells.FindAll(s => s.IsEnd);
         }
 
-
-        // [SerializeField] private 
         public void LogicUpdate()
         {
             foreach (var spell in _spells)

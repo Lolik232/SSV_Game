@@ -1,8 +1,10 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
-namespace Spells
+namespace Systems.SpellSystem.SpellEffect
 {
-    [CreateAssetMenu(menuName = "Spell/Effect", fileName = "effect")]
+    [CreateAssetMenu(menuName = "Spell/Effect/Effect", fileName = "Effect")]
+    [Serializable]
     public class EffectSO : ScriptableObject
     {
         [SerializeField] private EffectActionSO        _effectActionSO;

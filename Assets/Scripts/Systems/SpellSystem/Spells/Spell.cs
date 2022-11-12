@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using All.Interfaces;
 using Extensions;
-using Spells;
-using Systems.SpellSystem.SpellLiveCycle;
+using Systems.SpellSystem.SpellEffect;
+using Systems.SpellSystem.SpellEffect.SpellLiveCycle;
 using UnityEngine;
 
-namespace Systems.SpellSystem.Spells
+namespace Systems.SpellSystem.SpellEffect
 {
     [Serializable]
     public class Spell : ILogicUpdate
@@ -25,7 +25,7 @@ namespace Systems.SpellSystem.Spells
         {
             SpellSO    = spellSO;
             _liveCycle = liveCycle;
-            _effects.AddRange(effects.ToList().Clone());
+            _effects.AddRange(effects);
         }
 
         public void ApplyEffects(ISpellEffectActionVisitor visitor)
