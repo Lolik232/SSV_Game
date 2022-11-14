@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-public class GameSceneSO : ScriptableObject
+public class GameSceneSO : SerializableScriptableObject
 {
 	public GameSceneType sceneType;
 	public AssetReference sceneReference;

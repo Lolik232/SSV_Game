@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a18e8671bfc54a0cb9ef860bc58f0daa, type: 3}
+  m_Name: Save System
+  m_EditorClassIdentifier: 
+  _saveSettingsEvent: {fileID: 11400000, guid: 03e464b9efe0c4c49bddff3551926ffc, type: 2}
+  _saveGameEvent: {fileID: 11400000, guid: efcd5361b4da801408cb91de1a0effaa, type: 2}
+  _currentSettings: {fileID: 11400000, guid: f6eb78f1a31f6c3488200d318a9a6368, type: 2}
+  _saveFileName: LIND.save
+  _settingsFilename: settings.save
+  save:
+    locationID: 

@@ -24,7 +24,5 @@ public class UISettingsManager : MonoBehaviour
 	public void ChangeFX(float volume)
 	{
 		mixer.audioMixer.SetFloat("FXVolume", Mathf.Lerp(-80, 0, volume));
-		
-	}
-	
+    }
 }

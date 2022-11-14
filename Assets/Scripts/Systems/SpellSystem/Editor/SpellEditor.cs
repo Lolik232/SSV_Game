@@ -22,14 +22,14 @@ namespace Systems.SpellSystem.SpellEffect.Editor
         {
             base.OnInspectorGUI();
 
-            // EditorGUILayout.BeginHorizontal();
-            // _effectSo = (EffectSO)EditorGUILayout.ObjectField(_effectSo, typeof(EffectSO));
-            // EditorGUILayout.EndHorizontal();
-            //
-            // if (_effectSo != null && GUILayout.Button("Add effect"))
-            // {
-            //     _spellSO.AddEffect(_effectSo);
-            // }
+            EditorGUILayout.BeginHorizontal();
+            _effectSo = (EffectSO)EditorGUILayout.ObjectField(_effectSo, typeof(EffectSO));
+            EditorGUILayout.EndHorizontal();
+            
+            if (_effectSo != null && GUILayout.Button("Add effect"))
+            {
+                _spellSO.AddEffect(_effectSo);
+            }
 
             if (_spellSO.EffectsSO.Count != 0 && GUILayout.Button("Initialize Spell"))
             {
