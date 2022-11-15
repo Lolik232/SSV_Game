@@ -1,14 +1,14 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 using UnityEngine;
-
-using static UnityEngine.Rendering.DebugUI;
 
 [RequireComponent(typeof(AbilitiesManager))]
 
 public abstract class Ability : ComponentBase
 {
+  public AbilitySO description;
+
 	private List<dynamic> _abilityStates = new();
 
 	protected List<Func<bool>> enterConditions = new();

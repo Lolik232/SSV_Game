@@ -1,18 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class DummyInAirState : MonoBehaviour
+[RequireComponent(typeof(GroundChecker))]
+
+public class DummyInAirState : State
 {
-    // Start is called before the first frame update
-    void Start()
+    private Dummy _dummy;
+
+    private GroundChecker _groundChecker;
+
+    protected override void Awake()
     {
-        
+        base.Awake();
+        _dummy = GetComponent<Dummy>();
+
+        Checkers.Add(_groundChecker = GetComponent<GroundChecker>());
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        bool GroundedCondition() => _groundChecker.Grounded && _dummy.Velocity.y < 0.01f;
+
+        Transitions.Add(new(_dummy.GroundedState, GroundedCondition));
     }
 }

@@ -1,71 +1,87 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(Physical), typeof(Rotateable), typeof(Damageable))]
+[RequireComponent(typeof(DummyGroundedState), typeof(DummyInAirState))]
 
-public class Dummy : Entity, IPhysical, IRotateable , IDamageable
+public class Dummy : Entity, IPhysical, IRotateable, IDamageable
 {
-	private Physical _physical;
-	private Rotateable _rotateable;
-	private Damageable _damageable;
+    private Physical _physical;
+    private Rotateable _rotateable;
+    private Damageable _damageable;
 
-	public Vector2 Position => _physical.Position;
+    public Vector2 Position => _physical.Position;
 
-	public Vector2 Velocity => _physical.Velocity;
+    public Vector2 Velocity => _physical.Velocity;
 
-	public float Gravity => _physical.Gravity;
+    public float Gravity => _physical.Gravity;
 
-	public Vector2 Size => _physical.Size;
+    public Vector2 Size => _physical.Size;
 
-	public Vector2 Offset => _physical.Offset;
+    public Vector2 Offset => _physical.Offset;
 
-	public Vector2 Center => _physical.Center;
+    public Vector2 Center => _physical.Center;
 
-	public int FacingDirection => _rotateable.FacingDirection;
+    public int FacingDirection => _rotateable.FacingDirection;
 
-	public int BodyDirection => _rotateable.BodyDirection;
+    public int BodyDirection => _rotateable.BodyDirection;
 
-	public float MaxHealth
-	{
-		get => _damageable.MaxHealth;
-		set => _damageable.MaxHealth = value;
-	}
+    public float MaxHealth
+    {
+        get => _damageable.MaxHealth;
+        set => _damageable.MaxHealth = value;
+    }
 
-	public float Health => _damageable.Health;
+    public float Health => _damageable.Health;
 
-	public void Push(float force, Vector2 angle)
-	{
-		_physical.Push(force, angle);
-	}
+    public DummyGroundedState GroundedState
+    {
+        get;
+        private set;
+    }
 
-	public void RestoreHealth(float regeneration)
-	{
-		_damageable.RestoreHealth(regeneration);
-	}
+    public DummyInAirState InAirState
+    {
+        get;
+        private set;
+    }
 
-	public void RotateBodyIntoDirection(int direction)
-	{
-		_rotateable.RotateBodyIntoDirection(direction);
-	}
+    public void Push(float force, Vector2 angle)
+    {
+        _physical.Push(force, angle);
+    }
 
-	public void RotateIntoDirection(int direction)
-	{
-		_rotateable.RotateIntoDirection(direction);
-	}
+    public void RestoreHealth(float regeneration)
+    {
+        _damageable.RestoreHealth(regeneration);
+    }
 
-	public void TakeDamage(float damage)
-	{
-		_damageable.TakeDamage(damage);
-	}
+    public void RotateBodyIntoDirection(int direction)
+    {
+        _rotateable.RotateBodyIntoDirection(direction);
+    }
 
-	private void Awake()
-	{
-		_physical = GetComponent<Physical>();
-		_rotateable = GetComponent<Rotateable>();
-		_damageable = GetComponent<Damageable>();
-	}
+    public void RotateIntoDirection(int direction)
+    {
+        _rotateable.RotateIntoDirection(direction);
+    }
 
-	private void Start()
-	{
-		RotateIntoDirection(1);
-	}
+    public void TakeDamage(float damage)
+    {
+        _damageable.TakeDamage(damage);
+    }
+
+    private void Awake()
+    {
+        _physical = GetComponent<Physical>();
+        _rotateable = GetComponent<Rotateable>();
+        _damageable = GetComponent<Damageable>();
+
+        InAirState = GetComponent<DummyInAirState>();
+        GroundedState = GetComponent<DummyGroundedState>();
+    }
+
+    private void Start()
+    {
+        RotateIntoDirection(1);
+    }
 }

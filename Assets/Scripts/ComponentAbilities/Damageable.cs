@@ -2,9 +2,14 @@
 
 using UnityEngine;
 
+[RequireComponent(typeof(DeadState), typeof(StateMachine))]
+
 public class Damageable : MonoBehaviour, IDamageable
 {
     [SerializeField] private float _health;
+
+    private StateMachine _machine;
+    private DeadState _deadState;
 
     public float MaxHealth
     {
@@ -19,6 +24,9 @@ public class Damageable : MonoBehaviour, IDamageable
 
     private void Awake()
     {
+        _machine  = GetComponent<StateMachine>();
+        _deadState = GetComponent<DeadState>();
+
         MaxHealth = _health;
         Health = _health;
     }
@@ -43,5 +51,10 @@ public class Damageable : MonoBehaviour, IDamageable
 
         Health = Mathf.Clamp(Health - damage, 0, MaxHealth);
         Debug.Log(this + " Health: " + Health);
+
+        if (Health == 0)
+        {
+            _machine.GetTransition(_deadState);
+        }
     }
 }

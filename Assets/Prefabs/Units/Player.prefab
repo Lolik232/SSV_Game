@@ -217,6 +217,14 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 5f60d7ad-25cd-4461-89c2-9bc61c9c9f52
     m_ActionName: Gameplay/Atack[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f2012ff9-f0de-4151-aa5f-6edddb096523
+    m_ActionName: UI/MenuEntering[/Keyboard/enter]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9d5686ad-d36a-412c-8443-7d871aeeb4b0
+    m_ActionName: UI/MenuExiting[/Keyboard/escape]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard
   m_DefaultActionMap: Gameplay
@@ -769,6 +777,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05474aa6d9b85f748a9b79ae92f54298, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  description: {fileID: 0}
 --- !u!114 &3971873209930756927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -825,6 +834,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28eec5f14b88eac4ba781c5c85454851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  description: {fileID: 0}
 --- !u!114 &7311644396788237840
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -851,6 +861,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecd3f07fda17d074f89dcc9d4a3dcf65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  description: {fileID: 0}
 --- !u!114 &97826728177380232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -889,6 +900,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c27074410493c3d44b72d058a335d124, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  description: {fileID: 0}
 --- !u!114 &5450313350551176671
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -933,6 +945,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 604f3a07e5525714ca7c351deba9fbc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  description: {fileID: 0}
   _amountOfJumps: 2
 --- !u!114 &1545915187109840561
 MonoBehaviour:
@@ -961,6 +974,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d541773bc69cec94cb2473791c31925c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  description: {fileID: 0}
   _amountOfDashes: 1
   _cooldown: 1.5
 --- !u!114 &6576269496505308791
@@ -988,6 +1002,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6963136fa7e05d644bfe30e346e13a2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  description: {fileID: 0}
 --- !u!114 &4839718794917041577
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1312,6 +1327,7 @@ MonoBehaviour:
   _swordLength: 2
   _attackSpeed: 0.2
   _force: 1
+  _damage: 20
 --- !u!1 &8408035153215212682
 GameObject:
   m_ObjectHideFlags: 0
