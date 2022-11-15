@@ -3,8 +3,11 @@
 [RequireComponent(typeof(Physical), typeof(Rotateable), typeof(Damageable))]
 [RequireComponent(typeof(DummyGroundedState), typeof(DummyInAirState))]
 
-public class Dummy : Entity, IPhysical, IRotateable, IDamageable
+public class Dummy : Entity, IPhysical, IRotateable, IDamageable, 
+                             IGrounded
 {
+    private GroundChecker _groundChecker;
+
     private Physical _physical;
     private Rotateable _rotateable;
     private Damageable _damageable;
@@ -45,6 +48,15 @@ public class Dummy : Entity, IPhysical, IRotateable, IDamageable
         private set;
     }
 
+    public bool Grounded => _groundChecker.Grounded;
+
+    public bool IsDead => _damageable.IsDead;
+
+    public void LookAt(Vector2 position)
+    {
+        _rotateable.LookAt(position);
+    }
+
     public void Push(float force, Vector2 angle)
     {
         _physical.Push(force, angle);
@@ -65,13 +77,18 @@ public class Dummy : Entity, IPhysical, IRotateable, IDamageable
         _rotateable.RotateIntoDirection(direction);
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage, Entity damager)
     {
-        _damageable.TakeDamage(damage);
+        LookAt(damager.transform.position);
+        _damageable.TakeDamage(damage, damager);
     }
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
+        _groundChecker = GetComponent<GroundChecker>();
+
         _physical = GetComponent<Physical>();
         _rotateable = GetComponent<Rotateable>();
         _damageable = GetComponent<Damageable>();

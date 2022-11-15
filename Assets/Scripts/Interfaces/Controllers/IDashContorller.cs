@@ -1,8 +1,8 @@
 public interface IDashContorller
 {
-	public bool Dash
-	{
-		get;
-		set;
-	}
+    public bool Dash
+    {
+        get;
+        set;
+    }
 }

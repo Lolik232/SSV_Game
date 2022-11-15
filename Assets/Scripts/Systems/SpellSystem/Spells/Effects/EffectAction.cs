@@ -1,5 +1,7 @@
 ﻿using System;
+
 using All.Interfaces;
+
 using UnityEngine;
 
 namespace Systems.SpellSystem.SpellEffect
@@ -8,7 +10,7 @@ namespace Systems.SpellSystem.SpellEffect
     public abstract class EffectAction
     {
         [SerializeField] private EffectActionSO _effectActionSO;
-        public                   EffectActionSO EffectActionSO => _effectActionSO;
+        public EffectActionSO EffectActionSO => _effectActionSO;
 
         protected EffectAction(EffectActionSO effectActionSo)
         {

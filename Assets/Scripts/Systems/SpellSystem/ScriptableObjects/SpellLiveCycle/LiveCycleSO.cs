@@ -1,5 +1,4 @@
-﻿using Systems.SpellSystem.SpellEffect.SpellLiveCycle;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Systems.SpellSystem.SpellEffect.SpellLiveCycle
 {

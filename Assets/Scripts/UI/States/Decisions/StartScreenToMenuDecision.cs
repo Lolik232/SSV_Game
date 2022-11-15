@@ -1,21 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
-
-using UnityEngine;
-
 using FSM;
 
-using Unity.VisualScripting;
-
-using UnityEngine.InputSystem;
+using UnityEngine;
 
 [CreateAssetMenu(menuName = "FSM/Decisions/Start Screen To Menu")]
 public class StartScreenToMenuDecision : Decision
 {
-	public override bool Decide(BaseStateMachine stateMachine)
-	{
-		return stateMachine.UIInputSO.enterPressed;
+    public override bool Decide(BaseStateMachine stateMachine)
+    {
+        return stateMachine.UIInputSO.enterPressed;
 
 
-	}
+    }
 }

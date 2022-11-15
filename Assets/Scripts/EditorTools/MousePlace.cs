@@ -1,9 +1,6 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.Serialization;
+
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -15,7 +12,10 @@ public class MousePlace : MonoBehaviour
     [FormerlySerializedAs("m_isTargeting")]
     [SerializeField] private bool _isTargeting = false;
 
-    public bool IsTargeting { get => _isTargeting; private set => _isTargeting = value; }
+    public bool IsTargeting
+    {
+        get => _isTargeting; private set => _isTargeting = value;
+    }
 
     [FormerlySerializedAs("m_targetPosition")]
     [SerializeField] private Vector3 _targetPosition;
@@ -31,7 +31,7 @@ public class MousePlace : MonoBehaviour
 
     public void BeginTargeting()
     {
-        IsTargeting      = true;
+        IsTargeting = true;
         _targetPosition = transform.position;
     }
 
@@ -52,7 +52,7 @@ public class MousePlace : MonoBehaviour
 
     public void Cancel()
     {
-        IsTargeting      = false;
+        IsTargeting = false;
         _targetPosition = transform.position;
     }
 }

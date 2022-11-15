@@ -1,4 +1,4 @@
 public interface ICondition
 {
-	public bool DoChecks();
+    public bool DoChecks();
 }

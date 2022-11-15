@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
+
 using All.Events;
-using Unity.VisualScripting;
+
 using UnityEngine;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceProviders;
@@ -28,7 +28,8 @@ namespace SceneManagement
         [Header("Broadcasting")]
         [FormerlySerializedAs("m_toggleLoadingScreenChan")]
         [SerializeField] private BoolEventChannelSO _toggleLoadingScreenChan = default;
-        [FormerlySerializedAs("m_onSceneReadyChan")] [SerializeField]
+        [FormerlySerializedAs("m_onSceneReadyChan")]
+        [SerializeField]
         private VoidEventChannelSO _onSceneReadyChan = default; // to scene managers. Spawn entity, etc.
         [FormerlySerializedAs("m_fadeRequestChan")]
         [SerializeField] private FadeChannelSO _fadeRequestChan = default;
@@ -85,11 +86,14 @@ namespace SceneManagement
 
         private void LoadLocation(GameSceneSO scene, bool showLoadingScreen, bool fadeScreen)
         {
-            if (_isLoading) { return; } // if scene just loading
+            if (_isLoading)
+            {
+                return;
+            } // if scene just loading
 
-            _sceneToLoad       = scene;
+            _sceneToLoad = scene;
             _showLoadingScreen = showLoadingScreen;
-            _isLoading         = true;
+            _isLoading = true;
 
 
             // if (m_gameplayManagerSceneInstance.Scene == null ||
@@ -123,7 +127,10 @@ namespace SceneManagement
                     _currentlyLoadedScene.sceneReference.UnLoadScene();
                 }
 #if UNITY_EDITOR
-                else { SceneManager.UnloadSceneAsync(_currentlyLoadedScene.sceneReference.editorAsset.name); }
+                else
+                {
+                    SceneManager.UnloadSceneAsync(_currentlyLoadedScene.sceneReference.editorAsset.name);
+                }
 #endif
             }
 
@@ -133,7 +140,10 @@ namespace SceneManagement
 
         private void LoadNewScene()
         {
-            if (_showLoadingScreen) { _toggleLoadingScreenChan.RaiseEvent(true); }
+            if (_showLoadingScreen)
+            {
+                _toggleLoadingScreenChan.RaiseEvent(true);
+            }
 
             _loadingOperationHandle = _sceneToLoad.sceneReference.LoadSceneAsync(LoadSceneMode.Additive, true, 0);
             // m_loadingOperationHandle.
@@ -150,7 +160,10 @@ namespace SceneManagement
             LightProbes.TetrahedralizeAsync();
 
             _isLoading = false;
-            if (_showLoadingScreen) { _toggleLoadingScreenChan.RaiseEvent(false); }
+            if (_showLoadingScreen)
+            {
+                _toggleLoadingScreenChan.RaiseEvent(false);
+            }
 
             _fadeRequestChan.RaiseEvent(_fadeDuration);
 

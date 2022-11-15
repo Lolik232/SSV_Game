@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-
 using FSM;
 
 using UnityEngine;
@@ -8,8 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "FSM/Decisions/Menu To Options")]
 public class MenuToOptionsDecision : Decision
 {
-	public override bool Decide(BaseStateMachine stateMachine)
-	{
-		return stateMachine.UIInputSO.optionsPressed;
-	}
+    public override bool Decide(BaseStateMachine stateMachine)
+    {
+        return stateMachine.UIInputSO.optionsPressed;
+    }
 }

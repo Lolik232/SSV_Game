@@ -3,15 +3,15 @@ using UnityEngine.AddressableAssets;
 
 public class GameSceneSO : ScriptableObject
 {
-	public GameSceneType sceneType;
-	public AssetReference sceneReference;
+    public GameSceneType sceneType;
+    public AssetReference sceneReference;
 
 
-	public enum GameSceneType
-	{
-		Location,
-		Menu,
+    public enum GameSceneType
+    {
+        Location,
+        Menu,
 
-		Managers,
-	}
+        Managers,
+    }
 }

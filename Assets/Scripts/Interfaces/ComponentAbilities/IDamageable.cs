@@ -1,19 +1,22 @@
-using UnityEngine;
-
-public interface IDamageable
+﻿public interface IDamageable
 {
-	public float MaxHealth
-	{
-		get;
-		set;
-	}
+    public float MaxHealth
+    {
+        get;
+        set;
+    }
 
-	public float Health
-	{
-		get;
-	}
+    public float Health
+    {
+        get;
+    }
 
-	public void TakeDamage(float damage);
+    public bool IsDead
+    {
+        get;
+    }
 
-	public void RestoreHealth(float regeneration);
+    public void TakeDamage(float damage, Entity damager);
+
+    public void RestoreHealth(float regeneration);
 }

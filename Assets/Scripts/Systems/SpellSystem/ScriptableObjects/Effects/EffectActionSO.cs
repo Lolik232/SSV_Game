@@ -1,5 +1,4 @@
 ﻿using All.BaseClasses;
-using UnityEngine;
 
 namespace Systems.SpellSystem.SpellEffect
 {

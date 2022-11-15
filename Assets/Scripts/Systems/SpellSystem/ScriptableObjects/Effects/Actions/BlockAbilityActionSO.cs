@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+
 using UnityEngine;
 
 namespace Systems.SpellSystem.SpellEffect.Actions.ScriptableObjects

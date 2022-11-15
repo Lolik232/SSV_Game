@@ -4,38 +4,38 @@ using UnityEngine;
 
 public class PlayerAttackAbility : Ability
 {
-	public Player Player
-	{
-		get;
-		private set;
-	}
+    public Player Player
+    {
+        get;
+        private set;
+    }
 
-	public PlayerAttackAS Attack
-	{
-		get;
-		private set;
-	}
+    public PlayerAttackAS Attack
+    {
+        get;
+        private set;
+    }
 
-	protected override void Awake()
-	{
-		base.Awake();
-		Player = GetComponent<Player>();
+    protected override void Awake()
+    {
+        base.Awake();
+        Player = GetComponent<Player>();
 
-		Default = Attack = GetComponent<PlayerAttackAS>();
+        Default = Attack = GetComponent<PlayerAttackAS>();
 
-		GetAbilityStates<PlayerAttackAbility>();
-	}
+        GetAbilityStates<PlayerAttackAbility>();
+    }
 
-	protected override void Start()
-	{
-		base.Start();
-		enterConditions.Add(() => Player.Input.Attack);
-		exitConditions.Add(() => false);
-	}
+    protected override void Start()
+    {
+        base.Start();
+        enterConditions.Add(() => Player.Input.Attack);
+        exitConditions.Add(() => false);
+    }
 
-	protected override void ApplyExitActions()
-	{
-		base.ApplyExitActions();
-		Player.Input.Attack = false;
-	}
+    protected override void ApplyExitActions()
+    {
+        base.ApplyExitActions();
+        Player.Input.Attack = false;
+    }
 }

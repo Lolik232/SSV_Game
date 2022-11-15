@@ -1,8 +1,8 @@
 public interface IJumpController
 {
-	public bool Jump
-	{
-		get;
-		set;
-	}
+    public bool Jump
+    {
+        get;
+        set;
+    }
 }

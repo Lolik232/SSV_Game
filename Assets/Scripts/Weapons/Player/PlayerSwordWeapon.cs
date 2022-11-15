@@ -1,6 +1,5 @@
 ﻿using System.Collections;
-
-using Unity.VisualScripting;
+using System.Collections.Generic;
 
 using UnityEngine;
 
@@ -28,25 +27,37 @@ public class PlayerSwordWeapon : Weapon
         _lr = GetComponent<LineRenderer>();
     }
 
+    protected override void Start()
+    {
+        SetAnimationSpeed("SwordAttack", _attackSpeed);
+    }
+
     protected override void ApplyEnterActions()
     {
         base.ApplyEnterActions();
         Vector2 attackAngle = _player.Input.LookAt - _player.Center;
         _hitArea = new CheckArea(_player.Center, _player.Center + attackAngle.normalized * _swordLength);
 
-        collisions.Clear();
-        collisions.AddRange(Physics2D.LinecastAll(_hitArea.a, _hitArea.b, whatIsTarget));
+        collisions = new List<RaycastHit2D>(Physics2D.LinecastAll(_hitArea.a, _hitArea.b, whatIsTarget));
 
         foreach (var collision in collisions)
         {
-            if (collision.collider.TryGetComponent<Physical>(out var physical))
+            if (collision.collider.TryGetComponent<Entity>(out var entity))
             {
-                physical.Push(_force, attackAngle);
-            }
+                if (entity is IPhysical)
+                {
+                    var physical = entity as IPhysical;
+                    physical.Push(_force, attackAngle);
+                }
 
-            if (collision.collider.TryGetComponent<Damageable>(out var damageable))
-            {
-                damageable.TakeDamage(_damage);
+                if (entity is IDamageable)
+                {
+                    var damageable = entity as IDamageable;
+                    if (!damageable.IsDead)
+                    {
+                        damageable.TakeDamage(_damage, _player);
+                    }
+                }
             }
         }
 

@@ -2,7 +2,7 @@
 
 using UnityEngine;
 
-[RequireComponent(typeof(DeadState), typeof(StateMachine))]
+[RequireComponent(typeof(DeadState))]
 
 public class Damageable : MonoBehaviour, IDamageable
 {
@@ -10,6 +10,7 @@ public class Damageable : MonoBehaviour, IDamageable
 
     private StateMachine _machine;
     private DeadState _deadState;
+    private Animator _anim;
 
     public float MaxHealth
     {
@@ -21,11 +22,17 @@ public class Damageable : MonoBehaviour, IDamageable
         get;
         private set;
     }
+    public bool IsDead
+    {
+        get;
+        private set;
+    }
 
     private void Awake()
     {
-        _machine  = GetComponent<StateMachine>();
+        _machine = GetComponent<StateMachine>();
         _deadState = GetComponent<DeadState>();
+        _anim = GetComponent<Animator>();
 
         MaxHealth = _health;
         Health = _health;
@@ -42,8 +49,13 @@ public class Damageable : MonoBehaviour, IDamageable
         Debug.Log(this + " Health: " + Health);
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage, Entity damager)
     {
+        if (IsDead)
+        {
+            return;
+        }
+
         if (damage < 0)
         {
             throw new Exception("Damage Cannot Be Negative");
@@ -54,7 +66,12 @@ public class Damageable : MonoBehaviour, IDamageable
 
         if (Health == 0)
         {
+            IsDead = true;
             _machine.GetTransition(_deadState);
+        }
+        else
+        {
+            _anim.SetTrigger("hit");
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+
 using All.Interfaces;
 
 namespace Systems.SpellSystem.SpellEffect.SpellLiveCycle

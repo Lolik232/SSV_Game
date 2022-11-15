@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+
 using All.Interfaces;
-using Extensions;
-using Systems.SpellSystem.SpellEffect;
+
 using Systems.SpellSystem.SpellEffect.SpellLiveCycle;
+
 using UnityEngine;
 
 namespace Systems.SpellSystem.SpellEffect
@@ -12,7 +12,10 @@ namespace Systems.SpellSystem.SpellEffect
     [Serializable]
     public class Spell : ILogicUpdate
     {
-        public SpellSO SpellSO { get; private set; }
+        public SpellSO SpellSO
+        {
+            get; private set;
+        }
 
         [SerializeField] private List<Effect> _effects = new();
 
@@ -23,7 +26,7 @@ namespace Systems.SpellSystem.SpellEffect
 
         public Spell(SpellSO spellSO, BaseLiveCycle liveCycle, params Effect[] effects)
         {
-            SpellSO    = spellSO;
+            SpellSO = spellSO;
             _liveCycle = liveCycle;
             _effects.AddRange(effects);
         }

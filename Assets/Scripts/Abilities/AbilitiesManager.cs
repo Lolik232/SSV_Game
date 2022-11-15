@@ -1,27 +1,27 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 using UnityEngine;
 
-public class AbilitiesManager : MonoBehaviour
+public class AbilitiesManager : Component
 {
-	private readonly List<Ability> _abilities = new();
+    private readonly List<Ability> _abilities = new();
 
-	private void Awake()
-	{
-		GetComponents(_abilities);
+    private void Awake()
+    {
+        GetComponents(_abilities);
     }
 
-	private void Update()
-	{
-		TryUseAbilities();
-	}
+    private void Update()
+    {
+        TryUseAbilities();
+    }
 
-	public void TryUseAbilities()
-	{
-		foreach (var ability in _abilities)
-		{
-			ability.OnEnter();
-			ability.OnUpdate();
-		}
-	}
+    public void TryUseAbilities()
+    {
+        foreach (var ability in _abilities)
+        {
+            ability.OnEnter();
+            ability.OnUpdate();
+        }
+    }
 }

@@ -1,11 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+
 using All.BaseClasses;
 using All.Interfaces;
+
 using Extensions;
-using Systems.SpellSystem.SpellEffect;
+
 using Systems.SpellSystem.SpellEffect.SpellLiveCycle;
+
 using UnityEngine;
 
 namespace Systems.SpellSystem.SpellEffect
@@ -22,7 +24,7 @@ namespace Systems.SpellSystem.SpellEffect
         [SerializeField] private LiveCycleSO _liveCycleSO;
 
         [SerializeField] private List<EffectSO>          _effectsSO = new();
-        public                   IReadOnlyList<EffectSO> EffectsSO => _effectsSO;
+        public IReadOnlyList<EffectSO> EffectsSO => _effectsSO;
 
         [Header("Initialized fields")]
         [SerializeField] private BaseLiveCycle _liveCycle;

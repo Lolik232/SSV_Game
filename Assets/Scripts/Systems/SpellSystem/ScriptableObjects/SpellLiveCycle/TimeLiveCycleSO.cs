@@ -1,5 +1,4 @@
-﻿using Systems.SpellSystem.SpellEffect.SpellLiveCycle;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Systems.SpellSystem.SpellEffect.SpellLiveCycle
 {
@@ -8,7 +7,7 @@ namespace Systems.SpellSystem.SpellEffect.SpellLiveCycle
     public class TimeLiveCycleSO : LiveCycleSO
     {
         [SerializeField] private float _time = 0f;
-        
+
         public override BaseLiveCycle CreateLiveCycle()
         {
             return new TimeLiveCycle(_time);

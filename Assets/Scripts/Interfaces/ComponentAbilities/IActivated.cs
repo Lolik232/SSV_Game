@@ -1,21 +1,21 @@
 public interface IActivated
 {
-	public bool IsActive
-	{
-		get;
-	}
+    public bool IsActive
+    {
+        get;
+    }
 
-	public float ActiveTime
-	{
-		get;
-	}
+    public float ActiveTime
+    {
+        get;
+    }
 
-	public float InactiveTime
-	{
-		get;
-	}
+    public float InactiveTime
+    {
+        get;
+    }
 
-	public void OnEnter();
+    public void OnEnter();
 
-	public void OnExit();
+    public void OnExit();
 }

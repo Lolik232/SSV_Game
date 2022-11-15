@@ -1,9 +1,7 @@
 ﻿using System;
+
 using All.Interfaces;
-using Systems.SpellSystem.SpellEffect.Actions;
-using Systems.SpellSystem.SpellEffect.Actions.ScriptableObjects;
-using Systems.SpellSystem.SpellEffect.SpellLiveCycle;
-using Unity.VisualScripting;
+
 using UnityEngine;
 
 namespace Systems.SpellSystem.SpellEffect
@@ -15,22 +13,23 @@ namespace Systems.SpellSystem.SpellEffect
         [SerializeField] private EffectApplyStrategy _applyStrategy;
         [SerializeField] private EffectAction        _effectAction;
 
-        public EffectSO              EffectSO              => _effectSO;
-        public EffectActionSO        EffectActionSO        => _effectAction.EffectActionSO;
+        public EffectSO EffectSO => _effectSO;
+        public EffectActionSO EffectActionSO => _effectAction.EffectActionSO;
         public EffectApplyStrategySO EffectApplyStrategySO => _applyStrategy.ApplyStrategySO;
 
-        public Effect(EffectSO            effectSo,
+        public Effect(EffectSO effectSo,
                       EffectApplyStrategy applyStrategy,
-                      EffectAction        effectAction)
+                      EffectAction effectAction)
         {
-            _effectSO      = effectSo;
+            _effectSO = effectSo;
             _applyStrategy = applyStrategy;
-            _effectAction  = effectAction;
+            _effectAction = effectAction;
         }
 
         public void Apply(ISpellEffectActionVisitor visitor)
         {
-            if (!_applyStrategy.CanApply()) return;
+            if (!_applyStrategy.CanApply())
+                return;
 
             _effectAction.Apply(visitor);
         }

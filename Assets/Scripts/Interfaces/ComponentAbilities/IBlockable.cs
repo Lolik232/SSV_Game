@@ -1,11 +1,11 @@
 public interface IBlockable
 {
-	public bool IsLocked
-	{
-		get;
-	}
+    public bool IsLocked
+    {
+        get;
+    }
 
-	public void Block();
+    public void Block();
 
-	public void Unlock();
+    public void Unlock();
 }

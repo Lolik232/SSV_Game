@@ -41,7 +41,7 @@ Material:
     - _Fade: 0.5
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Scale: 1
+    - _Scale: 16
     - _Speed: 10
     m_Colors:
     - _Color: {r: 47.937256, g: 10.541177, b: 0, a: 1}

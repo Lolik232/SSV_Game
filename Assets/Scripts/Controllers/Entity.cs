@@ -1,18 +1,40 @@
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
+
 using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    protected List<IChecker> Checkers
     {
-        
+        get;
+        private set;
+    } = new();
+
+    protected virtual void Awake()
+    {
+        GetComponents(Checkers);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void FixedUpdate()
     {
-        
+        DoChecks();
+    }
+
+    public void UpdateCheckersPosition()
+    {
+        foreach (var checker in Checkers)
+        {
+            checker.UpdateCheckersPosition();
+        }
+    }
+
+    public void DoChecks()
+    {
+        UpdateCheckersPosition();
+        foreach (var checker in Checkers)
+        {
+            checker.DoChecks();
+        }
     }
 }

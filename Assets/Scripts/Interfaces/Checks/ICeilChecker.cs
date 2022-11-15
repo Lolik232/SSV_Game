@@ -1,7 +1,7 @@
-public interface ICeilChecker : IChecker
+﻿public interface ITouchingCeiling 
 {
-	public bool TouchingCeiling
-	{
-		get;
-	}
+    public bool TouchingCeiling
+    {
+        get;
+    }
 }

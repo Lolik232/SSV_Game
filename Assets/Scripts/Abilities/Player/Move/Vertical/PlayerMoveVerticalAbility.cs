@@ -6,47 +6,47 @@ using UnityEngine;
 
 public class PlayerMoveVerticalAbility : Ability
 {
-	public Player Player
-	{
-		get;
-		private set;
-	}
+    public Player Player
+    {
+        get;
+        private set;
+    }
 
-	public PlayerWallSlideAS Slide
-	{
-		get;
-		private set;
-	}
-	public PlayerWallClimbAS Climb
-	{
-		get;
-		private set;
-	}
-	public PlayerWallGrabAS Grab
-	{
-		get;
-		private set;
-	}
+    public PlayerWallSlideAS Slide
+    {
+        get;
+        private set;
+    }
+    public PlayerWallClimbAS Climb
+    {
+        get;
+        private set;
+    }
+    public PlayerWallGrabAS Grab
+    {
+        get;
+        private set;
+    }
 
-	protected override void Awake()
-	{
-		base.Awake();
-		Player = GetComponent<Player>();
+    protected override void Awake()
+    {
+        base.Awake();
+        Player = GetComponent<Player>();
 
-		Default = Grab = GetComponent<PlayerWallGrabAS>();
-		Climb = GetComponent<PlayerWallClimbAS>();
-		Slide = GetComponent<PlayerWallSlideAS>();
+        Default = Grab = GetComponent<PlayerWallGrabAS>();
+        Climb = GetComponent<PlayerWallClimbAS>();
+        Slide = GetComponent<PlayerWallSlideAS>();
 
-		GetAbilityStates<PlayerMoveVerticalAbility>();
-	}
+        GetAbilityStates<PlayerMoveVerticalAbility>();
+    }
 
-	protected override void Start()
-	{
-		base.Start();
-		bool StayCondition() => !Player.IsVelocityLocked && !Player.IsPositionLocked &&
-															(Player.Input.Grab || Player.Input.Move.x == Player.FacingDirection);
+    protected override void Start()
+    {
+        base.Start();
+        bool StayCondition() => !Player.IsVelocityLocked && !Player.IsPositionLocked &&
+                                                            (Player.Input.Grab || Player.Input.Move.x == Player.FacingDirection);
 
-		enterConditions.Add(() => StayCondition());
-		exitConditions.Add(() => !StayCondition());
-	}
+        enterConditions.Add(() => StayCondition());
+        exitConditions.Add(() => !StayCondition());
+    }
 }

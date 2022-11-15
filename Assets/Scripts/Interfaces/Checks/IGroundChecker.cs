@@ -1,7 +1,7 @@
-public interface IGroundChecker : IChecker
+﻿public interface IGrounded
 {
-	public bool Grounded
-	{
-		get;
-	}
+    public bool Grounded
+    {
+        get;
+    }
 }
