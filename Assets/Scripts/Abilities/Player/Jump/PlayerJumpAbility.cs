@@ -2,17 +2,11 @@
 
 [RequireComponent(typeof(PlayerJumpAS), typeof(PlayerWallJumpAS), typeof(CeilChecker))]
 
-public class PlayerJumpAbility : Ability
+public class PlayerJumpAbility : PlayerAbility
 {
     [SerializeField] private int _amountOfJumps;
 
     private CeilChecker _ceilChecker;
-
-    public Player Player
-    {
-        get;
-        private set;
-    }
 
     public PlayerJumpAS NormalJump
     {
@@ -35,8 +29,6 @@ public class PlayerJumpAbility : Ability
     protected override void Awake()
     {
         base.Awake();
-        Player = GetComponent<Player>();
-
         _ceilChecker = GetComponent<CeilChecker>();
 
         Default = NormalJump = GetComponent<PlayerJumpAS>();

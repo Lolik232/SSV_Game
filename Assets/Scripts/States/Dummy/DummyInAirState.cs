@@ -1,19 +1,11 @@
 ﻿using UnityEngine;
 
-public class DummyInAirState : State
+public class DummyInAirState : DummyState
 {
-    private Dummy _dummy;
-
-    protected override void Awake()
-    {
-        base.Awake();
-        _dummy = GetComponent<Dummy>();
-    }
-
     private void Start()
     {
-        bool GroundedCondition() => _dummy.Grounded && _dummy.Velocity.y < 0.01f;
+        bool GroundedCondition() => Dummy.Grounded && Dummy.Velocity.y < 0.01f;
 
-        Transitions.Add(new(_dummy.GroundedState, GroundedCondition));
+        Transitions.Add(new(Dummy.GroundedState, GroundedCondition));
     }
 }

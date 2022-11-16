@@ -1,69 +1,61 @@
 ﻿using UnityEngine;
 
-public class PlayerTouchingWallState : State
+public class PlayerTouchingWallState : PlayerState
 {
-    private  Player _player;
-
     private Vector2 _holdPosition;
-
-    protected override void Awake()
-    {
-        base.Awake();
-        _player = GetComponent<Player>();
-    }
 
     private void Start()
     {
-        bool GroundedCondition() => _player.Grounded && (_player.Input.Move.y == -1 || !_player.Input.Grab);
+        bool GroundedCondition() => Player.Grounded && (Player.Input.Move.y == -1 || !Player.Input.Grab || Player.Input.Attack);
 
-        bool InAirCondition() => !_player.TouchingWall || (!_player.Input.Grab && _player.Input.Move.x != _player.FacingDirection);
+        bool InAirCondition() => !Player.TouchingWall || (!Player.Input.Grab && Player.Input.Move.x != Player.FacingDirection);
 
-        bool OnLedgeCondition() => _player.TouchingWall && !_player.TouchingLegde;
+        bool OnLedgeCondition() => Player.TouchingWall && !Player.TouchingLegde;
 
         void OnLedgeAction()
         {
-            _player.OnLedgeState.DetermineLedgePosition();
+            Player.OnLedgeState.DetermineLedgePosition();
         }
 
         void InAirAction()
         {
-            if (!_player.JumpAbility.IsActive)
+            if (!Player.JumpAbility.IsActive)
             {
-                _player.InAirState.CheckJumpCoyoteTime();
+                Player.InAirState.CheckJumpCoyoteTime();
             }
         }
 
-        Transitions.Add(new(_player.GroundedState, GroundedCondition));
-        Transitions.Add(new(_player.InAirState, InAirCondition, InAirAction));
-        Transitions.Add(new(_player.OnLedgeState, OnLedgeCondition, OnLedgeAction));
+        Transitions.Add(new(Player.GroundedState, GroundedCondition));
+        Transitions.Add(new(Player.InAirState, InAirCondition, InAirAction));
+        Transitions.Add(new(Player.OnLedgeState, OnLedgeCondition, OnLedgeAction));
     }
 
     protected override void ApplyEnterActions()
     {
         base.ApplyEnterActions();
-        _player.MoveHorizontalAbility.Permited = false;
-        _player.MoveVerticalAbility.Permited = true;
-        _player.LedgeClimbAbility.Permited = false;
-        _player.CrouchAbility.Permited = false;
-        _player.JumpAbility.Permited = true;
-        _player.DashAbility.Permited = true;
-        _player.AttackAbility.Permited = true;
+        Player.MoveHorizontalAbility.Permited = false;
+        Player.MoveVerticalAbility.Permited = true;
+        Player.LedgeClimbAbility.Permited = false;
+        Player.CrouchAbility.Permited = false;
+        Player.JumpAbility.Permited = true;
+        Player.DashAbility.Permited = true;
+        Player.AttackAbility.Permited = true;
 
-        _player.JumpAbility.Request(_player.JumpAbility.WallJump);
-        _player.SetPosition(_holdPosition);
-        _player.SetGravity(0f);
-        _player.BlockRotation();
+        Player.JumpAbility.Request(Player.JumpAbility.WallJump);
+        Player.SetPosition(_holdPosition);
+        Player.SetGravity(0f);
+        Player.BlockRotation();
     }
 
     protected override void ApplyExitActions()
     {
         base.ApplyExitActions();
-        _player.ResetGravity();
-        _player.UnlockRotation();
+        Player.ResetGravity();
+        Player.UnlockRotation();
     }
 
     public void DetermineWallPosition()
     {
-        _holdPosition = new Vector2(_player.WallPosition.x + _player.WallDirection * (_player.Size.x / 2 + IChecker.CHECK_OFFSET), _player.Position.y);
+        _holdPosition = new Vector2(Player.WallPosition.x + Player.WallDirection * (Player.Size.x / 2 + IChecker.CHECK_OFFSET), Player.Position.y);
     }
 }

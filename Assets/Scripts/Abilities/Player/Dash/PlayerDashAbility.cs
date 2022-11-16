@@ -1,19 +1,13 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(PlayerDashAS))]
 
-public class PlayerDashAbility : Ability
+public class PlayerDashAbility : PlayerAbility
 {
     [SerializeField] private int _amountOfDashes;
 
 
     [SerializeField] private float _cooldown;
-
-    public Player Player
-    {
-        get;
-        private set;
-    }
 
     public PlayerDashAS Dash
     {
@@ -30,8 +24,6 @@ public class PlayerDashAbility : Ability
     protected override void Awake()
     {
         base.Awake();
-        Player = GetComponent<Player>();
-
         Default = Dash = GetComponent<PlayerDashAS>();
 
         GetAbilityStates<PlayerDashAbility>();

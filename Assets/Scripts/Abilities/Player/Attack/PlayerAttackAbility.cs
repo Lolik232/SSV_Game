@@ -1,15 +1,9 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(PlayerAttackAS))]
 
-public class PlayerAttackAbility : Ability
+public class PlayerAttackAbility : PlayerAbility
 {
-    public Player Player
-    {
-        get;
-        private set;
-    }
-
     public PlayerAttackAS Attack
     {
         get;
@@ -19,8 +13,6 @@ public class PlayerAttackAbility : Ability
     protected override void Awake()
     {
         base.Awake();
-        Player = GetComponent<Player>();
-
         Default = Attack = GetComponent<PlayerAttackAS>();
 
         GetAbilityStates<PlayerAttackAbility>();

@@ -1,17 +1,11 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(PlayerWallGrabAS), typeof(PlayerWallClimbAS), typeof(PlayerWallSlideAS))]
 [RequireComponent(typeof(Movable), typeof(GrabController))]
 [RequireComponent(typeof(MoveController), typeof(Rotateable))]
 
-public class PlayerMoveVerticalAbility : Ability
+public class PlayerMoveVerticalAbility : PlayerAbility
 {
-    public Player Player
-    {
-        get;
-        private set;
-    }
-
     public PlayerWallSlideAS Slide
     {
         get;
@@ -31,8 +25,6 @@ public class PlayerMoveVerticalAbility : Ability
     protected override void Awake()
     {
         base.Awake();
-        Player = GetComponent<Player>();
-
         Default = Grab = GetComponent<PlayerWallGrabAS>();
         Climb = GetComponent<PlayerWallClimbAS>();
         Slide = GetComponent<PlayerWallSlideAS>();

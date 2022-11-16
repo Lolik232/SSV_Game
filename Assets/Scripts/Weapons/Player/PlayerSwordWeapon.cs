@@ -3,26 +3,14 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
-[RequireComponent(typeof(LineRenderer))]
-
-public class PlayerSwordWeapon : Weapon
+public class PlayerSwordWeapon : PlayerWeapon
 {
     [SerializeField] private float _swordLength;
     [SerializeField] private float _attackSpeed;
     [SerializeField] private float _force;
     [SerializeField] private float _damage;
 
-    private Player _player;
-    private LineRenderer _lr;
-
     private Coroutine _hitHolder;
-
-    protected override void Awake()
-    {
-        base.Awake();
-        _player = Inventory.GetComponentInParent<Player>();
-        _lr = GetComponent<LineRenderer>();
-    }
 
     protected override void Start()
     {
@@ -33,10 +21,10 @@ public class PlayerSwordWeapon : Weapon
     {
         base.ApplyEnterActions();
 
-        _player.LookAt(_player.Input.LookAt);
-        _player.BlockRotation();
+        Player.LookAt(Player.Input.LookAt);
+        Player.BlockRotation();
 
-        collisions = new List<Collider2D>(Physics2D.OverlapCircleAll(_player.Center, _swordLength, whatIsTarget));
+        collisions = new List<Collider2D>(Physics2D.OverlapCircleAll(Player.Center, _swordLength, whatIsTarget));
 
         foreach (var collider in collisions)
         {
@@ -45,7 +33,7 @@ public class PlayerSwordWeapon : Weapon
                 if (entity is IPhysical)
                 {
                     var physical = entity as IPhysical;
-                    physical.Push(_force, _player.BodyDirection * Vector2.one);
+                    physical.Push(_force, Player.BodyDirection * Vector2.one);
                 }
 
                 if (entity is IDamageable)
@@ -53,7 +41,7 @@ public class PlayerSwordWeapon : Weapon
                     var damageable = entity as IDamageable;
                     if (!damageable.IsDead)
                     {
-                        damageable.TakeDamage(_damage, _player);
+                        damageable.TakeDamage(_damage, Player);
                     }
                 }
             }
@@ -64,24 +52,24 @@ public class PlayerSwordWeapon : Weapon
             StopCoroutine(_hitHolder);
         }
 
-        _hitHolder = StartCoroutine(DrawHit());
+        _hitHolder = StartCoroutine(OnHit());
     }
 
     protected override void ApplyExitActions()
     {
         base.ApplyExitActions();
-        _player.UnlockRotation();
+        Player.UnlockRotation();
     }
 
-    private IEnumerator DrawHit()
+    private IEnumerator OnHit()
     {
         yield return new WaitUntil(() => ActiveTime > _attackSpeed);
 
-        _player.AttackAbility.OnExit();
+        Player.AttackAbility.OnExit();
     }
 
     private void OnDrawGizmos()
     {
-        Utility.DrawCircle(_player.Center, _swordLength, collisions.Count > 0, Color.red);
+        Utility.DrawCircle(Player.Center, _swordLength, collisions.Count > 0, Color.red);
     }
 }

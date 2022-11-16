@@ -41,10 +41,10 @@ Material:
     - _Fade: 0.5
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Scale: 16
-    - _Speed: 10
+    - _Scale: 5
+    - _Speed: 50
     m_Colors:
-    - _Color: {r: 47.937256, g: 10.541177, b: 0, a: 1}
+    - _Color: {r: 23.968628, g: 5.521569, b: 0, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &2930642751653169301
 MonoBehaviour:

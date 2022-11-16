@@ -1,75 +1,69 @@
 ﻿using UnityEngine;
 
-public sealed class PlayerGroundedState : State
+public sealed class PlayerGroundedState : PlayerState
 {
     [SerializeField] private float _waitForLedgeClimbTime;
 
-    private Player _player;
-
-    protected override void Awake()
-    {
-        base.Awake();
-        _player = GetComponent<Player>();
-    }
-
     private void Start()
     {
-        bool InAirCondition() => !_player.Grounded;
+        bool InAirCondition() => !Player.Grounded;
 
-        bool TouchingWallCondition() => _player.TouchingWall &&
-                                        _player.TouchingLegde &&
-                                        _player.IsStanding &&
-                                        _player.Input.Grab &&
-                                        _player.Input.Move.y != -1;
+        bool TouchingWallCondition() => Player.TouchingWall &&
+                                        Player.TouchingLegde &&
+                                        Player.IsStanding &&
+                                        Player.Input.Grab &&
+                                        Player.Input.Move.y != -1 &&
+                                        !Player.AttackAbility.IsActive;
 
-        bool OnLedgeCondition() => _player.OnLedgeState.LedgeClimbing;
+
+        bool OnLedgeCondition() => Player.OnLedgeState.LedgeClimbing;
 
         void InAirAction()
         {
-            if (!_player.IsStanding && _player.TouchingCeiling)
+            if (!Player.IsStanding && Player.TouchingCeiling)
             {
-                _player.SetPositionY(_player.Position.y - (_player.StandSize.y - _player.CrouchSize.y));
+                Player.SetPositionY(Player.Position.y - (Player.StandSize.y - Player.CrouchSize.y));
             }
 
-            if (!_player.JumpAbility.IsActive)
+            if (!Player.JumpAbility.IsActive)
             {
-                _player.InAirState.CheckJumpCoyoteTime();
+                Player.InAirState.CheckJumpCoyoteTime();
             }
         }
 
         void TouchingWallAction()
         {
-            _player.TouchingWallState.DetermineWallPosition();
+            Player.TouchingWallState.DetermineWallPosition();
         }
 
-        Transitions.Add(new(_player.InAirState, InAirCondition, InAirAction));
-        Transitions.Add(new(_player.TouchingWallState, TouchingWallCondition, TouchingWallAction));
-        Transitions.Add(new(_player.OnLedgeState, OnLedgeCondition));
+        Transitions.Add(new(Player.InAirState, InAirCondition, InAirAction));
+        Transitions.Add(new(Player.TouchingWallState, TouchingWallCondition, TouchingWallAction));
+        Transitions.Add(new(Player.OnLedgeState, OnLedgeCondition));
     }
 
     protected override void ApplyEnterActions()
     {
         base.ApplyEnterActions();
-        _player.MoveHorizontalAbility.Permited = true;
-        _player.MoveVerticalAbility.Permited = false;
-        _player.LedgeClimbAbility.Permited = false;
-        _player.CrouchAbility.Permited = true;
-        _player.JumpAbility.Permited = true;
-        _player.DashAbility.Permited = true;
-        _player.AttackAbility.Permited = true;
+        Player.MoveHorizontalAbility.Permited = true;
+        Player.MoveVerticalAbility.Permited = false;
+        Player.LedgeClimbAbility.Permited = false;
+        Player.CrouchAbility.Permited = true;
+        Player.JumpAbility.Permited = true;
+        Player.DashAbility.Permited = true;
+        Player.AttackAbility.Permited = true;
 
-        _player.OnLedgeState.LedgeClimbing = false;
+        Player.OnLedgeState.LedgeClimbing = false;
 
-        _player.JumpAbility.RestoreJumps();
-        _player.JumpAbility.CancelRequest();
-        _player.DashAbility.RestoreDashes();
+        Player.JumpAbility.RestoreJumps();
+        Player.JumpAbility.CancelRequest();
+        Player.DashAbility.RestoreDashes();
 
-        _player.InAirState.TerminateTryingLedgeClimb();
+        Player.InAirState.TerminateTryingLedgeClimb();
     }
 
     protected override void ApplyUpdateActions()
     {
         base.ApplyUpdateActions();
-        _player.InAirState.TryLedgeClimb();
+        Player.InAirState.TryLedgeClimb();
     }
 }

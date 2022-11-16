@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 
-using Unity.VisualScripting;
-
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
@@ -10,7 +8,6 @@ public abstract class Weapon : ComponentBase
 {
     [SerializeField] private string _name;
     [SerializeField] protected LayerMask whatIsTarget;
-    [SerializeField] private Entity _entity;
 
     protected List<Collider2D> collisions = new();
 

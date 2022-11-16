@@ -1,15 +1,9 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(PlayerCrouchAS), typeof(PlayerStandAS))]
 
-public class PlayerCrouchAbility : Ability
+public class PlayerCrouchAbility : PlayerAbility
 {
-    public Player Player
-    {
-        get;
-        private set;
-    }
-
     public PlayerCrouchAS Crouch
     {
         get;
@@ -25,8 +19,6 @@ public class PlayerCrouchAbility : Ability
     protected override void Awake()
     {
         base.Awake();
-        Player = GetComponent<Player>();
-
         Crouch = GetComponent<PlayerCrouchAS>();
         Default = Stand = GetComponent<PlayerStandAS>();
 

@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(WallChecker), typeof(LedgeChecker))]
-
-public class PlayerOnLedgeState : State
+public class PlayerOnLedgeState : PlayerState
 {
     public bool LedgeClimbing
     {
@@ -10,64 +8,56 @@ public class PlayerOnLedgeState : State
         set;
     }
 
-    private Player _player;
-
     private Vector2 _startPosition;
     private Vector2 _endPosition;
 
-    protected override void Awake()
-    {
-        base.Awake();
-        _player = GetComponent<Player>();
-    }
-
     private void Start()
     {
-        bool GroundedCondition() => !_player.LedgeClimbAbility.IsActive;
+        bool GroundedCondition() => !Player.LedgeClimbAbility.IsActive;
 
-        Transitions.Add(new(_player.GroundedState, GroundedCondition));
+        Transitions.Add(new(Player.GroundedState, GroundedCondition));
     }
 
     protected override void ApplyEnterActions()
     {
         base.ApplyEnterActions();
-        _player.MoveHorizontalAbility.Permited = false;
-        _player.MoveVerticalAbility.Permited = false;
-        _player.LedgeClimbAbility.Permited = true;
-        _player.CrouchAbility.Permited = false;
-        _player.JumpAbility.Permited = false;
-        _player.DashAbility.Permited = false;
-        _player.AttackAbility.Permited = false;
+        Player.MoveHorizontalAbility.Permited = false;
+        Player.MoveVerticalAbility.Permited = false;
+        Player.LedgeClimbAbility.Permited = true;
+        Player.CrouchAbility.Permited = false;
+        Player.JumpAbility.Permited = false;
+        Player.DashAbility.Permited = false;
+        Player.AttackAbility.Permited = false;
 
         LedgeClimbing = false;
 
-        _player.SetPosition(_startPosition);
-        _player.SetVelocity(Vector2.zero);
-        _player.SetGravity(0f);
-        _player.BlockRotation();
+        Player.SetPosition(_startPosition);
+        Player.SetVelocity(Vector2.zero);
+        Player.SetGravity(0f);
+        Player.BlockRotation();
     }
 
     protected override void ApplyExitActions()
     {
         base.ApplyExitActions();
-        _player.SetPosition(_endPosition);
-        _player.ResetGravity();
-        _player.UnlockRotation();
+        Player.SetPosition(_endPosition);
+        Player.ResetGravity();
+        Player.UnlockRotation();
 
-        _player.CrouchAbility.Request(_player.CrouchAbility.Crouch);
+        Player.CrouchAbility.Request(Player.CrouchAbility.Crouch);
     }
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireCube(_startPosition + _player.Offset, _player.Size);
-        Gizmos.DrawWireCube(_endPosition + _player.Offset, _player.Size);
+        Gizmos.DrawWireCube(_startPosition + Player.Offset, Player.Size);
+        Gizmos.DrawWireCube(_endPosition + Player.Offset, Player.Size);
     }
 
     public void DetermineLedgePosition()
     {
-        _startPosition = new Vector2(_player.WallPosition.x + _player.WallDirection * (_player.Size.x / 2 + IChecker.CHECK_OFFSET),
-                                                                     _player.GroundPosition.y - 1f);
-        _endPosition = new Vector2(_player.WallPosition.x - _player.WallDirection * (_player.Size.x / 2 + IChecker.CHECK_OFFSET),
-                                                                 _player.GroundPosition.y + IChecker.CHECK_OFFSET);
+        _startPosition = new Vector2(Player.WallPosition.x + Player.WallDirection * (Player.Size.x / 2 + IChecker.CHECK_OFFSET),
+                                                                     Player.GroundPosition.y - 1f);
+        _endPosition = new Vector2(Player.WallPosition.x - Player.WallDirection * (Player.Size.x / 2 + IChecker.CHECK_OFFSET),
+                                                                 Player.GroundPosition.y + IChecker.CHECK_OFFSET);
     }
 }

@@ -1,14 +1,9 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(PlayerLedgeClimbAS))]
 
-public class PlayerLedgeClimbAbility : Ability
+public class PlayerLedgeClimbAbility : PlayerAbility
 {
-    public Player Player
-    {
-        get; private set;
-    }
-
     public PlayerLedgeClimbAS Climb
     {
         get;
@@ -18,8 +13,6 @@ public class PlayerLedgeClimbAbility : Ability
     protected override void Awake()
     {
         base.Awake();
-        Player = GetComponent<Player>();
-
         Default = Climb = GetComponent<PlayerLedgeClimbAS>();
 
         GetAbilityStates<PlayerLedgeClimbAbility>();

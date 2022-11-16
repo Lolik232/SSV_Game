@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Audio;
 
 [CreateAssetMenu(menuName = "UI/Volume/Volume")]
@@ -19,7 +19,5 @@ public class UISettingsManager : MonoBehaviour
     public void ChangeFX(float volume)
     {
         mixer.audioMixer.SetFloat("FXVolume", Mathf.Lerp(-80, 0, volume));
-
     }
-
 }

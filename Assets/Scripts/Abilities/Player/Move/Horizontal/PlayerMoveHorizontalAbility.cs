@@ -1,15 +1,9 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(PlayerStayAS), typeof(PlayerMoveForwardAS), typeof(PlayerMoveBackwardAS))]
 
-public class PlayerMoveHorizontalAbility : Ability
+public class PlayerMoveHorizontalAbility : PlayerAbility
 {
-    public Player Player
-    {
-        get;
-        private set;
-    }
-
     public PlayerMoveForwardAS Forward
     {
         get;
@@ -29,8 +23,6 @@ public class PlayerMoveHorizontalAbility : Ability
     protected override void Awake()
     {
         base.Awake();
-        Player = GetComponent<Player>();
-
         Forward = GetComponent<PlayerMoveForwardAS>();
         Backward = GetComponent<PlayerMoveBackwardAS>();
         Default = Stay = GetComponent<PlayerStayAS>();
