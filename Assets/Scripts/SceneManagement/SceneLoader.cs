@@ -55,9 +55,9 @@ namespace SceneManagement
                 // _gameplayManagerLoadingOpHandle = _gameplayScene.sceneReference.LoadSceneAsync(LoadSceneMode.Additive, true);
                 // _gameplayManagerLoadingOpHandle.WaitForCompletion();
                 // _gameplayManagerSceneInstance = _gameplayManagerLoadingOpHandle.Result;
-
                 StartGameplay();
             }
+            _fadeRequestChan.FadeIn(_fadeDuration);
         }
 #endif
 
@@ -112,7 +112,7 @@ namespace SceneManagement
         private IEnumerator UnloadPreviousScene()
         {
             // TODO: disable all inputs
-            _fadeRequestChan.RaiseEvent(_fadeDuration);
+            _fadeRequestChan.FadeOut(_fadeDuration);
 
             yield return new WaitForSeconds(_fadeDuration);
 
@@ -152,7 +152,7 @@ namespace SceneManagement
             _isLoading = false;
             if (_showLoadingScreen) { _toggleLoadingScreenChan.RaiseEvent(false); }
 
-            _fadeRequestChan.RaiseEvent(_fadeDuration);
+            _fadeRequestChan.FadeIn(_fadeDuration);
 
             StartGameplay();
         }

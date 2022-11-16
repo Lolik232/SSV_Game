@@ -21,8 +21,13 @@ namespace Systems.SaveSystem
 
         private void OnEnable()
         {
-            _saveSettingsEvent.OnEventRaised += SaveSettingsOnDisk;
+            // _saveSettingsEvent.OnEventRaised += SaveSettingsOnDisk;
             _saveGameEvent.OnEventRaised     += OnSaveGame;
+        }
+
+        private void OnDisable()
+        {
+            _saveGameEvent.OnEventRaised -= OnSaveGame;
         }
 
         private void OnSaveGame(GameSceneSO loadedLocation, bool showLoadingScreen, bool fadeScreen)
@@ -55,6 +60,15 @@ namespace Systems.SaveSystem
             _currentSettings.FromJson(settingsJson);
             return true;
         }
+
+        // public bool LoadDataFromDisk()
+        // {
+        //     LoadSettingsFromDisk();
+        //
+        //
+        //     return true;
+        // }
+
 
         public void SaveSettingsOnDisk()
         {

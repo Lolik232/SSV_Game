@@ -1,53 +1,57 @@
 using System.Collections.Generic;
-
+using Systems.SaveSystem;
+using Systems.SaveSystem.Settings.ScriptableObjects;
 using UnityEngine;
 
 namespace FSM
 {
-	public class BaseStateMachine : MonoBehaviour
-	{
-		[SerializeField] private BaseState _initialState;
-		[SerializeField] private UIInputSO _uiInputSO;
-		[SerializeField] private Animator _textAnim;
-		[SerializeField] private Animator _menuAnim;
-		[SerializeField] private Animator _optionsAnim;
-		[SerializeField] private CanvasGroup _menuGroup;
-		[SerializeField] private CanvasGroup _optionsGroup;
-		private void Awake()
-		{
-			CurrentState = _initialState;
-		}
+    public class BaseStateMachine : MonoBehaviour
+    {
+        [SerializeField] private BaseState   _initialState;
+        [SerializeField] private UIInputSO   _uiInputSO;
+        [SerializeField] private Animator    _textAnim;
+        [SerializeField] private Animator    _menuAnim;
+        [SerializeField] private Animator    _optionsAnim;
+        [SerializeField] private CanvasGroup _menuGroup;
+        [SerializeField] private CanvasGroup _optionsGroup;
 
-		public BaseState CurrentState
-		{
-			get;
-			set;
-		}
+        [SerializeField] public UISettingsManager settingsManager;
 
-		public UIInputSO UIInputSO => _uiInputSO;
+        private void Awake()
+        {
+            CurrentState = _initialState;
+        }
 
-		public Animator menuAnim => _menuAnim;
+        public BaseState CurrentState
+        {
+            get;
+            set;
+        }
 
-		public Animator textAnim => _textAnim;
+        public UIInputSO UIInputSO => _uiInputSO;
 
-		public Animator optionsAnim => _optionsAnim;
+        public Animator menuAnim => _menuAnim;
 
-		public CanvasGroup menuGroup => _menuGroup;
-		
-		public CanvasGroup optionsGroup => _optionsGroup;
+        public Animator textAnim => _textAnim;
 
-		private void Update()
-		{
-			CurrentState.Execute(this);
-		}
+        public Animator optionsAnim => _optionsAnim;
 
-		public void ChangeState(BaseState newState)
-		{
-			CurrentState.OnExit(this);
-			
-			CurrentState = newState;
+        public CanvasGroup menuGroup => _menuGroup;
 
-			CurrentState.OnEnter(this);
-		}
-	}
+        public CanvasGroup optionsGroup => _optionsGroup;
+
+        private void Update()
+        {
+            CurrentState.Execute(this);
+        }
+
+        public void ChangeState(BaseState newState)
+        {
+            CurrentState.OnExit(this);
+
+            CurrentState = newState;
+
+            CurrentState.OnEnter(this);
+        }
+    }
 }
