@@ -1323,11 +1323,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   _entity: {fileID: 4839718794917041577}
-  _maxAttackDistance: 3
-  _swordLength: 2
-  _attackSpeed: 0.2
-  _force: 1
-  _damage: 20
+  _maxAttackDistance: 0
+  _swordLength: 2.5
+  _attackSpeed: 0.3
+  _force: 5
+  _damage: 15
 --- !u!1 &8408035153215212682
 GameObject:
   m_ObjectHideFlags: 0

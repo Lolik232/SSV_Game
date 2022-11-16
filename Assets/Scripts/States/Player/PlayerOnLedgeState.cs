@@ -4,6 +4,12 @@
 
 public class PlayerOnLedgeState : State
 {
+    public bool LedgeClimbing
+    {
+        get;
+        set;
+    }
+
     private Player _player;
 
     private Vector2 _startPosition;
@@ -33,9 +39,12 @@ public class PlayerOnLedgeState : State
         _player.DashAbility.Permited = false;
         _player.AttackAbility.Permited = false;
 
+        LedgeClimbing = false;
+
         _player.SetPosition(_startPosition);
         _player.SetVelocity(Vector2.zero);
         _player.SetGravity(0f);
+        _player.BlockRotation();
     }
 
     protected override void ApplyExitActions()
@@ -43,6 +52,7 @@ public class PlayerOnLedgeState : State
         base.ApplyExitActions();
         _player.SetPosition(_endPosition);
         _player.ResetGravity();
+        _player.UnlockRotation();
 
         _player.CrouchAbility.Request(_player.CrouchAbility.Crouch);
     }

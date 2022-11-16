@@ -9,6 +9,7 @@ public sealed class PlayerInAirState : State
     private Player _player;
 
     private bool _tryingLedgeClimb;
+    private bool _ledgeClimbing;
     private float _tryingLedgeClimbStartTime;
 
     private float TryingLedgeClimbTime
@@ -44,8 +45,15 @@ public sealed class PlayerInAirState : State
                                         (_player.Input.Grab || _player.Input.Move.x == _player.FacingDirection &&
                                         _player.Velocity.y < 0.01f);
 
+        bool OnLedgeCondition() => _player.OnLedgeState.LedgeClimbing;
+
+        void TouchingWallAction() {
+            _player.TouchingWallState.DetermineWallPosition();
+        }
+
         Transitions.Add(new(_player.GroundedState, GroundedCondition));
-        Transitions.Add(new(_player.TouchingWallState, TouchingWallCondition));
+        Transitions.Add(new(_player.TouchingWallState, TouchingWallCondition, TouchingWallAction));
+        Transitions.Add(new(_player.OnLedgeState, OnLedgeCondition));
     }
 
     protected override void ApplyEnterActions()
@@ -58,6 +66,8 @@ public sealed class PlayerInAirState : State
         _player.JumpAbility.Permited = true;
         _player.DashAbility.Permited = true;
         _player.AttackAbility.Permited = true;
+
+        _player.OnLedgeState.LedgeClimbing = false;
     }
 
     protected override void ApplyUpdateActions()
@@ -136,19 +146,19 @@ public sealed class PlayerInAirState : State
     private IEnumerator CheckOnLedgeCondition()
     {
         _player.JumpAbility.Permited = false;
+        _tryingLedgeClimb = true;
 
-        while (_tryingLedgeClimb = CheckIfTryingLedgeClimb())
+        yield return new WaitUntil(() => TryingLedgeClimbTime > _waitForLedgeClimbTime / Mathf.Max(Mathf.Abs(_player.Velocity.y), 1f));
+
+        if (CheckIfTryingLedgeClimb())
         {
-            if (TryingLedgeClimbTime > _waitForLedgeClimbTime / Mathf.Max(Mathf.Abs(_player.Velocity.y), 1f))
-            {
-                Machine.GetTransition(_player.OnLedgeState);
-                _tryingLedgeClimb = false;
-                yield break;
-            }
-
-            yield return null;
+            _player.OnLedgeState.LedgeClimbing = true;
+        }
+        else
+        {
+            _player.JumpAbility.Permited = true;
         }
 
-        _player.JumpAbility.Permited = true;
+        _tryingLedgeClimb = false;
     }
 }

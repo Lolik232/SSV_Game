@@ -12,7 +12,7 @@ public abstract class Weapon : ComponentBase
     [SerializeField] protected LayerMask whatIsTarget;
     [SerializeField] private Entity _entity;
 
-    protected List<RaycastHit2D> collisions = new();
+    protected List<Collider2D> collisions = new();
 
     protected Inventory Inventory
     {

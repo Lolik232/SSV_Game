@@ -1,4 +1,4 @@
-public class PlayerMoveBackwardAS : MoveAS<PlayerMoveHorizontalAbility>
+﻿public class PlayerMoveBackwardAS : MoveAS<PlayerMoveHorizontalAbility>
 {
     private void Start()
     {

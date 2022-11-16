@@ -7,7 +7,6 @@ using UnityEngine;
 
 public class PlayerSwordWeapon : Weapon
 {
-    [SerializeField] private float _maxAttackDistance;
     [SerializeField] private float _swordLength;
     [SerializeField] private float _attackSpeed;
     [SerializeField] private float _force;
@@ -15,8 +14,6 @@ public class PlayerSwordWeapon : Weapon
 
     private Player _player;
     private LineRenderer _lr;
-
-    private CheckArea _hitArea;
 
     private Coroutine _hitHolder;
 
@@ -35,19 +32,20 @@ public class PlayerSwordWeapon : Weapon
     protected override void ApplyEnterActions()
     {
         base.ApplyEnterActions();
-        Vector2 attackAngle = _player.Input.LookAt - _player.Center;
-        _hitArea = new CheckArea(_player.Center, _player.Center + attackAngle.normalized * _swordLength);
 
-        collisions = new List<RaycastHit2D>(Physics2D.LinecastAll(_hitArea.a, _hitArea.b, whatIsTarget));
+        _player.LookAt(_player.Input.LookAt);
+        _player.BlockRotation();
 
-        foreach (var collision in collisions)
+        collisions = new List<Collider2D>(Physics2D.OverlapCircleAll(_player.Center, _swordLength, whatIsTarget));
+
+        foreach (var collider in collisions)
         {
-            if (collision.collider.TryGetComponent<Entity>(out var entity))
+            if (collider.TryGetComponent<Entity>(out var entity))
             {
                 if (entity is IPhysical)
                 {
                     var physical = entity as IPhysical;
-                    physical.Push(_force, attackAngle);
+                    physical.Push(_force, _player.BodyDirection * Vector2.one);
                 }
 
                 if (entity is IDamageable)
@@ -69,20 +67,21 @@ public class PlayerSwordWeapon : Weapon
         _hitHolder = StartCoroutine(DrawHit());
     }
 
+    protected override void ApplyExitActions()
+    {
+        base.ApplyExitActions();
+        _player.UnlockRotation();
+    }
+
     private IEnumerator DrawHit()
     {
-        _lr.enabled = true;
-        _lr.SetPosition(0, _hitArea.a);
-        _lr.SetPosition(1, _hitArea.b);
-
         yield return new WaitUntil(() => ActiveTime > _attackSpeed);
 
-        _lr.enabled = false;
         _player.AttackAbility.OnExit();
     }
 
     private void OnDrawGizmos()
     {
-        Utility.DrawLine(_hitArea, collisions.Count > 0, Color.red);
+        Utility.DrawCircle(_player.Center, _swordLength, collisions.Count > 0, Color.red);
     }
 }

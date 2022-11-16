@@ -1,8 +1,8 @@
-public class PlayerWallSlideAS : MoveAS<PlayerMoveVerticalAbility>
+﻿public class PlayerWallSlideAS : MoveAS<PlayerMoveVerticalAbility>
 {
     private void Start()
     {
-        bool GrabCondition() => Ability.Player.Input.Grab && Ability.Player.Input.Move.y != -1;
+        bool GrabCondition() => Ability.Player.Input.Grab && Ability.Player.Input.Move.y != -1 && !Ability.Player.AttackAbility.IsActive;
 
         Transitions.Add(new(Ability.Grab, GrabCondition));
     }

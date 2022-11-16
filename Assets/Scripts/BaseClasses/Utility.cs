@@ -2,6 +2,12 @@
 
 public static class Utility
 {
+    static public void DrawCircle(Vector2 center, float radius, bool detected, Color color)
+    {
+        Gizmos.color = SetTargetDetectedColor(detected, color);
+        Gizmos.DrawWireSphere(center, radius);
+    }
+
     static public void DrawArea(CheckArea area, bool detected, Color color)
     {
         var a = area.a;

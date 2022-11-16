@@ -10,10 +10,20 @@ public interface IRotateable
     {
         get;
     }
+    public bool IsRotationLocked
+    {
+        get;
+    }
 
     public void RotateIntoDirection(int direction);
 
     public void RotateBodyIntoDirection(int direction);
 
     public void LookAt(Vector2 position);
+
+    public void RotateBodyAt(Vector2 position);
+
+    public void BlockRotation();
+
+    public void UnlockRotation();
 }

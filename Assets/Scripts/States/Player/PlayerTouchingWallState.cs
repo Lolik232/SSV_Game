@@ -4,6 +4,8 @@ public class PlayerTouchingWallState : State
 {
     private  Player _player;
 
+    private Vector2 _holdPosition;
+
     protected override void Awake()
     {
         base.Awake();
@@ -48,15 +50,20 @@ public class PlayerTouchingWallState : State
         _player.AttackAbility.Permited = true;
 
         _player.JumpAbility.Request(_player.JumpAbility.WallJump);
-
-        var holdPosition = new Vector2(_player.WallPosition.x + _player.WallDirection * (_player.Size.x / 2 + IChecker.CHECK_OFFSET), _player.Position.y);
-        _player.SetPosition(holdPosition);
+        _player.SetPosition(_holdPosition);
         _player.SetGravity(0f);
+        _player.BlockRotation();
     }
 
     protected override void ApplyExitActions()
     {
         base.ApplyExitActions();
         _player.ResetGravity();
+        _player.UnlockRotation();
+    }
+
+    public void DetermineWallPosition()
+    {
+        _holdPosition = new Vector2(_player.WallPosition.x + _player.WallDirection * (_player.Size.x / 2 + IChecker.CHECK_OFFSET), _player.Position.y);
     }
 }

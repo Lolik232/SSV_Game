@@ -98,163 +98,180 @@ public class Player : Entity, IPhysical, IMovable, ICrouchable, IRotateable,
         private set;
     }
 
-    public Vector2 Position => _physical.Position;
+    public Vector2 Position => ((IPhysical)_physical).Position;
 
-    public Vector2 Velocity => _physical.Velocity;
+    public Vector2 Velocity => ((IPhysical)_physical).Velocity;
 
-    public float Gravity => _physical.Gravity;
+    public float Gravity => ((IPhysical)_physical).Gravity;
 
-    public Vector2 Size => _physical.Size;
+    public Vector2 Size => ((IPhysical)_physical).Size;
 
-    public Vector2 Offset => _physical.Offset;
+    public Vector2 Offset => ((IPhysical)_physical).Offset;
 
-    public Vector2 Center => _physical.Center;
+    public Vector2 Center => ((IPhysical)_physical).Center;
 
-    public bool IsPositionLocked => _movable.IsPositionLocked;
+    public bool IsPositionLocked => ((IMovable)_movable).IsPositionLocked;
 
-    public bool IsVelocityLocked => _movable.IsVelocityLocked;
+    public bool IsVelocityLocked => ((IMovable)_movable).IsVelocityLocked;
 
-    public Vector2 StandSize => _crouchable.StandSize;
+    public Vector2 StandSize => ((ICrouchable)_crouchable).StandSize;
 
-    public Vector2 StandOffset => _crouchable.StandOffset;
+    public Vector2 StandOffset => ((ICrouchable)_crouchable).StandOffset;
 
-    public Vector2 StandCenter => _crouchable.StandCenter;
+    public Vector2 StandCenter => ((ICrouchable)_crouchable).StandCenter;
 
-    public Vector2 CrouchSize => _crouchable.CrouchSize;
+    public Vector2 CrouchSize => ((ICrouchable)_crouchable).CrouchSize;
 
-    public Vector2 CrouchOffset => _crouchable.CrouchOffset;
+    public Vector2 CrouchOffset => ((ICrouchable)_crouchable).CrouchOffset;
 
-    public Vector2 CrouchCenter => _crouchable.CrouchCenter;
+    public Vector2 CrouchCenter => ((ICrouchable)_crouchable).CrouchCenter;
 
-    public bool IsStanding => _crouchable.IsStanding;
+    public bool IsStanding => ((ICrouchable)_crouchable).IsStanding;
 
-    public int FacingDirection => _rotateable.FacingDirection;
+    public int FacingDirection => ((IRotateable)_rotateable).FacingDirection;
 
-    public int BodyDirection => _rotateable.BodyDirection;
+    public int BodyDirection => ((IRotateable)_rotateable).BodyDirection;
 
-    public bool Grounded => _groundChecker.Grounded;
+    public bool IsRotationLocked => ((IRotateable)_rotateable).IsRotationLocked;
 
-    public bool TouchingWall => _wallChecker.TouchingWall;
+    public bool Grounded => ((IGrounded)_groundChecker).Grounded;
 
-    public bool TouchingWallBack => _wallChecker.TouchingWallBack;
+    public bool TouchingWall => ((ITouchingWall)_wallChecker).TouchingWall;
 
-    public Vector2 WallPosition => _wallChecker.WallPosition;
+    public bool TouchingWallBack => ((ITouchingWall)_wallChecker).TouchingWallBack;
 
-    public int WallDirection => _wallChecker.WallDirection;
+    public Vector2 WallPosition => ((ITouchingWall)_wallChecker).WallPosition;
 
-    public float YOffset => _wallChecker.YOffset;
+    public int WallDirection => ((ITouchingWall)_wallChecker).WallDirection;
 
-    public bool TouchingLegde => _ledgeChecker.TouchingLegde;
+    public float YOffset => ((ITouchingWall)_wallChecker).YOffset;
 
-    public bool TouchingGround => _ledgeChecker.TouchingGround;
+    public bool TouchingCeiling => ((ITouchingCeiling)_ceilChecker).TouchingCeiling;
 
-    public Vector2 GroundPosition => _ledgeChecker.GroundPosition;
+    public bool TouchingLegde => ((ITouchingLedge)_ledgeChecker).TouchingLegde;
 
-    public bool TouchingCeiling => _ceilChecker.TouchingCeiling;
+    public bool TouchingGround => ((ITouchingLedge)_ledgeChecker).TouchingGround;
+
+    public Vector2 GroundPosition => ((ITouchingLedge)_ledgeChecker).GroundPosition;
 
     public void BlockPosition()
     {
-        _movable.BlockPosition();
+        ((IMovable)_movable).BlockPosition();
+    }
+
+    public void BlockRotation()
+    {
+        ((IRotateable)_rotateable).BlockRotation();
     }
 
     public void BlockVelocity()
     {
-        _movable.BlockVelocity();
-    }
-
-    public void Push(float force, Vector2 angle)
-    {
-        _physical.Push(force, angle);
-    }
-
-    public void ResetGravity()
-    {
-        _movable.ResetGravity();
-    }
-
-    public void RotateBodyIntoDirection(int direction)
-    {
-        _rotateable.RotateBodyIntoDirection(direction);
-    }
-
-    public void RotateIntoDirection(int direction)
-    {
-        _rotateable.RotateIntoDirection(direction);
-    }
-
-    public void SetGravity(float gravity)
-    {
-        _movable.SetGravity(gravity);
-    }
-
-    public void SetPosition(Vector2 position)
-    {
-        _movable.SetPosition(position);
-    }
-
-    public void SetPosition(float x, float y)
-    {
-        _movable.SetPosition(x, y);
-    }
-
-    public void SetpositionX(float x)
-    {
-        _movable.SetpositionX(x);
-    }
-
-    public void SetPositionY(float y)
-    {
-        _movable.SetPositionY(y);
-    }
-
-    public void SetVelocity(Vector2 velocity)
-    {
-        _movable.SetVelocity(velocity);
-    }
-
-    public void SetVelocity(float x, float y)
-    {
-        _movable.SetVelocity(x, y);
-    }
-
-    public void SetVelocity(float speed, Vector2 angle, int direction)
-    {
-        _movable.SetVelocity(speed, angle, direction);
-    }
-
-    public void SetVelocityX(float x)
-    {
-        _movable.SetVelocityX(x);
-    }
-
-    public void SetVelocityY(float Y)
-    {
-        _movable.SetVelocityY(Y);
-    }
-
-    public void Stand()
-    {
-        _crouchable.Stand();
+        ((IMovable)_movable).BlockVelocity();
     }
 
     public void Crouch()
     {
-        _crouchable.Crouch();
-    }
-
-    public void UnlockPosition()
-    {
-        _movable.UnlockPosition();
-    }
-
-    public void UnlockVelocity()
-    {
-        _movable.UnlockVelocity();
+        ((ICrouchable)_crouchable).Crouch();
     }
 
     public void LookAt(Vector2 position)
     {
-        _rotateable.LookAt(position);
+        ((IRotateable)_rotateable).LookAt(position);
+    }
+
+    public void Push(float force, Vector2 angle)
+    {
+        ((IPhysical)_physical).Push(force, angle);
+    }
+
+    public void ResetGravity()
+    {
+        ((IMovable)_movable).ResetGravity();
+    }
+
+    public void RotateBodyAt(Vector2 position)
+    {
+        ((IRotateable)_rotateable).RotateBodyAt(position);
+    }
+
+    public void RotateBodyIntoDirection(int direction)
+    {
+        ((IRotateable)_rotateable).RotateBodyIntoDirection(direction);
+    }
+
+    public void RotateIntoDirection(int direction)
+    {
+        ((IRotateable)_rotateable).RotateIntoDirection(direction);
+    }
+
+    public void SetGravity(float gravity)
+    {
+        ((IMovable)_movable).SetGravity(gravity);
+    }
+
+    public void SetPosition(Vector2 position)
+    {
+        ((IMovable)_movable).SetPosition(position);
+    }
+
+    public void SetPosition(float x, float y)
+    {
+        ((IMovable)_movable).SetPosition(x, y);
+    }
+
+    public void SetpositionX(float x)
+    {
+        ((IMovable)_movable).SetpositionX(x);
+    }
+
+    public void SetPositionY(float y)
+    {
+        ((IMovable)_movable).SetPositionY(y);
+    }
+
+    public void SetVelocity(Vector2 velocity)
+    {
+        ((IMovable)_movable).SetVelocity(velocity);
+    }
+
+    public void SetVelocity(float x, float y)
+    {
+        ((IMovable)_movable).SetVelocity(x, y);
+    }
+
+    public void SetVelocity(float speed, Vector2 angle, int direction)
+    {
+        ((IMovable)_movable).SetVelocity(speed, angle, direction);
+    }
+
+    public void SetVelocityX(float x)
+    {
+        ((IMovable)_movable).SetVelocityX(x);
+    }
+
+    public void SetVelocityY(float Y)
+    {
+        ((IMovable)_movable).SetVelocityY(Y);
+    }
+
+    public void Stand()
+    {
+        ((ICrouchable)_crouchable).Stand();
+    }
+
+    public void UnlockPosition()
+    {
+        ((IMovable)_movable).UnlockPosition();
+    }
+
+    public void UnlockRotation()
+    {
+        ((IRotateable)_rotateable).UnlockRotation();
+    }
+
+    public void UnlockVelocity()
+    {
+        ((IMovable)_movable).UnlockVelocity();
     }
 
     protected override void Awake()

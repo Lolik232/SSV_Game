@@ -1,4 +1,4 @@
-public class PlayerWallGrabAS : StayAS<PlayerMoveVerticalAbility>
+﻿public class PlayerWallGrabAS : StayAS<PlayerMoveVerticalAbility>
 {
     private void Start()
     {
@@ -6,7 +6,7 @@ public class PlayerWallGrabAS : StayAS<PlayerMoveVerticalAbility>
                                                          Ability.Player.Velocity.y > -0.01f;
 
         bool SlideCondition() => (Ability.Player.Input.Grab && Ability.Player.Input.Move.y == -1 || !Ability.Player.Input.Grab) &&
-                                                         Ability.Player.Velocity.y < 0.01f;
+                                                         Ability.Player.Velocity.y < 0.01f || Ability.Player.Input.Attack;
 
         Transitions.Add(new(Ability.Climb, ClimbCondition));
         Transitions.Add(new(Ability.Slide, SlideCondition));

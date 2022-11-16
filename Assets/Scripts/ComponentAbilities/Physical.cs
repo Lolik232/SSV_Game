@@ -43,7 +43,7 @@ public class Physical : Component, IPhysical
 
     public void Push(float force, Vector2 angle)
     {
-        _rb.velocity = force * new Vector2(angle.normalized.x, 3 * Vector2.up.y);
+        _rb.velocity = force * new Vector2(angle.normalized.x, Vector2.up.y);
     }
 
     private void OnDrawGizmos()
