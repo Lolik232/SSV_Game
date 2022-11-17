@@ -1,7 +1,7 @@
 public interface IGrabController
 {
-	public bool Grab
-	{
-		get; set;
-	}
+    public bool Grab
+    {
+        get; set;
+    }
 }

@@ -1,6 +1,5 @@
-﻿using Systems.SpellSystem.SpellEffect;
-using Unity.VisualScripting;
-using UnityEditor;
+﻿using UnityEditor;
+
 using UnityEngine;
 
 namespace Systems.SpellSystem.SpellEffect.Editor
@@ -15,7 +14,8 @@ namespace Systems.SpellSystem.SpellEffect.Editor
         [MenuItem("Effect properties")]
         public void EditEffect()
         {
-            if (_effectSo != null) EditorUtility.OpenPropertyEditor(_effectSo);
+            if (_effectSo != null)
+                EditorUtility.OpenPropertyEditor(_effectSo);
         }
 
         public override void OnInspectorGUI()

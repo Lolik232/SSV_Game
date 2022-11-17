@@ -1,69 +1,63 @@
-using UnityEngine;
+﻿using UnityEngine;
 
-[RequireComponent(typeof(WallChecker), typeof(LedgeChecker))]
-
-public class PlayerOnLedgeState : State
+public class PlayerOnLedgeState : PlayerState
 {
-	private Player _player;
+    public bool LedgeClimbing
+    {
+        get;
+        set;
+    }
 
-	private WallChecker _wallChecker;
-	private LedgeChecker _ledgeChecker;
+    private Vector2 _startPosition;
+    private Vector2 _endPosition;
 
-	private Vector2 _startPosition;
-	private Vector2 _endPosition;
+    private void Start()
+    {
+        bool GroundedCondition() => !Player.LedgeClimbAbility.IsActive;
 
-	protected override void Awake()
-	{
-		base.Awake();
-		_player = GetComponent<Player>();
+        Transitions.Add(new(Player.GroundedState, GroundedCondition));
+    }
 
-		Checkers.Add(_wallChecker = GetComponent<WallChecker>());
-		Checkers.Add(_ledgeChecker = GetComponent<LedgeChecker>());
-	}
+    protected override void ApplyEnterActions()
+    {
+        base.ApplyEnterActions();
+        Player.MoveHorizontalAbility.Permited = false;
+        Player.MoveVerticalAbility.Permited = false;
+        Player.LedgeClimbAbility.Permited = true;
+        Player.CrouchAbility.Permited = false;
+        Player.JumpAbility.Permited = false;
+        Player.DashAbility.Permited = false;
+        Player.AttackAbility.Permited = false;
 
-	private void Start()
-	{
-		bool GroundedCondition() => !_player.LedgeClimbAbility.IsActive;
+        LedgeClimbing = false;
 
-		Transitions.Add(new(_player.GroundedState, GroundedCondition));
-	}
+        Player.SetPosition(_startPosition);
+        Player.SetVelocity(Vector2.zero);
+        Player.SetGravity(0f);
+        Player.BlockRotation();
+    }
 
-	protected override void ApplyEnterActions()
-	{
-		base.ApplyEnterActions();
-		_player.MoveHorizontalAbility.Permited = false;
-		_player.MoveVerticalAbility.Permited = false;
-		_player.LedgeClimbAbility.Permited = true;
-		_player.CrouchAbility.Permited = false;
-		_player.JumpAbility.Permited = false;
-		_player.DashAbility.Permited = false;
-		_player.AttackAbility.Permited = false;
+    protected override void ApplyExitActions()
+    {
+        base.ApplyExitActions();
+        Player.SetPosition(_endPosition);
+        Player.ResetGravity();
+        Player.UnlockRotation();
 
-		_player.SetPosition(_startPosition);
-		_player.SetVelocity(Vector2.zero);
-		_player.SetGravity(0f);
-	}
+        Player.CrouchAbility.Request(Player.CrouchAbility.Crouch);
+    }
 
-	protected override void ApplyExitActions()
-	{
-		base.ApplyExitActions();
-		_player.SetPosition(_endPosition);
-		_player.ResetGravity();
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireCube(_startPosition + Player.Offset, Player.Size);
+        Gizmos.DrawWireCube(_endPosition + Player.Offset, Player.Size);
+    }
 
-		_player.CrouchAbility.Request(_player.CrouchAbility.Crouch);
-	}
-
-	private void OnDrawGizmos()
-	{
-		Gizmos.DrawWireCube(_startPosition + _player.Offset, _player.Size);
-		Gizmos.DrawWireCube(_endPosition + _player.Offset, _player.Size);
-	}
-
-	public void DetermineLedgePosition()
-	{
-		_startPosition = new Vector2(_wallChecker.WallPosition.x + _wallChecker.WallDirection * (_player.Size.x / 2 + IChecker.CHECK_OFFSET),
-																	 _ledgeChecker.GroundPosition.y - 1f);
-		_endPosition = new Vector2(_wallChecker.WallPosition.x - _wallChecker.WallDirection * (_player.Size.x / 2 + IChecker.CHECK_OFFSET),
-																 _ledgeChecker.GroundPosition.y + IChecker.CHECK_OFFSET);
-	}
+    public void DetermineLedgePosition()
+    {
+        _startPosition = new Vector2(Player.WallPosition.x + Player.WallDirection * (Player.Size.x / 2 + IChecker.CHECK_OFFSET),
+                                                                     Player.GroundPosition.y - 1f);
+        _endPosition = new Vector2(Player.WallPosition.x - Player.WallDirection * (Player.Size.x / 2 + IChecker.CHECK_OFFSET),
+                                                                 Player.GroundPosition.y + IChecker.CHECK_OFFSET);
+    }
 }

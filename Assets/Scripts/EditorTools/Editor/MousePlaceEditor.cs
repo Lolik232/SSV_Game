@@ -1,7 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
+
 using UnityEngine;
 
 [CustomEditor(typeof(MousePlace))]
@@ -34,7 +32,7 @@ public class MousePlaceEditor : Editor
         mousePos = sceneView.camera.ScreenToWorldPoint(mousePos);
 
         _mousePlace.UpdateTargeting(mousePos);
- 
+
 
         switch (currentGUIEvent.type)
         {

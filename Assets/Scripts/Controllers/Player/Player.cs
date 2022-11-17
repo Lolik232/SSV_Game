@@ -1,6 +1,9 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
+
+[RequireComponent(typeof(WallChecker), typeof(GroundChecker), typeof(CeilChecker))]
+[RequireComponent(typeof(LedgeChecker))]
 
 [RequireComponent(typeof(Physical), typeof(Movable), typeof(Crouchable))]
 [RequireComponent(typeof(Rotateable))]
@@ -17,238 +20,293 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerDashAbility))]
 [RequireComponent(typeof(PlayerAttackAbility))]
 
-public class Player : Entity, IPhysical, IMovable, ICrouchable, IRotateable
+public class Player : Entity, IPhysical, IMovable, ICrouchable, IRotateable, 
+                              IGrounded, ITouchingWall, ITouchingCeiling, ITouchingLedge
 {
-	private Physical _physical;
-	private Movable _movable;
-	private Crouchable _crouchable;
-	private Rotateable _rotateable;
+    private WallChecker _wallChecker;
+    private GroundChecker _groundChecker;
+    private CeilChecker _ceilChecker;
+    private LedgeChecker _ledgeChecker;
 
-	public PlayerInputReader Input
-	{
-		get;
-		private set;
-	}
+    private Physical _physical;
+    private Movable _movable;
+    private Crouchable _crouchable;
+    private Rotateable _rotateable;
 
-	public PlayerGroundedState GroundedState
-	{
-		get;
-		private set;
-	}
-	public PlayerInAirState InAirState
-	{
-		get;
-		private set;
-	}
-	public PlayerTouchingWallState TouchingWallState
-	{
-		get;
-		private set;
-	}
-	public PlayerOnLedgeState OnLedgeState
-	{
-		get;
-		private set;
-	}
+    public PlayerInputReader Input
+    {
+        get;
+        private set;
+    }
 
-	public PlayerMoveHorizontalAbility MoveHorizontalAbility
-	{
-		get;
-		private set;
-	}
-	public PlayerMoveVerticalAbility MoveVerticalAbility
-	{
-		get;
-		private set;
-	}
-	public PlayerJumpAbility JumpAbility
-	{
-		get;
-		private set;
-	}
-	public PlayerCrouchAbility CrouchAbility
-	{
-		get;
-		private set;
-	}
-	public PlayerLedgeClimbAbility LedgeClimbAbility
-	{
-		get;
-		private set;
-	}
+    public PlayerGroundedState GroundedState
+    {
+        get;
+        private set;
+    }
+    public PlayerInAirState InAirState
+    {
+        get;
+        private set;
+    }
+    public PlayerTouchingWallState TouchingWallState
+    {
+        get;
+        private set;
+    }
+    public PlayerOnLedgeState OnLedgeState
+    {
+        get;
+        private set;
+    }
 
-	public PlayerDashAbility DashAbility
-	{
-		get;
-		private set;
-	}
+    public PlayerMoveHorizontalAbility MoveHorizontalAbility
+    {
+        get;
+        private set;
+    }
+    public PlayerMoveVerticalAbility MoveVerticalAbility
+    {
+        get;
+        private set;
+    }
+    public PlayerJumpAbility JumpAbility
+    {
+        get;
+        private set;
+    }
+    public PlayerCrouchAbility CrouchAbility
+    {
+        get;
+        private set;
+    }
+    public PlayerLedgeClimbAbility LedgeClimbAbility
+    {
+        get;
+        private set;
+    }
 
-	public PlayerAttackAbility AttackAbility
-	{
-		get;
-		private set;
-	}
+    public PlayerDashAbility DashAbility
+    {
+        get;
+        private set;
+    }
 
-	public Vector2 Position => _physical.Position;
+    public PlayerAttackAbility AttackAbility
+    {
+        get;
+        private set;
+    }
 
-	public Vector2 Velocity => _physical.Velocity;
+    public Vector2 Position => ((IPhysical)_physical).Position;
 
-	public float Gravity => _physical.Gravity;
+    public Vector2 Velocity => ((IPhysical)_physical).Velocity;
 
-	public Vector2 Size => _physical.Size;
+    public float Gravity => ((IPhysical)_physical).Gravity;
 
-	public Vector2 Offset => _physical.Offset;
+    public Vector2 Size => ((IPhysical)_physical).Size;
 
-	public Vector2 Center => _physical.Center;
+    public Vector2 Offset => ((IPhysical)_physical).Offset;
 
-	public bool IsPositionLocked => _movable.IsPositionLocked;
+    public Vector2 Center => ((IPhysical)_physical).Center;
 
-	public bool IsVelocityLocked => _movable.IsVelocityLocked;
+    public bool IsPositionLocked => ((IMovable)_movable).IsPositionLocked;
 
-	public Vector2 StandSize => _crouchable.StandSize;
+    public bool IsVelocityLocked => ((IMovable)_movable).IsVelocityLocked;
 
-	public Vector2 StandOffset => _crouchable.StandOffset;
+    public Vector2 StandSize => ((ICrouchable)_crouchable).StandSize;
 
-	public Vector2 StandCenter => _crouchable.StandCenter;
+    public Vector2 StandOffset => ((ICrouchable)_crouchable).StandOffset;
 
-	public Vector2 CrouchSize => _crouchable.CrouchSize;
+    public Vector2 StandCenter => ((ICrouchable)_crouchable).StandCenter;
 
-	public Vector2 CrouchOffset => _crouchable.CrouchOffset;
+    public Vector2 CrouchSize => ((ICrouchable)_crouchable).CrouchSize;
 
-	public Vector2 CrouchCenter => _crouchable.CrouchCenter;
+    public Vector2 CrouchOffset => ((ICrouchable)_crouchable).CrouchOffset;
 
-	public bool IsStanding => _crouchable.IsStanding;
+    public Vector2 CrouchCenter => ((ICrouchable)_crouchable).CrouchCenter;
 
-	public int FacingDirection => _rotateable.FacingDirection;
+    public bool IsStanding => ((ICrouchable)_crouchable).IsStanding;
 
-	public int BodyDirection => _rotateable.BodyDirection;
+    public int FacingDirection => ((IRotateable)_rotateable).FacingDirection;
 
-	public void BlockPosition()
-	{
-		_movable.BlockPosition();
-	}
+    public int BodyDirection => ((IRotateable)_rotateable).BodyDirection;
 
-	public void BlockVelocity()
-	{
-		_movable.BlockVelocity();
-	}
+    public bool IsRotationLocked => ((IRotateable)_rotateable).IsRotationLocked;
 
-	public void Push(float force, Vector2 angle)
-	{
-		_physical.Push(force, angle);
-	}
+    public bool Grounded => ((IGrounded)_groundChecker).Grounded;
 
-	public void ResetGravity()
-	{
-		_movable.ResetGravity();
-	}
+    public bool TouchingWall => ((ITouchingWall)_wallChecker).TouchingWall;
 
-	public void RotateBodyIntoDirection(int direction)
-	{
-		_rotateable.RotateBodyIntoDirection(direction);
-	}
+    public bool TouchingWallBack => ((ITouchingWall)_wallChecker).TouchingWallBack;
 
-	public void RotateIntoDirection(int direction)
-	{
-		_rotateable.RotateIntoDirection(direction);
-	}
+    public Vector2 WallPosition => ((ITouchingWall)_wallChecker).WallPosition;
 
-	public void SetGravity(float gravity)
-	{
-		_movable.SetGravity(gravity);
-	}
+    public int WallDirection => ((ITouchingWall)_wallChecker).WallDirection;
 
-	public void SetPosition(Vector2 position)
-	{
-		_movable.SetPosition(position);
-	}
+    public float YOffset => ((ITouchingWall)_wallChecker).YOffset;
 
-	public void SetPosition(float x, float y)
-	{
-		_movable.SetPosition(x, y);
-	}
+    public bool TouchingCeiling => ((ITouchingCeiling)_ceilChecker).TouchingCeiling;
 
-	public void SetpositionX(float x)
-	{
-		_movable.SetpositionX(x);
-	}
+    public bool TouchingLegde => ((ITouchingLedge)_ledgeChecker).TouchingLegde;
 
-	public void SetPositionY(float y)
-	{
-		_movable.SetPositionY(y);
-	}
+    public bool TouchingGround => ((ITouchingLedge)_ledgeChecker).TouchingGround;
 
-	public void SetVelocity(Vector2 velocity)
-	{
-		_movable.SetVelocity(velocity);
-	}
+    public Vector2 GroundPosition => ((ITouchingLedge)_ledgeChecker).GroundPosition;
 
-	public void SetVelocity(float x, float y)
-	{
-		_movable.SetVelocity(x, y);
-	}
+    public void BlockPosition()
+    {
+        ((IMovable)_movable).BlockPosition();
+    }
 
-	public void SetVelocity(float speed, Vector2 angle, int direction)
-	{
-		_movable.SetVelocity(speed, angle, direction);
-	}
+    public void BlockRotation()
+    {
+        ((IRotateable)_rotateable).BlockRotation();
+    }
 
-	public void SetVelocityX(float x)
-	{
-		_movable.SetVelocityX(x);
-	}
+    public void BlockVelocity()
+    {
+        ((IMovable)_movable).BlockVelocity();
+    }
 
-	public void SetVelocityY(float Y)
-	{
-		_movable.SetVelocityY(Y);
-	}
+    public void Crouch()
+    {
+        ((ICrouchable)_crouchable).Crouch();
+    }
 
-	public void Stand()
-	{
-		_crouchable.Stand();
-	}
+    public void LookAt(Vector2 position)
+    {
+        ((IRotateable)_rotateable).LookAt(position);
+    }
 
-	public void Crouch()
-	{
-		_crouchable.Crouch();
-	}
+    public void Push(float force, Vector2 angle)
+    {
+        ((IPhysical)_physical).Push(force, angle);
+    }
 
-	public void UnlockPosition()
-	{
-		_movable.UnlockPosition();
-	}
+    public void ResetGravity()
+    {
+        ((IMovable)_movable).ResetGravity();
+    }
 
-	public void UnlockVelocity()
-	{
-		_movable.UnlockVelocity();
-	}
+    public void RotateBodyAt(Vector2 position)
+    {
+        ((IRotateable)_rotateable).RotateBodyAt(position);
+    }
 
-	private void Awake()
-	{
-		_physical = GetComponent<Physical>();
-		_movable = GetComponent<Movable>();
-		_rotateable = GetComponent<Rotateable>();
-		_crouchable = GetComponent<Crouchable>();
+    public void RotateBodyIntoDirection(int direction)
+    {
+        ((IRotateable)_rotateable).RotateBodyIntoDirection(direction);
+    }
 
-		Input = GetComponent<PlayerInputReader>();
+    public void RotateIntoDirection(int direction)
+    {
+        ((IRotateable)_rotateable).RotateIntoDirection(direction);
+    }
 
-		GroundedState = GetComponent<PlayerGroundedState>();
-		InAirState = GetComponent<PlayerInAirState>();
-		TouchingWallState = GetComponent<PlayerTouchingWallState>();
-		OnLedgeState = GetComponent<PlayerOnLedgeState>();
+    public void SetGravity(float gravity)
+    {
+        ((IMovable)_movable).SetGravity(gravity);
+    }
 
-		MoveHorizontalAbility = GetComponent<PlayerMoveHorizontalAbility>();
-		MoveVerticalAbility = GetComponent<PlayerMoveVerticalAbility>();
-		JumpAbility = GetComponent<PlayerJumpAbility>();
-		CrouchAbility = GetComponent<PlayerCrouchAbility>();
-		LedgeClimbAbility = GetComponent<PlayerLedgeClimbAbility>();
-		DashAbility = GetComponent<PlayerDashAbility>();
-		AttackAbility = GetComponent<PlayerAttackAbility>();
-	}
+    public void SetPosition(Vector2 position)
+    {
+        ((IMovable)_movable).SetPosition(position);
+    }
 
-	private void Start()
-	{
-		RotateIntoDirection(1);
-		Stand();
-	}
+    public void SetPosition(float x, float y)
+    {
+        ((IMovable)_movable).SetPosition(x, y);
+    }
+
+    public void SetpositionX(float x)
+    {
+        ((IMovable)_movable).SetpositionX(x);
+    }
+
+    public void SetPositionY(float y)
+    {
+        ((IMovable)_movable).SetPositionY(y);
+    }
+
+    public void SetVelocity(Vector2 velocity)
+    {
+        ((IMovable)_movable).SetVelocity(velocity);
+    }
+
+    public void SetVelocity(float x, float y)
+    {
+        ((IMovable)_movable).SetVelocity(x, y);
+    }
+
+    public void SetVelocity(float speed, Vector2 angle, int direction)
+    {
+        ((IMovable)_movable).SetVelocity(speed, angle, direction);
+    }
+
+    public void SetVelocityX(float x)
+    {
+        ((IMovable)_movable).SetVelocityX(x);
+    }
+
+    public void SetVelocityY(float Y)
+    {
+        ((IMovable)_movable).SetVelocityY(Y);
+    }
+
+    public void Stand()
+    {
+        ((ICrouchable)_crouchable).Stand();
+    }
+
+    public void UnlockPosition()
+    {
+        ((IMovable)_movable).UnlockPosition();
+    }
+
+    public void UnlockRotation()
+    {
+        ((IRotateable)_rotateable).UnlockRotation();
+    }
+
+    public void UnlockVelocity()
+    {
+        ((IMovable)_movable).UnlockVelocity();
+    }
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        _wallChecker = GetComponent<WallChecker>();
+        _ledgeChecker = GetComponent<LedgeChecker>();
+        _ceilChecker = GetComponent<CeilChecker>();
+        _groundChecker = GetComponent<GroundChecker>();
+
+        _physical = GetComponent<Physical>();
+        _movable = GetComponent<Movable>();
+        _rotateable = GetComponent<Rotateable>();
+        _crouchable = GetComponent<Crouchable>();
+
+        Input = GetComponent<PlayerInputReader>();
+
+        GroundedState = GetComponent<PlayerGroundedState>();
+        InAirState = GetComponent<PlayerInAirState>();
+        TouchingWallState = GetComponent<PlayerTouchingWallState>();
+        OnLedgeState = GetComponent<PlayerOnLedgeState>();
+
+        MoveHorizontalAbility = GetComponent<PlayerMoveHorizontalAbility>();
+        MoveVerticalAbility = GetComponent<PlayerMoveVerticalAbility>();
+        JumpAbility = GetComponent<PlayerJumpAbility>();
+        CrouchAbility = GetComponent<PlayerCrouchAbility>();
+        LedgeClimbAbility = GetComponent<PlayerLedgeClimbAbility>();
+        DashAbility = GetComponent<PlayerDashAbility>();
+        AttackAbility = GetComponent<PlayerAttackAbility>();
+    }
+
+    private void Start()
+    {
+        RotateIntoDirection(1);
+        Stand();
+    }
 }

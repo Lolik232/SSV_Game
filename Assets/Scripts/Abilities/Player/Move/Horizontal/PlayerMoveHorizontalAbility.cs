@@ -1,49 +1,41 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(PlayerStayAS), typeof(PlayerMoveForwardAS), typeof(PlayerMoveBackwardAS))]
 
-public class PlayerMoveHorizontalAbility : Ability
+public class PlayerMoveHorizontalAbility : PlayerAbility
 {
-	public Player Player
-	{
-		get;
-		private set;
-	}
+    public PlayerMoveForwardAS Forward
+    {
+        get;
+        private set;
+    }
+    public PlayerMoveBackwardAS Backward
+    {
+        get;
+        private set;
+    }
+    public PlayerStayAS Stay
+    {
+        get;
+        private set;
+    }
 
-	public PlayerMoveForwardAS Forward
-	{
-		get;
-		private set;
-	}
-	public PlayerMoveBackwardAS Backward
-	{
-		get;
-		private set;
-	}
-	public PlayerStayAS Stay
-	{
-		get;
-		private set;
-	}
+    protected override void Awake()
+    {
+        base.Awake();
+        Forward = GetComponent<PlayerMoveForwardAS>();
+        Backward = GetComponent<PlayerMoveBackwardAS>();
+        Default = Stay = GetComponent<PlayerStayAS>();
 
-	protected override void Awake()
-	{
-		base.Awake();
-		Player = GetComponent<Player>();
+        GetAbilityStates<PlayerMoveHorizontalAbility>();
+    }
 
-		Forward = GetComponent<PlayerMoveForwardAS>();
-		Backward = GetComponent<PlayerMoveBackwardAS>();
-		Default = Stay = GetComponent<PlayerStayAS>();
+    protected override void Start()
+    {
+        base.Start();
+        bool StayCondition() => !Player.IsVelocityLocked && !Player.IsPositionLocked;
 
-		GetAbilityStates<PlayerMoveHorizontalAbility>();
-	}
-
-	protected override void Start()
-	{
-		base.Start();
-		bool StayCondition() => !Player.IsVelocityLocked && !Player.IsPositionLocked;
-
-		enterConditions.Add(() => StayCondition());
-		exitConditions.Add(() => !StayCondition());
-	}
+        enterConditions.Add(() => StayCondition());
+        exitConditions.Add(() => !StayCondition());
+    }
 }

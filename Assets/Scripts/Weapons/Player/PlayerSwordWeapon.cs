@@ -1,71 +1,75 @@
-using System.Collections;
-
-using Unity.VisualScripting;
+﻿using System.Collections;
+using System.Collections.Generic;
 
 using UnityEngine;
 
-[RequireComponent(typeof(LineRenderer))]
-
-public class PlayerSwordWeapon : Weapon
+public class PlayerSwordWeapon : PlayerWeapon
 {
-	[SerializeField] private float _maxAttackDistance;
-	[SerializeField] private float _swordLength;
-	[SerializeField] private float _attackSpeed;
-	[SerializeField] private float _force;
+    [SerializeField] private float _swordLength;
+    [SerializeField] private float _attackSpeed;
+    [SerializeField] private float _force;
+    [SerializeField] private float _damage;
 
-	private Player _player;
-	private LineRenderer _lr;
+    private Coroutine _hitHolder;
 
-	private CheckArea _hitArea;
+    protected override void Start()
+    {
+        SetAnimationSpeed("SwordAttack", _attackSpeed);
+    }
 
-	private Coroutine _hitHolder;
+    protected override void ApplyEnterActions()
+    {
+        base.ApplyEnterActions();
 
-	protected override void Awake()
-	{
-		base.Awake();
-		_player = Inventory.GetComponentInParent<Player>();
-		_lr = GetComponent<LineRenderer>();
-	}
+        Player.LookAt(Player.Input.LookAt);
+        Player.BlockRotation();
 
-	protected override void ApplyEnterActions()
-	{
-		base.ApplyEnterActions();
-		Vector2 attackAngle = _player.Input.LookAt - _player.Center;
-		_hitArea = new CheckArea(_player.Center, _player.Center + attackAngle.normalized * _swordLength);
+        collisions = new List<Collider2D>(Physics2D.OverlapCircleAll(Player.Center, _swordLength, whatIsTarget));
 
-		collisions.Clear();
-		collisions.AddRange(Physics2D.LinecastAll(_hitArea.a, _hitArea.b, whatIsTarget));
-		
-		foreach (var collision in collisions)
-		{
-			if (collision.collider.TryGetComponent<Physical>(out var physical))
-			{
-				physical.Push(_force, attackAngle);
-			}
-		}
+        foreach (var collider in collisions)
+        {
+            if (collider.TryGetComponent<Entity>(out var entity))
+            {
+                if (entity is IPhysical)
+                {
+                    var physical = entity as IPhysical;
+                    physical.Push(_force, Player.BodyDirection * Vector2.one);
+                }
 
-		if (_hitHolder != null)
-		{
-			StopCoroutine(_hitHolder);
-		}
+                if (entity is IDamageable)
+                {
+                    var damageable = entity as IDamageable;
+                    if (!damageable.IsDead)
+                    {
+                        damageable.TakeDamage(_damage, Player);
+                    }
+                }
+            }
+        }
 
-		_hitHolder = StartCoroutine(DrawHit());
-	}
+        if (_hitHolder != null)
+        {
+            StopCoroutine(_hitHolder);
+        }
 
-	private IEnumerator DrawHit()
-	{
-		_lr.enabled = true;
-		_lr.SetPosition(0, _hitArea.a);
-		_lr.SetPosition(1, _hitArea.b);
+        _hitHolder = StartCoroutine(OnHit());
+    }
 
-		yield return new WaitUntil(() => ActiveTime > _attackSpeed);
+    protected override void ApplyExitActions()
+    {
+        base.ApplyExitActions();
+        Player.UnlockRotation();
+    }
 
-		_lr.enabled = false;
-		_player.AttackAbility.OnExit();
-	}
+    private IEnumerator OnHit()
+    {
+        yield return new WaitUntil(() => ActiveTime > _attackSpeed);
 
-	private void OnDrawGizmos()
-	{
-		Utility.DrawLine(_hitArea, collisions.Count > 0, Color.red);
-	}
+        Player.AttackAbility.OnExit();
+    }
+
+    private void OnDrawGizmos()
+    {
+        Utility.DrawCircle(Player.Center, _swordLength, collisions.Count > 0, Color.red);
+    }
 }

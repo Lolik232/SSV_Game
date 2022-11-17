@@ -1,8 +1,8 @@
 public interface IAbilityControlller
 {
-	public bool Ability
-	{
-		get;
-		set;
-	}
+    public bool Ability
+    {
+        get;
+        set;
+    }
 }

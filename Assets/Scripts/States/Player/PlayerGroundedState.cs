@@ -1,81 +1,69 @@
-using System;
-using System.Collections;
+﻿using UnityEngine;
 
-using UnityEngine;
-
-[RequireComponent(typeof(CeilChecker), typeof(GroundChecker), typeof(WallChecker))]
-[RequireComponent(typeof(LedgeChecker))]
-
-public sealed class PlayerGroundedState : State
+public sealed class PlayerGroundedState : PlayerState
 {
-	[SerializeField] private float _waitForLedgeClimbTime;
+    [SerializeField] private float _waitForLedgeClimbTime;
 
-	private Player _player;
+    private void Start()
+    {
+        bool InAirCondition() => !Player.Grounded;
 
-	private GroundChecker _groundChecker;
-	private WallChecker _wallChecker;
-	private LedgeChecker _ledgeChecker;
-	private CeilChecker _ceilChecker;
+        bool TouchingWallCondition() => Player.TouchingWall &&
+                                        Player.TouchingLegde &&
+                                        Player.IsStanding &&
+                                        Player.Input.Grab &&
+                                        Player.Input.Move.y != -1 &&
+                                        !Player.AttackAbility.IsActive;
 
-	protected override void Awake()
-	{
-		base.Awake();
-		_player = GetComponent<Player>();
 
-		Checkers.Add(_groundChecker = GetComponent<GroundChecker>());
-		Checkers.Add(_wallChecker = GetComponent<WallChecker>());
-		Checkers.Add(_ledgeChecker = GetComponent<LedgeChecker>());
-		Checkers.Add(_ceilChecker = GetComponent<CeilChecker>());
-	}
+        bool OnLedgeCondition() => Player.OnLedgeState.LedgeClimbing;
 
-	private void Start()
-	{
-		bool InAirCondition() => !_groundChecker.Grounded;
+        void InAirAction()
+        {
+            if (!Player.IsStanding && Player.TouchingCeiling)
+            {
+                Player.SetPositionY(Player.Position.y - (Player.StandSize.y - Player.CrouchSize.y));
+            }
 
-		bool TouchingWallCondition() => _wallChecker.TouchingWall &&
-																		_ledgeChecker.TouchingLegde &&
-																		_player.IsStanding &&
-																		_player.Input.Grab &&
-																		_player.Input.Move.y != -1;
+            if (!Player.JumpAbility.IsActive)
+            {
+                Player.InAirState.CheckJumpCoyoteTime();
+            }
+        }
 
-		void InAirAction()
-		{
-			if (!_player.IsStanding && _ceilChecker.TouchingCeiling)
-			{
-				_player.SetPositionY(_player.Position.y - (_player.StandSize.y - _player.CrouchSize.y));
-			}
+        void TouchingWallAction()
+        {
+            Player.TouchingWallState.DetermineWallPosition();
+        }
 
-			if (!_player.JumpAbility.IsActive)
-			{
-				_player.InAirState.CheckJumpCoyoteTime();
-			}
-		}
+        Transitions.Add(new(Player.InAirState, InAirCondition, InAirAction));
+        Transitions.Add(new(Player.TouchingWallState, TouchingWallCondition, TouchingWallAction));
+        Transitions.Add(new(Player.OnLedgeState, OnLedgeCondition));
+    }
 
-		Transitions.Add(new(_player.InAirState, InAirCondition, InAirAction));
-		Transitions.Add(new(_player.TouchingWallState, TouchingWallCondition));
-	}
+    protected override void ApplyEnterActions()
+    {
+        base.ApplyEnterActions();
+        Player.MoveHorizontalAbility.Permited = true;
+        Player.MoveVerticalAbility.Permited = false;
+        Player.LedgeClimbAbility.Permited = false;
+        Player.CrouchAbility.Permited = true;
+        Player.JumpAbility.Permited = true;
+        Player.DashAbility.Permited = true;
+        Player.AttackAbility.Permited = true;
 
-	protected override void ApplyEnterActions()
-	{
-		base.ApplyEnterActions();
-		_player.MoveHorizontalAbility.Permited = true;
-		_player.MoveVerticalAbility.Permited = false;
-		_player.LedgeClimbAbility.Permited = false;
-		_player.CrouchAbility.Permited = true;
-		_player.JumpAbility.Permited = true;
-		_player.DashAbility.Permited = true;
-		_player.AttackAbility.Permited = true;
+        Player.OnLedgeState.LedgeClimbing = false;
 
-		_player.JumpAbility.RestoreJumps();
-		_player.JumpAbility.CancelRequest();
-		_player.DashAbility.RestoreDashes();
+        Player.JumpAbility.RestoreJumps();
+        Player.JumpAbility.CancelRequest();
+        Player.DashAbility.RestoreDashes();
 
-		_player.InAirState.TerminateTryingLedgeClimb();
-	}
+        Player.InAirState.TerminateTryingLedgeClimb();
+    }
 
-	protected override void ApplyUpdateActions()
-	{
-		base.ApplyUpdateActions();
-		_player.InAirState.TryLedgeClimb();
-	}
+    protected override void ApplyUpdateActions()
+    {
+        base.ApplyUpdateActions();
+        Player.InAirState.TryLedgeClimb();
+    }
 }

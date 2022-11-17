@@ -1,113 +1,100 @@
-using System;
-using System.Collections.Generic;
+﻿using System;
 
 using UnityEngine;
 
 public abstract class StateBase : ComponentBase
 {
-	[SerializeField] private string _name;
+    [SerializeField] private string _name;
 
-	protected List<IChecker> Checkers
-	{
-		get;
-		private set;
-	} = new();
+    protected Animator Anim
+    {
+        get;
+        private set;
+    }
+    public string Name
+    {
+        get => _name;
+    }
 
-	protected Animator Anim
-	{
-		get;
-		private set;
-	}
-	public string Name
-	{
-		get => _name;
-	}
+    protected virtual void Awake()
+    {
+        Anim = GetComponent<Animator>();
+    }
 
-	protected virtual void Awake()
-	{
-		Anim = GetComponent<Animator>();
-	}
+    public override void OnEnter()
+    {
+        if (IsActive)
+        {
+            return;
+        }
 
-	public override void OnEnter()
-	{
-		if (IsActive)
-		{
-			return;
-		}
+        ApplyEnterActions();
+    }
 
-		ApplyEnterActions();
+    public override void OnExit()
+    {
+        if (!IsActive)
+        {
+            return;
+        }
 
-		foreach (var checker in Checkers)
-		{
-			checker.UpdateCheckersPosition();
-			checker.DoChecks();
-		}
-	}
+        ApplyExitActions();
+    }
 
-	public override void OnExit()
-	{
-		if (!IsActive)
-		{
-			return;
-		}
+    public override void OnUpdate()
+    {
+        if (!IsActive)
+        {
+            return;
+        }
 
-		ApplyExitActions();
-	}
+        TryGetTransition();
 
-	public override void OnUpdate()
-	{
-		if (!IsActive)
-		{
-			return;
-		}
+        if (!IsActive)
+        {
+            return;
+        }
 
-		TryGetTransition();
+        ApplyUpdateActions();
+    }
 
-		if (!IsActive)
-		{
-			return;
-		}
+    protected override void ApplyEnterActions()
+    {
+        base.ApplyEnterActions();
+        if (Name != string.Empty)
+        {
+            Anim.SetBool(Name, true);
+            Debug.Log(Name);
+        }
+    }
 
-		ApplyUpdateActions();
-	}
+    protected override void ApplyExitActions()
+    {
+        base.ApplyExitActions();
+        if (Name != string.Empty)
+        {
+            Anim.SetBool(Name, false);
+        }
+    }
 
-	protected override void ApplyEnterActions()
-	{
-		base.ApplyEnterActions();
-		if (Name != string.Empty)
-		{
-			Anim.SetBool(Name, true);
-			Debug.Log(Name);
-		}
-	}
+    protected abstract void TryGetTransition();
 
-	protected override void ApplyExitActions()
-	{
-		base.ApplyExitActions();
-		if (Name != string.Empty)
-		{
-			Anim.SetBool(Name, false);
-		}
-	}
-
-	protected abstract void TryGetTransition();
-
-	protected void SetAnimationSpeed(float duration)
-	{
-		Utility.SetAnimationSpeed(Anim, Name, duration);
-	}
+    protected void SetAnimationSpeed(string clipName, float duration)
+    {
+        Utility.SetAnimationSpeed(Anim, clipName, Name, duration);
+    }
 }
 
 public struct TransitionItem<T> where T : StateBase
 {
-	public T target;
-	public Func<bool> condition;
-	public Action action;
+    public T target;
+    public Func<bool> condition;
+    public Action action;
 
-	public TransitionItem(T target, Func<bool> condition, Action action = null)
-	{
-		this.target = target;
-		this.condition = condition;
-		this.action = action;
-	}
+    public TransitionItem(T target, Func<bool> condition, Action action = null)
+    {
+        this.target = target;
+        this.condition = condition;
+        this.action = action;
+    }
 }

@@ -1,6 +1,6 @@
 public interface IAnimated
 {
-	public void OnAnimationTrigger();
+    public void OnAnimationTrigger();
 
-	public void OnAnimationFinishTrigger();
+    public void OnAnimationFinishTrigger();
 }

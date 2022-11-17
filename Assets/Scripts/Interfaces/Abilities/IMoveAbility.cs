@@ -1,8 +1,8 @@
 public interface IMoveAbility
 {
-	public float MoveSpeed
-	{
-		get;
-		set;
-	}
+    public float MoveSpeed
+    {
+        get;
+        set;
+    }
 }

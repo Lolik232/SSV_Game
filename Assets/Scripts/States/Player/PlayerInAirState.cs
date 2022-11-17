@@ -1,165 +1,155 @@
-using System;
-using System.Collections;
+﻿using System.Collections;
 
 using UnityEngine;
 
-[RequireComponent(typeof(GroundChecker), typeof(WallChecker), typeof(LedgeChecker))]
-
-public sealed class PlayerInAirState : State
+public sealed class PlayerInAirState : PlayerState
 {
-	[SerializeField] private float _waitForLedgeClimbTime;
+    [SerializeField] private float _waitForLedgeClimbTime;
 
-	private Player _player;
+    private bool _tryingLedgeClimb;
+    private float _tryingLedgeClimbStartTime;
 
-	private GroundChecker _groundChecker;
-	private WallChecker _wallChecker;
-	private LedgeChecker _ledgeChecker;
+    private float TryingLedgeClimbTime
+    {
+        get => Time.time - _tryingLedgeClimbStartTime;
+        set => _tryingLedgeClimbStartTime = value;
+    }
 
-	private bool _tryingLedgeClimb;
-	private float _tryingLedgeClimbStartTime;
+    public Coroutine JumpCoyoteTimeHolder
+    {
+        private get;
+        set;
+    }
 
-	private float TryingLedgeClimbTime
-	{
-		get => Time.time - _tryingLedgeClimbStartTime;
-		set => _tryingLedgeClimbStartTime = value;
-	}
+    public Coroutine TryingLedgeClimbHolder
+    {
+        private get;
+        set;
+    }
 
-	public Coroutine JumpCoyoteTimeHolder
-	{
-		private get;
-		set;
-	}
+    private void Start()
+    {
+        bool GroundedCondition() => Player.Grounded && Player.Velocity.y < 0.01f;
 
-	public Coroutine TryingLedgeClimbHolder
-	{
-		private get;
-		set;
-	}
+        bool TouchingWallCondition() => Player.TouchingWall &&
+                                        Player.TouchingLegde &&
+                                        (Player.Input.Grab || Player.Input.Move.x == Player.FacingDirection &&
+                                        Player.Velocity.y < 0.01f);
 
-	protected override void Awake()
-	{
-		base.Awake();
-		_player = GetComponent<Player>();
+        bool OnLedgeCondition() => Player.OnLedgeState.LedgeClimbing;
 
-		Checkers.Add(_groundChecker = GetComponent<GroundChecker>());
-		Checkers.Add(_wallChecker = GetComponent<WallChecker>());
-		Checkers.Add(_ledgeChecker = GetComponent<LedgeChecker>());
-	}
+        void TouchingWallAction() {
+            Player.TouchingWallState.DetermineWallPosition();
+        }
 
-	private void Start()
-	{
-		bool GroundedCondition() => _groundChecker.Grounded && _player.Velocity.y < 0.01f;
+        Transitions.Add(new(Player.GroundedState, GroundedCondition));
+        Transitions.Add(new(Player.TouchingWallState, TouchingWallCondition, TouchingWallAction));
+        Transitions.Add(new(Player.OnLedgeState, OnLedgeCondition));
+    }
 
-		bool TouchingWallCondition() => _wallChecker.TouchingWall &&
-																		_ledgeChecker.TouchingLegde &&
-																		 (_player.Input.Grab || _player.Input.Move.x == _player.FacingDirection &&
-																		 _player.Velocity.y < 0.01f);
+    protected override void ApplyEnterActions()
+    {
+        base.ApplyEnterActions();
+        Player.MoveHorizontalAbility.Permited = true;
+        Player.MoveVerticalAbility.Permited = false;
+        Player.LedgeClimbAbility.Permited = false;
+        Player.CrouchAbility.Permited = false;
+        Player.JumpAbility.Permited = true;
+        Player.DashAbility.Permited = true;
+        Player.AttackAbility.Permited = true;
 
-		Transitions.Add(new(_player.GroundedState, GroundedCondition));
-		Transitions.Add(new(_player.TouchingWallState, TouchingWallCondition));
-	}
+        Player.OnLedgeState.LedgeClimbing = false;
+    }
 
-	protected override void ApplyEnterActions()
-	{
-		base.ApplyEnterActions();
-		_player.MoveHorizontalAbility.Permited = true;
-		_player.MoveVerticalAbility.Permited = false;
-		_player.LedgeClimbAbility.Permited = false;
-		_player.CrouchAbility.Permited = false;
-		_player.JumpAbility.Permited = true;
-		_player.DashAbility.Permited = true;
-		_player.AttackAbility.Permited = true;
-	}
+    protected override void ApplyUpdateActions()
+    {
+        base.ApplyUpdateActions();
+        TryLedgeClimb();
 
-	protected override void ApplyUpdateActions()
-	{
-		base.ApplyUpdateActions();
-		TryLedgeClimb();
+        if (Player.TouchingWall || Player.TouchingWallBack)
+        {
+            Player.JumpAbility.Request(Player.JumpAbility.WallJump);
+        }
+        else
+        {
+            Player.JumpAbility.CancelRequest();
+        }
+    }
 
-		if (_wallChecker.TouchingWall || _wallChecker.TouchingWallBack)
-		{
-			_player.JumpAbility.Request(_player.JumpAbility.WallJump);
-		}
-		else
-		{
-			_player.JumpAbility.CancelRequest();
-		}
-	}
+    public void CheckJumpCoyoteTime()
+    {
+        if (JumpCoyoteTimeHolder != null)
+        {
+            StopCoroutine(JumpCoyoteTimeHolder);
+        }
 
-	public void CheckJumpCoyoteTime()
-	{
-		if (JumpCoyoteTimeHolder != null)
-		{
-			StopCoroutine(JumpCoyoteTimeHolder);
-		}
+        JumpCoyoteTimeHolder = StartCoroutine(CheckJumpCoyoteTimeRoutine());
+    }
 
-		JumpCoyoteTimeHolder = StartCoroutine(CheckJumpCoyoteTimeRoutine());
-	}
+    private IEnumerator CheckJumpCoyoteTimeRoutine()
+    {
+        yield return new WaitUntil(() => IsActive);
 
-	private IEnumerator CheckJumpCoyoteTimeRoutine()
-	{
-		yield return new WaitUntil(() => IsActive);
+        while (IsActive && ActiveTime < Player.JumpAbility.NormalJump.CoyoteTime)
+        {
+            yield return null;
 
-		while (IsActive && ActiveTime < _player.JumpAbility.NormalJump.CoyoteTime)
-		{
-			yield return null;
+            if (Player.JumpAbility.IsActive)
+            {
+                yield break;
+            }
+        }
 
-			if (_player.JumpAbility.IsActive)
-			{
-				yield break;
-			}
-		}
+        if (IsActive)
+        {
+            Player.JumpAbility.SetJumpsEmpty();
+            Player.JumpAbility.CancelRequest();
+        }
+    }
 
-		if (IsActive)
-		{
-			_player.JumpAbility.SetJumpsEmpty();
-			_player.JumpAbility.CancelRequest();
-		}
-	}
+    public void TryLedgeClimb()
+    {
+        if (!_tryingLedgeClimb && Player.TouchingWall && !Player.TouchingLegde)
+        {
+            TryingLedgeClimbTime = Time.time;
+            Player.OnLedgeState.DetermineLedgePosition();
+            TerminateTryingLedgeClimb();
+            TryingLedgeClimbHolder = StartCoroutine(CheckOnLedgeCondition());
+        }
+    }
 
-	public void TryLedgeClimb()
-	{
-		if (!_tryingLedgeClimb && _wallChecker.TouchingWall && !_ledgeChecker.TouchingLegde)
-		{
-			TryingLedgeClimbTime = Time.time;
-			_player.OnLedgeState.DetermineLedgePosition();
-			TerminateTryingLedgeClimb();
-			TryingLedgeClimbHolder = StartCoroutine(CheckOnLedgeCondition());
-		}
-	}
+    public void TerminateTryingLedgeClimb()
+    {
+        if (TryingLedgeClimbHolder != null)
+        {
+            StopCoroutine(TryingLedgeClimbHolder);
+            _tryingLedgeClimb = false;
+        }
+    }
 
-	public void TerminateTryingLedgeClimb()
-	{
-		if (TryingLedgeClimbHolder != null)
-		{
-			StopCoroutine(TryingLedgeClimbHolder);
-			_tryingLedgeClimb = false;
-		}
-	}
+    private bool CheckIfTryingLedgeClimb()
+    {
+        return Player.TouchingWall &&
+                (Player.Input.Move.x == Player.FacingDirection ||
+                Player.Input.Move.y == 1 || Player.Input.Grab);
+    }
 
-	private bool CheckIfTryingLedgeClimb()
-	{
-		return _wallChecker.TouchingWall &&
-					 (_player.Input.Move.x == _player.FacingDirection ||
-						_player.Input.Move.y == 1 || _player.Input.Grab);
-	}
+    private IEnumerator CheckOnLedgeCondition()
+    {
+        Player.JumpAbility.Permited = false;
+        _tryingLedgeClimb = true;
 
-	private IEnumerator CheckOnLedgeCondition()
-	{
-		_player.JumpAbility.Permited = false;
+        yield return new WaitUntil(() => TryingLedgeClimbTime > _waitForLedgeClimbTime / Mathf.Max(Mathf.Abs(Player.Velocity.y), 1f));
 
-		while (_tryingLedgeClimb = CheckIfTryingLedgeClimb())
-		{
-			if (TryingLedgeClimbTime > _waitForLedgeClimbTime / Mathf.Max(Mathf.Abs(_player.Velocity.y), 1f))
-			{
-				Machine.GetTransition(_player.OnLedgeState);
-				_tryingLedgeClimb = false;
-				yield break;
-			}
+        if (CheckIfTryingLedgeClimb())
+        {
+            Player.OnLedgeState.LedgeClimbing = true;
+        }
+        else
+        {
+            Player.JumpAbility.Permited = true;
+        }
 
-			yield return null;
-		}
-
-		_player.JumpAbility.Permited = true;
-	}
+        _tryingLedgeClimb = false;
+    }
 }

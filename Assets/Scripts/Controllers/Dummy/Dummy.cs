@@ -1,51 +1,121 @@
-using UnityEngine;
+﻿using UnityEngine;
 
-[RequireComponent(typeof(Physical), typeof(Rotateable))]
+[RequireComponent(typeof(Physical), typeof(Rotateable), typeof(Damageable))]
+[RequireComponent(typeof(DummyGroundedState), typeof(DummyInAirState))]
 
-public class Dummy : Entity, IPhysical, IRotateable
+public class Dummy : Entity, IPhysical, IRotateable, IDamageable,
+                             IGrounded
 {
-	private Physical _physical;
-	private Rotateable _rotateable;
+    private GroundChecker _groundChecker;
 
-	public Vector2 Position => _physical.Position;
+    private Physical _physical;
+    private Rotateable _rotateable;
+    private Damageable _damageable;
 
-	public Vector2 Velocity => _physical.Velocity;
+    public DummyGroundedState GroundedState
+    {
+        get;
+        private set;
+    }
 
-	public float Gravity => _physical.Gravity;
+    public DummyInAirState InAirState
+    {
+        get;
+        private set;
+    }
 
-	public Vector2 Size => _physical.Size;
+    public Vector2 Position => ((IPhysical)_physical).Position;
 
-	public Vector2 Offset => _physical.Offset;
+    public Vector2 Velocity => ((IPhysical)_physical).Velocity;
 
-	public Vector2 Center => _physical.Center;
+    public float Gravity => ((IPhysical)_physical).Gravity;
 
-	public int FacingDirection => _rotateable.FacingDirection;
+    public Vector2 Size => ((IPhysical)_physical).Size;
 
-	public int BodyDirection => _rotateable.BodyDirection;
+    public Vector2 Offset => ((IPhysical)_physical).Offset;
 
-	public void Push(float force, Vector2 angle)
-	{
-		_physical.Push(force, angle);
-	}
+    public Vector2 Center => ((IPhysical)_physical).Center;
 
-	public void RotateBodyIntoDirection(int direction)
-	{
-		_rotateable.RotateBodyIntoDirection(direction);
-	}
+    public int FacingDirection => ((IRotateable)_rotateable).FacingDirection;
 
-	public void RotateIntoDirection(int direction)
-	{
-		_rotateable.RotateIntoDirection(direction);
-	}
+    public int BodyDirection => ((IRotateable)_rotateable).BodyDirection;
 
-	private void Awake()
-	{
-		_physical = GetComponent<Physical>();
-		_rotateable = GetComponent<Rotateable>();
-	}
+    public bool IsRotationLocked => ((IRotateable)_rotateable).IsRotationLocked;
 
-	private void Start()
-	{
-		RotateIntoDirection(1);
-	}
+    public float MaxHealth
+    {
+        get => ((IDamageable)_damageable).MaxHealth;
+        set => ((IDamageable)_damageable).MaxHealth = value;
+    }
+
+    public float Health => ((IDamageable)_damageable).Health;
+
+    public bool IsDead => ((IDamageable)_damageable).IsDead;
+
+    public bool Grounded => ((IGrounded)_groundChecker).Grounded;
+
+    public void BlockRotation()
+    {
+        ((IRotateable)_rotateable).BlockRotation();
+    }
+
+    public void LookAt(Vector2 position)
+    {
+        ((IRotateable)_rotateable).LookAt(position);
+    }
+
+    public void Push(float force, Vector2 angle)
+    {
+        ((IPhysical)_physical).Push(force, angle);
+    }
+
+    public void RestoreHealth(float regeneration)
+    {
+        ((IDamageable)_damageable).RestoreHealth(regeneration);
+    }
+
+    public void RotateBodyAt(Vector2 position)
+    {
+        ((IRotateable)_rotateable).RotateBodyAt(position);
+    }
+
+    public void RotateBodyIntoDirection(int direction)
+    {
+        ((IRotateable)_rotateable).RotateBodyIntoDirection(direction);
+    }
+
+    public void RotateIntoDirection(int direction)
+    {
+        ((IRotateable)_rotateable).RotateIntoDirection(direction);
+    }
+
+    public void TakeDamage(float damage, Entity damager)
+    {
+        LookAt(damager.transform.position);
+        ((IDamageable)_damageable).TakeDamage(damage, damager);
+    }
+
+    public void UnlockRotation()
+    {
+        ((IRotateable)_rotateable).UnlockRotation();
+    }
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        _groundChecker = GetComponent<GroundChecker>();
+
+        _physical = GetComponent<Physical>();
+        _rotateable = GetComponent<Rotateable>();
+        _damageable = GetComponent<Damageable>();
+
+        InAirState = GetComponent<DummyInAirState>();
+        GroundedState = GetComponent<DummyGroundedState>();
+    }
+
+    private void Start()
+    {
+        RotateIntoDirection(1);
+    }
 }

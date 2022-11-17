@@ -1,7 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Cinemachine;
+
 using UnityEngine;
 
 [RequireComponent(typeof(CinemachineVirtualCamera))]
@@ -12,7 +10,7 @@ public class RoomCam : MonoBehaviour
 
     private void Awake()
     {
-        _currentRoomCam         = GetComponent<CinemachineVirtualCamera>();
+        _currentRoomCam = GetComponent<CinemachineVirtualCamera>();
         _currentRoomCam.enabled = false;
     }
 

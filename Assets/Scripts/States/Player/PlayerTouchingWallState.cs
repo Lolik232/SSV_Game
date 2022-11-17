@@ -1,72 +1,61 @@
-using UnityEngine;
+﻿using UnityEngine;
 
-[RequireComponent(typeof(GroundChecker), typeof(WallChecker), typeof(LedgeChecker))]
-
-public class PlayerTouchingWallState : State
+public class PlayerTouchingWallState : PlayerState
 {
-	private  Player _player;
+    private Vector2 _holdPosition;
 
-	private GroundChecker _groundChecker;
-	private WallChecker _wallChecker;
-	private LedgeChecker _ledgeChecker;
+    private void Start()
+    {
+        bool GroundedCondition() => Player.Grounded && (Player.Input.Move.y == -1 || !Player.Input.Grab || Player.Input.Attack);
 
-	protected override void Awake()
-	{
-		base.Awake();
-		_player = GetComponent<Player>();
+        bool InAirCondition() => !Player.TouchingWall || (!Player.Input.Grab && Player.Input.Move.x != Player.FacingDirection);
 
-		Checkers.Add(_groundChecker = GetComponent<GroundChecker>());
-		Checkers.Add(_wallChecker = GetComponent<WallChecker>());
-		Checkers.Add(_ledgeChecker = GetComponent<LedgeChecker>());
-	}
+        bool OnLedgeCondition() => Player.TouchingWall && !Player.TouchingLegde;
 
-	private void Start()
-	{
-		bool GroundedCondition() => _groundChecker.Grounded && (_player.Input.Move.y == -1 || !_player.Input.Grab);
+        void OnLedgeAction()
+        {
+            Player.OnLedgeState.DetermineLedgePosition();
+        }
 
-		bool InAirCondition() => !_wallChecker.TouchingWall || (!_player.Input.Grab && _player.Input.Move.x != _player.FacingDirection);
+        void InAirAction()
+        {
+            if (!Player.JumpAbility.IsActive)
+            {
+                Player.InAirState.CheckJumpCoyoteTime();
+            }
+        }
 
-		bool OnLedgeCondition() => _wallChecker.TouchingWall && !_ledgeChecker.TouchingLegde;
+        Transitions.Add(new(Player.GroundedState, GroundedCondition));
+        Transitions.Add(new(Player.InAirState, InAirCondition, InAirAction));
+        Transitions.Add(new(Player.OnLedgeState, OnLedgeCondition, OnLedgeAction));
+    }
 
-		void OnLedgeAction()
-		{
-			_player.OnLedgeState.DetermineLedgePosition();
-		}
+    protected override void ApplyEnterActions()
+    {
+        base.ApplyEnterActions();
+        Player.MoveHorizontalAbility.Permited = false;
+        Player.MoveVerticalAbility.Permited = true;
+        Player.LedgeClimbAbility.Permited = false;
+        Player.CrouchAbility.Permited = false;
+        Player.JumpAbility.Permited = true;
+        Player.DashAbility.Permited = true;
+        Player.AttackAbility.Permited = true;
 
-		void InAirAction()
-		{
-			if (!_player.JumpAbility.IsActive)
-			{
-				_player.InAirState.CheckJumpCoyoteTime();
-			}
-		}
+        Player.JumpAbility.Request(Player.JumpAbility.WallJump);
+        Player.SetPosition(_holdPosition);
+        Player.SetGravity(0f);
+        Player.BlockRotation();
+    }
 
-		Transitions.Add(new(_player.GroundedState, GroundedCondition));
-		Transitions.Add(new(_player.InAirState, InAirCondition, InAirAction));
-		Transitions.Add(new(_player.OnLedgeState, OnLedgeCondition, OnLedgeAction));
-	}
+    protected override void ApplyExitActions()
+    {
+        base.ApplyExitActions();
+        Player.ResetGravity();
+        Player.UnlockRotation();
+    }
 
-	protected override void ApplyEnterActions()
-	{
-		base.ApplyEnterActions();
-		_player.MoveHorizontalAbility.Permited = false;
-		_player.MoveVerticalAbility.Permited = true;
-		_player.LedgeClimbAbility.Permited = false;
-		_player.CrouchAbility.Permited = false;
-		_player.JumpAbility.Permited = true;
-		_player.DashAbility.Permited = true;
-		_player.AttackAbility.Permited = true;
-
-		_player.JumpAbility.Request(_player.JumpAbility.WallJump);
-
-		var holdPosition = new Vector2(_wallChecker.WallPosition.x + _wallChecker.WallDirection * (_player.Size.x / 2 + IChecker.CHECK_OFFSET), _player.Position.y);
-		_player.SetPosition(holdPosition);
-		_player.SetGravity(0f);
-	}
-
-	protected override void ApplyExitActions()
-	{
-		base.ApplyExitActions();
-		_player.ResetGravity();
-	}
+    public void DetermineWallPosition()
+    {
+        _holdPosition = new Vector2(Player.WallPosition.x + Player.WallDirection * (Player.Size.x / 2 + IChecker.CHECK_OFFSET), Player.Position.y);
+    }
 }

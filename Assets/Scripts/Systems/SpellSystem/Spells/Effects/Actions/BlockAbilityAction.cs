@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+
 using All.Interfaces;
+
 using UnityEngine;
 
 namespace Systems.SpellSystem.SpellEffect.Actions
@@ -9,7 +11,7 @@ namespace Systems.SpellSystem.SpellEffect.Actions
     public class BlockAbilityAction : EffectAction
     {
         [SerializeField] private List<AbilitySO> _abilitiesToBlock = new List<AbilitySO>();
-        public                   List<AbilitySO> AbilitiesToBlock => _abilitiesToBlock;
+        public List<AbilitySO> AbilitiesToBlock => _abilitiesToBlock;
 
         public BlockAbilityAction(EffectActionSO effectActionSo) : base(effectActionSo) { }
 

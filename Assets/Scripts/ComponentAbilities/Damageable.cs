@@ -1,27 +1,77 @@
-using System.Collections;
-using System.Collections.Generic;
+﻿using System;
+
 using UnityEngine;
+
+[RequireComponent(typeof(DeadState))]
 
 public class Damageable : MonoBehaviour, IDamageable
 {
+    [SerializeField] private float _health;
+
+    private StateMachine _machine;
+    private DeadState _deadState;
+    private Animator _anim;
+
     public float MaxHealth
-	{
-		get;
-		set;
-	}
-	public float Health
-	{
-		get;
-		private set;
-	}
+    {
+        get;
+        set;
+    }
+    public float Health
+    {
+        get;
+        private set;
+    }
+    public bool IsDead
+    {
+        get;
+        private set;
+    }
 
-	public void RestoreHealth(float regeneration)
-	{
-		throw new System.NotImplementedException();
-	}
+    private void Awake()
+    {
+        _machine = GetComponent<StateMachine>();
+        _deadState = GetComponent<DeadState>();
+        _anim = GetComponent<Animator>();
 
-	public void TakeDamage(float damage)
-	{
-		throw new System.NotImplementedException();
-	}
+        MaxHealth = _health;
+        Health = _health;
+    }
+
+    public void RestoreHealth(float regeneration)
+    {
+        if (regeneration < 0)
+        {
+            throw new Exception("Regeneration Cannot Be Negative");
+        }
+
+        Health = Mathf.Clamp(Health + regeneration, 0, MaxHealth);
+        Debug.Log(this + " Health: " + Health);
+    }
+
+    public void TakeDamage(float damage, Entity damager)
+    {
+        if (IsDead)
+        {
+            return;
+        }
+
+        if (damage < 0)
+        {
+            throw new Exception("Damage Cannot Be Negative");
+        }
+
+        Health = Mathf.Clamp(Health - damage, 0, MaxHealth);
+        Debug.Log(this + " Health: " + Health);
+
+        if (Health == 0)
+        {
+            IsDead = true;
+            _machine.GetTransition(_deadState);
+        }
+        else
+        {
+            _anim.SetTrigger("hit");
+        }
+    }
 }

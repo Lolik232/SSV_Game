@@ -1,8 +1,8 @@
 public interface IAttackController
 {
-	public bool Attack
-	{
-		get;
-		set;
-	}
+    public bool Attack
+    {
+        get;
+        set;
+    }
 }

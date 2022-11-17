@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
+
 using All.Interfaces;
-using Systems.SpellSystem.SpellEffect;
+
 using UnityEngine;
 
 namespace Systems.SpellSystem.SpellEffect
@@ -24,7 +23,8 @@ namespace Systems.SpellSystem.SpellEffect
 
         public void AddSpell(SpellSO spell)
         {
-            if (_spellFilterSO.InBlackList(spell)) return;
+            if (_spellFilterSO.InBlackList(spell))
+                return;
 
             _spells.Add(spell.CreateSpell());
         }
