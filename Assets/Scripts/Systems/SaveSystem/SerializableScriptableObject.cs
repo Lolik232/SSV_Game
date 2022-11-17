@@ -8,7 +8,7 @@ using UnityEditor;
 public class SerializableScriptableObject : ScriptableObject
 {
     [FormerlySerializedAs("m_guid")]
-    [SerializeField, HideInInspector] private string _guid;
+    [SerializeField] private string _guid;
     public string Guid => _guid;
 
 #if UNITY_EDITOR
