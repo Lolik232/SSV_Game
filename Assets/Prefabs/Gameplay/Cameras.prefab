@@ -105,10 +105,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6ad0b09f6c749f688ac3cdb5b255651, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_playerInstantiatedChannel: {fileID: 11400000, guid: 4d7eb21ddd8805749aba73e1ba9b84e0, type: 2}
-  m_enterPivotChannel: {fileID: 11400000, guid: 85e511c49a7c3d2458e778b122e4b249, type: 2}
-  m_exitPivotChannel: {fileID: 11400000, guid: 83124ad0f7ffff24787a1f512f12cfae, type: 2}
-  m_cameraTargetChannel: {fileID: 11400000, guid: a635bcecc3e7ef14984eda04a7d131cd, type: 2}
+  _playerInstantiatedChannel: {fileID: 11400000, guid: 4d7eb21ddd8805749aba73e1ba9b84e0, type: 2}
+  _enterPivotChannel: {fileID: 11400000, guid: 85e511c49a7c3d2458e778b122e4b249, type: 2}
+  _exitPivotChannel: {fileID: 11400000, guid: 83124ad0f7ffff24787a1f512f12cfae, type: 2}
+  _cameraTargetChannel: {fileID: 11400000, guid: a635bcecc3e7ef14984eda04a7d131cd, type: 2}
 --- !u!1 &6542917769179243787
 GameObject:
   m_ObjectHideFlags: 0
@@ -158,12 +158,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f95715d0f1354be8a344957fe757e873, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_mainCamera: {fileID: 6542917770757014784}
-  m_virtualCamera: {fileID: 6542917769921796196}
-  m_cameraShakeChannel: {fileID: 11400000, guid: 89c416766b548c940bcd7c40c85a6b54, type: 2}
-  m_targetChannel: {fileID: 11400000, guid: a635bcecc3e7ef14984eda04a7d131cd, type: 2}
-  m_impulseSource: {fileID: 0}
-  m_target: {fileID: 0}
+  _mainCamera: {fileID: 6542917770757014784}
+  _virtualCamera: {fileID: 6542917769921796196}
+  _cameraShakeChannel: {fileID: 11400000, guid: 89c416766b548c940bcd7c40c85a6b54, type: 2}
+  _targetChannel: {fileID: 11400000, guid: a635bcecc3e7ef14984eda04a7d131cd, type: 2}
+  _impulseSource: {fileID: 0}
+  _target: {fileID: 0}
 --- !u!1 &6542917769668827800
 GameObject:
   m_ObjectHideFlags: 0
@@ -352,7 +352,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.1911764, y: 1}
+    m_SensorSize: {x: 1.7786118, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -416,7 +416,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6542917770757014787}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 169.39, y: -12.9, z: -10}
+  m_LocalPosition: {x: 107.8, y: -15.8, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -433,7 +433,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.15388037, g: 0.19021353, b: 0.24528301, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -450,7 +450,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 8.43
+  orthographic size: 5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

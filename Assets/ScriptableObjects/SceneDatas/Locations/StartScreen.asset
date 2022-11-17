@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4faed90f24174df2b5c3ff296c42b6d1, type: 3}
   m_Name: StartScreen
   m_EditorClassIdentifier: 
-  sceneType: 0
+  _guid: 9f59aba7e2c52ba4d9f7dbe02ad9d0d8
+  sceneType: 1
   sceneReference:
     m_AssetGUID: 2123febb9bc08e741af7292389d56d91
     m_SubObjectName: 

@@ -1,8 +1,7 @@
 ﻿using System.Collections;
-
 using All.Events;
-
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
@@ -12,8 +11,7 @@ namespace SceneManagement
 {
     public class SceneLoader : MonoBehaviour
     {
-        [FormerlySerializedAs("m_scene")]
-        [SerializeField] private GameSceneSO _scene;
+        [SerializeField] private GameSceneSO _gameplayManagersScene;
 
         /// <summary>
         /// Listening load location chan to get location to load
@@ -21,6 +19,7 @@ namespace SceneManagement
         [Header("Listening")]
         [FormerlySerializedAs("m_LoadLocationChan")]
         [SerializeField] private LoadEventChannelSO _loadLocationChan = default;
+        [SerializeField] private LoadEventChannelSO _loadMenuChan = default;
 #if UNITY_EDITOR
         [FormerlySerializedAs("m_loadFromEditorChan")]
         [SerializeField] private LoadEventChannelSO _loadFromEditorChan = default;
@@ -52,24 +51,27 @@ namespace SceneManagement
             _currentlyLoadedScene = scene;
             if (_currentlyLoadedScene.sceneType == GameSceneSO.GameSceneType.Location)
             {
-                // //Gameplay managers is loaded synchronously
-                // _gameplayManagerLoadingOpHandle = _gameplayScene.sceneReference.LoadSceneAsync(LoadSceneMode.Additive, true);
+                //Gameplay managers is loaded synchronously
+                // _gameplayManagerLoadingOpHandle =
+                //     _gameplayManagersScene.sceneReference.LoadSceneAsync(LoadSceneMode.Additive, true);
                 // _gameplayManagerLoadingOpHandle.WaitForCompletion();
                 // _gameplayManagerSceneInstance = _gameplayManagerLoadingOpHandle.Result;
                 StartGameplay();
             }
+
             _fadeRequestChan.FadeIn(_fadeDuration);
         }
 #endif
 
         private void Awake()
         {
-            _currentlyLoadedScene = _scene;
+            _currentlyLoadedScene = _gameplayManagersScene;
         }
 
         private void OnEnable()
         {
             _loadLocationChan.OnEventRaised += LoadLocation;
+            _loadMenuChan.OnEventRaised     += LoadMenu;
 #if UNITY_EDITOR
             _loadFromEditorChan.OnEventRaised += OnEditorLoad;
 #endif
@@ -78,11 +80,11 @@ namespace SceneManagement
         private void OnDisable()
         {
             _loadLocationChan.OnEventRaised -= LoadLocation;
+            _loadMenuChan.OnEventRaised     -= LoadMenu;
 #if UNITY_EDITOR
             _loadFromEditorChan.OnEventRaised -= OnEditorLoad;
 #endif
         }
-
 
         private void LoadLocation(GameSceneSO scene, bool showLoadingScreen, bool fadeScreen)
         {
@@ -91,17 +93,38 @@ namespace SceneManagement
                 return;
             } // if scene just loading
 
-            _sceneToLoad = scene;
+            _sceneToLoad       = scene;
             _showLoadingScreen = showLoadingScreen;
-            _isLoading = true;
+            _isLoading         = true;
 
 
-            // if (m_gameplayManagerSceneInstance.Scene == null ||
-            //     m_gameplayManagerSceneInstance.Scene.isLoaded == false)
+            // if (_gameplayManagerSceneInstance.Scene == null ||
+            //     _gameplayManagerSceneInstance.Scene.isLoaded == false)
             // {
-            //     m_gameplayManagerLoadingOpHandle = m_scene.sceneReference.LoadSceneAsync(LoadSceneMode.Additive, true);
-            //     m_gameplayManagerLoadingOpHandle.Completed += OnGameplayManagersLoaded;
-            // } else { StartCoroutine(UnloadPreviousScene()); }
+            //     // _gameplayManagerLoadingOpHandle =
+            //     //     _gameplayManagersScene.sceneReference.LoadSceneAsync(LoadSceneMode.Additive, true);
+            //     // _gameplayManagerLoadingOpHandle.Completed += OnGameplayManagersLoaded;
+            // } else
+            // {
+            //     StartCoroutine(UnloadPreviousScene());
+            // }
+            
+            StartCoroutine(UnloadPreviousScene());
+        }
+        
+        private void LoadMenu(GameSceneSO menuToLoad, bool showLoadingScreen, bool fadeScreen)
+        {
+            if (_isLoading) return;
+            _sceneToLoad = menuToLoad;
+
+            _showLoadingScreen = showLoadingScreen;
+            _isLoading         = true;
+
+            // if (_gameplayManagerSceneInstance.Scene != null &&
+            //     _gameplayManagerSceneInstance.Scene.isLoaded)
+            // {
+            //     Addressables.UnloadSceneAsync(_gameplayManagerLoadingOpHandle, true);
+            // }
 
             StartCoroutine(UnloadPreviousScene());
         }

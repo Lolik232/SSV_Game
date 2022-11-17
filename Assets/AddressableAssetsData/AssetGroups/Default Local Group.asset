@@ -37,6 +37,186 @@ MonoBehaviour:
     m_Address: Assets/Scenes/Startscreen.unity
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 6101fdfd88686e242a278adcca199cf5
+    m_Address: Assets/ScriptableObjects/Channels/Audio/Effects Volume Event Channel.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: af8126120ede5f4458e3a5bba36097e2
+    m_Address: Assets/ScriptableObjects/Channels/Audio/Master Volume Event Channel.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: d6a5e143f66fd234bb43ef874c3b1693
+    m_Address: Assets/ScriptableObjects/Channels/Audio/Music Volume Event Channel.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 85e511c49a7c3d2458e778b122e4b249
+    m_Address: Assets/ScriptableObjects/Channels/Camera/CameraEnterPivotEventChannel.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 83124ad0f7ffff24787a1f512f12cfae
+    m_Address: Assets/ScriptableObjects/Channels/Camera/CameraExitPivotEventChannel.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 89c416766b548c940bcd7c40c85a6b54
+    m_Address: Assets/ScriptableObjects/Channels/Camera/CameraShakeChannel.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: a635bcecc3e7ef14984eda04a7d131cd
+    m_Address: Assets/ScriptableObjects/Channels/Camera/CameraTargetEventChannel.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 4d7eb21ddd8805749aba73e1ba9b84e0
+    m_Address: Assets/ScriptableObjects/Channels/Runtime/TransformPlayerChannel.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: cd187a6916f5390448f70953127d1e86
+    m_Address: Assets/ScriptableObjects/Channels/SaveSystem/SaveGame Event Channel.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: efcd5361b4da801408cb91de1a0effaa
+    m_Address: Assets/ScriptableObjects/Channels/SceneManagement/LocationLoadChannel.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: c28d78fe2c4ca274cab79481ea39ade4
+    m_Address: Assets/ScriptableObjects/Channels/SceneManagement/MenuLoadChannel.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: c78296a871062f34e9879fa67fe14abd
+    m_Address: Assets/ScriptableObjects/Channels/SceneManagement/OnSceneReadyChannel.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 03e464b9efe0c4c49bddff3551926ffc
+    m_Address: Assets/ScriptableObjects/Channels/Settings/Save Settings Event Channel.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: ddb08b9d7f05b5449abcf1c4d3cd1fa3
+    m_Address: Assets/ScriptableObjects/Channels/UI/ToggleLoadingScreenShannel.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 3756d3b60ad9cc6439774583674d223c
+    m_Address: Assets/ScriptableObjects/Channels/UI/FadeChannel.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: b57bfe0ad6d6a114f8b4159beffd7015
+    m_Address: Assets/ScriptableObjects/SceneDatas/Managers/Managers.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 3364c22a734aa764ba23233e4a085500
+    m_Address: Assets/ScriptableObjects/SceneDatas/Locations/Level1.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 3daa61fa245053b429a8424da4f3b622
+    m_Address: Assets/ScriptableObjects/SceneDatas/Locations/Level2.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 9f59aba7e2c52ba4d9f7dbe02ad9d0d8
+    m_Address: Assets/ScriptableObjects/SceneDatas/Locations/StartScreen.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: ca5a00e8b8acb964cb88e77d41600973
+    m_Address: Assets/ScriptableObjects/SaveSystem/Save System.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: e38c1fd614416a9459e25b5465c65425
+    m_Address: Assets/ScriptableObjects/SpellSystem
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: b411567004b384d4ea112b2cec8cc434
+    m_Address: Assets/InputSystem.inputsettings.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 2fbaa6bf9df41e847931f044603cca79
+    m_Address: Assets/ScriptableObjects/UI/Input/UI Input SO.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: fa1dd6cab9a44c5409a81eb67fbdbb61
+    m_Address: Assets/InputSystem/GameInput.inputactions
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 9910b7cf424e9134ea5fd433dd4bc562
+    m_Address: Assets/Prefabs/Units/Player.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 986130970ad337b4295d6d247c1ea999
+    m_Address: Assets/ScriptableObjects/UI/Menu/Menu Action.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: df71905451e7a954eba97e70dac25c1c
+    m_Address: Assets/ScriptableObjects/UI/Menu/Menu To Options Decision.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: e22bd93673260df4282584f3b6a7987e
+    m_Address: Assets/ScriptableObjects/UI/Menu/Menu To Start Screen Decision.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: b6f35805fe1c5494490a59e07968c8f9
+    m_Address: Assets/ScriptableObjects/UI/Menu/MenuState.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 91ff0ade227a7ca489a6055fc0a7c909
+    m_Address: Assets/ScriptableObjects/UI/Menu/MenuToOptionsTransition.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 1feb914f0a301b84b83843f29d6cd8d7
+    m_Address: Assets/ScriptableObjects/UI/Menu/MenuToStartScreenTransition.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: f67a1ca3827d1ef4f8a5f0ecf20166aa
+    m_Address: Assets/ScriptableObjects/UI/Menu/Options Action.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 13e925f46809e77459d1e032646498fe
+    m_Address: Assets/ScriptableObjects/UI/Menu/Options To Menu Decision.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 07839b14c111c6440bf1875bedff2ee6
+    m_Address: Assets/ScriptableObjects/UI/Menu/StartScreenToMenuTransition.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 9c64f1c553e380b43a6dc842b15e296c
+    m_Address: Assets/ScriptableObjects/UI/Menu/StartScreenState.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: f65e4f90223890c40bdcb9b85f35cc05
+    m_Address: Assets/ScriptableObjects/UI/Menu/Start Screen To Menu Decision.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 264e9ad3fc9fd6446b110b78bbf7f7d0
+    m_Address: Assets/ScriptableObjects/UI/Menu/Start Screen Action.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: e86c2e5f5bc2ab14e9236d4d4a0e05fe
+    m_Address: Assets/ScriptableObjects/UI/Menu/RemainInState.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 5e30110cc93499a4e91d466da509d958
+    m_Address: Assets/ScriptableObjects/UI/Menu/OptionsToMenuTransition.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 92602cc1fafec2c4283e2d13397902d6
+    m_Address: Assets/ScriptableObjects/UI/Menu/OptionsState.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: f6eb78f1a31f6c3488200d318a9a6368
+    m_Address: Assets/ScriptableObjects/Settings/Settings.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: b8c169394c06e8546bfd12c3119380be
+    m_Address: Assets/Prefabs/Gameplay/LocationExit.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 6dfa7521817fb7f42818046c16f983bf
+    m_Address: Assets/Prefabs/Gameplay/SpawnSystem.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 23f046d5517e2e441853f8e73eb59a36
+    m_Address: Assets/Prefabs/Gameplay/Room.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 4b6ccb5cd6a75904591efcaf22d42fe2
+    m_Address: Assets/Prefabs/Gameplay/Cameras.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: d160d21b4ee59804cabc734a782d9dd7, type: 2}
   m_SchemaSet:

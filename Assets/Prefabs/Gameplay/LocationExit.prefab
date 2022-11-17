@@ -71,5 +71,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60d537b569cd4ce8a66e473bd008624d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_locationToLoad: {fileID: 11400000, guid: 3364c22a734aa764ba23233e4a085500, type: 2}
-  m_loadLocationChannel: {fileID: 11400000, guid: efcd5361b4da801408cb91de1a0effaa, type: 2}
+  _locationToLoad: {fileID: 11400000, guid: 3364c22a734aa764ba23233e4a085500, type: 2}
+  _loadLocationChannel: {fileID: 11400000, guid: efcd5361b4da801408cb91de1a0effaa, type: 2}
+  _saveSystem: {fileID: 11400000, guid: ca5a00e8b8acb964cb88e77d41600973, type: 2}
