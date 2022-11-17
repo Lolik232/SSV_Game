@@ -89,10 +89,10 @@ public class Dummy : Entity, IPhysical, IRotateable, IDamageable,
         ((IRotateable)_rotateable).RotateIntoDirection(direction);
     }
 
-    public void TakeDamage(float damage, Entity damager)
+    public void TakeDamage(float damage, Vector2 attackPoint)
     {
-        LookAt(damager.transform.position);
-        ((IDamageable)_damageable).TakeDamage(damage, damager);
+        LookAt(attackPoint);
+        ((IDamageable)_damageable).TakeDamage(damage, attackPoint);
     }
 
     public void UnlockRotation()

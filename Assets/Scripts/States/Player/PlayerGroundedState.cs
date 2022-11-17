@@ -15,8 +15,12 @@ public sealed class PlayerGroundedState : PlayerState
                                         Player.Input.Move.y != -1 &&
                                         !Player.AttackAbility.IsActive;
 
+        bool OnLedgeCondition() => Player.TouchingWall && !Player.TouchingLegde && Player.Input.Grab;
 
-        bool OnLedgeCondition() => Player.OnLedgeState.LedgeClimbing;
+        void OnLedgeAction()
+        {
+            Player.OnLedgeState.DetermineLedgePosition();
+        }
 
         void InAirAction()
         {
@@ -37,8 +41,8 @@ public sealed class PlayerGroundedState : PlayerState
         }
 
         Transitions.Add(new(Player.InAirState, InAirCondition, InAirAction));
+        Transitions.Add(new(Player.OnLedgeState, OnLedgeCondition, OnLedgeAction));
         Transitions.Add(new(Player.TouchingWallState, TouchingWallCondition, TouchingWallAction));
-        Transitions.Add(new(Player.OnLedgeState, OnLedgeCondition));
     }
 
     protected override void ApplyEnterActions()
@@ -52,18 +56,8 @@ public sealed class PlayerGroundedState : PlayerState
         Player.DashAbility.Permited = true;
         Player.AttackAbility.Permited = true;
 
-        Player.OnLedgeState.LedgeClimbing = false;
-
         Player.JumpAbility.RestoreJumps();
         Player.JumpAbility.CancelRequest();
         Player.DashAbility.RestoreDashes();
-
-        Player.InAirState.TerminateTryingLedgeClimb();
-    }
-
-    protected override void ApplyUpdateActions()
-    {
-        base.ApplyUpdateActions();
-        Player.InAirState.TryLedgeClimb();
     }
 }

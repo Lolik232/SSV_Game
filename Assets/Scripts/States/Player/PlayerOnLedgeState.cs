@@ -2,14 +2,9 @@
 
 public class PlayerOnLedgeState : PlayerState
 {
-    public bool LedgeClimbing
-    {
-        get;
-        set;
-    }
-
     private Vector2 _startPosition;
     private Vector2 _endPosition;
+    private int _wallDirection;
 
     private void Start()
     {
@@ -29,10 +24,9 @@ public class PlayerOnLedgeState : PlayerState
         Player.DashAbility.Permited = false;
         Player.AttackAbility.Permited = false;
 
-        LedgeClimbing = false;
-
         Player.SetPosition(_startPosition);
         Player.SetVelocity(Vector2.zero);
+        Player.RotateIntoDirection(-_wallDirection);
         Player.SetGravity(0f);
         Player.BlockRotation();
     }
@@ -59,5 +53,6 @@ public class PlayerOnLedgeState : PlayerState
                                                                      Player.GroundPosition.y - 1f);
         _endPosition = new Vector2(Player.WallPosition.x - Player.WallDirection * (Player.Size.x / 2 + IChecker.CHECK_OFFSET),
                                                                  Player.GroundPosition.y + IChecker.CHECK_OFFSET);
+        _wallDirection = Player.WallDirection;
     }
 }
