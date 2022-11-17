@@ -2,6 +2,9 @@ using System.Collections.Generic;
 using Systems.SaveSystem;
 using Systems.SaveSystem.Settings.ScriptableObjects;
 using UnityEngine;
+using UnityEngine.InputSystem.Controls;
+using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 namespace FSM
 {
@@ -14,6 +17,9 @@ namespace FSM
         [SerializeField] private Animator    _optionsAnim;
         [SerializeField] private CanvasGroup _menuGroup;
         [SerializeField] private CanvasGroup _optionsGroup;
+
+        [FormerlySerializedAs("_continueButton")] [SerializeField] public GameObject     continueButton;
+        [SerializeField] public SaveSystem _saveSystem = default;
 
         [SerializeField] public UISettingsManager settingsManager;
 

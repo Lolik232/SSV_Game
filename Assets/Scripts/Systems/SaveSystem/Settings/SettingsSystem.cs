@@ -13,6 +13,7 @@ namespace Systems.SaveSystem.Settings
         [SerializeField] private SaveSystem         _saveSystem                 = default;
         [SerializeField] private SettingsSO         _currentSettings            = default;
 
+        [Header("Broadcasting")]
         [SerializeField] private FloatEventChannelSO _masterVolumeEventChannelSO  = default;
         [SerializeField] private FloatEventChannelSO _musicVolumeEventChannelSO   = default;
         [SerializeField] private FloatEventChannelSO _effectsVolumeEventChannelSO = default;

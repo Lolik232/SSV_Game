@@ -22,12 +22,12 @@ namespace Systems.SaveSystem
         private void OnEnable()
         {
             // _saveSettingsEvent.OnEventRaised += SaveSettingsOnDisk;
-            _saveGameEvent.OnEventRaised     += OnSaveGame;
+            // _saveGameEvent.OnEventRaised += OnSaveGame;
         }
 
         private void OnDisable()
         {
-            _saveGameEvent.OnEventRaised -= OnSaveGame;
+            // _saveGameEvent.OnEventRaised -= OnSaveGame;
         }
 
         private void OnSaveGame(GameSceneSO loadedLocation, bool showLoadingScreen, bool fadeScreen)
@@ -46,11 +46,22 @@ namespace Systems.SaveSystem
             return FileManager.IsExist(_saveFileName);
         }
 
+        public void SetupSave(GameSceneSO lastLocation)
+        {
+            save.locationID = lastLocation.Guid;
+        }
+
         public void SaveGameOnDisk()
         {
             var saveJson = save.ToJson();
             FileManager.WriteToFile(_saveFileName, "", saveJson);
         }
+
+        public void RemoveGameFromDisk()
+        {
+            FileManager.RemoveFile(_saveFileName);
+        }
+
 
         public bool LoadSettingsFromDisk()
         {
@@ -61,13 +72,14 @@ namespace Systems.SaveSystem
             return true;
         }
 
-        // public bool LoadDataFromDisk()
-        // {
-        //     LoadSettingsFromDisk();
-        //
-        //
-        //     return true;
-        // }
+        public bool LoadDataFromDisk()
+        {
+            string json;
+            FileManager.LoadFromFile(_saveFileName, out json);
+            save.FromJson(json);
+
+            return true;
+        }
 
 
         public void SaveSettingsOnDisk()
