@@ -273,7 +273,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2114112684}
         m_TargetAssemblyTypeName: UISettingsManager, Assembly-CSharp
         m_MethodName: SaveSettings
         m_Mode: 1
@@ -1985,7 +1985,7 @@ MonoBehaviour:
       - m_Target: {fileID: 2114112684}
         m_TargetAssemblyTypeName: UISettingsManager, Assembly-CSharp
         m_MethodName: ChangeMaster
-        m_Mode: 4
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3140,7 +3140,7 @@ MonoBehaviour:
       - m_Target: {fileID: 2114112684}
         m_TargetAssemblyTypeName: UISettingsManager, Assembly-CSharp
         m_MethodName: ChangeFX
-        m_Mode: 4
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3536,7 +3536,7 @@ MonoBehaviour:
       - m_Target: {fileID: 2114112684}
         m_TargetAssemblyTypeName: UISettingsManager, Assembly-CSharp
         m_MethodName: ChangeMusic
-        m_Mode: 4
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -4708,7 +4708,7 @@ MonoBehaviour:
   _optionsAnim: {fileID: 412534568}
   _menuGroup: {fileID: 1282044680}
   _optionsGroup: {fileID: 412534571}
-  settingsManager: {fileID: 0}
+  settingsManager: {fileID: 2114112684}
 --- !u!114 &2114112684
 MonoBehaviour:
   m_ObjectHideFlags: 0
