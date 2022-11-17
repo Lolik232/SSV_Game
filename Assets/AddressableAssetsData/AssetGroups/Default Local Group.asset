@@ -21,6 +21,22 @@ MonoBehaviour:
     m_Address: Assets/ScriptableObjects/Channels/SceneManagement/ColdStartupChannel.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 00a55256bc8251942a5e1d8bee5d06ef
+    m_Address: Assets/Scenes/Managers.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: e46872bf4c729b940bb75d3e90a35383
+    m_Address: Assets/Scenes/Level2.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 2cda990e2423bbf4892e6590ba056729
+    m_Address: Assets/Scenes/Level1.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 2123febb9bc08e741af7292389d56d91
+    m_Address: Assets/Scenes/Startscreen.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: d160d21b4ee59804cabc734a782d9dd7, type: 2}
   m_SchemaSet:

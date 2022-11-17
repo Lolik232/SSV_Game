@@ -1,16 +1,22 @@
+using System.Collections.Generic;
+using Systems.SaveSystem;
+using Systems.SaveSystem.Settings.ScriptableObjects;
 using UnityEngine;
 
 namespace FSM
 {
     public class BaseStateMachine : MonoBehaviour
     {
-        [SerializeField] private BaseState _initialState;
-        [SerializeField] private UIInputSO _uiInputSO;
-        [SerializeField] private Animator _textAnim;
-        [SerializeField] private Animator _menuAnim;
-        [SerializeField] private Animator _optionsAnim;
+        [SerializeField] private BaseState   _initialState;
+        [SerializeField] private UIInputSO   _uiInputSO;
+        [SerializeField] private Animator    _textAnim;
+        [SerializeField] private Animator    _menuAnim;
+        [SerializeField] private Animator    _optionsAnim;
         [SerializeField] private CanvasGroup _menuGroup;
         [SerializeField] private CanvasGroup _optionsGroup;
+
+        [SerializeField] public UISettingsManager settingsManager;
+
         private void Awake()
         {
             CurrentState = _initialState;

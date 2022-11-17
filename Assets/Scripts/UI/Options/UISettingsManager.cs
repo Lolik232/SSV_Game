@@ -1,23 +1,66 @@
-﻿using UnityEngine;
-using UnityEngine.Audio;
+using System;
+using All.Events;
+using Systems.SaveSystem.Settings.ScriptableObjects;
+using UnityEngine;
+using UnityEngine.UI;
 
-[CreateAssetMenu(menuName = "UI/Volume/Volume")]
 public class UISettingsManager : MonoBehaviour
 {
-    [SerializeField] private AudioMixerGroup mixer;
+    [SerializeField] private FloatEventChannelSO _masterVolumeEventChannelSO  = default;
+    [SerializeField] private FloatEventChannelSO _musicVolumeEventChannelSO   = default;
+    [SerializeField] private FloatEventChannelSO _effectsVolumeEventChannelSO = default;
+    [SerializeField] private VoidEventChannelSO  _saveSettingsEventChannelSO  = default;
+
+    [SerializeField] private SettingsSO _settings;
+
+    [SerializeField] private Slider _masterVolumeSlider;
+    [SerializeField] private Slider _musicVolumeSlider;
+    [SerializeField] private Slider _effectsVolumeSlider;
+    
+    private float _masterVolume;
+    private float _musicVolume;
+    private float _effectsVolume;
+
+    public void Setup()
+    {
+        _masterVolumeSlider.SetValueWithoutNotify(_settings.masterVolume);
+        _musicVolumeSlider.SetValueWithoutNotify(_settings.musicVolume);
+        _effectsVolumeSlider.SetValueWithoutNotify(_settings.effectsVolume);
+
+        ChangeMaster(_settings.masterVolume);
+        ChangeMusic(_settings.musicVolume);
+        ChangeFX(_settings.effectsVolume);
+    }
 
     public void ChangeMaster(float volume)
     {
-        mixer.audioMixer.SetFloat("MasterVolume", Mathf.Lerp(-80, 0, volume));
+        _masterVolume = volume;
+        _masterVolumeEventChannelSO.RaiseEvent(volume);
     }
 
     public void ChangeMusic(float volume)
     {
-        mixer.audioMixer.SetFloat("MusicVolume", Mathf.Lerp(-80, 0, volume));
+        _musicVolume = volume;
+        _musicVolumeEventChannelSO.RaiseEvent(volume);
     }
 
     public void ChangeFX(float volume)
     {
-        mixer.audioMixer.SetFloat("FXVolume", Mathf.Lerp(-80, 0, volume));
+        _effectsVolume = volume;
+        _effectsVolumeEventChannelSO.RaiseEvent(volume);
+    }
+
+    public void SaveSettings()
+    {
+        _settings.masterVolume  = _masterVolume;
+        _settings.musicVolume   = _musicVolume;
+        _settings.effectsVolume = _effectsVolume;
+
+        _saveSettingsEventChannelSO.RaiseEvent();
+    }
+    
+    public void Reset()
+    {
+        Setup();
     }
 }

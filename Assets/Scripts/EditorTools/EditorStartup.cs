@@ -1,5 +1,6 @@
-﻿using All.Events;
-
+﻿using System;
+using All.Events;
+using Systems.SaveSystem;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -24,6 +25,9 @@ namespace EditorTools
 
         private AsyncOperationHandle<SceneInstance> _managersSceneLoadingOpHandle = default;
 
+        [SerializeField] private SaveSystem _saveSystem = default;
+
+
         private bool m_editorStartup = false;
 
         private void Awake()
@@ -32,6 +36,8 @@ namespace EditorTools
             {
                 m_editorStartup = true;
             }
+
+            InitializeSave();
         }
 
         private void Start()
@@ -52,11 +58,15 @@ namespace EditorTools
             if (_thisScene != null)
             {
                 obj.Result.RaiseEvent(_thisScene);
-            }
-            else
+            } else
             {
                 _onReadySceneChannel.RaiseEvent();
             }
+        }
+
+        private void InitializeSave()
+        {
+            _saveSystem.LoadSettingsFromDisk();
         }
 #endif
     }
