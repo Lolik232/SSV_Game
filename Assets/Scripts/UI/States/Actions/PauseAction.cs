@@ -15,7 +15,7 @@ public class PauseAction : FSMAction
     public override void OnExit(BaseStateMachine stateMachine)
     {
         stateMachine.UIInputSO.escPressed  = false;
-        stateMachine.UIInputSO.gameOnPause = true;    
+        // stateMachine.UIInputSO.gameOnPause = true;    
         stateMachine.pausePanel.SetActive(false);
     }
 

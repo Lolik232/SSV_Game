@@ -29,12 +29,15 @@ public class InGameUIManager : MonoBehaviour
 
     private void OnDisable()
     {
+        ResetUi();
         _onSceneReadyChannel.OnEventRaised -= ResetUi;
         _pauseEventChannel.OnEventRaised   -= OnPause;
     }
 
     private void OnPause()
     {
+        _UIInputReader.gameOnPause = true;
+        
         Time.timeScale = 0;
 
         _inGameMenu.ResumeClicked         += OnUnpause;
@@ -42,7 +45,6 @@ public class InGameUIManager : MonoBehaviour
         _inGameMenu.QuitGameClicked       += OnQuit;
         _inGameMenu.BackToMainMenuClicked += OnBackToMainMenu;
 
-        _UIInputReader.gameOnPause = true;
 
         // _inGameMenu.gameObject.SetActive(true);
 
@@ -52,6 +54,9 @@ public class InGameUIManager : MonoBehaviour
 
     private void OnUnpause()
     {
+        
+        _UIInputReader.gameOnPause = false;
+        
         _inGameMenu.ResumeClicked         -= OnUnpause;
         _inGameMenu.Closed                -= OnUnpause;
         _inGameMenu.QuitGameClicked       -= OnQuit;
@@ -59,9 +64,8 @@ public class InGameUIManager : MonoBehaviour
 
         // _inGameMenu.gameObject.SetActive(false);
 
-        _UIInputReader.gameOnPause = false;
+        Time.timeScale             = 1;
 
-        Time.timeScale = 1;
         GameInputSingeltone.GameInput.EnableGameplayInput();
     }
 

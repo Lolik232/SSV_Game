@@ -3574,7 +3574,6 @@ GameObject:
   - component: {fileID: 5160077143960606345}
   - component: {fileID: 5160077143960606359}
   - component: {fileID: 5160077143960606344}
-  - component: {fileID: 1637515241}
   m_Layer: 5
   m_Name: Pause Panel
   m_TagString: Untagged
@@ -3642,22 +3641,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &1637515241
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5160077143960606346}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5089161b0f0d4ab4782633646c043a3f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _resumeButton: {fileID: 5160077144821262142}
-  _backToMainMenuButton: {fileID: 5160077144628628462}
-  _quitGameButton: {fileID: 5160077144872510191}
-  _input: {fileID: 0}
 --- !u!1 &5160077143963496292
 GameObject:
   m_ObjectHideFlags: 0
@@ -4631,6 +4614,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _resumeButton: {fileID: 5160077144821262142}
-  _backToMainMenuButton: {fileID: 5160077143537521081}
-  _quitGameButton: {fileID: 5160077144628628462}
+  _backToMainMenuButton: {fileID: 5160077144628628462}
+  _quitGameButton: {fileID: 5160077144872510191}
   _input: {fileID: 11400000, guid: 2fbaa6bf9df41e847931f044603cca79, type: 2}
