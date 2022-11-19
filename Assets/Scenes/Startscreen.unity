@@ -253,7 +253,7 @@ MonoBehaviour:
     m_NormalColor: {r: 0.43529412, g: 0.18431373, b: 0.63529414, a: 1}
     m_HighlightedColor: {r: 0.18431373, g: 0.26666668, b: 0.63529414, a: 1}
     m_PressedColor: {r: 0.18431373, g: 0.26666668, b: 0.63529414, a: 0.78431374}
-    m_SelectedColor: {r: 0.18431373, g: 0.26666668, b: 0.63529414, a: 1}
+    m_SelectedColor: {r: 0.18431373, g: 0.63529414, b: 0.6313726, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -971,7 +971,7 @@ MonoBehaviour:
     m_NormalColor: {r: 0.43529412, g: 0.18431373, b: 0.63529414, a: 1}
     m_HighlightedColor: {r: 0.18431373, g: 0.26666668, b: 0.63529414, a: 1}
     m_PressedColor: {r: 0.18431373, g: 0.26666668, b: 0.63529414, a: 0.78431374}
-    m_SelectedColor: {r: 0.18431373, g: 0.26666668, b: 0.63529414, a: 1}
+    m_SelectedColor: {r: 0.18431373, g: 0.63529414, b: 0.6313726, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -1233,7 +1233,7 @@ MonoBehaviour:
     m_NormalColor: {r: 0.43529412, g: 0.18431373, b: 0.63529414, a: 1}
     m_HighlightedColor: {r: 0.18431373, g: 0.26666668, b: 0.63529414, a: 1}
     m_PressedColor: {r: 0.18431373, g: 0.26666668, b: 0.63529414, a: 0.78431374}
-    m_SelectedColor: {r: 0.18431373, g: 0.26666668, b: 0.63529414, a: 1}
+    m_SelectedColor: {r: 0.18431373, g: 0.63529414, b: 0.6313726, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -2662,7 +2662,7 @@ MonoBehaviour:
     m_NormalColor: {r: 0.43529412, g: 0.18431373, b: 0.63529414, a: 1}
     m_HighlightedColor: {r: 0.18431373, g: 0.26666668, b: 0.63529414, a: 1}
     m_PressedColor: {r: 0.18431373, g: 0.26666668, b: 0.63529414, a: 0.78431374}
-    m_SelectedColor: {r: 0.18431373, g: 0.26666668, b: 0.63529414, a: 1}
+    m_SelectedColor: {r: 0.18431373, g: 0.63529414, b: 0.6313726, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -3427,7 +3427,7 @@ MonoBehaviour:
     m_NormalColor: {r: 0.43529412, g: 0.18431373, b: 0.63529414, a: 1}
     m_HighlightedColor: {r: 0.18431373, g: 0.26666668, b: 0.63529414, a: 1}
     m_PressedColor: {r: 0.18431373, g: 0.26666668, b: 0.63529414, a: 0.78431374}
-    m_SelectedColor: {r: 0.18431373, g: 0.26666668, b: 0.63529414, a: 1}
+    m_SelectedColor: {r: 0.18431373, g: 0.63529414, b: 0.6313726, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -3899,7 +3899,7 @@ MonoBehaviour:
     m_NormalColor: {r: 0.43529412, g: 0.18431373, b: 0.63529414, a: 1}
     m_HighlightedColor: {r: 0.18431373, g: 0.26666668, b: 0.63529414, a: 1}
     m_PressedColor: {r: 0.18431373, g: 0.26666668, b: 0.63529414, a: 0.78431374}
-    m_SelectedColor: {r: 0.18431373, g: 0.26666668, b: 0.63529414, a: 1}
+    m_SelectedColor: {r: 0.18431373, g: 0.63529414, b: 0.6313726, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -4244,7 +4244,7 @@ MonoBehaviour:
     m_NormalColor: {r: 0.43529412, g: 0.18431373, b: 0.63529414, a: 1}
     m_HighlightedColor: {r: 0.18431373, g: 0.26666668, b: 0.63529414, a: 1}
     m_PressedColor: {r: 0.18431373, g: 0.26666668, b: 0.63529414, a: 0.78431374}
-    m_SelectedColor: {r: 0.18431373, g: 0.26666668, b: 0.63529414, a: 1}
+    m_SelectedColor: {r: 0.18431373, g: 0.63529414, b: 0.6313726, a: 1}
     m_DisabledColor: {r: 1, g: 1, b: 1, a: 0}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -4843,8 +4843,11 @@ MonoBehaviour:
   _menuGroup: {fileID: 1282044680}
   _optionsGroup: {fileID: 412534571}
   _newGameButton: {fileID: 500870658}
+  _resumeButton: {fileID: 0}
   _gameVolumeSlider: {fileID: 948133738}
   continueButton: {fileID: 265113364}
+  pausePanel: {fileID: 0}
+  optionsPanel: {fileID: 0}
   _saveSystem: {fileID: 11400000, guid: ca5a00e8b8acb964cb88e77d41600973, type: 2}
   settingsManager: {fileID: 2114112684}
 --- !u!114 &2114112684
