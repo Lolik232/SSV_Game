@@ -9,6 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2bcc978509f67e040bfa56c88d0d7ad1, type: 3}
-  m_Name: Options Action
+  m_Script: {fileID: 11500000, guid: 1e2bbbb6d20821d48b64a7449927648b, type: 3}
+  m_Name: Pause To Options Decision
   m_EditorClassIdentifier: 

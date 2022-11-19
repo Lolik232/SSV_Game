@@ -13,6 +13,7 @@ public class UIInputSO : ScriptableObject
     [NonSerialized] public bool enterPressed;
     [NonSerialized] public bool escPressed;
     [NonSerialized] public bool optionsPressed;
+    [NonSerialized] public bool gameOnPause = false;
 
     [SerializeField] private GameSceneSO locationToLoad;
     // [SerializeField] private LoadEventChannelSO loadLocationChannel;
@@ -22,7 +23,8 @@ public class UIInputSO : ScriptableObject
         if (context.started)
         {
             enterPressed = true;
-        } else if (context.canceled)
+        }
+        else if (context.canceled)
         {
             enterPressed = false;
         }
@@ -32,7 +34,7 @@ public class UIInputSO : ScriptableObject
     {
         ContinueGame?.Invoke();
     }
-    
+
     public void OnNewButtonPressed()
     {
         StartNewGame?.Invoke();
@@ -43,7 +45,9 @@ public class UIInputSO : ScriptableObject
         if (context.performed)
         {
             escPressed = true;
-        } else if (context.canceled)
+            gameOnPause = !gameOnPause;
+        }
+        else if (context.canceled)
         {
             escPressed = false;
         }
@@ -62,5 +66,10 @@ public class UIInputSO : ScriptableObject
     public void OnOptionsBackButton()
     {
         escPressed = true;
+    }
+
+    public void OnResumeButton()
+    {
+        gameOnPause = false;
     }
 }

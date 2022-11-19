@@ -9,6 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2bcc978509f67e040bfa56c88d0d7ad1, type: 3}
-  m_Name: Options Action
+  m_Script: {fileID: 11500000, guid: a31a346d8bb62cc44abaeff5093069eb, type: 3}
+  m_Name: RemainInState
   m_EditorClassIdentifier: 

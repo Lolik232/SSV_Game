@@ -3,17 +3,15 @@ using System.Collections.Generic;
 using FSM;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "FSM/Actions/Options Action")]
-public class OptionsAction : FSMAction
+[CreateAssetMenu(menuName = "FSM/Actions/Pause Options Action")]
+public class PauseOptionsAction : FSMAction
 {
     public override void OnEnter(BaseStateMachine stateMachine)
     {
         stateMachine.settingsManager.Setup();
 
-        stateMachine.menuAnim.SetBool("isButtonPressed", true);
-        stateMachine.optionsAnim.SetBool("isButtonPressed", true);
-
-        stateMachine.optionsGroup.interactable = true;
+        stateMachine.optionsPanel.SetActive(true);
+        
         stateMachine.gameVolumeSlider.Select();
     }
 
@@ -21,11 +19,8 @@ public class OptionsAction : FSMAction
     {
         stateMachine.UIInputSO.optionsPressed = false;
         stateMachine.UIInputSO.escPressed     = false;
-
-        stateMachine.optionsGroup.interactable = false;
-
-        stateMachine.optionsAnim.SetBool("isButtonPressed", false);
-        stateMachine.menuAnim.SetBool("isButtonPressed", false);
+        
+        stateMachine.optionsPanel.SetActive(false);
 
         stateMachine.settingsManager.Reset();
     }
