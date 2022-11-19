@@ -1,5 +1,4 @@
-using UnityEngine;
-public class GrabController : MonoBehaviour, IGrabController
+﻿public class GrabController : Component, IGrabController
 {
     public bool Grab
     {

@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(DeadState))]
 
-public class Damageable : MonoBehaviour, IDamageable
+public class Damageable : Component, IDamageable
 {
     [SerializeField] private float _health;
 

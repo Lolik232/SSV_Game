@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 
-public class BehaviuorState : ComponentBase
+public class BehaviuorState<BehaviourControllerT> : ComponentBase where BehaviourControllerT : BehaviourController
 {
-    protected StateMachine Machine
+    protected BehaviourControllerT Controller
     {
         get;
         private set;
     }
-    public List<TransitionItem<State>> Transitions
+    public List<TransitionItem<BehaviuorState<BehaviourControllerT>>> Transitions
     {
         get;
         protected set;
@@ -23,7 +20,7 @@ public class BehaviuorState : ComponentBase
 
     protected void Awake()
     {
-        Machine = GetComponent<StateMachine>();
+        Controller = GetComponent<BehaviourControllerT>();
         Entity = GetComponent<Entity>();
     }
 
@@ -71,7 +68,7 @@ public class BehaviuorState : ComponentBase
             if (transition.condition())
             {
                 transition.action?.Invoke();
-                Machine.GetTransition(transition.target);
+                Controller.GetTransition(transition.target);
                 return;
             }
         }

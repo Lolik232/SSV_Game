@@ -31,7 +31,7 @@ public class DashAbility : Ability
     protected override void Start()
     {
         base.Start();
-        enterConditions.Add(() => Entity.Behaviour.Dash && !Entity.IsVelocityLocked && !Entity.IsPositionLocked && InactiveTime > _cooldown && AmountOfDashes > 0);
+        enterConditions.Add(() => Entity.Behaviour.Dash && !Entity.IsVelocityLocked && !Entity.IsPositionLocked && InactiveTime > _cooldown && AmountOfDashes > 0 && Entity.IsStanding);
         exitConditions.Add(() => false);
     }
 

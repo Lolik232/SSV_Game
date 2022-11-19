@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class SkeletonWarriorState : State
+﻿public class SkeletonWarriorState : State
 {
     protected SkeletonWarrior Skeleton
     {

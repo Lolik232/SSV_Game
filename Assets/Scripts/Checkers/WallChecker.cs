@@ -2,7 +2,7 @@
 
 [RequireComponent(typeof(Rotateable), typeof(Physical))]
 
-public class WallChecker : MonoBehaviour, ITouchingWall, IChecker
+public class WallChecker : Component, ITouchingWall, IChecker
 {
     [SerializeField] private LayerMask _whatIsTarget;
     [SerializeField] private float _wallCheckDistance;

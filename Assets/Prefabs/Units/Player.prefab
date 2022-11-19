@@ -590,7 +590,7 @@ MonoBehaviour:
   _whatIsTarget:
     serializedVersion: 2
     m_Bits: 8
-  _ledgeCheckDistance: 0.25
+  _ledgeCheckDistance: 0.2
   _ledgeCheckerYOffset: 1.1
   _color:
     _r: 1
