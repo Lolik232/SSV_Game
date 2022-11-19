@@ -55,7 +55,7 @@ public class Rotateable : Component, IRotateable
 
     public void RotateIntoDirection(int direction)
     {
-        if (direction != 0 && !IsRotationLocked)
+        if (direction != 0)
         {
             FacingDirection = direction;
             RotateBodyIntoDirection(direction);

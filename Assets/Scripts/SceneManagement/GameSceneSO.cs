@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-using UnityEngine.AddressableAssets;
+﻿using UnityEngine.AddressableAssets;
 
 public class GameSceneSO : SerializableScriptableObject
 {

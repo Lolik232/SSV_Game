@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public abstract class PlayerWeapon : Weapon
+﻿public abstract class PlayerWeapon : Weapon
 {
     protected Player Player
     {

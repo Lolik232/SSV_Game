@@ -36,7 +36,7 @@ public static class Utility
         }
     }
 
-    static public void SetAnimationSpeed(Animator anim, string clipName , string name, float duration)
+    static public void SetAnimationSpeed(Animator anim, string clipName, string name, float duration)
     {
         string speedName = name + "Speed";
 

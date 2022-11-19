@@ -1,9 +1,8 @@
-﻿using UnityEngine;
-
-public class DummyGroundedState : DummyState
+﻿public class DummyGroundedState : DummyState
 {
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         bool InAirCondition() => !Dummy.Grounded;
 
         Transitions.Add(new(Dummy.InAirState, InAirCondition));

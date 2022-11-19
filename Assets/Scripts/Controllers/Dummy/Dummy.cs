@@ -1,6 +1,9 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+
+using UnityEngine;
 
 [RequireComponent(typeof(Physical), typeof(Rotateable), typeof(Damageable))]
+
 [RequireComponent(typeof(DummyGroundedState), typeof(DummyInAirState))]
 
 public class Dummy : Entity, IPhysical, IRotateable, IDamageable,
@@ -54,6 +57,8 @@ public class Dummy : Entity, IPhysical, IRotateable, IDamageable,
 
     public bool Grounded => ((IGrounded)_groundChecker).Grounded;
 
+    public bool IsPushed => ((IPhysical)_physical).IsPushed;
+
     public void BlockRotation()
     {
         ((IRotateable)_rotateable).BlockRotation();
@@ -64,9 +69,9 @@ public class Dummy : Entity, IPhysical, IRotateable, IDamageable,
         ((IRotateable)_rotateable).LookAt(position);
     }
 
-    public void Push(float force, Vector2 angle)
+    public IEnumerator Push(float force, Vector2 angle)
     {
-        ((IPhysical)_physical).Push(force, angle);
+        return ((IPhysical)_physical).Push(force, angle);
     }
 
     public void RestoreHealth(float regeneration)
@@ -89,10 +94,10 @@ public class Dummy : Entity, IPhysical, IRotateable, IDamageable,
         ((IRotateable)_rotateable).RotateIntoDirection(direction);
     }
 
-    public void TakeDamage(float damage, Entity damager)
+    public void TakeDamage(float damage, Vector2 attackPoint)
     {
-        LookAt(damager.transform.position);
-        ((IDamageable)_damageable).TakeDamage(damage, damager);
+        LookAt(attackPoint);
+        ((IDamageable)_damageable).TakeDamage(damage, attackPoint);
     }
 
     public void UnlockRotation()

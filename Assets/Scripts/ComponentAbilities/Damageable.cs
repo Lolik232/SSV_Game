@@ -49,7 +49,7 @@ public class Damageable : MonoBehaviour, IDamageable
         Debug.Log(this + " Health: " + Health);
     }
 
-    public void TakeDamage(float damage, Entity damager)
+    public void TakeDamage(float damage, Vector2 attackPoint)
     {
         if (IsDead)
         {

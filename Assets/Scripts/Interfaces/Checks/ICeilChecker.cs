@@ -1,4 +1,4 @@
-﻿public interface ITouchingCeiling 
+﻿public interface ITouchingCeiling
 {
     public bool TouchingCeiling
     {

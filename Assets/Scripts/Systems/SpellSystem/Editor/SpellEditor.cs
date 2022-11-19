@@ -25,7 +25,7 @@ namespace Systems.SpellSystem.SpellEffect.Editor
             EditorGUILayout.BeginHorizontal();
             _effectSo = (EffectSO)EditorGUILayout.ObjectField(_effectSo, typeof(EffectSO));
             EditorGUILayout.EndHorizontal();
-            
+
             if (_effectSo != null && GUILayout.Button("Add effect"))
             {
                 _spellSO.AddEffect(_effectSo);

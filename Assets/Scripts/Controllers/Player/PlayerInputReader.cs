@@ -40,42 +40,38 @@ public class PlayerInputReader : Component,
 
     public Vector2Int Move
     {
-        get => _moveController.Move;
-        set => _moveController.Move = value;
+        get => ((IMoveController)_moveController).Move;
+        set => ((IMoveController)_moveController).Move = value;
     }
-
     public Vector2 LookAt
     {
-        get => _moveController.LookAt;
-        set => _moveController.LookAt = value;
+        get => ((IMoveController)_moveController).LookAt;
+        set => ((IMoveController)_moveController).LookAt = value;
     }
-
     public bool Jump
     {
-        get => _jumpController.Jump;
-        set => _jumpController.Jump = value;
+        get => ((IJumpController)_jumpController).Jump;
+        set => ((IJumpController)_jumpController).Jump = value;
     }
-
     public bool Grab
     {
-        get => _grabController.Grab;
-        set => _grabController.Grab = value;
-    }
-
-    public bool Dash
-    {
-        get => _dashController.Dash;
-        set => _dashController.Dash = value;
+        get => ((IGrabController)_grabController).Grab;
+        set => ((IGrabController)_grabController).Grab = value;
     }
     public bool Attack
     {
-        get => _attackController.Attack;
-        set => _attackController.Attack = value;
+        get => ((IAttackController)_attackController).Attack;
+        set => ((IAttackController)_attackController).Attack = value;
+    }
+    public bool Dash
+    {
+        get => ((IDashContorller)_dashController).Dash;
+        set => ((IDashContorller)_dashController).Dash = value;
     }
     public bool Ability
     {
-        get => _abilityController.Ability;
-        set => _abilityController.Ability = value;
+        get => ((IAbilityControlller)_abilityController).Ability;
+        set => ((IAbilityControlller)_abilityController).Ability = value;
     }
 
     private void Awake()

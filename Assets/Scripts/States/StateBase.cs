@@ -21,6 +21,11 @@ public abstract class StateBase : ComponentBase
         Anim = GetComponent<Animator>();
     }
 
+    protected virtual void Start()
+    {
+
+    }
+
     public override void OnEnter()
     {
         if (IsActive)
@@ -85,7 +90,7 @@ public abstract class StateBase : ComponentBase
     }
 }
 
-public struct TransitionItem<T> where T : StateBase
+public struct TransitionItem<T> where T : ComponentBase
 {
     public T target;
     public Func<bool> condition;

@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+
+using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D), typeof(Rigidbody2D))]
 
@@ -8,6 +10,12 @@ public class Physical : Component, IPhysical
 
     private BoxCollider2D _collider;
     private Rigidbody2D _rb;
+
+    public bool IsPushed
+    {
+        get;
+        private set;
+    }
 
     public Vector2 Size
     {
@@ -41,9 +49,14 @@ public class Physical : Component, IPhysical
         _rb = GetComponent<Rigidbody2D>();
     }
 
-    public void Push(float force, Vector2 angle)
+    public IEnumerator Push(float force, Vector2 angle)
     {
+        IsPushed = true;
         _rb.velocity = force * new Vector2(angle.normalized.x, Vector2.up.y);
+
+        yield return new WaitForSeconds(0.1f);
+
+        IsPushed = false;
     }
 
     private void OnDrawGizmos()

@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 public abstract class AbilityState<AbilityT> : StateBase where AbilityT : Ability
 {
@@ -13,10 +13,22 @@ public abstract class AbilityState<AbilityT> : StateBase where AbilityT : Abilit
         protected set;
     } = new();
 
+    protected dynamic Entity
+    {
+        get;
+        private set;
+    }
+
     protected override void Awake()
     {
         base.Awake();
         Ability = GetComponent<AbilityT>();
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+        Entity = Ability.Entity;
     }
 
     protected override void TryGetTransition()
