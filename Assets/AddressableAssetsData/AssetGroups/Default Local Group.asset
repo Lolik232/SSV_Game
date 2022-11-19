@@ -197,10 +197,6 @@ MonoBehaviour:
     m_Address: Assets/ScriptableObjects/UI/Menu/OptionsState.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: f6eb78f1a31f6c3488200d318a9a6368
-    m_Address: Assets/ScriptableObjects/Settings/Settings.asset
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: b8c169394c06e8546bfd12c3119380be
     m_Address: Assets/Prefabs/Gameplay/LocationExit.prefab
     m_ReadOnly: 0
@@ -219,6 +215,14 @@ MonoBehaviour:
     m_SerializedLabels: []
   - m_GUID: 79b41746cf4c07d4281c4af1b911ec98
     m_Address: Assets/UniversalRenderPipelineGlobalSettings.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: f6eb78f1a31f6c3488200d318a9a6368
+    m_Address: Assets/ScriptableObjects/Settings/Settings.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 45ed7c9c5922dcc45b021434e3abae82
+    m_Address: Assets/ScriptableObjects/Settings/DefaultSettings.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

@@ -8,15 +8,14 @@ namespace Systems.SaveSystem.Settings.ScriptableObjects
         public float masterVolume    = default;
         public float musicVolume   = default;
         public float effectsVolume = default;
-
-        public string ToJson()
+        
+        public SettingsSO(){}
+        
+        public void LoadSavedSettings(SettingsSave settingsSave)
         {
-            return JsonUtility.ToJson(this);
-        }
-
-        public void FromJson(string json)
-        {
-            JsonUtility.FromJsonOverwrite(json, this);
+            masterVolume  = settingsSave.masterVolume;
+            musicVolume   = settingsSave.musicVolume;
+            effectsVolume = settingsSave.effectsVolume;
         }
     }
 }

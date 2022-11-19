@@ -246,6 +246,7 @@ MonoBehaviour:
   _saveSettingsEventChannelSO: {fileID: 11400000, guid: 03e464b9efe0c4c49bddff3551926ffc, type: 2}
   _saveSystem: {fileID: 11400000, guid: ca5a00e8b8acb964cb88e77d41600973, type: 2}
   _currentSettings: {fileID: 11400000, guid: f6eb78f1a31f6c3488200d318a9a6368, type: 2}
+  _defaultSettings: {fileID: 11400000, guid: 45ed7c9c5922dcc45b021434e3abae82, type: 2}
   _masterVolumeEventChannelSO: {fileID: 11400000, guid: af8126120ede5f4458e3a5bba36097e2, type: 2}
   _musicVolumeEventChannelSO: {fileID: 11400000, guid: d6a5e143f66fd234bb43ef874c3b1693, type: 2}
   _effectsVolumeEventChannelSO: {fileID: 11400000, guid: 6101fdfd88686e242a278adcca199cf5, type: 2}

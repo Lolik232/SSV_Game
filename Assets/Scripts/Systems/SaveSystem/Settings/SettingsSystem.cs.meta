@@ -1,3 +1,18 @@
 fileFormatVersion: 2
 guid: 0591e318c02c42d68fdf8bd405d81158
-timeCreated: 1668627765
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - _saveSettingsEventChannelSO: {fileID: 11400000, guid: 03e464b9efe0c4c49bddff3551926ffc, type: 2}
+  - _saveSystem: {fileID: 11400000, guid: ca5a00e8b8acb964cb88e77d41600973, type: 2}
+  - _currentSettings: {instanceID: 0}
+  - _defaultSettings: {instanceID: 0}
+  - _masterVolumeEventChannelSO: {instanceID: 0}
+  - _musicVolumeEventChannelSO: {instanceID: 0}
+  - _effectsVolumeEventChannelSO: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
