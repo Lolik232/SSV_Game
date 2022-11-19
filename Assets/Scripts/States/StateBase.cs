@@ -90,7 +90,7 @@ public abstract class StateBase : ComponentBase
     }
 }
 
-public struct TransitionItem<T> where T : StateBase
+public struct TransitionItem<T> where T : ComponentBase
 {
     public T target;
     public Func<bool> condition;

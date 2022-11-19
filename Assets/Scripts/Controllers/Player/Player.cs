@@ -198,7 +198,7 @@ public class Player : Entity, IPhysical, IMovable, ICrouchable, IRotateable,
 
     public IEnumerator Push(float force, Vector2 angle)
     {
-        return ((IPhysical)_physical). (force, angle);
+        return ((IPhysical)_physical).Push(force, angle);
     }
 
     public void ResetGravity()
