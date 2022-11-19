@@ -4719,6 +4719,7 @@ GameObject:
   - component: {fileID: 2114112682}
   - component: {fileID: 2114112683}
   - component: {fileID: 2114112684}
+  - component: {fileID: 2114112685}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: Untagged
@@ -4826,6 +4827,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 9d5686ad-d36a-412c-8443-7d871aeeb4b0
     m_ActionName: UI/MenuExiting[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 1b323bab-bc55-4533-a1f5-e011787f40aa
+    m_ActionName: Gameplay/Pause[/Keyboard/escape]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: UI
@@ -4879,6 +4884,18 @@ MonoBehaviour:
   _masterVolumeSlider: {fileID: 948133738}
   _musicVolumeSlider: {fileID: 1725798020}
   _effectsVolumeSlider: {fileID: 1594970958}
+--- !u!114 &2114112685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2114112679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f75df735a50247bda4be8a190e7a0c0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2114442143
 GameObject:
   m_ObjectHideFlags: 0

@@ -22,11 +22,6 @@ public class UISettingsManager : MonoBehaviour
     private float _musicVolume;
     private float _effectsVolume;
 
-    private void Start()
-    {
-        GameInputSingeltone.GameInput.EnableMenuInput();
-    }
-
     public void Setup()
     {
         _masterVolumeSlider.SetValueWithoutNotify(_settings.masterVolume);

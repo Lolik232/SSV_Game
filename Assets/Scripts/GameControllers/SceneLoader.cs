@@ -97,7 +97,8 @@ namespace SceneManagement
             _sceneToLoad       = scene;
             _showLoadingScreen = showLoadingScreen;
             _isLoading         = true;
-
+            
+            GameInputSingeltone.GameInput.DisableAllInputs();
 
             if (_gameplayManagerSceneInstance.Scene == null ||
                 _gameplayManagerSceneInstance.Scene.isLoaded == false)
@@ -114,6 +115,9 @@ namespace SceneManagement
         private void LoadMenu(GameSceneSO menuToLoad, bool showLoadingScreen, bool fadeScreen)
         {
             if (_isLoading) return;
+            
+            GameInputSingeltone.GameInput.DisableAllInputs();
+            
             _sceneToLoad = menuToLoad;
 
             _showLoadingScreen = showLoadingScreen;
