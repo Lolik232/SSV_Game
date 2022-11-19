@@ -197,6 +197,10 @@ MonoBehaviour:
     m_Address: Assets/ScriptableObjects/UI/Menu/OptionsState.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: f6eb78f1a31f6c3488200d318a9a6368
+    m_Address: Assets/ScriptableObjects/Settings/Settings.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   - m_GUID: b8c169394c06e8546bfd12c3119380be
     m_Address: Assets/Prefabs/Gameplay/LocationExit.prefab
     m_ReadOnly: 0
@@ -217,12 +221,84 @@ MonoBehaviour:
     m_Address: Assets/UniversalRenderPipelineGlobalSettings.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: f6eb78f1a31f6c3488200d318a9a6368
-    m_Address: Assets/ScriptableObjects/Settings/Settings.asset
+  - m_GUID: 5078ac33c1a2a014fb04a6e7cd16f74a
+    m_Address: Assets/Scenes/GameplayManagers.unity
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 45ed7c9c5922dcc45b021434e3abae82
-    m_Address: Assets/ScriptableObjects/Settings/DefaultSettings.asset
+  - m_GUID: 93b6005c6d8c4fc498b549ab767686cd
+    m_Address: Assets/ScriptableObjects/SceneDatas/Managers/GameplayManagers.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: f5306b4c59c6ba14ab61637668548883
+    m_Address: Assets/ScriptableObjects/Channels/SceneManagement/PauseEventChannel.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 3ecb14bd78076fc40ab29999df6b030a
+    m_Address: Assets/ScriptableObjects/UI/Menu/Game State.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 13cc2359d89d7a649a0925efb89c77e9
+    m_Address: Assets/ScriptableObjects/UI/Menu/Game Action.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 9406d16109105e74aa8eafffc864d533
+    m_Address: Assets/ScriptableObjects/UI/Menu/Game To Pause Decision.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: c9a2c3fb548e3f14a8c83e0263be2f70
+    m_Address: Assets/ScriptableObjects/UI/Menu/Game To Pause Transition.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 11a3d5be7f70ee54ab131156dbf782e1
+    m_Address: Assets/ScriptableObjects/UI/Menu/Options Action.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: e78505c7c8a324f468a39ad3a5984e64
+    m_Address: Assets/ScriptableObjects/UI/Menu/Options State.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: cd08a58c329449c4f867e44d01be38f6
+    m_Address: Assets/ScriptableObjects/UI/Menu/RemainInState.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 88f4ee6b6f0151c47b10d5c148aceda7
+    m_Address: Assets/ScriptableObjects/UI/Menu/Pause To Options Transition.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 039e8ba5aa0f8ba4b9b95b4ea44796b1
+    m_Address: Assets/ScriptableObjects/UI/Menu/Pause To Options Decision.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: e279f0089cf7a5247b69f244b46ef181
+    m_Address: Assets/ScriptableObjects/UI/Menu/Pause To Game Transition.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 9c006e248fec5ae42b17fce28f23ad5e
+    m_Address: Assets/ScriptableObjects/UI/Menu/Pause To Game Decision.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: a8d917420ad47cd4292666dc8e754ad2
+    m_Address: Assets/ScriptableObjects/UI/Menu/Pause State.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 5219886aaa0261d4dbd8af22ec214b3d
+    m_Address: Assets/ScriptableObjects/UI/Menu/Pause Action.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 73f51050d8b44b441994293cf0a9b62a
+    m_Address: Assets/ScriptableObjects/UI/Menu/Options To Pause Transition.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 7817b975cdfb9034c82f22360812e9c9
+    m_Address: Assets/ScriptableObjects/UI/Menu/Options To Pause Decision.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: a58c2637d2d5d7d4b9060c281ba74957
+    m_Address: Assets/Prefabs/Gameplay/InGameMenu.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 93aa4169bca15c34c8cd72885bfb246d
+    m_Address: Assets/Prefabs/Gameplay/EventSystem.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

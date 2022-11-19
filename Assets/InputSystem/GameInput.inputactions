@@ -67,6 +67,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "1b323bab-bc55-4533-a1f5-e011787f40aa",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -190,6 +199,28 @@
                     "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "792e9576-e908-48e5-9b65-f3d142f0556c",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "121ca082-3ddc-4f48-97cd-3a2110c18a8a",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -198,7 +229,7 @@
             "id": "6b3a8751-eed8-477e-b8fb-d5c7daa04db2",
             "actions": [
                 {
-                    "name": "MenuEntering",
+                    "name": "Enter",
                     "type": "Button",
                     "id": "f2012ff9-f0de-4151-aa5f-6edddb096523",
                     "expectedControlType": "Button",
@@ -207,7 +238,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "MenuExiting",
+                    "name": "Escape",
                     "type": "Button",
                     "id": "9d5686ad-d36a-412c-8443-7d871aeeb4b0",
                     "expectedControlType": "Button",
@@ -224,7 +255,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "MenuEntering",
+                    "action": "Enter",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -235,7 +266,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "MenuEntering",
+                    "action": "Enter",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -246,7 +277,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "MenuExiting",
+                    "action": "Escape",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -257,7 +288,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "MenuExiting",
+                    "action": "Escape",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

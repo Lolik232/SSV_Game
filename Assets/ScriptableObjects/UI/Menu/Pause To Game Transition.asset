@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9716599d0f784a048b791f042431b073, type: 3}
+  m_Name: Pause To Game Transition
+  m_EditorClassIdentifier: 
+  Decision: {fileID: 11400000, guid: 9c006e248fec5ae42b17fce28f23ad5e, type: 2}
+  TrueState: {fileID: 11400000, guid: 3ecb14bd78076fc40ab29999df6b030a, type: 2}
+  FalseState: {fileID: 11400000, guid: cd08a58c329449c4f867e44d01be38f6, type: 2}

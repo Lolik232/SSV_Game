@@ -225,6 +225,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 9d5686ad-d36a-412c-8443-7d871aeeb4b0
     m_ActionName: UI/MenuExiting[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 1b323bab-bc55-4533-a1f5-e011787f40aa
+    m_ActionName: Gameplay/Pause[/Keyboard/escape]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard
   m_DefaultActionMap: Gameplay
@@ -707,6 +711,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc84e82edc8e4bf428463fdd0d27981e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _pauseEventChannel: {fileID: 11400000, guid: f5306b4c59c6ba14ab61637668548883, type: 2}
   _jumpInputHoldTime: 0.1
   _dashInputPressTime: 0.5
 --- !u!114 &7888675239276289702
@@ -1322,8 +1327,6 @@ MonoBehaviour:
   whatIsTarget:
     serializedVersion: 2
     m_Bits: 1024
-  _entity: {fileID: 4839718794917041577}
-  _maxAttackDistance: 0
   _swordLength: 2.5
   _attackSpeed: 0.3
   _force: 5
