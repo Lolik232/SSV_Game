@@ -7,14 +7,15 @@ public class PauseAction : FSMAction
 {
     public override void OnEnter(BaseStateMachine stateMachine)
     {
+        stateMachine.pause.SetActive(true);
         stateMachine.pausePanel.SetActive(true);
         stateMachine.resumeButton.Select();
-
-        Time.timeScale = 0f;
     }
 
     public override void OnExit(BaseStateMachine stateMachine)
     {
+        stateMachine.UIInputSO.escPressed  = false;
+        stateMachine.UIInputSO.gameOnPause = true;    
         stateMachine.pausePanel.SetActive(false);
     }
 

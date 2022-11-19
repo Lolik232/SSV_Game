@@ -1,5 +1,6 @@
 using System;
 using All.Events;
+using Input;
 using Systems.SaveSystem.Settings.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,6 +21,11 @@ public class UISettingsManager : MonoBehaviour
     private float _masterVolume;
     private float _musicVolume;
     private float _effectsVolume;
+
+    private void Start()
+    {
+        GameInputSingeltone.GameInput.EnableMenuInput();
+    }
 
     public void Setup()
     {

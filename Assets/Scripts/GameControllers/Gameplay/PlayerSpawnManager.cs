@@ -1,5 +1,5 @@
 ﻿using All.Events;
-
+using Input;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -41,14 +41,15 @@ namespace All.Gameplay
 
         private void SpawnPlayer()
         {
-            Transform  spawnLocation  = _defaultSpawnPoint;
-            Player playerInstance = Instantiate(_playerPrefab, spawnLocation.position, spawnLocation.rotation);
+            Transform spawnLocation  = _defaultSpawnPoint;
+            Player    playerInstance = Instantiate(_playerPrefab, spawnLocation.position, spawnLocation.rotation);
 
             _transformEventChannel.RaiseEvent(playerInstance.transform);
 
             Debug.Log("Player spawned");
 
             //TODO: send message to PlayerSpawnedChannel for enable input, UI etc.
+            GameInputSingeltone.GameInput.EnableGameplayInput();
         }
     }
 }

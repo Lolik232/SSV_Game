@@ -1,11 +1,13 @@
 using System;
 using All.Events;
+using Input;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
 
 [CreateAssetMenu(menuName = "UI/Input/UIInput")]
-public class UIInputSO : ScriptableObject
+public class UIInputSO : ScriptableObject, GameInput.IUIActions
 {
     public UnityEvent StartNewGame;
     public UnityEvent ContinueGame;
@@ -17,17 +19,21 @@ public class UIInputSO : ScriptableObject
 
     [SerializeField] private GameSceneSO locationToLoad;
     // [SerializeField] private LoadEventChannelSO loadLocationChannel;
+    private GameInput _gameInput;
 
-    public void OnEnterDown(InputAction.CallbackContext context)
+    private void OnEnable()
     {
-        if (context.started)
+        if (_gameInput == null)
         {
-            enterPressed = true;
+            _gameInput = GameInputSingeltone.GameInput;
+            _gameInput.UI.SetCallbacks(this);
         }
-        else if (context.canceled)
-        {
-            enterPressed = false;
-        }
+        EnableUiInput();
+    }
+
+    private void OnDisable()
+    {
+        DisableUiInput();
     }
 
     public void OnContinueButtonPressed()
@@ -38,19 +44,6 @@ public class UIInputSO : ScriptableObject
     public void OnNewButtonPressed()
     {
         StartNewGame?.Invoke();
-    }
-
-    public void OnEscDown(InputAction.CallbackContext context)
-    {
-        if (context.performed)
-        {
-            escPressed = true;
-            gameOnPause = !gameOnPause;
-        }
-        else if (context.canceled)
-        {
-            escPressed = false;
-        }
     }
 
     public void OnQuitButton()
@@ -68,8 +61,41 @@ public class UIInputSO : ScriptableObject
         escPressed = true;
     }
 
-    public void OnResumeButton()
+    // public void OnResumeButton()
+    // {
+    //     gameOnPause = false;
+    // }
+
+    public void OnEnter(InputAction.CallbackContext context)
     {
-        gameOnPause = false;
+        if (context.started)
+        {
+            enterPressed = true;
+        } else if (context.canceled)
+        {
+            enterPressed = false;
+        }
+    }
+
+    public void OnEscape(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            escPressed  = true;
+            gameOnPause = !gameOnPause;
+        } else if (context.canceled)
+        {
+            escPressed = false;
+        }
+    }
+    
+    public void EnableUiInput()
+    {
+        _gameInput.UI.Enable();
+    }
+    
+    public void DisableUiInput()
+    {
+        _gameInput.UI.Disable();        
     }
 }

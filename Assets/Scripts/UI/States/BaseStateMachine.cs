@@ -25,11 +25,14 @@ namespace FSM
         [SerializeField] private Button _resumeButton;
         [SerializeField] private Slider _gameVolumeSlider;
 
-        [FormerlySerializedAs("_continueButton")] [SerializeField] public GameObject     continueButton;
+        [FormerlySerializedAs("_continueButton")] 
+        [SerializeField] public GameObject     continueButton;
+        
         [SerializeField] public GameObject pausePanel;
         [SerializeField] public GameObject optionsPanel;
 
-        
+        [SerializeField] public GameObject pause;
+
         [SerializeField] public SaveSystem _saveSystem = default;
 
         [SerializeField] public UISettingsManager settingsManager;
