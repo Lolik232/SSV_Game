@@ -9,8 +9,7 @@ public class InGameUIManager : MonoBehaviour
 {
     // update ui components if ne scene
     [SerializeField] private VoidEventChannelSO _onSceneReadyChannel = default;
-
-
+    
     [SerializeField] private InGameMenu _inGameMenu;
     [SerializeField] private GameObject _optionsPanel;
 

@@ -11,17 +11,6 @@ namespace UI
 
         private void OnEnable()
         {
-            _onSceneReady.OnEventRaised += EnableInput;
-        }
-
-        private void OnDisable()
-        {
-            _onSceneReady.OnEventRaised -= EnableInput;
-        }
-
-
-        private void EnableInput()
-        {
             GameInputSingeltone.GameInput.EnableMenuInput();
         }
     }

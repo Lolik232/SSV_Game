@@ -57,8 +57,11 @@ namespace SceneManagement
                     _gameplayManagersScene.sceneReference.LoadSceneAsync(LoadSceneMode.Additive, true);
                 _gameplayManagerLoadingOpHandle.WaitForCompletion();
                 _gameplayManagerSceneInstance = _gameplayManagerLoadingOpHandle.Result;
+                
                 StartGameplay();
             }
+
+          
 
             _fadeRequestChan.FadeIn(_fadeDuration);
         }
@@ -97,7 +100,7 @@ namespace SceneManagement
             _sceneToLoad       = scene;
             _showLoadingScreen = showLoadingScreen;
             _isLoading         = true;
-            
+
             GameInputSingeltone.GameInput.DisableAllInputs();
 
             if (_gameplayManagerSceneInstance.Scene == null ||
@@ -115,9 +118,9 @@ namespace SceneManagement
         private void LoadMenu(GameSceneSO menuToLoad, bool showLoadingScreen, bool fadeScreen)
         {
             if (_isLoading) return;
-            
+
             GameInputSingeltone.GameInput.DisableAllInputs();
-            
+
             _sceneToLoad = menuToLoad;
 
             _showLoadingScreen = showLoadingScreen;
@@ -147,8 +150,6 @@ namespace SceneManagement
 
         private IEnumerator UnloadPreviousScene()
         {
-            GameInputSingeltone.GameInput.DisableAllInputs();
-
             _fadeRequestChan.FadeOut(_fadeDuration);
 
             yield return new WaitForSecondsRealtime(_fadeDuration);

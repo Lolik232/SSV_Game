@@ -92,14 +92,15 @@ public class PlayerInputReader : Component,
         _jumpController.Jump   &= Time.time < _jumpInputStartTime + _jumpInputHoldTime;
         _dashController.Dash   &= Time.time < _dashInputStartTime + _dashInputPressTime;
     }
-
+    
     private void OnEnable()
     {
         if (_gameInput == null)
         {
             _gameInput = GameInputSingeltone.GameInput;
-            _gameInput.Gameplay.SetCallbacks(this);
         }
+
+        _gameInput.Gameplay.SetCallbacks(this);
     }
 
 

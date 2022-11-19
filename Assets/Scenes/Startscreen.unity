@@ -2180,12 +2180,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6542917769737345639, guid: 4b6ccb5cd6a75904591efcaf22d42fe2, type: 3}
       propertyPath: m_YDamping
-      value: 1
+      value: 1.7
       objectReference: {fileID: 0}
     - target: {fileID: 6542917770757015038, guid: 4b6ccb5cd6a75904591efcaf22d42fe2, type: 3}
       propertyPath: m_CustomBlends
       value: 
-      objectReference: {fileID: 11400000, guid: 1e7f3d5afc08444469c3abe551b29855, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 6542917770757015039, guid: 4b6ccb5cd6a75904591efcaf22d42fe2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 107.8

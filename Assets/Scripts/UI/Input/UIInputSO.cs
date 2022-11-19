@@ -26,14 +26,9 @@ public class UIInputSO : ScriptableObject, GameInput.IUIActions
         if (_gameInput == null)
         {
             _gameInput = GameInputSingeltone.GameInput;
-            _gameInput.UI.SetCallbacks(this);
         }
-        EnableUiInput();
-    }
 
-    private void OnDisable()
-    {
-        DisableUiInput();
+        _gameInput.UI.SetCallbacks(this);
     }
 
     public void OnContinueButtonPressed()
@@ -61,11 +56,6 @@ public class UIInputSO : ScriptableObject, GameInput.IUIActions
         escPressed = true;
     }
 
-    // public void OnResumeButton()
-    // {
-    //     gameOnPause = false;
-    // }
-
     public void OnEnter(InputAction.CallbackContext context)
     {
         if (context.started)
@@ -87,15 +77,5 @@ public class UIInputSO : ScriptableObject, GameInput.IUIActions
         {
             escPressed = false;
         }
-    }
-    
-    public void EnableUiInput()
-    {
-        _gameInput.UI.Enable();
-    }
-    
-    public void DisableUiInput()
-    {
-        _gameInput.UI.Disable();        
     }
 }
