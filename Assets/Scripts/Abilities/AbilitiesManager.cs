@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 
-using UnityEngine;
-
 public class AbilitiesManager : Component
 {
     private readonly List<Ability> _abilities = new();

@@ -1,4 +1,5 @@
 using FSM;
+
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "FSM/Actions/Menu Action")]

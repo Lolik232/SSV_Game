@@ -5,13 +5,14 @@ public class PlayerTouchingWallState : PlayerState
     private Vector2 _holdPosition;
     private int _wallDirection;
 
-    private void Start()
+    protected override void Start()
     {
-        bool GroundedCondition() => Player.Grounded && (Player.Input.Move.y == -1 || !Player.Input.Grab || Player.Input.Attack);
+        base.Start();
+        bool GroundedCondition() => Player.Grounded && (Player.Behaviour.Move.y == -1 || !Player.Behaviour.Grab || Player.Behaviour.Attack);
 
-        bool InAirCondition() => !Player.TouchingWall || (!Player.Input.Grab && Player.Input.Move.x != Player.FacingDirection) || Player.Input.Jump || Player.Input.Dash;
+        bool InAirCondition() => !Player.TouchingWall || (!Player.Behaviour.Grab && Player.Behaviour.Move.x != Player.FacingDirection) || Player.Behaviour.Dash;
 
-        bool OnLedgeCondition() => Player.TouchingWall && !Player.TouchingLegde;
+        bool OnLedgeCondition() => Player.TouchingWall && !Player.TouchingLedge;
 
         void OnLedgeAction()
         {

@@ -50,3 +50,6 @@ TagManager:
   - name: Effects
     uniqueID: 1579864801
     locked: 0
+  - name: Skeleton
+    uniqueID: 47369503
+    locked: 0

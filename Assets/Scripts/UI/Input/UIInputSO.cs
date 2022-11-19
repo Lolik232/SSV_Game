@@ -1,5 +1,5 @@
 using System;
-using All.Events;
+
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -22,7 +22,8 @@ public class UIInputSO : ScriptableObject
         if (context.started)
         {
             enterPressed = true;
-        } else if (context.canceled)
+        }
+        else if (context.canceled)
         {
             enterPressed = false;
         }
@@ -32,7 +33,7 @@ public class UIInputSO : ScriptableObject
     {
         ContinueGame?.Invoke();
     }
-    
+
     public void OnNewButtonPressed()
     {
         StartNewGame?.Invoke();
@@ -43,7 +44,8 @@ public class UIInputSO : ScriptableObject
         if (context.performed)
         {
             escPressed = true;
-        } else if (context.canceled)
+        }
+        else if (context.canceled)
         {
             escPressed = false;
         }

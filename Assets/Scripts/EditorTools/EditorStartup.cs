@@ -1,6 +1,7 @@
-﻿using System;
-using All.Events;
+﻿using All.Events;
+
 using Systems.SaveSystem;
+
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -58,7 +59,8 @@ namespace EditorTools
             if (_thisScene != null)
             {
                 obj.Result.RaiseEvent(_thisScene);
-            } else
+            }
+            else
             {
                 _onReadySceneChannel.RaiseEvent();
             }

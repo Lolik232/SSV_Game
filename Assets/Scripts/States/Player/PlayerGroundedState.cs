@@ -4,18 +4,19 @@ public sealed class PlayerGroundedState : PlayerState
 {
     [SerializeField] private float _waitForLedgeClimbTime;
 
-    private void Start()
+    protected override void Start()
     {
-        bool InAirCondition() => !Player.Grounded;
+        base.Start();
+        bool InAirCondition() => !Player.Grounded || Player.Behaviour.Dash;
 
         bool TouchingWallCondition() => Player.TouchingWall &&
-                                        Player.TouchingLegde &&
+                                        Player.TouchingLedge &&
                                         Player.IsStanding &&
-                                        Player.Input.Grab &&
-                                        Player.Input.Move.y != -1 &&
+                                        Player.Behaviour.Grab &&
+                                        Player.Behaviour.Move.y != -1 &&
                                         !Player.AttackAbility.IsActive;
 
-        bool OnLedgeCondition() => Player.TouchingWall && !Player.TouchingLegde && Player.Input.Grab;
+        bool OnLedgeCondition() => Player.TouchingWall && !Player.TouchingLedge && Player.Behaviour.Grab;
 
         void OnLedgeAction()
         {

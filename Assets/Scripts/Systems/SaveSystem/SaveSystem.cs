@@ -1,6 +1,7 @@
-﻿using System;
-using All.Events;
+﻿using All.Events;
+
 using Systems.SaveSystem.Settings.ScriptableObjects;
+
 using UnityEngine;
 
 namespace Systems.SaveSystem
@@ -67,7 +68,8 @@ namespace Systems.SaveSystem
         {
             string settingsJson;
             var    loaded = FileManager.LoadFromFile(_settingsFilename, out settingsJson);
-            if (loaded == false) return false;
+            if (loaded == false)
+                return false;
             _currentSettings.FromJson(settingsJson);
             return true;
         }

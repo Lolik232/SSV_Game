@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+
+using UnityEngine;
 
 public interface IPhysical
 {
@@ -32,5 +34,10 @@ public interface IPhysical
         get;
     }
 
-    public void Push(float force, Vector2 angle);
+    public bool IsPushed
+    {
+        get;
+    }
+
+    public IEnumerator Push(float force, Vector2 angle);
 }

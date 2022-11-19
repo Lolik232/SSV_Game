@@ -23,13 +23,13 @@ public sealed class PlayerInAirState : PlayerState
         bool GroundedCondition() => Player.Grounded && Player.Velocity.y < 0.01f;
 
         bool TouchingWallCondition() => Player.TouchingWall &&
-                                        Player.TouchingLegde &&
-                                        (Player.Input.Grab || Player.Input.Move.x == Player.FacingDirection &&
+                                        Player.TouchingLedge &&
+                                        (Player.Behaviour.Grab || Player.Behaviour.Move.x == Player.FacingDirection &&
                                         Player.Velocity.y < 0.01f);
 
         bool OnLedgeCondition() => Player.TouchingWall &&
-                                   !Player.TouchingLegde &&
-                                   Player.Input.Grab;
+                                   !Player.TouchingLedge &&
+                                   Player.Behaviour.Grab;
 
         void OnLedgeAction()
         {

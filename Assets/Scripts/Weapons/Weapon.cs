@@ -33,12 +33,18 @@ public abstract class Weapon : ComponentBase
     {
         get => _name;
     }
+    protected dynamic Entity
+    {
+        get;
+        private set;
+    }
 
     protected virtual void Awake()
     {
         Anim = GetComponent<Animator>();
         Inventory = GetComponentInParent<Inventory>();
-        OriginAnim = Inventory.GetComponentInParent<Animator>();
+        Entity = Inventory.GetComponentInParent<Entity>();
+        OriginAnim = Entity.GetComponent<Animator>();
     }
 
     protected abstract void Start();
@@ -54,7 +60,7 @@ public abstract class Weapon : ComponentBase
                 if (entity is IPhysical)
                 {
                     var physical = entity as IPhysical;
-                    physical.Push(force, physical.Center - this.attackPoint);
+                    StartCoroutine(physical.Push(force, physical.Center - this.attackPoint));
                 }
 
                 if (entity is IDamageable)

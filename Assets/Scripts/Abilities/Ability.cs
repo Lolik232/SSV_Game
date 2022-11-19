@@ -18,6 +18,12 @@ public abstract class Ability : ComponentBase
 
     private dynamic _requested;
 
+    public dynamic Entity
+    {
+        get;
+        private set;
+    }
+
     public dynamic Current
     {
         get;
@@ -54,7 +60,7 @@ public abstract class Ability : ComponentBase
 
     protected virtual void Awake()
     {
-
+        Entity = GetComponent<Entity>();
     }
 
     protected virtual void Start()

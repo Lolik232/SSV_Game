@@ -1,10 +1,7 @@
-using System.Collections.Generic;
 using Systems.SaveSystem;
-using Systems.SaveSystem.Settings.ScriptableObjects;
+
 using UnityEngine;
-using UnityEngine.InputSystem.Controls;
 using UnityEngine.Serialization;
-using UnityEngine.UI;
 
 namespace FSM
 {

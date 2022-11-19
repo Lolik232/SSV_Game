@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
+
 using UnityEngine;
+
 using Application = UnityEngine.Application;
 
 namespace Systems.SaveSystem
@@ -15,13 +17,14 @@ namespace Systems.SaveSystem
             {
                 File.WriteAllText(fullPath, json);
                 return true;
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 Debug.LogError($"Filed to write file on disk. Path: {fullPath} exception {e}");
                 return false;
             }
         }
-        
+
         public static bool LoadFromFile(string path, out string json)
         {
             var fullPath = Path.Combine(Application.persistentDataPath, path);
@@ -35,7 +38,8 @@ namespace Systems.SaveSystem
             {
                 json = File.ReadAllText(fullPath);
                 return true;
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 Debug.LogError($"Failed read file from disk. Path: {fullPath} exception {e}");
                 json = "";
@@ -68,7 +72,8 @@ namespace Systems.SaveSystem
             {
                 File.Delete(fullPath);
                 return true;
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 Debug.LogError($"Failed remove file from disk. Path: {fullPath} exception {e}");
                 return false;

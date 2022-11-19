@@ -21,6 +21,11 @@ public abstract class StateBase : ComponentBase
         Anim = GetComponent<Animator>();
     }
 
+    protected virtual void Start()
+    {
+
+    }
+
     public override void OnEnter()
     {
         if (IsActive)

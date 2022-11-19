@@ -1,7 +1,7 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
+
 using All.Events;
+
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -26,15 +26,15 @@ public class AudioManager : MonoBehaviour
 
     private void OnEnable()
     {
-        _masterVolumeEventChannelSO.OnEventRaised  += ChangeMaster;
-        _musicVolumeEventChannelSO.OnEventRaised   += ChangeMusic;
+        _masterVolumeEventChannelSO.OnEventRaised += ChangeMaster;
+        _musicVolumeEventChannelSO.OnEventRaised += ChangeMusic;
         _effectsVolumeEventChannelSO.OnEventRaised += ChangeFX;
     }
 
     private void OnDisable()
     {
-        _masterVolumeEventChannelSO.OnEventRaised  -= ChangeMaster;
-        _musicVolumeEventChannelSO.OnEventRaised   -= ChangeMusic;
+        _masterVolumeEventChannelSO.OnEventRaised -= ChangeMaster;
+        _musicVolumeEventChannelSO.OnEventRaised -= ChangeMusic;
         _effectsVolumeEventChannelSO.OnEventRaised -= ChangeFX;
     }
 

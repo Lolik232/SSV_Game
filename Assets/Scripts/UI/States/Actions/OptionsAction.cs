@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using FSM;
+
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "FSM/Actions/Options Action")]
@@ -19,7 +18,7 @@ public class OptionsAction : FSMAction
     public override void OnExit(BaseStateMachine stateMachine)
     {
         stateMachine.UIInputSO.optionsPressed = false;
-        stateMachine.UIInputSO.escPressed     = false;
+        stateMachine.UIInputSO.escPressed = false;
 
         stateMachine.optionsGroup.interactable = false;
 

@@ -18,6 +18,11 @@ public abstract class State : StateBase
         get;
         protected set;
     } = new();
+    protected dynamic Entity
+    {
+        get;
+        private set;
+    }
 
     protected override void Awake()
     {

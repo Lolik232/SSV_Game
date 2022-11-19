@@ -1,5 +1,7 @@
 ﻿using All.Events;
+
 using Systems.SaveSystem;
+
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -22,7 +24,7 @@ namespace SceneManagement
             {
                 _saveSystem.SetupSave(_locationToLoad);
                 _saveSystem.SaveGameOnDisk();
-                
+
                 _loadLocationChannel.RaiseEvent(_locationToLoad, false, true);
             }
         }
@@ -33,7 +35,7 @@ namespace SceneManagement
             {
                 _saveSystem.SetupSave(_locationToLoad);
                 _saveSystem.SaveGameOnDisk();
-                
+
                 _loadLocationChannel.RaiseEvent(_locationToLoad, false, true);
             }
         }

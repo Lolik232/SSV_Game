@@ -1,7 +1,8 @@
 ﻿using System.Collections;
+
 using All.Events;
+
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
@@ -71,7 +72,7 @@ namespace SceneManagement
         private void OnEnable()
         {
             _loadLocationChan.OnEventRaised += LoadLocation;
-            _loadMenuChan.OnEventRaised     += LoadMenu;
+            _loadMenuChan.OnEventRaised += LoadMenu;
 #if UNITY_EDITOR
             _loadFromEditorChan.OnEventRaised += OnEditorLoad;
 #endif
@@ -80,7 +81,7 @@ namespace SceneManagement
         private void OnDisable()
         {
             _loadLocationChan.OnEventRaised -= LoadLocation;
-            _loadMenuChan.OnEventRaised     -= LoadMenu;
+            _loadMenuChan.OnEventRaised -= LoadMenu;
 #if UNITY_EDITOR
             _loadFromEditorChan.OnEventRaised -= OnEditorLoad;
 #endif
@@ -93,9 +94,9 @@ namespace SceneManagement
                 return;
             } // if scene just loading
 
-            _sceneToLoad       = scene;
+            _sceneToLoad = scene;
             _showLoadingScreen = showLoadingScreen;
-            _isLoading         = true;
+            _isLoading = true;
 
 
             // if (_gameplayManagerSceneInstance.Scene == null ||
@@ -108,17 +109,18 @@ namespace SceneManagement
             // {
             //     StartCoroutine(UnloadPreviousScene());
             // }
-            
+
             StartCoroutine(UnloadPreviousScene());
         }
-        
+
         private void LoadMenu(GameSceneSO menuToLoad, bool showLoadingScreen, bool fadeScreen)
         {
-            if (_isLoading) return;
+            if (_isLoading)
+                return;
             _sceneToLoad = menuToLoad;
 
             _showLoadingScreen = showLoadingScreen;
-            _isLoading         = true;
+            _isLoading = true;
 
             // if (_gameplayManagerSceneInstance.Scene != null &&
             //     _gameplayManagerSceneInstance.Scene.isLoaded)

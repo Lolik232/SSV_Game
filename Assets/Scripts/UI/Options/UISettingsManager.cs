@@ -1,6 +1,7 @@
-using System;
 using All.Events;
+
 using Systems.SaveSystem.Settings.ScriptableObjects;
+
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,7 +17,7 @@ public class UISettingsManager : MonoBehaviour
     [SerializeField] private Slider _masterVolumeSlider;
     [SerializeField] private Slider _musicVolumeSlider;
     [SerializeField] private Slider _effectsVolumeSlider;
-    
+
     private float _masterVolume;
     private float _musicVolume;
     private float _effectsVolume;
@@ -52,13 +53,13 @@ public class UISettingsManager : MonoBehaviour
 
     public void SaveSettings()
     {
-        _settings.masterVolume  = _masterVolume;
-        _settings.musicVolume   = _musicVolume;
+        _settings.masterVolume = _masterVolume;
+        _settings.musicVolume = _musicVolume;
         _settings.effectsVolume = _effectsVolume;
 
         _saveSettingsEventChannelSO.RaiseEvent();
     }
-    
+
     public void Reset()
     {
         Setup();
