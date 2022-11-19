@@ -3457,6 +3457,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _onSceneReadyChannel: {fileID: 11400000, guid: c78296a871062f34e9879fa67fe14abd, type: 2}
   _inGameMenu: {fileID: 726152823994240512}
+  _optionsPanel: {fileID: 1685269013}
   _mainMenu: {fileID: 11400000, guid: 9f59aba7e2c52ba4d9f7dbe02ad9d0d8, type: 2}
   _menuLoadEventChannel: {fileID: 11400000, guid: c28d78fe2c4ca274cab79481ea39ade4, type: 2}
   _UIInputReader: {fileID: 11400000, guid: 2fbaa6bf9df41e847931f044603cca79, type: 2}
@@ -3632,6 +3633,7 @@ MonoBehaviour:
   _resumeButton: {fileID: 5160077144821262142}
   _backToMainMenuButton: {fileID: 5160077144628628462}
   _quitGameButton: {fileID: 5160077144872510191}
+  _input: {fileID: 0}
 --- !u!1 &5160077143963496292
 GameObject:
   m_ObjectHideFlags: 0
@@ -4586,3 +4588,4 @@ MonoBehaviour:
   _resumeButton: {fileID: 5160077144821262142}
   _backToMainMenuButton: {fileID: 5160077143537521081}
   _quitGameButton: {fileID: 5160077144628628462}
+  _input: {fileID: 0}

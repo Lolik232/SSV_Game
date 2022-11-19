@@ -293,6 +293,14 @@ MonoBehaviour:
     m_Address: Assets/ScriptableObjects/UI/Menu/Options To Pause Decision.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: a58c2637d2d5d7d4b9060c281ba74957
+    m_Address: Assets/Prefabs/Gameplay/InGameMenu.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 93aa4169bca15c34c8cd72885bfb246d
+    m_Address: Assets/Prefabs/Gameplay/EventSystem.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: d160d21b4ee59804cabc734a782d9dd7, type: 2}
   m_SchemaSet:

@@ -211,6 +211,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1637515242, guid: a58c2637d2d5d7d4b9060c281ba74957, type: 3}
+      propertyPath: _optionsPanel
+      value: 
+      objectReference: {fileID: 1637515238}
     - target: {fileID: 1645270553, guid: a58c2637d2d5d7d4b9060c281ba74957, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
