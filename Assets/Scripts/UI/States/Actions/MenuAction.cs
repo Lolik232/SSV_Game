@@ -1,6 +1,7 @@
 using FSM;
 
 using UnityEngine;
+using UnityEngine.UI;
 
 [CreateAssetMenu(menuName = "FSM/Actions/Menu Action")]
 public class MenuAction : FSMAction
@@ -12,7 +13,17 @@ public class MenuAction : FSMAction
 
         stateMachine.menuGroup.interactable = true;
 
-        stateMachine.continueButton.SetActive(stateMachine._saveSystem.HasSave());
+        if (stateMachine._saveSystem.HasSave())
+        {
+            stateMachine.continueButton.SetActive(true);
+            var button = stateMachine.continueButton.GetComponentInChildren<Button>();
+            button.Select();
+        }
+        else
+        {
+            stateMachine.continueButton.SetActive(false);
+            stateMachine.newGameButton.Select();
+        }
     }
 
     public override void OnExit(BaseStateMachine stateMachine)

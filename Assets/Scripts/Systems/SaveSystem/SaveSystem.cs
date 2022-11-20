@@ -1,7 +1,7 @@
-﻿using All.Events;
-
+﻿using System;
+using All.Events;
+using Systems.SaveSystem.Settings;
 using Systems.SaveSystem.Settings.ScriptableObjects;
-
 using UnityEngine;
 
 namespace Systems.SaveSystem
@@ -18,18 +18,8 @@ namespace Systems.SaveSystem
 
         public string SaveFileName => _saveFileName;
 
-        public Save save = new Save();
-
-        private void OnEnable()
-        {
-            // _saveSettingsEvent.OnEventRaised += SaveSettingsOnDisk;
-            // _saveGameEvent.OnEventRaised += OnSaveGame;
-        }
-
-        private void OnDisable()
-        {
-            // _saveGameEvent.OnEventRaised -= OnSaveGame;
-        }
+        public Save         save          = new Save();
+        public SettingsSave SavedSettings = new SettingsSave();
 
         private void OnSaveGame(GameSceneSO loadedLocation, bool showLoadingScreen, bool fadeScreen)
         {
@@ -63,14 +53,13 @@ namespace Systems.SaveSystem
             FileManager.RemoveFile(_saveFileName);
         }
 
-
         public bool LoadSettingsFromDisk()
         {
             string settingsJson;
             var    loaded = FileManager.LoadFromFile(_settingsFilename, out settingsJson);
-            if (loaded == false)
-                return false;
-            _currentSettings.FromJson(settingsJson);
+            if (!loaded) return false;
+
+            SavedSettings.FromJson(settingsJson);
             return true;
         }
 
@@ -82,14 +71,13 @@ namespace Systems.SaveSystem
 
             return true;
         }
-
-
+        
         public void SaveSettingsOnDisk()
         {
-            var settingsJson = _currentSettings.ToJson();
+            SavedSettings.SaveSettings(_currentSettings);
+            var settingsJson = SavedSettings.ToJson();
             FileManager.WriteToFile(_settingsFilename, "", settingsJson);
         }
-
         public void ClearSettings()
         {
             FileManager.RemoveFile(_settingsFilename);

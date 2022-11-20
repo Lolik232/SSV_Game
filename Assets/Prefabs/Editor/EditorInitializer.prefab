@@ -46,10 +46,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _thisScene: {fileID: 0}
   _managers: {fileID: 11400000, guid: b57bfe0ad6d6a114f8b4159beffd7015, type: 2}
-  _notifyEditorStartupChannel:
-    m_AssetGUID: 08db377ca0e9af343b85c9e43d0cd15e
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0
+  _notifyEditorStartupChannel: {fileID: 11400000, guid: 08db377ca0e9af343b85c9e43d0cd15e, type: 2}
   _onReadySceneChannel: {fileID: 11400000, guid: c78296a871062f34e9879fa67fe14abd, type: 2}
   _saveSystem: {fileID: 11400000, guid: ca5a00e8b8acb964cb88e77d41600973, type: 2}

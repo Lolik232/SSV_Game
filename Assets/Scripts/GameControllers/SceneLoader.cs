@@ -1,8 +1,8 @@
 ﻿using System.Collections;
-
 using All.Events;
-
+using Input;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
@@ -52,13 +52,16 @@ namespace SceneManagement
             _currentlyLoadedScene = scene;
             if (_currentlyLoadedScene.sceneType == GameSceneSO.GameSceneType.Location)
             {
-                //Gameplay managers is loaded synchronously
-                // _gameplayManagerLoadingOpHandle =
-                //     _gameplayManagersScene.sceneReference.LoadSceneAsync(LoadSceneMode.Additive, true);
-                // _gameplayManagerLoadingOpHandle.WaitForCompletion();
-                // _gameplayManagerSceneInstance = _gameplayManagerLoadingOpHandle.Result;
+                // Gameplay managers is loaded synchronously
+                _gameplayManagerLoadingOpHandle =
+                    _gameplayManagersScene.sceneReference.LoadSceneAsync(LoadSceneMode.Additive, true);
+                _gameplayManagerLoadingOpHandle.WaitForCompletion();
+                _gameplayManagerSceneInstance = _gameplayManagerLoadingOpHandle.Result;
+                
                 StartGameplay();
             }
+
+          
 
             _fadeRequestChan.FadeIn(_fadeDuration);
         }
@@ -72,7 +75,7 @@ namespace SceneManagement
         private void OnEnable()
         {
             _loadLocationChan.OnEventRaised += LoadLocation;
-            _loadMenuChan.OnEventRaised += LoadMenu;
+            _loadMenuChan.OnEventRaised     += LoadMenu;
 #if UNITY_EDITOR
             _loadFromEditorChan.OnEventRaised += OnEditorLoad;
 #endif
@@ -81,7 +84,7 @@ namespace SceneManagement
         private void OnDisable()
         {
             _loadLocationChan.OnEventRaised -= LoadLocation;
-            _loadMenuChan.OnEventRaised -= LoadMenu;
+            _loadMenuChan.OnEventRaised     -= LoadMenu;
 #if UNITY_EDITOR
             _loadFromEditorChan.OnEventRaised -= OnEditorLoad;
 #endif
@@ -94,39 +97,35 @@ namespace SceneManagement
                 return;
             } // if scene just loading
 
-            _sceneToLoad = scene;
+            _sceneToLoad       = scene;
             _showLoadingScreen = showLoadingScreen;
-            _isLoading = true;
+            _isLoading         = true;
 
+            GameInputSingeltone.GameInput.DisableAllInputs();
 
-            // if (_gameplayManagerSceneInstance.Scene == null ||
-            //     _gameplayManagerSceneInstance.Scene.isLoaded == false)
-            // {
-            //     // _gameplayManagerLoadingOpHandle =
-            //     //     _gameplayManagersScene.sceneReference.LoadSceneAsync(LoadSceneMode.Additive, true);
-            //     // _gameplayManagerLoadingOpHandle.Completed += OnGameplayManagersLoaded;
-            // } else
-            // {
-            //     StartCoroutine(UnloadPreviousScene());
-            // }
-
-            StartCoroutine(UnloadPreviousScene());
+            if (_gameplayManagerSceneInstance.Scene == null ||
+                _gameplayManagerSceneInstance.Scene.isLoaded == false)
+            {
+                _gameplayManagerLoadingOpHandle =
+                    _gameplayManagersScene.sceneReference.LoadSceneAsync(LoadSceneMode.Additive, true);
+                _gameplayManagerLoadingOpHandle.Completed += OnGameplayManagersLoaded;
+            } else
+            {
+                StartCoroutine(UnloadPreviousScene());
+            }
         }
 
         private void LoadMenu(GameSceneSO menuToLoad, bool showLoadingScreen, bool fadeScreen)
         {
-            if (_isLoading)
-                return;
+            if (_isLoading) return;
+
+            GameInputSingeltone.GameInput.DisableAllInputs();
+
             _sceneToLoad = menuToLoad;
 
             _showLoadingScreen = showLoadingScreen;
-            _isLoading = true;
+            _isLoading         = true;
 
-            // if (_gameplayManagerSceneInstance.Scene != null &&
-            //     _gameplayManagerSceneInstance.Scene.isLoaded)
-            // {
-            //     Addressables.UnloadSceneAsync(_gameplayManagerLoadingOpHandle, true);
-            // }
 
             StartCoroutine(UnloadPreviousScene());
         }
@@ -138,12 +137,27 @@ namespace SceneManagement
             StartCoroutine(UnloadPreviousScene());
         }
 
+        private IEnumerator UnloadManagers()
+        {
+            if (_gameplayManagerSceneInstance.Scene != null &&
+                _gameplayManagerSceneInstance.Scene.isLoaded)
+            {
+                Addressables.UnloadSceneAsync(_gameplayManagerLoadingOpHandle, true);
+            }
+
+            yield return null;
+        }
+
         private IEnumerator UnloadPreviousScene()
         {
-            // TODO: disable all inputs
             _fadeRequestChan.FadeOut(_fadeDuration);
 
-            yield return new WaitForSeconds(_fadeDuration);
+            yield return new WaitForSecondsRealtime(_fadeDuration);
+
+            if (_sceneToLoad.sceneType == GameSceneSO.GameSceneType.Menu)
+            {
+                StartCoroutine(UnloadManagers());
+            }
 
             if (_currentlyLoadedScene != null)
             {
@@ -171,8 +185,6 @@ namespace SceneManagement
             }
 
             _loadingOperationHandle = _sceneToLoad.sceneReference.LoadSceneAsync(LoadSceneMode.Additive, true, 0);
-            // m_loadingOperationHandle.
-            // m_loadingOperationHandle.PercentComplete
             _loadingOperationHandle.Completed += OnNewSceneLoaded;
         }
 
@@ -198,11 +210,6 @@ namespace SceneManagement
         private void StartGameplay()
         {
             _onSceneReadyChan.RaiseEvent();
-        }
-
-        private void ExitGame()
-        {
-            Application.Quit();
         }
     }
 }

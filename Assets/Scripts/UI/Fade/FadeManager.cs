@@ -16,7 +16,7 @@ public class FadeManager : MonoBehaviour
     private void StartFade(bool fadeIn, float duration, Color desiredColor)
     {
         // _fadeComponent.color = desiredColor;
-        _fadeComponent.CrossFadeAlpha(fadeIn ? 0 : 1, duration, false);
+        _fadeComponent.CrossFadeAlpha(fadeIn ? 0 : 1, duration, true);
     }
 
     private void OnDisable()

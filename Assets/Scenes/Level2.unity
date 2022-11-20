@@ -197,7 +197,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1853734567544006984, guid: 23f046d5517e2e441853f8e73eb59a36, type: 3}
       propertyPath: m_Lens.m_SensorSize.x
-      value: 1.7782705
+      value: 1.7777777
       objectReference: {fileID: 0}
     - target: {fileID: 1853734568127182860, guid: 23f046d5517e2e441853f8e73eb59a36, type: 3}
       propertyPath: m_isTargeting
@@ -74099,7 +74099,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1853734567544006984, guid: 23f046d5517e2e441853f8e73eb59a36, type: 3}
       propertyPath: m_Lens.m_SensorSize.x
-      value: 1.7782705
+      value: 1.7777777
       objectReference: {fileID: 0}
     - target: {fileID: 1853734568127182860, guid: 23f046d5517e2e441853f8e73eb59a36, type: 3}
       propertyPath: m_isTargeting
@@ -74283,9 +74283,33 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cameras
       objectReference: {fileID: 0}
+    - target: {fileID: 6542917769737345639, guid: 4b6ccb5cd6a75904591efcaf22d42fe2, type: 3}
+      propertyPath: m_YDamping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6542917769921796195, guid: 4b6ccb5cd6a75904591efcaf22d42fe2, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 107.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6542917769921796195, guid: 4b6ccb5cd6a75904591efcaf22d42fe2, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -15.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6542917770757014784, guid: 4b6ccb5cd6a75904591efcaf22d42fe2, type: 3}
+      propertyPath: orthographic size
+      value: 8.43
+      objectReference: {fileID: 0}
+    - target: {fileID: 6542917770757015038, guid: 4b6ccb5cd6a75904591efcaf22d42fe2, type: 3}
+      propertyPath: m_CustomBlends
+      value: 
+      objectReference: {fileID: 11400000, guid: 1e7f3d5afc08444469c3abe551b29855, type: 2}
     - target: {fileID: 6542917770757015039, guid: 4b6ccb5cd6a75904591efcaf22d42fe2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 169.39
+      objectReference: {fileID: 0}
+    - target: {fileID: 6542917770757015039, guid: 4b6ccb5cd6a75904591efcaf22d42fe2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -12.9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4b6ccb5cd6a75904591efcaf22d42fe2, type: 3}

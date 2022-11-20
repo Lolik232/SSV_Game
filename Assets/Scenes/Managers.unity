@@ -246,9 +246,67 @@ MonoBehaviour:
   _saveSettingsEventChannelSO: {fileID: 11400000, guid: 03e464b9efe0c4c49bddff3551926ffc, type: 2}
   _saveSystem: {fileID: 11400000, guid: ca5a00e8b8acb964cb88e77d41600973, type: 2}
   _currentSettings: {fileID: 11400000, guid: f6eb78f1a31f6c3488200d318a9a6368, type: 2}
+  _defaultSettings: {fileID: 11400000, guid: 45ed7c9c5922dcc45b021434e3abae82, type: 2}
   _masterVolumeEventChannelSO: {fileID: 11400000, guid: af8126120ede5f4458e3a5bba36097e2, type: 2}
   _musicVolumeEventChannelSO: {fileID: 11400000, guid: d6a5e143f66fd234bb43ef874c3b1693, type: 2}
   _effectsVolumeEventChannelSO: {fileID: 11400000, guid: 6101fdfd88686e242a278adcca199cf5, type: 2}
+--- !u!1001 &533986172
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5404461354623439296, guid: 93aa4169bca15c34c8cd72885bfb246d, type: 3}
+      propertyPath: m_Name
+      value: EventSystem
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404461354623439327, guid: 93aa4169bca15c34c8cd72885bfb246d, type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404461354623439327, guid: 93aa4169bca15c34c8cd72885bfb246d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404461354623439327, guid: 93aa4169bca15c34c8cd72885bfb246d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404461354623439327, guid: 93aa4169bca15c34c8cd72885bfb246d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404461354623439327, guid: 93aa4169bca15c34c8cd72885bfb246d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404461354623439327, guid: 93aa4169bca15c34c8cd72885bfb246d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404461354623439327, guid: 93aa4169bca15c34c8cd72885bfb246d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404461354623439327, guid: 93aa4169bca15c34c8cd72885bfb246d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404461354623439327, guid: 93aa4169bca15c34c8cd72885bfb246d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404461354623439327, guid: 93aa4169bca15c34c8cd72885bfb246d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404461354623439327, guid: 93aa4169bca15c34c8cd72885bfb246d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 93aa4169bca15c34c8cd72885bfb246d, type: 3}
 --- !u!1 &1385725457
 GameObject:
   m_ObjectHideFlags: 0
@@ -363,7 +421,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!224 &1426321385
 RectTransform:
@@ -461,7 +519,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa559d2d02dd4b679ef9c9367a94393b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameplayManagersScene: {fileID: 0}
+  _gameplayManagersScene: {fileID: 11400000, guid: 93b6005c6d8c4fc498b549ab767686cd, type: 2}
   _loadLocationChan: {fileID: 11400000, guid: efcd5361b4da801408cb91de1a0effaa, type: 2}
   _loadMenuChan: {fileID: 11400000, guid: c28d78fe2c4ca274cab79481ea39ade4, type: 2}
   _loadFromEditorChan: {fileID: 11400000, guid: 08db377ca0e9af343b85c9e43d0cd15e, type: 2}

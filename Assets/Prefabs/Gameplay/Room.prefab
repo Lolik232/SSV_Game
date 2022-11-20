@@ -63,10 +63,10 @@ MonoBehaviour:
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
-    ModeOverride: 0
+    ModeOverride: 1
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.8639706, y: 1}
+    m_SensorSize: {x: 1.5, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -235,5 +235,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37f454fb0418ba24590b6c48a33c1ee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_isTargeting: 0
-  m_targetPosition: {x: 0, y: 0, z: 0}
+  _isTargeting: 0
+  _targetPosition: {x: 0, y: 0, z: 0}

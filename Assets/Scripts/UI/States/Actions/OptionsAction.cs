@@ -13,6 +13,7 @@ public class OptionsAction : FSMAction
         stateMachine.optionsAnim.SetBool("isButtonPressed", true);
 
         stateMachine.optionsGroup.interactable = true;
+        stateMachine.gameVolumeSlider.Select();
     }
 
     public override void OnExit(BaseStateMachine stateMachine)

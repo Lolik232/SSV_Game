@@ -19,3 +19,7 @@ MonoBehaviour:
   _settingsFilename: settings.save
   save:
     locationID: 
+  SavedSettings:
+    masterVolume: 1
+    musicVolume: 1
+    effectsVolume: 1
