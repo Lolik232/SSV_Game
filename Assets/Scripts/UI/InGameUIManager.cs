@@ -22,6 +22,7 @@ public class InGameUIManager : MonoBehaviour
 
     private void OnEnable()
     {
+        ResetUi();
         _onSceneReadyChannel.OnEventRaised += ResetUi;
         _pauseEventChannel.OnEventRaised   += OnPause;
     }
@@ -53,7 +54,6 @@ public class InGameUIManager : MonoBehaviour
 
     private void OnUnpause()
     {
-        
         _UIInputReader.gameOnPause = false;
         
         _inGameMenu.ResumeClicked         -= OnUnpause;
@@ -77,10 +77,10 @@ public class InGameUIManager : MonoBehaviour
     {
         _menuLoadEventChannel.RaiseEvent(_mainMenu, false, true);
     }
-
-
+    
     private void ResetUi()
     {
+        _UIInputReader.gameOnPause = false;
         _inGameMenu.gameObject.SetActive(false);
         _optionsPanel.SetActive(false);
 

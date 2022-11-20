@@ -72,7 +72,6 @@ public class UIInputSO : ScriptableObject, GameInput.IUIActions
         if (context.performed)
         {
             escPressed  = true;
-            gameOnPause = !gameOnPause;
         } else if (context.canceled)
         {
             escPressed = false;

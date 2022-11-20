@@ -96,13 +96,13 @@ namespace SceneManagement
             {
                 return;
             } // if scene just loading
+            
+            GameInputSingeltone.GameInput.DisableAllInputs();
 
             _sceneToLoad       = scene;
             _showLoadingScreen = showLoadingScreen;
             _isLoading         = true;
-
-            GameInputSingeltone.GameInput.DisableAllInputs();
-
+            
             if (_gameplayManagerSceneInstance.Scene == null ||
                 _gameplayManagerSceneInstance.Scene.isLoaded == false)
             {
@@ -202,7 +202,7 @@ namespace SceneManagement
                 _toggleLoadingScreenChan.RaiseEvent(false);
             }
 
-            _fadeRequestChan.FadeIn(_fadeDuration);
+            _fadeRequestChan.FadeIn(_fadeDuration * 2);
 
             StartGameplay();
         }

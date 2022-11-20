@@ -6,6 +6,6 @@ public class PauseToGameDecision : Decision
 {
     public override bool Decide(BaseStateMachine stateMachine)
     {
-        return !stateMachine.UIInputSO.gameOnPause;
+        return stateMachine.UIInputSO.escPressed || stateMachine.UIInputSO.gameOnPause == false;
     }
 }
