@@ -19,6 +19,9 @@
     {
         base.ApplyUpdateActions();
         Entity.SetVelocityX(MoveSpeed);
-        Entity.RotateIntoDirection(Entity.Behaviour.Move.x);
+        if (!Entity.IsRotationLocked)
+        {
+            Entity.RotateIntoDirection(Entity.Behaviour.Move.x);
+        }
     }
 }

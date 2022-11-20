@@ -6,6 +6,7 @@ public class EdgeChecker : Component, ITouchingEdge, IChecker
 {
     [SerializeField] private LayerMask _whatIsTarget;
     [SerializeField] private float _edgeCheckDistance;
+    [SerializeField] private float _xOffset;
     [SerializeField] private PickableColor _color;
 
     private CheckArea _edgeCheckRay;
@@ -35,7 +36,7 @@ public class EdgeChecker : Component, ITouchingEdge, IChecker
         Vector2 checkerOffset = _physical.Size / 2 - Vector2.one * IChecker.CHECK_OFFSET;
         float rightCheckerPositionX = _physical.Center.x + _rotateable.FacingDirection * checkerOffset.x;
 
-        Vector2 workspace = new(rightCheckerPositionX + _rotateable.FacingDirection * IChecker.UNIT_SIZE / 2, _physical.Position.y + IChecker.CHECK_OFFSET);
+        Vector2 workspace = new(rightCheckerPositionX + _rotateable.FacingDirection * _xOffset, _physical.Position.y + IChecker.CHECK_OFFSET);
         _edgeCheckRay = new CheckArea(workspace.x,
                                     workspace.y,
                                     workspace.x,
