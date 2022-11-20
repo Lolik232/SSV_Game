@@ -980,7 +980,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: dash
-  _clip: {fileID: 0}
+  _clip: {fileID: 8300000, guid: 0417b5f06be4dd44c82f633f130c3114, type: 3}
   _duration: 0.3
   _dashForse: 35
 --- !u!114 &4675764141932494462
