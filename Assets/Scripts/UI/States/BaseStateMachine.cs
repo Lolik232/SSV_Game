@@ -1,3 +1,4 @@
+using System;
 using Systems.SaveSystem;
 
 using UnityEngine;
@@ -63,6 +64,11 @@ namespace FSM
         public Button resumeButton => _resumeButton;
 
         public Slider gameVolumeSlider => _gameVolumeSlider;
+
+        private void Start()
+        {
+            CurrentState.OnEnter(this);
+        }
 
         private void Update()
         {
