@@ -1,8 +1,6 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-using UnityEngine;
-
-public class Inventory : MonoBehaviour
+public class Inventory : Component
 {
     private readonly List<Weapon> _weapons = new();
 

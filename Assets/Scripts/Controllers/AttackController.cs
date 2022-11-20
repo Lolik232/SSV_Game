@@ -1,6 +1,4 @@
-using UnityEngine;
-
-public class AttackController : MonoBehaviour, IAttackController
+﻿public class AttackController : Component, IAttackController
 {
     public bool Attack
     {

@@ -32,6 +32,8 @@ GameObject:
   - component: {fileID: 5894404398743642063}
   - component: {fileID: 6537229132570805288}
   - component: {fileID: 3017922774255678377}
+  - component: {fileID: 3684252535774189104}
+  - component: {fileID: 517640187530283267}
   m_Layer: 10
   m_Name: SkeletonWarrior
   m_TagString: Untagged
@@ -381,7 +383,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: move
   _acceleration: 30
-  _maxSpeed: 5
+  _maxSpeed: 3
 --- !u!114 &6537229132570805288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -410,6 +412,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   description: {fileID: 0}
+--- !u!114 &3684252535774189104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1235322479934673738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 602f48b613c25d34a81db0ace0d6a377, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _minTime: 1
+  _maxTime: 5
+--- !u!114 &517640187530283267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1235322479934673738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 857c34c5efa53a648b0dc138795a400b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _minTime: 0.2
+  _maxTime: 2
 --- !u!1 &2498361145611737820
 GameObject:
   m_ObjectHideFlags: 0

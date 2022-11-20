@@ -2,7 +2,7 @@
 
 [RequireComponent(typeof(Physical))]
 
-public class GroundChecker : MonoBehaviour, IGrounded, IChecker
+public class GroundChecker : Component, IGrounded, IChecker
 {
     [SerializeField] private LayerMask _whatIsTarget;
     [SerializeField] private float _groundCheckDistance;

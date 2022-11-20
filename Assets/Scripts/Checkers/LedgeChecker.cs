@@ -2,7 +2,7 @@
 
 [RequireComponent(typeof(Rotateable), typeof(Physical), typeof(WallChecker))]
 
-public class LedgeChecker : MonoBehaviour, ITouchingLedge, IChecker
+public class LedgeChecker : Component, ITouchingLedge, IChecker
 {
     [SerializeField] private LayerMask _whatIsTarget;
     [SerializeField] private float _ledgeCheckDistance;

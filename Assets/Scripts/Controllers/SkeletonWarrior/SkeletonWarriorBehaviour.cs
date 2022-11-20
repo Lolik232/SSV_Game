@@ -1,17 +1,27 @@
-﻿using System.Collections;
-
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(MoveController), typeof(AttackController))]
 
-public class SkeletonWarriorBehaviour : Component, IMoveController, IAttackController
+[RequireComponent(typeof(SkeletonWarriorWalkBS), typeof(SkeletonWarriorStayBS))]
+
+public class SkeletonWarriorBehaviour : BehaviourController, IMoveController, IAttackController
 {
     [SerializeField] private Entity _target;
 
-    private SkeletonWarrior _skeleton;
-
     private MoveController _moveController;
     private AttackController _attackController;
+
+    public SkeletonWarriorWalkBS WalkCommand
+    {
+        get;
+        private set;
+    }
+
+    public SkeletonWarriorStayBS StayCommand
+    {
+        get;
+        private set;
+    }
 
     public Vector2Int Move
     {
@@ -29,15 +39,20 @@ public class SkeletonWarriorBehaviour : Component, IMoveController, IAttackContr
         set => ((IAttackController)_attackController).Attack = value;
     }
 
-    private void Awake()
+    protected override void Awake()
     {
-        _skeleton = GetComponent<SkeletonWarrior>();
+        base.Awake();
         _moveController = GetComponent<MoveController>();
         _attackController = GetComponent<AttackController>();
+        WalkCommand = GetComponent<SkeletonWarriorWalkBS>();
+        StayCommand = GetComponent<SkeletonWarriorStayBS>();
+
+        GetBehaviourStates<SkeletonWarriorBehaviour>();
     }
 
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
         _moveController.LookAt = _target.transform.position;
     }
 }

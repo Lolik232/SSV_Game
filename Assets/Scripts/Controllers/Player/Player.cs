@@ -1,7 +1,5 @@
 ﻿using System.Collections;
 
-using All.Events;
-
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]

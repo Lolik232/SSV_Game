@@ -1,13 +1,15 @@
-﻿public class WallGrabAS : StayAS<MoveOnWallAbility>
+﻿using UnityEngine;
+
+public class WallGrabAS : StayAS<MoveOnWallAbility>
 {
     protected override void Start()
     {
         base.Start();
         bool ClimbCondition() => Entity.Behaviour.Grab && Entity.Behaviour.Move.y == 1 &&
-                                                         Entity.Velocity.y > -0.01f;
+                                                         Mathf.Abs(Entity.Velocity.y) < 0.01f;
 
         bool SlideCondition() => (Entity.Behaviour.Grab && Entity.Behaviour.Move.y == -1 || !Entity.Behaviour.Grab) &&
-                                                         Entity.Velocity.y < 0.01f || Entity.Behaviour.Attack;
+                                                         Mathf.Abs(Entity.Velocity.y < 0.01f) || Entity.Behaviour.Attack;
 
         Transitions.Add(new(Ability.Climb, ClimbCondition));
         Transitions.Add(new(Ability.Slide, SlideCondition));

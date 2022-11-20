@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class SkeletonWarriorGroundedState : SkeletonWarriorState
+﻿public class SkeletonWarriorGroundedState : SkeletonWarriorState
 {
     protected override void Start()
     {

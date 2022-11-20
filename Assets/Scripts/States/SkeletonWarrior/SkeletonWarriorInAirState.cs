@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class SkeletonWarriorInAirState : SkeletonWarriorState
+﻿public class SkeletonWarriorInAirState : SkeletonWarriorState
 {
     protected override void Start()
     {

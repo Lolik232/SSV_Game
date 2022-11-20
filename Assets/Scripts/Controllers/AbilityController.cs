@@ -1,6 +1,4 @@
-using UnityEngine;
-
-public class AbilityController : MonoBehaviour, IAbilityControlller
+﻿public class AbilityController : Component, IAbilityControlller
 {
     public bool Ability
     {
