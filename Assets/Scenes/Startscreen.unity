@@ -2322,6 +2322,10 @@ PrefabInstance:
       propertyPath: m_thisScene
       value: 
       objectReference: {fileID: 11400000, guid: 9f59aba7e2c52ba4d9f7dbe02ad9d0d8, type: 2}
+    - target: {fileID: 5496943263659745029, guid: 80e064f061b7f614d85872bc0e8f681d, type: 3}
+      propertyPath: _notifyEditorStartupChannel
+      value: 
+      objectReference: {fileID: 11400000, guid: 08db377ca0e9af343b85c9e43d0cd15e, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 80e064f061b7f614d85872bc0e8f681d, type: 3}
 --- !u!1001 &1033450162

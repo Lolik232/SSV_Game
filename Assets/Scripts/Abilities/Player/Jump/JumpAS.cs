@@ -21,6 +21,11 @@ public class JumpAS : AbilityState<JumpAbility>
 
         Ability.DecreaseJumps();
         Entity.SetVelocityY(_jumpForse);
+        
+        if (_clip != null)
+        {
+            Entity.Source.PlayOneShot(_clip);
+        }
     }
 
     protected override void ApplyUpdateActions()

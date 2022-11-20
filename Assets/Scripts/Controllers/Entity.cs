@@ -2,9 +2,16 @@
 
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class Entity : MonoBehaviour
 {
     private List<Component> _components = new();
+
+    public AudioSource Source
+    {
+        get;
+        private set;
+    }
 
     protected List<IChecker> Checkers
     {
@@ -16,6 +23,7 @@ public class Entity : MonoBehaviour
     {
         GetComponents(Checkers);
         GetComponents(_components);
+        Source = GetComponent<AudioSource>();
     }
 
     private void FixedUpdate()
