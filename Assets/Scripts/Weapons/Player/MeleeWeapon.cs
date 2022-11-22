@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 
 using UnityEngine;
+using UnityEngine.U2D.Animation;
 
 public class MeleeWeapon : Weapon
 {
@@ -10,6 +11,7 @@ public class MeleeWeapon : Weapon
     [SerializeField] private float _attackSpeed;
     [SerializeField] private float _force;
     [SerializeField] private float _damage;
+
 
     public float Length
     {
@@ -20,6 +22,8 @@ public class MeleeWeapon : Weapon
     {
         get => _attackSpeed;
     }
+
+
 
     protected override void Start()
     {
@@ -43,6 +47,7 @@ public class MeleeWeapon : Weapon
         OnHit(Entity.Center, _force, _damage);
         StartCoroutine(WaitForEndOfAtack());
     }
+
 
     protected override void ApplyExitActions()
     {
