@@ -2,12 +2,11 @@
 
 [RequireComponent(typeof(MoveController), typeof(AttackController))]
 
-[RequireComponent(typeof(SkeletonWarriorWalkBS), typeof(SkeletonWarriorStayBS))]
+[RequireComponent(typeof(SkeletonWarriorWalkBS), typeof(SkeletonWarriorStayBS), typeof(SkeletonWarriorMoveToTargetBS))]
+[RequireComponent(typeof(SkeletonWarriorAttackBS))]
 
 public class SkeletonWarriorBehaviour : BehaviourController, IMoveController, IAttackController
 {
-    [SerializeField] private Entity _target;
-
     private MoveController _moveController;
     private AttackController _attackController;
 
@@ -18,6 +17,18 @@ public class SkeletonWarriorBehaviour : BehaviourController, IMoveController, IA
     }
 
     public SkeletonWarriorStayBS StayCommand
+    {
+        get;
+        private set;
+    }
+
+    public SkeletonWarriorMoveToTargetBS MoveToTargetCommand
+    {
+        get;
+        private set;
+    }
+
+    public SkeletonWarriorAttackBS AttackCommand
     {
         get;
         private set;
@@ -46,13 +57,9 @@ public class SkeletonWarriorBehaviour : BehaviourController, IMoveController, IA
         _attackController = GetComponent<AttackController>();
         WalkCommand = GetComponent<SkeletonWarriorWalkBS>();
         StayCommand = GetComponent<SkeletonWarriorStayBS>();
+        MoveToTargetCommand = GetComponent<SkeletonWarriorMoveToTargetBS>();
+        AttackCommand = GetComponent<SkeletonWarriorAttackBS>();
 
         GetBehaviourStates<SkeletonWarriorBehaviour>();
-    }
-
-    protected override void Update()
-    {
-        base.Update();
-        _moveController.LookAt = _target.transform.position;
     }
 }

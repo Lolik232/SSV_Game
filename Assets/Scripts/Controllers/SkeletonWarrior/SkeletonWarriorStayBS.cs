@@ -9,17 +9,21 @@ public class SkeletonWarriorStayBS : BehaviuorState<SkeletonWarriorBehaviour>
 
     protected void Start()
     {
-        bool WalkCondition() => ActiveTime > _stayRandomTime;
+        bool WalkCondition() => ActiveTime > _stayRandomTime && !Entity.TargetDetected;
 
-        Transitions.Add(new(((SkeletonWarrior)Entity).Behaviour.WalkCommand, WalkCondition));
+        bool MoveToTargetCondition() => Entity.TargetDetected;
+
+        Transitions.Add(new(Controller.WalkCommand, WalkCondition));
+        Transitions.Add(new(Controller.MoveToTargetCommand, MoveToTargetCondition));
     }
 
     protected override void ApplyEnterActions()
     {
         base.ApplyEnterActions();
         _stayRandomTime = Random.Range(_minTime, _maxTime);
-        Controller.Move = new Vector2Int(0, 0);
+        Controller.Move = Vector2Int.zero;
     }
+
     protected override void ApplyExitActions()
     {
         base.ApplyExitActions();

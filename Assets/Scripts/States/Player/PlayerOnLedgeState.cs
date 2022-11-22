@@ -6,8 +6,10 @@ public class PlayerOnLedgeState : PlayerState
     private Vector2 _endPosition;
     private int _wallDirection;
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
+
         bool GroundedCondition() => !Player.LedgeClimbAbility.IsActive;
 
         Transitions.Add(new(Player.GroundedState, GroundedCondition));

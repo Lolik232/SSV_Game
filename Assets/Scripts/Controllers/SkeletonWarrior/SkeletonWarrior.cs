@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 
 [RequireComponent(typeof(WallChecker), typeof(GroundChecker), typeof(EdgeChecker))]
+[RequireComponent(typeof(TargetChecker))]
 
 [RequireComponent(typeof(SkeletonWarriorGroundedState), typeof(SkeletonWarriorInAirState))]
 
@@ -13,14 +14,15 @@ using UnityEngine;
 
 [RequireComponent(typeof(SkeletonWarriorBehaviour))]
 
-[RequireComponent(typeof(MoveHorizontalAbility))]
+[RequireComponent(typeof(MoveHorizontalAbility), typeof(AttackAbility))]
 
 public class SkeletonWarrior : Entity, IPhysical, IRotateable, IMovable, IDamageable,
-                             IGrounded, ITouchingWall, ITouchingEdge
+                             IGrounded, ITouchingWall, ITouchingEdge, ITargetChecker
 {
     private GroundChecker _groundChecker;
     private WallChecker _wallChecker;
     private EdgeChecker _edgeChecker;
+    private TargetChecker _targetChecker;
 
     private Physical _physical;
     private Movable _movable;
@@ -43,6 +45,16 @@ public class SkeletonWarrior : Entity, IPhysical, IRotateable, IMovable, IDamage
         private set;
     }
     public MoveHorizontalAbility MoveHorizontalAbility
+    {
+        get;
+        private set;
+    }
+    public AttackAbility AttackAbility
+    {
+        get;
+        private set;
+    }
+    public Inventory Inventory
     {
         get;
         private set;
@@ -95,6 +107,14 @@ public class SkeletonWarrior : Entity, IPhysical, IRotateable, IMovable, IDamage
     public bool TouchingEdge => ((ITouchingEdge)_edgeChecker).TouchingEdge;
 
     public bool IsPushed => ((IPhysical)_physical).IsPushed;
+
+    public bool TargetDetected => ((ITargetChecker)_targetChecker).TargetDetected;
+
+    public Vector2 TargetPosition => ((ITargetChecker)_targetChecker).TargetPosition;
+
+    public float TargetDistance => ((ITargetChecker)_targetChecker).TargetDistance;
+
+    public int TargetDirection => ((ITargetChecker)_targetChecker).TargetDirection;
 
     public void BlockPosition()
     {
@@ -224,6 +244,7 @@ public class SkeletonWarrior : Entity, IPhysical, IRotateable, IMovable, IDamage
         _wallChecker = GetComponent<WallChecker>();
         _edgeChecker = GetComponent<EdgeChecker>();
         _groundChecker = GetComponent<GroundChecker>();
+        _targetChecker = GetComponent<TargetChecker>();
 
         _physical = GetComponent<Physical>();
         _movable = GetComponent<Movable>();
@@ -236,6 +257,9 @@ public class SkeletonWarrior : Entity, IPhysical, IRotateable, IMovable, IDamage
         InAirState = GetComponent<SkeletonWarriorInAirState>();
 
         MoveHorizontalAbility = GetComponent<MoveHorizontalAbility>();
+        AttackAbility = GetComponent<AttackAbility>();
+
+        Inventory = GetComponentInChildren<Inventory>();
     }
 
     private void Start()

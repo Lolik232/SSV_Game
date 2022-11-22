@@ -18,8 +18,10 @@ public sealed class PlayerInAirState : PlayerState
         set;
     }
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
+
         bool GroundedCondition() => Player.Grounded && Player.Velocity.y < 0.01f;
 
         bool TouchingWallCondition() => Player.TouchingWall &&

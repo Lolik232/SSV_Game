@@ -3,7 +3,6 @@
 using UnityEngine;
 
 [RequireComponent(typeof(DeadState))]
-
 public class Damageable : Component, IDamageable
 {
     [SerializeField] private float _health;

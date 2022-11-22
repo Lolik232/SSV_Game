@@ -12,5 +12,6 @@
     {
         base.ApplyEnterActions();
         Skeleton.MoveHorizontalAbility.Permited = true;
+        Skeleton.AttackAbility.Permited = true;
     }
 }

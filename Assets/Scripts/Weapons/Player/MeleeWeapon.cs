@@ -11,6 +11,16 @@ public class MeleeWeapon : Weapon
     [SerializeField] private float _force;
     [SerializeField] private float _damage;
 
+    public float Length
+    {
+        get => _length;
+    }
+
+    public float AttackSpeed
+    {
+        get => _attackSpeed;
+    }
+
     protected override void Start()
     {
         TextInfo ti = new CultureInfo("en-US",false).TextInfo;
