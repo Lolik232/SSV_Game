@@ -11,7 +11,7 @@ public abstract class Weapon : ComponentBase
 
     protected Vector2 attackPoint;
 
-    protected List<Collider2D> collisions = new();
+    protected HashSet<Collider2D> collisions = new();
 
     protected Inventory Inventory
     {
@@ -49,27 +49,24 @@ public abstract class Weapon : ComponentBase
 
     protected abstract void Start();
 
-    protected void OnHit(Vector2 attackPoint, float force, float damage)
+    protected void OnHit(Vector2 attackPoint, Collider2D collider, float force, float damage)
     {
         this.attackPoint = attackPoint;
 
-        foreach (var collider in collisions)
+        if (collider.TryGetComponent<Entity>(out var entity))
         {
-            if (collider.TryGetComponent<Entity>(out var entity))
+            if (entity is IPhysical)
             {
-                if (entity is IPhysical)
-                {
-                    var physical = entity as IPhysical;
-                    StartCoroutine(physical.Push(force, physical.Center - this.attackPoint));
-                }
+                var physical = entity as IPhysical;
+                StartCoroutine(physical.Push(force, physical.Center - this.attackPoint));
+            }
 
-                if (entity is IDamageable)
+            if (entity is IDamageable)
+            {
+                var damageable = entity as IDamageable;
+                if (!damageable.IsDead)
                 {
-                    var damageable = entity as IDamageable;
-                    if (!damageable.IsDead)
-                    {
-                        damageable.TakeDamage(damage, attackPoint);
-                    }
+                    damageable.TakeDamage(damage, attackPoint);
                 }
             }
         }

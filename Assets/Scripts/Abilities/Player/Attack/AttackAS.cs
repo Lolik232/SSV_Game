@@ -1,4 +1,4 @@
-public class AttackAS : AbilityState<AttackAbility>
+﻿public class AttackAS : AbilityState<AttackAbility>
 {
     private Inventory _inventory;
 
@@ -17,6 +17,12 @@ public class AttackAS : AbilityState<AttackAbility>
         {
             Entity.Source.PlayOneShot(_clip);
         }
+    }
+
+    protected override void ApplyUpdateActions()
+    {
+        base.ApplyUpdateActions();
+        _inventory.Current.OnUpdate();
     }
 
     protected override void ApplyExitActions()

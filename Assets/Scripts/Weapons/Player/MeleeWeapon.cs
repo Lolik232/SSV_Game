@@ -12,6 +12,7 @@ public class MeleeWeapon : Weapon
     [SerializeField] private float _force;
     [SerializeField] private float _damage;
 
+    private List<Collider2D> _collisionsBuffer = new();
 
     public float Length
     {
@@ -22,8 +23,6 @@ public class MeleeWeapon : Weapon
     {
         get => _attackSpeed;
     }
-
-
 
     protected override void Start()
     {
@@ -41,18 +40,29 @@ public class MeleeWeapon : Weapon
         }
 
         Entity.BlockRotation();
-
-        collisions = new List<Collider2D>(Physics2D.OverlapCircleAll(Entity.Center, _length, whatIsTarget));
-
-        OnHit(Entity.Center, _force, _damage);
+        collisions.Clear();
         StartCoroutine(WaitForEndOfAtack());
     }
-
 
     protected override void ApplyExitActions()
     {
         base.ApplyExitActions();
         Entity.UnlockRotation();
+    }
+
+    protected override void ApplyUpdateActions()
+    {
+        base.ApplyUpdateActions();
+        _collisionsBuffer = new List<Collider2D>(Physics2D.OverlapCircleAll(Entity.Center, _length, whatIsTarget));
+
+        foreach (var collision in _collisionsBuffer)
+        {
+            if (!collisions.Contains(collision))
+            {
+                collisions.Add(collision);
+                OnHit(Entity.Center, collision, _force, _damage);
+            }
+        }
     }
 
     private IEnumerator WaitForEndOfAtack()

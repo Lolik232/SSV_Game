@@ -389,7 +389,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: move
-  _clip: {fileID: 0}
+  _clip: {fileID: 8300000, guid: 2352822feb4caa14ebdbc0c713289f8d, type: 3}
   _acceleration: 30
   _maxSpeed: 3
 --- !u!114 &6537229132570805288
@@ -405,7 +405,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: move
-  _clip: {fileID: 0}
+  _clip: {fileID: 8300000, guid: 2352822feb4caa14ebdbc0c713289f8d, type: 3}
   _acceleration: 15
   _maxSpeed: 2
 --- !u!114 &3017922774255678377
@@ -506,7 +506,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: 
-  _clip: {fileID: 0}
+  _clip: {fileID: 8300000, guid: 2b21ef916f6943c439b71a7c74568878, type: 3}
 --- !u!114 &2435116797932109427
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -7,7 +7,7 @@ public sealed class PlayerGroundedState : PlayerState
     protected override void Start()
     {
         base.Start();
-        bool InAirCondition() => !Player.Grounded || Player.Behaviour.Dash;
+        bool InAirCondition() => !Player.Grounded || Player.DashAbility.IsActive;
 
         bool TouchingWallCondition() => Player.TouchingWall &&
                                         Player.TouchingLedge &&
