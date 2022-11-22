@@ -1,23 +1,14 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 public abstract class AbilityState<AbilityT> : StateBase where AbilityT : Ability
 {
-    public AbilityT Ability
-    {
-        get;
-        private set;
-    }
-    public List<TransitionItem<AbilityState<AbilityT>>> Transitions
-    {
-        get;
-        protected set;
-    } = new();
+    [SerializeField] protected AudioClip _clip;
 
-    protected dynamic Entity
-    {
-        get;
-        private set;
-    }
+    public AbilityT Ability { get; private set; }
+    public List<TransitionItem<AbilityState<AbilityT>>> Transitions { get; protected set; } = new();
+
+    protected dynamic Entity { get; private set; }
 
     protected override void Awake()
     {

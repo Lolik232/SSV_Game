@@ -301,6 +301,55 @@ MonoBehaviour:
     m_Address: Assets/Prefabs/Gameplay/EventSystem.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 2d1b7db1e4ea67549bc100bbfcf33f60
+    m_Address: Assets/Music/Tracks/Step_Rock.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 396e2979d6f8d204bbecaf6881de96dd
+    m_Address: Assets/Music/Tracks/Jump.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 0417b5f06be4dd44c82f633f130c3114
+    m_Address: Assets/Music/Tracks/Dash.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 14e3e1aa910b3a048a8b9efc3d497b7e
+    m_Address: Assets/Music/Tracks/Click.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 7917bdf58296a4341ad34ee9e5d77729
+    m_Address: Assets/Music/Tracks/Select.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 9820a8b199e8ef2468500a96ba88c9f3
+    m_Address: Assets/Music/Tracks/Slider.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 7da750b8b9b369642b61d1cb9194c776
+    m_Address: Assets/Music/Tracks/Attack.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: ca1506f1eb2284c46b6372ef40b0d4fe
+    m_Address: Assets/Music/Tracks/Bring Me The Horizon - And the Snakes Start to
+      Sing.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 34399263cc80deb4d9619ab8bee9d7f8
+    m_Address: Assets/Music/Tracks/Landing.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 949b5eafbd93a05428e57e1db0427ba2
+    m_Address: Assets/Music/Tracks/PlayerHit.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: a5e4b071cd0b23e4daed7604a57e0d87
+    m_Address: Assets/Music/Tracks/Climb.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 177292ee65f7069428ece308fb736599
+    m_Address: Assets/Music/Mixer.mixer
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: d160d21b4ee59804cabc734a782d9dd7, type: 2}
   m_SchemaSet:

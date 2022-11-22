@@ -58,6 +58,8 @@ GameObject:
   - component: {fileID: 3883778745036390565}
   - component: {fileID: -3732219779705251845}
   - component: {fileID: 7656289285633951347}
+  - component: {fileID: 6429904734341296822}
+  - component: {fileID: 5513969224647444367}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -741,6 +743,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: stay
+  _clip: {fileID: 8300000, guid: 2d1b7db1e4ea67549bc100bbfcf33f60, type: 3}
   _deceleration: 60
 --- !u!114 &5037243977048807271
 MonoBehaviour:
@@ -755,6 +758,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: move
+  _clip: {fileID: 8300000, guid: 2d1b7db1e4ea67549bc100bbfcf33f60, type: 3}
   _acceleration: 33
   _maxSpeed: 10
 --- !u!114 &293701275523363379
@@ -770,6 +774,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: move
+  _clip: {fileID: 0}
   _acceleration: 25
   _maxSpeed: 5
 --- !u!114 &9164414543366302101
@@ -798,6 +803,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: wallGrab
+  _clip: {fileID: 0}
   _deceleration: 0
 --- !u!114 &8593455093162021788
 MonoBehaviour:
@@ -812,6 +818,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: wallClimb
+  _clip: {fileID: 0}
   _acceleration: 30
   _maxSpeed: 6
 --- !u!114 &8664250654421567182
@@ -827,6 +834,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: wallSlide
+  _clip: {fileID: 0}
   _acceleration: 20
   _maxSpeed: 6
 --- !u!114 &4770625426845887525
@@ -855,6 +863,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: ledgeClimb
+  _clip: {fileID: 0}
   _duration: 0.2
 --- !u!114 &7438148992019475615
 MonoBehaviour:
@@ -882,6 +891,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: crouch
+  _clip: {fileID: 0}
 --- !u!114 &7381208014686858515
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -895,6 +905,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: stand
+  _clip: {fileID: 0}
 --- !u!114 &4122754252997366383
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -921,6 +932,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: jump
+  _clip: {fileID: 8300000, guid: 396e2979d6f8d204bbecaf6881de96dd, type: 3}
   _coyoteTime: 0.1
   _jumpForse: 20
 --- !u!114 &2409907618253895838
@@ -936,6 +948,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: jump
+  _clip: {fileID: 8300000, guid: 396e2979d6f8d204bbecaf6881de96dd, type: 3}
   _coyoteTime: 0.1
   _jumpForse: 20
   _angle: {x: 1, y: 1}
@@ -967,6 +980,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: dash
+  _clip: {fileID: 8300000, guid: 0417b5f06be4dd44c82f633f130c3114, type: 3}
   _duration: 0.3
   _dashForse: 35
 --- !u!114 &4675764141932494462
@@ -997,6 +1011,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: 
+  _clip: {fileID: 8300000, guid: 7da750b8b9b369642b61d1cb9194c776, type: 3}
 --- !u!114 &7127529741881988708
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1049,6 +1064,117 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _health: 300
+--- !u!114 &6429904734341296822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16557013547266712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e741851cba3ad425c91ecf922cc6b379, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _data:
+    _json: '{"declarations":{"Kind":"Object","collection":{"$content":[],"$version":"A"},"$version":"A"}}'
+    _objectReferences: []
+--- !u!82 &5513969224647444367
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16557013547266712}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 3588749368077440020, guid: 177292ee65f7069428ece308fb736599, type: 2}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &3238070780658984553
 GameObject:
   m_ObjectHideFlags: 0

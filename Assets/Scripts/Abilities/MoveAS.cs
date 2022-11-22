@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 
 using UnityEngine;
 
@@ -43,8 +43,21 @@ public abstract class MoveAS<AbilityT> : AbilityState<AbilityT> where AbilityT :
         MoveSpeed = StartSpeed;
         _delta = EndSpeed - StartSpeed;
         Acceleration = Mathf.Sign(_delta) * Mathf.Abs(_acceleration);
+        
+        if (_clip != null && Entity.Grounded)
+        {
+            Entity.Source.PlayOneShot(_clip);
+        }
 
         StartCoroutine(Accelerate());
+    }
+
+    protected void OnStep()
+    {
+        if (_clip != null)
+        {
+            Entity.Source.PlayOneShot(_clip);
+        }
     }
 
     private IEnumerator Accelerate()

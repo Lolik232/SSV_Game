@@ -24,6 +24,10 @@ public class AudioManager : MonoBehaviour
     [Range(0f, 1f)]
     [SerializeField] private float _effectsVolume = 1f;
 
+
+    [SerializeField] private float _min = -80f;
+    [SerializeField] private float _max = 20f;
+
     private void OnEnable()
     {
         _masterVolumeEventChannelSO.OnEventRaised += ChangeMaster;
@@ -42,18 +46,18 @@ public class AudioManager : MonoBehaviour
     public void ChangeMaster(float volume)
     {
         _masterVolume = volume;
-        _audioMixer.audioMixer.SetFloat(_masterVolumeGroup, Mathf.Lerp(-80, 0, volume));
+        _audioMixer.audioMixer.SetFloat(_masterVolumeGroup, Mathf.Lerp(_min, _max, volume));
     }
 
     public void ChangeMusic(float volume)
     {
         _musicVolume = volume;
-        _audioMixer.audioMixer.SetFloat(_musicVolumeGroup, Mathf.Lerp(-80, 0, volume));
+        _audioMixer.audioMixer.SetFloat(_musicVolumeGroup, Mathf.Lerp(_min, _max, volume));
     }
 
     public void ChangeFX(float volume)
     {
         _effectsVolume = volume;
-        _audioMixer.audioMixer.SetFloat(_effectsVolumeGroup, Mathf.Lerp(-80, 0, volume));
+        _audioMixer.audioMixer.SetFloat(_effectsVolumeGroup, Mathf.Lerp(_min, _max, volume));
     }
 }

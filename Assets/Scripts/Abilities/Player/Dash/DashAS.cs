@@ -22,6 +22,11 @@ public class DashAS : AbilityState<DashAbility>
         Entity.SetVelocity(_dashForse * dashDirection);
         Entity.RotateIntoDirection(dashDirection.x > 0 ? 1 : -1);
         Entity.BlockVelocity();
+        
+        if (_clip != null)
+        {
+            Entity.Source.PlayOneShot(_clip);
+        }
 
         _tr.Clear();
         _tr.emitting = true;

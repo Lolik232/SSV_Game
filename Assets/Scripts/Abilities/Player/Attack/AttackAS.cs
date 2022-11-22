@@ -12,6 +12,11 @@ public class AttackAS : AbilityState<AttackAbility>
     {
         base.ApplyEnterActions();
         _inventory.Current.OnEnter();
+        
+        if (_clip != null)
+        {
+            Entity.Source.PlayOneShot(_clip);
+        }
     }
 
     protected override void ApplyExitActions()
