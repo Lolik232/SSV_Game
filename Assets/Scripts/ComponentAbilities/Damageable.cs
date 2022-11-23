@@ -65,12 +65,17 @@ public class Damageable : Component, IDamageable
 
         if (Health == 0)
         {
-            IsDead = true;
-            _machine.GetTransition(_deadState);
+            OnDead();
         }
         else
         {
             _anim.SetTrigger("hit");
         }
+    }
+
+    public void OnDead()
+    {
+        IsDead = true;
+        _machine.GetTransition(_deadState);
     }
 }

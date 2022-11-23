@@ -467,7 +467,7 @@ MonoBehaviour:
   _whatIsTarget:
     serializedVersion: 2
     m_Bits: 64
-  _targetDetectRadius: 5
+  _targetDetectRadius: 10
 --- !u!114 &6707333774932108415
 MonoBehaviour:
   m_ObjectHideFlags: 0

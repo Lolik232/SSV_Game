@@ -69,6 +69,11 @@ public class Dummy : Entity, IPhysical, IRotateable, IDamageable,
         ((IRotateable)_rotateable).LookAt(position);
     }
 
+    public void OnDead()
+    {
+        ((IDamageable)_damageable).OnDead();
+    }
+
     public IEnumerator Push(float force, Vector2 angle)
     {
         return ((IPhysical)_physical).Push(force, angle);

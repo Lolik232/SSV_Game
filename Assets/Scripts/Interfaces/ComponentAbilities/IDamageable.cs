@@ -18,6 +18,8 @@ public interface IDamageable
         get;
     }
 
+    public void OnDead();
+
     public void TakeDamage(float damage, Vector2 attackPoint);
 
     public void RestoreHealth(float regeneration);
