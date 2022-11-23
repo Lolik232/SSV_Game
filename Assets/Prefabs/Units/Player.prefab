@@ -743,7 +743,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: stay
-  _clip: {fileID: 8300000, guid: 2d1b7db1e4ea67549bc100bbfcf33f60, type: 3}
+  _clip: {fileID: 0}
   _deceleration: 60
 --- !u!114 &5037243977048807271
 MonoBehaviour:
@@ -758,7 +758,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: move
-  _clip: {fileID: 8300000, guid: 2d1b7db1e4ea67549bc100bbfcf33f60, type: 3}
+  _clip: {fileID: 8300000, guid: a4711e3bd49af194db2955e0481e4026, type: 3}
   _acceleration: 33
   _maxSpeed: 10
 --- !u!114 &293701275523363379
@@ -774,7 +774,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: move
-  _clip: {fileID: 0}
+  _clip: {fileID: 8300000, guid: a4711e3bd49af194db2955e0481e4026, type: 3}
   _acceleration: 25
   _maxSpeed: 5
 --- !u!114 &9164414543366302101
@@ -818,7 +818,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: wallClimb
-  _clip: {fileID: 0}
+  _clip: {fileID: 8300000, guid: a5e4b071cd0b23e4daed7604a57e0d87, type: 3}
   _acceleration: 30
   _maxSpeed: 6
 --- !u!114 &8664250654421567182
@@ -891,7 +891,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: crouch
-  _clip: {fileID: 0}
+  _clip: {fileID: 8300000, guid: cfb58ed5da0a5904b8668ce6ae2b5147, type: 3}
 --- !u!114 &7381208014686858515
 MonoBehaviour:
   m_ObjectHideFlags: 0

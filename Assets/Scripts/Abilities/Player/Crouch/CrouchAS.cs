@@ -14,5 +14,18 @@
         base.ApplyEnterActions();
         Entity.Crouch();
         Entity.DoChecks();
+        
+        if (_clip != null && Entity.Grounded)
+        {
+            Entity.Source.PlayOneShot(_clip);
+        }
+    }
+
+    protected void OnCrouchStep()
+    {
+        if (_clip != null)
+        {
+            Entity.Source.PlayOneShot(_clip);
+        }
     }
 }
