@@ -26,7 +26,8 @@ public class Damageable : Component, IDamageable
         get => _health;
         private set
         {
-            _didHealthChangeEventChannelSo?.RaiseEvent(_health = value, MaxHealth);
+            _health = value;
+            _didHealthChangeEventChannelSo?.RaiseEvent(_health, MaxHealth);
         }
     }
     public bool IsDead
