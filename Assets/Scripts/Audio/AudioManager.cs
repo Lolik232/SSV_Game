@@ -26,7 +26,7 @@ public class AudioManager : MonoBehaviour
 
 
     [SerializeField] private float _min = -80f;
-    [SerializeField] private float _max = 20f;
+    [SerializeField] private float _max = 0f;
 
     private void OnEnable()
     {
@@ -46,18 +46,23 @@ public class AudioManager : MonoBehaviour
     public void ChangeMaster(float volume)
     {
         _masterVolume = volume;
-        _audioMixer.audioMixer.SetFloat(_masterVolumeGroup, Mathf.Lerp(_min, _max, volume));
+        _audioMixer.audioMixer.SetFloat(_masterVolumeGroup, SqrtInterpolation(_min, _max, volume));
     }
 
     public void ChangeMusic(float volume)
     {
         _musicVolume = volume;
-        _audioMixer.audioMixer.SetFloat(_musicVolumeGroup, Mathf.Lerp(_min, _max, volume));
+        _audioMixer.audioMixer.SetFloat(_musicVolumeGroup, SqrtInterpolation(_min, _max, volume));
     }
 
     public void ChangeFX(float volume)
     {
         _effectsVolume = volume;
-        _audioMixer.audioMixer.SetFloat(_effectsVolumeGroup, Mathf.Lerp(_min, _max, volume));
+        _audioMixer.audioMixer.SetFloat(_effectsVolumeGroup, SqrtInterpolation(_min, _max, volume));
+    }
+
+    private static float SqrtInterpolation(float a, float b, float t)
+    {
+        return a + (b - a) * (float) Math.Sqrt(t);
     }
 }

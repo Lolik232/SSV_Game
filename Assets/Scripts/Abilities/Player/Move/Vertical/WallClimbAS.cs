@@ -15,11 +15,24 @@
         StartSpeed = Entity.Velocity.y;
         MoveDirection = 1;
         base.ApplyEnterActions();
+        
+        if (_clip != null)
+        {
+            Entity.Source.PlayOneShot(_clip);
+        }
     }
 
     protected override void ApplyUpdateActions()
     {
         base.ApplyUpdateActions();
         Entity.SetVelocityY(MoveSpeed);
+    }
+
+    public void OnClimb()
+    {
+        if (_clip != null)
+        {
+            Entity.Source.PlayOneShot(_clip);
+        }
     }
 }

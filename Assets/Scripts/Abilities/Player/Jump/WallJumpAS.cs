@@ -21,6 +21,11 @@ public class WallJumpAS : AbilityState<JumpAbility>
         Entity.BlockVelocity();
         Entity.RotateIntoDirection(Entity.WallDirection);
         Entity.SetVelocity(_jumpForse, _angle, Entity.WallDirection);
+        
+        if (_clip != null)
+        {
+            Entity.Source.PlayOneShot(_clip);
+        }
     }
 
     protected override void ApplyExitActions()
