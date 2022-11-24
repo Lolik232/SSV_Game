@@ -1063,7 +1063,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56c622b16e5d29241810216118426762, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: 300
+  _didHealthChangeEventChannelSo: {fileID: 11400000, guid: e6f49b8a73726284ba22bcc7fb6f38ee, type: 2}
+  _startHealth: 300
 --- !u!114 &6429904734341296822
 MonoBehaviour:
   m_ObjectHideFlags: 0
