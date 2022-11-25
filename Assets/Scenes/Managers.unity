@@ -250,6 +250,53 @@ MonoBehaviour:
   _masterVolumeEventChannelSO: {fileID: 11400000, guid: af8126120ede5f4458e3a5bba36097e2, type: 2}
   _musicVolumeEventChannelSO: {fileID: 11400000, guid: d6a5e143f66fd234bb43ef874c3b1693, type: 2}
   _effectsVolumeEventChannelSO: {fileID: 11400000, guid: 6101fdfd88686e242a278adcca199cf5, type: 2}
+--- !u!1 &531009725
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 531009727}
+  - component: {fileID: 531009726}
+  m_Layer: 0
+  m_Name: Restarter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &531009726
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 531009725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77c3c7e057e442f9b00a9395cfd313e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _locationLoadEventChannelSO: {fileID: 11400000, guid: efcd5361b4da801408cb91de1a0effaa, type: 2}
+  _onDeadEventChannelSO: {fileID: 11400000, guid: f20abbdf3b757404b81a7adf0c651106, type: 2}
+  _saveSystem: {fileID: 11400000, guid: ca5a00e8b8acb964cb88e77d41600973, type: 2}
+--- !u!4 &531009727
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 531009725}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 170.56187, y: 140.73424, z: 851.55975}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &533986172
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -307,6 +354,37 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 93aa4169bca15c34c8cd72885bfb246d, type: 3}
+--- !u!1 &919071225
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 919071226}
+  m_Layer: 0
+  m_Name: ---REMOVE FROM THIS SCENE---
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &919071226
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919071225}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 170.56187, y: 140.73424, z: 851.55975}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1385725457
 GameObject:
   m_ObjectHideFlags: 0
@@ -361,6 +439,8 @@ MonoBehaviour:
   _masterVolume: 1
   _musicVolume: 1
   _effectsVolume: 1
+  _min: -80
+  _max: 0
 --- !u!1 &1426321381
 GameObject:
   m_ObjectHideFlags: 0

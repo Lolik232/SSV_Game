@@ -199,6 +199,7 @@ public class Player : Entity, IPhysical, IMovable, ICrouchable, IRotateable,
     public void OnDead()
     {
         ((IDamageable)_damageable).OnDead();
+        _playerDiedChannel.RaiseEvent();
 
         StartCoroutine(AfterDeadTimeOut());
     }
@@ -206,7 +207,6 @@ public class Player : Entity, IPhysical, IMovable, ICrouchable, IRotateable,
     private IEnumerator AfterDeadTimeOut()
     {
         yield return new WaitForSeconds(2f);
-        _playerDiedChannel.RaiseEvent();
     } 
 
     public IEnumerator Push(float force, Vector2 angle)
