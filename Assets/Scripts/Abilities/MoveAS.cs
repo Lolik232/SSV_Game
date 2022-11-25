@@ -46,7 +46,7 @@ public abstract class MoveAS<AbilityT> : AbilityState<AbilityT> where AbilityT :
         
         if (_clip != null && Entity.Grounded)
         {
-            Entity.Source.PlayOneShot(_clip);
+            Entity.Source.PlayOneShot(_clip, 0.5f);
         }
 
         StartCoroutine(Accelerate());
@@ -56,7 +56,7 @@ public abstract class MoveAS<AbilityT> : AbilityState<AbilityT> where AbilityT :
     {
         if (_clip != null)
         {
-            Entity.Source.PlayOneShot(_clip);
+            Entity.Source.PlayOneShot(_clip, 0.5f);
         }
     }
 
