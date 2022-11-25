@@ -26,6 +26,8 @@ public class Player : Entity, IPhysical, IMovable, ICrouchable, IRotateable,
                               IGrounded, ITouchingWall, ITouchingCeiling, ITouchingLedge, IDamageable
 { 
     [SerializeField] private VoidEventChannelSO _playerDiedChannel = default;
+
+    [SerializeField] private AudioClip _hitSound;
     
     private WallChecker _wallChecker;
     private GroundChecker _groundChecker;
@@ -297,6 +299,12 @@ public class Player : Entity, IPhysical, IMovable, ICrouchable, IRotateable,
     public void TakeDamage(float damage, Vector2 attackPoint)
     {
         LookAt(attackPoint);
+        
+        if (_hitSound != null)
+        {
+            Source.PlayOneShot(_hitSound, 1f);
+        }
+        
         ((IDamageable)_damageable).TakeDamage(damage, attackPoint);
     }
 

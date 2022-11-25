@@ -55,8 +55,8 @@ GameObject:
   - component: {fileID: 4675764141932494462}
   - component: {fileID: 745683197121119685}
   - component: {fileID: 7127529741881988708}
-  - component: {fileID: 3883778745036390565}
   - component: {fileID: -3732219779705251845}
+  - component: {fileID: 4908588619935511770}
   - component: {fileID: 7656289285633951347}
   - component: {fileID: 6429904734341296822}
   - component: {fileID: 5513969224647444367}
@@ -1027,19 +1027,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: {fileID: 0}
   _cooldown: 0.1
---- !u!114 &3883778745036390565
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 16557013547266712}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5bc956ee196fa34d9849921a1018d1f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playerDiedChannel: {fileID: 11400000, guid: f20abbdf3b757404b81a7adf0c651106, type: 2}
 --- !u!114 &-3732219779705251845
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1053,6 +1040,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: dead
+--- !u!114 &4908588619935511770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16557013547266712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5bc956ee196fa34d9849921a1018d1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerDiedChannel: {fileID: 11400000, guid: f20abbdf3b757404b81a7adf0c651106, type: 2}
+  _hitSound: {fileID: 8300000, guid: 0b845bf7b0919fa45ba45e390ea1706c, type: 3}
 --- !u!114 &7656289285633951347
 MonoBehaviour:
   m_ObjectHideFlags: 0
