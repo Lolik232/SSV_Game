@@ -9,9 +9,11 @@ public class InGameUIManager : MonoBehaviour
 {
     // update ui components if ne scene
     [SerializeField] private VoidEventChannelSO _onSceneReadyChannel = default;
-    
+
     [SerializeField] private InGameMenu _inGameMenu;
     [SerializeField] private GameObject _optionsPanel;
+
+    [SerializeField] private GameObject _hud;
 
     [SerializeField] private GameSceneSO        _mainMenu             = default;
     [SerializeField] private LoadEventChannelSO _menuLoadEventChannel = default;
@@ -22,14 +24,13 @@ public class InGameUIManager : MonoBehaviour
 
     private void OnEnable()
     {
-        ResetUi();
         _onSceneReadyChannel.OnEventRaised += ResetUi;
         _pauseEventChannel.OnEventRaised   += OnPause;
     }
 
     private void OnDisable()
     {
-        ResetUi();
+        // ResetUi();
         _onSceneReadyChannel.OnEventRaised -= ResetUi;
         _pauseEventChannel.OnEventRaised   -= OnPause;
     }
@@ -37,7 +38,7 @@ public class InGameUIManager : MonoBehaviour
     private void OnPause()
     {
         _UIInputReader.gameOnPause = true;
-        
+
         Time.timeScale = 0;
 
         _inGameMenu.ResumeClicked         += OnUnpause;
@@ -55,7 +56,7 @@ public class InGameUIManager : MonoBehaviour
     private void OnUnpause()
     {
         _UIInputReader.gameOnPause = false;
-        
+
         _inGameMenu.ResumeClicked         -= OnUnpause;
         _inGameMenu.Closed                -= OnUnpause;
         _inGameMenu.QuitGameClicked       -= OnQuit;
@@ -63,7 +64,7 @@ public class InGameUIManager : MonoBehaviour
 
         // _inGameMenu.gameObject.SetActive(false);
 
-        Time.timeScale             = 1;
+        Time.timeScale = 1;
 
         GameInputSingeltone.GameInput.EnableGameplayInput();
     }
@@ -83,6 +84,7 @@ public class InGameUIManager : MonoBehaviour
         _UIInputReader.gameOnPause = false;
         _inGameMenu.gameObject.SetActive(false);
         _optionsPanel.SetActive(false);
+        _hud.SetActive(true);
 
         Time.timeScale = 1;
     }

@@ -6,7 +6,7 @@ using UnityEngine.Serialization;
 [RequireComponent(typeof(DeadState))]
 public class Damageable : Component, IDamageable
 {
-    [SerializeField] private HealthEventChannelSO _didHealthChangeEventChannelSo;
+    [SerializeField] private HealthEventChannelSO _didHealthChangeEventChannelSo = default;
     
     [FormerlySerializedAs("_health")] [SerializeField] private float _startHealth;
     private float _health;

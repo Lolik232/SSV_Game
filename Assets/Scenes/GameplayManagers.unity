@@ -216,7 +216,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &193136947
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -316,7 +316,7 @@ RectTransform:
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -551,6 +551,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1637515242, guid: a58c2637d2d5d7d4b9060c281ba74957, type: 3}
+      propertyPath: _hud
+      value: 
+      objectReference: {fileID: 193136945}
     - target: {fileID: 1457439845600341724, guid: a58c2637d2d5d7d4b9060c281ba74957, type: 3}
       propertyPath: m_Delegates.Array.size
       value: 2

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using All.Events;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
@@ -23,7 +24,9 @@ using UnityEngine;
 
 public class Player : Entity, IPhysical, IMovable, ICrouchable, IRotateable,
                               IGrounded, ITouchingWall, ITouchingCeiling, ITouchingLedge, IDamageable
-{
+{ 
+    [SerializeField] private VoidEventChannelSO _playerDiedChannel = default;
+    
     private WallChecker _wallChecker;
     private GroundChecker _groundChecker;
     private CeilChecker _ceilChecker;
@@ -192,6 +195,19 @@ public class Player : Entity, IPhysical, IMovable, ICrouchable, IRotateable,
     {
         ((IRotateable)_rotateable).LookAt(position);
     }
+    
+    public void OnDead()
+    {
+        ((IDamageable)_damageable).OnDead();
+
+        StartCoroutine(AfterDeadTimeOut());
+    }
+
+    private IEnumerator AfterDeadTimeOut()
+    {
+        yield return new WaitForSeconds(2f);
+        _playerDiedChannel.RaiseEvent();
+    } 
 
     public IEnumerator Push(float force, Vector2 angle)
     {

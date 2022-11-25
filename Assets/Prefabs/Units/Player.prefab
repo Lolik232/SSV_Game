@@ -1038,7 +1038,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5bc956ee196fa34d9849921a1018d1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerDaedChannel: {fileID: 11400000, guid: f20abbdf3b757404b81a7adf0c651106, type: 2}
+  _playerDiedChannel: {fileID: 11400000, guid: f20abbdf3b757404b81a7adf0c651106, type: 2}
 --- !u!114 &-3732219779705251845
 MonoBehaviour:
   m_ObjectHideFlags: 0
