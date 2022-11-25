@@ -356,6 +356,8 @@ MonoBehaviour:
     m_SerializedLabels: []
   - m_GUID: 5529cf70ce89ab74db88f08d0300235f
     m_Address: Assets/ScriptableObjects/SceneDatas/Locations/Level3.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   - m_GUID: cd63f4189f9bfae429150a6e9de81387
     m_Address: Assets/ScriptableObjects/UI/HUD/Health Event Channel SO.asset
     m_ReadOnly: 0
@@ -386,6 +388,10 @@ MonoBehaviour:
     m_SerializedLabels: []
   - m_GUID: f20abbdf3b757404b81a7adf0c651106
     m_Address: Assets/ScriptableObjects/Channels/Runtime/PlayerDeadChannel.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: bea6b3032a8c9b143a4900bbbddd3ce1
+    m_Address: Assets/ScriptableObjects/UI/HUD/ManaEventChannelSO.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

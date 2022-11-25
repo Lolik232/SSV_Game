@@ -61,6 +61,8 @@ GameObject:
   - component: {fileID: 6429904734341296822}
   - component: {fileID: 5513969224647444367}
   - component: {fileID: 5951797871956850465}
+  - component: {fileID: 3883778745036390565}
+  - component: {fileID: 10410966333511330}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -948,19 +950,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: {fileID: 0}
   _cooldown: 0
---- !u!114 &3883778745036390565
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 16557013547266712}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5bc956ee196fa34d9849921a1018d1f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playerDiedChannel: {fileID: 11400000, guid: f20abbdf3b757404b81a7adf0c651106, type: 2}
+  _manaCost: 10
 --- !u!114 &-3732219779705251845
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1121,6 +1111,35 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 16557013547266712}
   m_Enabled: 1
+--- !u!114 &3883778745036390565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16557013547266712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5bc956ee196fa34d9849921a1018d1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerDiedChannel: {fileID: 11400000, guid: f20abbdf3b757404b81a7adf0c651106, type: 2}
+  _hitSound: {fileID: 8300000, guid: 949b5eafbd93a05428e57e1db0427ba2, type: 3}
+--- !u!114 &10410966333511330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16557013547266712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6799bd2a3ee1a64d9813f69c075120e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _didManaChangeEventChannelSo: {fileID: 11400000, guid: bea6b3032a8c9b143a4900bbbddd3ce1, type: 2}
+  _startMana: 100
+  _manaRegeneration: 20
 --- !u!1 &3238070780658984553
 GameObject:
   m_ObjectHideFlags: 0
