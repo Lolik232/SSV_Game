@@ -1,11 +1,15 @@
 ﻿using System;
-
+using All.Events;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [RequireComponent(typeof(DeadState))]
 public class Damageable : Component, IDamageable
 {
-    [SerializeField] private float _health;
+    [SerializeField] private HealthEventChannelSO _didHealthChangeEventChannelSo;
+    
+    [FormerlySerializedAs("_health")] [SerializeField] private float _startHealth;
+    private float _health;
 
     private StateMachine _machine;
     private DeadState _deadState;
@@ -18,8 +22,12 @@ public class Damageable : Component, IDamageable
     }
     public float Health
     {
-        get;
-        private set;
+        get => _health;
+        private set
+        {
+            _health = value;
+            _didHealthChangeEventChannelSo?.RaiseEvent(_health, MaxHealth);
+        }
     }
     public bool IsDead
     {
@@ -33,8 +41,8 @@ public class Damageable : Component, IDamageable
         _deadState = GetComponent<DeadState>();
         _anim = GetComponent<Animator>();
 
-        MaxHealth = _health;
-        Health = _health;
+        MaxHealth = _startHealth;
+        Health = _startHealth;
     }
 
     public void RestoreHealth(float regeneration)
