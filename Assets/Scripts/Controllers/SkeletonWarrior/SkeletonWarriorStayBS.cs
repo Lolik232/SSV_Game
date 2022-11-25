@@ -11,7 +11,8 @@ public class SkeletonWarriorStayBS : BehaviuorState<SkeletonWarriorBehaviour>
     {
         bool WalkCondition() => ActiveTime > _stayRandomTime && !Entity.TargetDetected;
 
-        bool MoveToTargetCondition() => Entity.TargetDetected;
+        bool MoveToTargetCondition() => Entity.TargetDetected && !(Entity.TargetDirection == Entity.FacingDirection &&
+                                                                   !Entity.TouchingEdge || Entity.TouchingWall);
 
         Transitions.Add(new(Controller.WalkCommand, WalkCondition));
         Transitions.Add(new(Controller.MoveToTargetCommand, MoveToTargetCondition));

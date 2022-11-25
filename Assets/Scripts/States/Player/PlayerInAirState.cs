@@ -4,6 +4,7 @@ using UnityEngine;
 
 public sealed class PlayerInAirState : PlayerState
 {
+    [SerializeField] protected AudioClip _clip;
     [SerializeField] private float _waitForLedgeClimbTime;
 
     public Coroutine JumpCoyoteTimeHolder
@@ -33,6 +34,11 @@ public sealed class PlayerInAirState : PlayerState
                                    !Player.TouchingLedge &&
                                    Player.Behaviour.Grab;
 
+        void GroundedAction()
+        {
+            Player.Source.PlayOneShot(_clip);
+        }
+
         void OnLedgeAction()
         {
             Player.OnLedgeState.DetermineLedgePosition();
@@ -43,7 +49,7 @@ public sealed class PlayerInAirState : PlayerState
             Player.TouchingWallState.DetermineWallPosition();
         }
 
-        Transitions.Add(new(Player.GroundedState, GroundedCondition));
+        Transitions.Add(new(Player.GroundedState, GroundedCondition, GroundedAction));
         Transitions.Add(new(Player.OnLedgeState, OnLedgeCondition, OnLedgeAction));
         Transitions.Add(new(Player.TouchingWallState, TouchingWallCondition, TouchingWallAction));
     }

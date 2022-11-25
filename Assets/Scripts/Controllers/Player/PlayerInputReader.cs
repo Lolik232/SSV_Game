@@ -18,6 +18,8 @@ public class PlayerInputReader : Component,
 {
     private GameInput _gameInput;
 
+    private Inventory _inventory;
+
     [SerializeField] private VoidEventChannelSO _pauseEventChannel = default;
 
     [SerializeField] private float _jumpInputHoldTime;
@@ -76,6 +78,7 @@ public class PlayerInputReader : Component,
 
     private void Awake()
     {
+        _inventory = GetComponentInChildren<Inventory>();
         _camera            = Camera.main;
         _playerInput       = GetComponent<PlayerInput>();
         _moveController    = GetComponent<MoveController>();
@@ -176,6 +179,17 @@ public class PlayerInputReader : Component,
 
     public void OnPause(InputAction.CallbackContext context)
     {
-        if (context.performed) _pauseEventChannel.RaiseEvent();
+        if (context.performed)
+        {
+            _pauseEventChannel.RaiseEvent();
+        }
+    }
+
+    public void OnChangeWeapon(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            _inventory.GetNext();
+        }
     }
 }

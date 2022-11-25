@@ -1,18 +1,101 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using System.Globalization;
 
-public class RangeWeapon : MonoBehaviour
+using UnityEngine;
+using UnityEngine.UIElements;
+
+
+[RequireComponent(typeof(LineRenderer))]
+
+public class RangeWeapon : Weapon
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private float _damage;
+    [SerializeField] private float _radius;
+    [SerializeField] private float _range;
+    [SerializeField] private float _attackSpeed;
+
+    [SerializeField] private LayerMask _whatIsBarier;
+
+    private List<Collider2D> _collisionsBuffer = new();
+
+    private LineRenderer _lr;
+
+    protected override void Awake()
     {
-        
+        base.Awake();
+        _lr = GetComponent<LineRenderer>();
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void Start()
     {
-        
+        _lr.enabled = false;
+
+        TextInfo ti = new CultureInfo("en-US",false).TextInfo;
+        SetAnimationSpeed(ti.ToTitleCase(Name) + "Attack", _attackSpeed);
+    }
+
+    protected override void ApplyEnterActions()
+    {
+        base.ApplyEnterActions();
+        if (!Entity.IsRotationLocked)
+        {
+            Entity.LookAt(Entity.Behaviour.LookAt);
+        }
+
+        Vector2 attackDirection = (Entity.Behaviour.LookAt - Entity.Center).normalized;
+
+        if (Entity.BodyDirection > 0 != attackDirection.x > 0)
+        {
+            Entity.AttackAbility.OnExit();
+            return;
+        }
+
+        Entity.BlockRotation();
+        collisions.Clear();
+
+        RaycastHit2D hit = Physics2D.Raycast(Entity.Center, attackDirection, _range, _whatIsBarier);
+        _lr.SetPosition(0, Entity.Center);
+        _lr.SetPosition(1, hit ? hit.point : Entity.Center + attackDirection * _range);
+
+        _collisionsBuffer = new List<Collider2D>(Physics2D.OverlapCircleAll(hit.point, _radius, whatIsTarget));
+
+        foreach (var collision in _collisionsBuffer)
+        {
+            if (!collisions.Contains(collision))
+            {
+                collisions.Add(collision);
+                OnHit(transform.position, collision, 0f, _damage, false);
+            }
+        }
+
+        StartCoroutine(WaitForEndOfAtack());
+        StartCoroutine(Shoot());
+    }
+
+    private IEnumerator Shoot()
+    {
+        _lr.enabled = true;
+        yield return new WaitForSeconds(0.1f);
+
+        _lr.enabled = false;
+    }
+
+    protected override void ApplyExitActions()
+    {
+        base.ApplyExitActions();
+        Entity.UnlockRotation();
+    }
+
+    private IEnumerator WaitForEndOfAtack()
+    {
+        yield return new WaitUntil(() => ActiveTime > _attackSpeed);
+
+        Entity.AttackAbility.OnExit();
+    }
+
+    private void OnDrawGizmos()
+    {
+        Utility.DrawLine(new CheckArea(Entity.Center, attackPoint), collisions.Count > 0, Color.red);
     }
 }

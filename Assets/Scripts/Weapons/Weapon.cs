@@ -49,16 +49,16 @@ public abstract class Weapon : ComponentBase
 
     protected abstract void Start();
 
-    protected void OnHit(Vector2 attackPoint, Collider2D collider, float force, float damage)
+    public void OnHit(Vector2 attackPoint, Collider2D collider, float force, float damage, bool needPush = true)
     {
         this.attackPoint = attackPoint;
 
         if (collider.TryGetComponent<Entity>(out var entity))
         {
-            if (entity is IPhysical)
+            if (needPush && entity is IPhysical)
             {
                 var physical = entity as IPhysical;
-                StartCoroutine(physical.Push(force, physical.Center - this.attackPoint));
+                entity.StartCoroutine(physical.Push(force, physical.Center - this.attackPoint));
             }
 
             if (entity is IDamageable)

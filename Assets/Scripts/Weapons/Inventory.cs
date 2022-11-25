@@ -2,7 +2,7 @@
 
 public class Inventory : Component
 {
-    private readonly List<Weapon> _weapons = new();
+    private List<Weapon> _weapons = new();
 
     private int _current;
 
@@ -19,11 +19,16 @@ public class Inventory : Component
     private void Start()
     {
         _current = 0;
+        for (int i = 1; i < _weapons.Count; i++)
+        {
+            _weapons[i].enabled = false;
+        }
     }
 
     public void GetNext()
     {
         Current.OnExit();
+        Current.enabled = false;
         if (_current == _weapons.Count - 1)
         {
             _current = 0;
@@ -32,11 +37,14 @@ public class Inventory : Component
         {
             _current++;
         }
+
+        Current.enabled = true;
     }
 
     public void GetPrev()
     {
         Current.OnExit();
+        Current.enabled = false;
         if (_current == 0)
         {
             _current = _weapons.Count - 1;
@@ -45,5 +53,7 @@ public class Inventory : Component
         {
             _current--;
         }
+
+        Current.enabled = true;
     }
 }
