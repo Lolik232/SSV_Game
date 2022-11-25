@@ -10,7 +10,7 @@ public class PlayerTouchingWallState : PlayerState
         base.Start();
         bool GroundedCondition() => Player.Grounded && (Player.Behaviour.Move.y == -1 || !Player.Behaviour.Grab || Player.Behaviour.Attack);
 
-        bool InAirCondition() => !Player.TouchingWall || (!Player.Behaviour.Grab && Player.Behaviour.Move.x != Player.FacingDirection) || Player.Behaviour.Dash;
+        bool InAirCondition() => !Player.TouchingWall || (!Player.Behaviour.Grab && Player.Behaviour.Move.x != Player.FacingDirection);
 
         bool OnLedgeCondition() => Player.TouchingWall && !Player.TouchingLedge;
 

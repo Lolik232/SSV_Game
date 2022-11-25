@@ -11,7 +11,7 @@ public class DeadArea : MonoBehaviour
         if (entity is IDamageable)
         {
             var damageable = entity as IDamageable;
-            damageable.OnDead();
+            damageable.TakeDamage(damageable.Health, transform.position);
         }
     }
 }
