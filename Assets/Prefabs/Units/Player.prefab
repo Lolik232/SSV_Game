@@ -2377,6 +2377,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bow
       objectReference: {fileID: 0}
+    - target: {fileID: 8746175134372676725, guid: 085993b5a4a830747974c93d788657c5, type: 3}
+      propertyPath: m_SortingOrder
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 085993b5a4a830747974c93d788657c5, type: 3}
 --- !u!4 &8907777751933824315 stripped
