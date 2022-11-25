@@ -4,7 +4,7 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - _clip: {fileID: 8300000, guid: 2d1b7db1e4ea67549bc100bbfcf33f60, type: 3}
+  - _clip: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
