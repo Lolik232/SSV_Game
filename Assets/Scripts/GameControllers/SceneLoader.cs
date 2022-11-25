@@ -57,11 +57,10 @@ namespace SceneManagement
                     _gameplayManagersScene.sceneReference.LoadSceneAsync(LoadSceneMode.Additive, true);
                 _gameplayManagerLoadingOpHandle.WaitForCompletion();
                 _gameplayManagerSceneInstance = _gameplayManagerLoadingOpHandle.Result;
-                
+
                 StartGameplay();
             }
 
-          
 
             _fadeRequestChan.FadeIn(_fadeDuration);
         }
@@ -90,19 +89,38 @@ namespace SceneManagement
 #endif
         }
 
+        private IEnumerator ReloadScene()
+        {
+            _fadeRequestChan.FadeOut(_fadeDuration);
+            yield return new WaitForSecondsRealtime(_fadeDuration);
+
+            _currentlyLoadedScene.sceneReference.UnLoadScene().Completed +=
+                obj =>
+                {
+                    LoadNewScene();
+                };
+        }
+
         private void LoadLocation(GameSceneSO scene, bool showLoadingScreen, bool fadeScreen)
         {
             if (_isLoading)
             {
                 return;
             } // if scene just loading
-            
+
             GameInputSingeltone.GameInput.DisableAllInputs();
 
             _sceneToLoad       = scene;
             _showLoadingScreen = showLoadingScreen;
             _isLoading         = true;
-            
+
+
+            if (_sceneToLoad == _currentlyLoadedScene)
+            {
+                StartCoroutine(ReloadScene());
+                return;
+            }
+
             if (_gameplayManagerSceneInstance.Scene == null ||
                 _gameplayManagerSceneInstance.Scene.isLoaded == false)
             {
@@ -125,7 +143,6 @@ namespace SceneManagement
 
             _showLoadingScreen = showLoadingScreen;
             _isLoading         = true;
-
 
             StartCoroutine(UnloadPreviousScene());
         }
@@ -172,7 +189,6 @@ namespace SceneManagement
                 }
 #endif
             }
-
 
             LoadNewScene();
         }

@@ -356,6 +356,36 @@ MonoBehaviour:
     m_SerializedLabels: []
   - m_GUID: 5529cf70ce89ab74db88f08d0300235f
     m_Address: Assets/ScriptableObjects/SceneDatas/Locations/Level3.asset
+  - m_GUID: cd63f4189f9bfae429150a6e9de81387
+    m_Address: Assets/ScriptableObjects/UI/HUD/Health Event Channel SO.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 45ed7c9c5922dcc45b021434e3abae82
+    m_Address: Assets/ScriptableObjects/Settings/DefaultSettings.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: dc291033ae8daa84dbb9e711baa3c51a
+    m_Address: Assets/Scenes/Level1/Global Volume Profile.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: dc90820f4271a764388180497c65b65d
+    m_Address: Assets/Scenes/Level1/Level1 GVP.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 3013d5a9c2919a34b8cd494d4368e823
+    m_Address: Assets/Scenes/Level2/Level2 GVP.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: ab8157b9e62b41140b671c0ca0716eff
+    m_Address: Assets/Scenes/Tiles
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 209111c7d3fe5eb4886bcd642514c07a
+    m_Address: Assets/Scenes/Tile Palletes
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: f20abbdf3b757404b81a7adf0c651106
+    m_Address: Assets/ScriptableObjects/Channels/Runtime/PlayerDeadChannel.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0
