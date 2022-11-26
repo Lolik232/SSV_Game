@@ -12,15 +12,16 @@ public class MenuAction : FSMAction
         stateMachine.menuAnim.SetBool("isTextHidden", true);
 
         stateMachine.menuGroup.interactable = true;
-
+        
+        var button = stateMachine.continueButton.GetComponentInChildren<Button>();
         if (stateMachine._saveSystem.HasSave())
         {
             stateMachine.continueButton.SetActive(true);
-            var button = stateMachine.continueButton.GetComponentInChildren<Button>();
             button.Select();
         }
         else
         {
+            button.interactable = false;
             stateMachine.continueButton.SetActive(false);
             stateMachine.newGameButton.Select();
         }

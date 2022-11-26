@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Input
 {
-    public static class GameInputSingeltone 
+    public static class GameInputSingleton 
     {
         private static GameInput _gameInput;
 

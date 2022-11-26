@@ -259,6 +259,89 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!1 &2645252640091318007
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8270661082711412921}
+  - component: {fileID: 5908576539096657183}
+  m_Layer: 0
+  m_Name: Starting New Game Window
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &8270661082711412921
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2645252640091318007}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 978.6103, y: 142.63078, z: -9.274226}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 356615622437392004}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5908576539096657183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2645252640091318007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ebd3d40dc239b44c809eb764bc9419d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonToSelectOnExit: {fileID: 0}
+  continueButton: {fileID: 0}
+  title: 
+  content: Do you really want to start a new game? All your progress will be lost.
+  onConfirmEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 2fbaa6bf9df41e847931f044603cca79, type: 2}
+        m_TargetAssemblyTypeName: UIInputSO, Assembly-CSharp
+        m_MethodName: OnNewButtonPressed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDeclineEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2645252640091318007}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  hasDeclineEvent: 1
+  onAlternativeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  hasAlternativeEvent: 0
 --- !u!1 &2789926543277100889
 GameObject:
   m_ObjectHideFlags: 0
@@ -573,6 +656,7 @@ Transform:
   - {fileID: 4507116885294234031}
   - {fileID: 1905135312096999618}
   - {fileID: 1338719231173333888}
+  - {fileID: 8270661082711412921}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -643,9 +727,11 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  hasDeclineEvent: 1
   onAlternativeEvent:
     m_PersistentCalls:
       m_Calls: []
+  hasAlternativeEvent: 0
 --- !u!1 &4658137497829197601
 GameObject:
   m_ObjectHideFlags: 0
@@ -1518,9 +1604,11 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  hasDeclineEvent: 1
   onAlternativeEvent:
     m_PersistentCalls:
       m_Calls: []
+  hasAlternativeEvent: 0
 --- !u!1 &7518886193119099672
 GameObject:
   m_ObjectHideFlags: 0
@@ -1953,9 +2041,11 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  hasDeclineEvent: 1
   onAlternativeEvent:
     m_PersistentCalls:
       m_Calls: []
+  hasAlternativeEvent: 0
 --- !u!1 &8448928358510670614
 GameObject:
   m_ObjectHideFlags: 0

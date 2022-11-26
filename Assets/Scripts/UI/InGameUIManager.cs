@@ -65,7 +65,7 @@ public class InGameUIManager : MonoBehaviour
         // _inGameMenu.gameObject.SetActive(true);
 
 
-        GameInputSingeltone.GameInput.EnableMenuInput();
+        GameInputSingleton.GameInput.EnableMenuInput();
     }
 
     private void OnUnpause()
@@ -83,7 +83,7 @@ public class InGameUIManager : MonoBehaviour
 
         Time.timeScale = 1;
 
-        GameInputSingeltone.GameInput.EnableGameplayInput();
+        GameInputSingleton.GameInput.EnableGameplayInput();
     }
 
     private void OnQuit()

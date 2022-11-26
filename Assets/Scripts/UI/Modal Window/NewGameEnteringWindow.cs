@@ -6,10 +6,10 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class QuittingWindow : MonoBehaviour
+public class NewGameEnteringWindow : MonoBehaviour
 {
     [SerializeField] private Button buttonToSelectOnExit;
-    [SerializeField] private Button buttonToSelectOnExit1;
+    [SerializeField] private Button continueButton;
 
     [SerializeField] private string title;
     [SerializeField] private string content;
@@ -29,6 +29,12 @@ public class QuittingWindow : MonoBehaviour
         Action confirmCallback = onConfirmEvent.Invoke;
         Action declineCallback = null;
         Action alternativeCallback = null;
+        
+        if (!continueButton.interactable)
+        {
+            confirmCallback.Invoke();
+            return;
+        }
 
         if (hasDeclineEvent)
         {
@@ -48,13 +54,13 @@ public class QuittingWindow : MonoBehaviour
     {
         GameInputSingleton.GameInput.UI.Enable();
         
-        if (buttonToSelectOnExit != null && buttonToSelectOnExit.interactable)
+        if (continueButton != null && continueButton.interactable)
         {
             buttonToSelectOnExit.Select();
         }
-        else if (buttonToSelectOnExit1 != null)
+        else if (buttonToSelectOnExit != null)
         {
-            buttonToSelectOnExit1.Select();
+            buttonToSelectOnExit.Select();
         }
     }
 }

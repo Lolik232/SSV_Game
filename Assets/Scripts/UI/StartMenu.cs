@@ -11,7 +11,7 @@ namespace UI
 
         private void OnEnable()
         {
-            GameInputSingeltone.GameInput.EnableMenuInput();
+            GameInputSingleton.GameInput.EnableMenuInput();
         }
     }
 }

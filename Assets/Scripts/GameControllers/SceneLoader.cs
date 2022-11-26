@@ -108,7 +108,7 @@ namespace SceneManagement
                 return;
             } // if scene just loading
 
-            GameInputSingeltone.GameInput.DisableAllInputs();
+            GameInputSingleton.GameInput.DisableAllInputs();
 
             _sceneToLoad       = scene;
             _showLoadingScreen = showLoadingScreen;
@@ -137,7 +137,7 @@ namespace SceneManagement
         {
             if (_isLoading) return;
 
-            GameInputSingeltone.GameInput.DisableAllInputs();
+            GameInputSingleton.GameInput.DisableAllInputs();
 
             _sceneToLoad = menuToLoad;
 

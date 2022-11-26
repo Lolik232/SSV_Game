@@ -1,6 +1,6 @@
 ﻿namespace Input
 {
-    public static class GameInputSingeltoneExtension
+    public static class GameInputSingletonExtension
     {
         public static void EnableMenuInput(this GameInput ginp)
         {

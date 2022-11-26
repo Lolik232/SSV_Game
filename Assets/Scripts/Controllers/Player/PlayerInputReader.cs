@@ -100,7 +100,7 @@ public class PlayerInputReader : Component,
     {
         if (_gameInput == null)
         {
-            _gameInput = GameInputSingeltone.GameInput;
+            _gameInput = GameInputSingleton.GameInput;
         }
 
         _gameInput.Gameplay.SetCallbacks(this);

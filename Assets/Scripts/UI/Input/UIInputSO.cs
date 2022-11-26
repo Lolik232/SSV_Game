@@ -25,7 +25,7 @@ public class UIInputSO : ScriptableObject, GameInput.IUIActions
     {
         if (_gameInput == null)
         {
-            _gameInput = GameInputSingeltone.GameInput;
+            _gameInput = GameInputSingleton.GameInput;
         }
 
         _gameInput.UI.SetCallbacks(this);

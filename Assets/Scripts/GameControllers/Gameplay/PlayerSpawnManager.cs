@@ -49,7 +49,7 @@ namespace All.Gameplay
             Debug.Log("Player spawned");
 
             //TODO: send message to PlayerSpawnedChannel for enable input, UI etc.
-            GameInputSingeltone.GameInput.EnableGameplayInput();
+            GameInputSingleton.GameInput.EnableGameplayInput();
         }
     }
 }
