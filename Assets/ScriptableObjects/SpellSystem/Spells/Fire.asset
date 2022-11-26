@@ -17,5 +17,5 @@ MonoBehaviour:
   _name: Fire
   _liveCycleSO: {fileID: 11400000, guid: 57033f6ce22ec2d469d6e2bdd8a10eff, type: 2}
   _effectsSO:
-  - {fileID: 11400000, guid: c329cfee489a641438befd23fbb15c35, type: 2}
+  - {fileID: 0}
   _effects: []

@@ -33,10 +33,6 @@ MonoBehaviour:
     m_Address: Assets/Scenes/Level1.unity
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 2123febb9bc08e741af7292389d56d91
-    m_Address: Assets/Scenes/Startscreen.unity
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: 6101fdfd88686e242a278adcca199cf5
     m_Address: Assets/ScriptableObjects/Channels/Audio/Effects Volume Event Channel.asset
     m_ReadOnly: 0
