@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿
+using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
@@ -18,6 +19,13 @@ public class SkeletonWarriorMoveToTargetBS : BehaviuorState<SkeletonWarriorBehav
     protected override void ApplyUpdateActions()
     {
         base.ApplyUpdateActions();
-        Controller.Move = new Vector2Int(Entity.TargetDirection, 0);
+        if (Mathf.Abs(Entity.TargetPosition.x - Entity.Position.x) > Entity.Size.x)
+        {
+            Controller.Move = new Vector2Int(Entity.TargetDirection, 0);
+        }
+        else
+        {
+            Controller.Move = Vector2Int.zero;
+        }
     }
 }

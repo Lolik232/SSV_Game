@@ -410,6 +410,10 @@ MonoBehaviour:
     m_Address: Assets/ScriptableObjects/SpellSystem/Effects/Apply Strategy/OneTimeApplyStrategy.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 2123febb9bc08e741af7292389d56d91
+    m_Address: Assets/Scenes/Startscreen.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: d160d21b4ee59804cabc734a782d9dd7, type: 2}
   m_SchemaSet:

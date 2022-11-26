@@ -3,7 +3,7 @@
     protected override void Start()
     {
         base.Start();
-        bool GrabCondition() => Entity.Behaviour.Grab && Entity.Behaviour.Move.y != -1 && !Entity.AttackAbility.IsActive;
+        bool GrabCondition() => Entity.Behaviour.Grab && Entity.Behaviour.Move.y != -1 && Entity.AttackAbility.CanWallClimb;
 
         Transitions.Add(new(Ability.Grab, GrabCondition));
     }
