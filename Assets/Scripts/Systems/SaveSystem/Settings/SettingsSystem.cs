@@ -1,18 +1,16 @@
 ﻿using System.Collections;
-
 using All.Events;
-
 using Systems.SaveSystem.Settings.ScriptableObjects;
-
 using UnityEngine;
 
 namespace Systems.SaveSystem.Settings
 {
     public class SettingsSystem : MonoBehaviour
     {
-        [SerializeField] private VoidEventChannelSO _saveSettingsEventChannelSO = default;
-        [SerializeField] private SaveSystem         _saveSystem                 = default;
-        [SerializeField] private SettingsSO         _currentSettings            = default;
+        [SerializeField] private VoidEventChannelSO _saveSettingsEventChannelSO  = default;
+        [SerializeField] private VoidEventChannelSO _resetSettingsEventChannelSO = default;
+        [SerializeField] private SaveSystem         _saveSystem                  = default;
+        [SerializeField] private SettingsSO         _currentSettings             = default;
 
         [SerializeField] private SettingsSO _defaultSettings = default;
 
@@ -28,12 +26,14 @@ namespace Systems.SaveSystem.Settings
             {
                 _saveSystem.SavedSettings.SaveSettings(_defaultSettings);
             }
-            _currentSettings.LoadSavedSettings(_saveSystem.SavedSettings);
+
+            LoadSettings();
         }
 
         private void OnEnable()
         {
-            _saveSettingsEventChannelSO.OnEventRaised += SaveSettings;
+            _saveSettingsEventChannelSO.OnEventRaised  += SaveSettings;
+            // _resetSettingsEventChannelSO.OnEventRaised += ResetToDefault;
         }
 
         private void Start()
@@ -43,7 +43,8 @@ namespace Systems.SaveSystem.Settings
 
         private void OnDisable()
         {
-            _saveSettingsEventChannelSO.OnEventRaised -= SaveSettings;
+            _saveSettingsEventChannelSO.OnEventRaised  -= SaveSettings;
+            // _resetSettingsEventChannelSO.OnEventRaised -= ResetToDefault;
         }
 
         private IEnumerator SetSettings()
@@ -57,6 +58,11 @@ namespace Systems.SaveSystem.Settings
         private void SaveSettings()
         {
             StartCoroutine(SaveSettingsCoroutine());
+        }
+        
+        private void LoadSettings()
+        {
+            _currentSettings.LoadSavedSettings(_saveSystem.SavedSettings);
         }
 
         private IEnumerator SaveSettingsCoroutine()

@@ -4269,7 +4269,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1888999467}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2114112684}
+        m_TargetAssemblyTypeName: UISettingsManager, Assembly-CSharp
+        m_MethodName: ResetToDefault
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1888999467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5297,6 +5309,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 1b323bab-bc55-4533-a1f5-e011787f40aa
     m_ActionName: Gameplay/Pause[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 40726c35-1aa5-48bc-89d2-aa40d532248d
+    m_ActionName: Gameplay/Change Weapon[/Mouse/middleButton]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: UI
@@ -5346,7 +5362,9 @@ MonoBehaviour:
   _musicVolumeEventChannelSO: {fileID: 11400000, guid: d6a5e143f66fd234bb43ef874c3b1693, type: 2}
   _effectsVolumeEventChannelSO: {fileID: 11400000, guid: 6101fdfd88686e242a278adcca199cf5, type: 2}
   _saveSettingsEventChannelSO: {fileID: 11400000, guid: 03e464b9efe0c4c49bddff3551926ffc, type: 2}
+  _resetSettingsEventChannelSO: {fileID: 0}
   _settings: {fileID: 11400000, guid: f6eb78f1a31f6c3488200d318a9a6368, type: 2}
+  _defaultSettings: {fileID: 11400000, guid: 45ed7c9c5922dcc45b021434e3abae82, type: 2}
   _masterVolumeSlider: {fileID: 948133738}
   _musicVolumeSlider: {fileID: 1725798020}
   _effectsVolumeSlider: {fileID: 1594970958}

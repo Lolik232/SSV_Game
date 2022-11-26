@@ -17,5 +17,12 @@ namespace Systems.SaveSystem.Settings.ScriptableObjects
             musicVolume   = settingsSave.musicVolume;
             effectsVolume = settingsSave.effectsVolume;
         }
+
+        public void Set(SettingsSO other)
+        {
+            masterVolume = other.masterVolume;
+            musicVolume = other.musicVolume;
+            effectsVolume = other.effectsVolume;
+        }
     }
 }

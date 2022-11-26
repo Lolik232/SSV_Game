@@ -966,10 +966,42 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 171255026, guid: a58c2637d2d5d7d4b9060c281ba74957, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 171255026, guid: a58c2637d2d5d7d4b9060c281ba74957, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 171255026, guid: a58c2637d2d5d7d4b9060c281ba74957, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1456994519}
+    - target: {fileID: 171255026, guid: a58c2637d2d5d7d4b9060c281ba74957, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 171255026, guid: a58c2637d2d5d7d4b9060c281ba74957, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ResetToDefault
+      objectReference: {fileID: 0}
+    - target: {fileID: 171255026, guid: a58c2637d2d5d7d4b9060c281ba74957, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UISettingsManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 171255026, guid: a58c2637d2d5d7d4b9060c281ba74957, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 1637515242, guid: a58c2637d2d5d7d4b9060c281ba74957, type: 3}
       propertyPath: _hud
       value: 
       objectReference: {fileID: 193136945}
+    - target: {fileID: 348431496653302800, guid: a58c2637d2d5d7d4b9060c281ba74957, type: 3}
+      propertyPath: _defaultSettings
+      value: 
+      objectReference: {fileID: 11400000, guid: 45ed7c9c5922dcc45b021434e3abae82, type: 2}
     - target: {fileID: 1457439845600341724, guid: a58c2637d2d5d7d4b9060c281ba74957, type: 3}
       propertyPath: m_Delegates.Array.size
       value: 2
@@ -1461,6 +1493,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 62af5298f91910d4d81732abafd09a3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1456994519 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 348431496653302800, guid: a58c2637d2d5d7d4b9060c281ba74957, type: 3}
+  m_PrefabInstance: {fileID: 1456994517}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e44fa28de54aca449d16be20931932c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2053671298
