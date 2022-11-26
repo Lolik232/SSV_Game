@@ -1,12 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
+using All.Interfaces;
+
+using Systems.SpellSystem.SpellEffect;
+
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(SpellApplier))]
 
 public abstract class Weapon : ComponentBase
 {
+    protected SpellApplier SpellApplier
+    {
+        get;
+        private set;
+    }
+
     [SerializeField] private string _name;
     [SerializeField] protected LayerMask whatIsTarget;
 
@@ -48,6 +59,7 @@ public abstract class Weapon : ComponentBase
         Inventory = GetComponentInParent<Inventory>();
         Entity = Inventory.GetComponentInParent<Entity>();
         OriginAnim = Entity.GetComponent<Animator>();
+        SpellApplier = GetComponent<SpellApplier>();
     }
 
     protected abstract void Start();
@@ -71,6 +83,11 @@ public abstract class Weapon : ComponentBase
                 {
                     damageable.TakeDamage(damage, attackPoint);
                 }
+            }
+
+            if (entity is ISpellEffectActionVisitor)
+            {
+                SpellApplier.Apply(entity.SpellHolder);
             }
         }
     }

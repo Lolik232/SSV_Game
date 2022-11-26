@@ -29,6 +29,11 @@ public class RangeWeapon : Weapon
         _lr = GetComponent<LineRenderer>();
     }
 
+    private void OnDisable()
+    {
+        _lr.enabled = false;
+    }
+
     protected override void Start()
     {
         _lr.enabled = false;

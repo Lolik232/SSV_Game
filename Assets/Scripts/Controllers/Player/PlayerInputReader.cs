@@ -1,6 +1,9 @@
 ﻿using System;
+
 using All.Events;
+
 using Input;
+
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -14,11 +17,17 @@ public class PlayerInputReader : Component,
                                  IGrabController,
                                  IAttackController,
                                  IDashContorller,
-                                 IAbilityControlller
+                                 IAbilityControlller,
+                                 IBlockableBySpell,
+                                 IBlockable
 {
+    public AbilitySO description;
+
     private GameInput _gameInput;
 
     private Inventory _inventory;
+
+    private Blocker _blocker = new();
 
     [SerializeField] private VoidEventChannelSO _pauseEventChannel = default;
 
@@ -75,27 +84,35 @@ public class PlayerInputReader : Component,
         get => ((IAbilityControlller)_abilityController).Ability;
         set => ((IAbilityControlller)_abilityController).Ability = value;
     }
+    public bool IsLocked
+    {
+        get => _blocker.IsLocked;
+    }
+    public AbilitySO Description
+    {
+        get => description;
+    }
 
     private void Awake()
     {
         _inventory = GetComponentInChildren<Inventory>();
-        _camera            = Camera.main;
-        _playerInput       = GetComponent<PlayerInput>();
-        _moveController    = GetComponent<MoveController>();
-        _jumpController    = GetComponent<JumpController>();
-        _dashController    = GetComponent<DashController>();
-        _grabController    = GetComponent<GrabController>();
-        _attackController  = GetComponent<AttackController>();
+        _camera = Camera.main;
+        _playerInput = GetComponent<PlayerInput>();
+        _moveController = GetComponent<MoveController>();
+        _jumpController = GetComponent<JumpController>();
+        _dashController = GetComponent<DashController>();
+        _grabController = GetComponent<GrabController>();
+        _attackController = GetComponent<AttackController>();
         _abilityController = GetComponent<AbilityController>();
     }
 
     private void Update()
     {
-        _moveController.LookAt =  _camera.ScreenToWorldPoint(_mouseInputPosition);
-        _jumpController.Jump   &= Time.time < _jumpInputStartTime + _jumpInputHoldTime;
-        _dashController.Dash   &= Time.time < _dashInputStartTime + _dashInputPressTime;
+        _moveController.LookAt = _camera.ScreenToWorldPoint(_mouseInputPosition);
+        _jumpController.Jump &= Time.time < _jumpInputStartTime + _jumpInputHoldTime;
+        _dashController.Dash &= Time.time < _dashInputStartTime + _dashInputPressTime;
     }
-    
+
     private void OnEnable()
     {
         if (_gameInput == null)
@@ -117,8 +134,9 @@ public class PlayerInputReader : Component,
         if (context.performed)
         {
             _jumpController.Jump = true;
-            _jumpInputStartTime  = Time.time;
-        } else if (context.canceled)
+            _jumpInputStartTime = Time.time;
+        }
+        else if (context.canceled)
         {
             _jumpController.Jump = false;
         }
@@ -129,7 +147,8 @@ public class PlayerInputReader : Component,
         if (context.performed)
         {
             _grabController.Grab = true;
-        } else if (context.canceled)
+        }
+        else if (context.canceled)
         {
             _grabController.Grab = false;
         }
@@ -140,8 +159,9 @@ public class PlayerInputReader : Component,
         if (context.performed)
         {
             _dashController.Dash = true;
-            _dashInputStartTime  = Time.time;
-        } else if (context.canceled)
+            _dashInputStartTime = Time.time;
+        }
+        else if (context.canceled)
         {
             _dashController.Dash = false;
         }
@@ -152,7 +172,8 @@ public class PlayerInputReader : Component,
         if (context.performed)
         {
             _attackController.Attack = true;
-        } else if (context.canceled)
+        }
+        else if (context.canceled)
         {
             _attackController.Attack = false;
         }
@@ -163,7 +184,8 @@ public class PlayerInputReader : Component,
         if (context.performed)
         {
             _abilityController.Ability = true;
-        } else if (context.canceled)
+        }
+        else if (context.canceled)
         {
             _abilityController.Ability = false;
         }
@@ -190,6 +212,22 @@ public class PlayerInputReader : Component,
         if (context.performed)
         {
             _inventory.GetNext();
+        }
+    }
+
+    public void Block()
+    {
+        GameInputSingeltone.GameInput.DisablePlayerInput();
+        _blocker.AddBlock();
+        Move = Vector2Int.zero;
+    }
+
+    public void Unlock()
+    { 
+        _blocker.RemoveBlock();
+        if (!IsLocked)
+        {
+            GameInputSingeltone.GameInput.EnablePlayerInput();
         }
     }
 }

@@ -1,10 +1,18 @@
 ﻿using System.Collections.Generic;
 
+using Systems.SpellSystem.SpellEffect;
+
 using UnityEngine;
 
-[RequireComponent(typeof(AudioSource))]
+[RequireComponent(typeof(AudioSource), typeof(SpellHolder))]
+
 public class Entity : MonoBehaviour
 {
+    public SpellHolder SpellHolder{
+        get;
+        private set;
+    }
+
     private List<Component> _components = new();
 
     public AudioSource Source
@@ -24,6 +32,7 @@ public class Entity : MonoBehaviour
         GetComponents(Checkers);
         GetComponents(_components);
         Source = GetComponent<AudioSource>();
+        SpellHolder = GetComponent<SpellHolder>();
     }
 
     private void FixedUpdate()

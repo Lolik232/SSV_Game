@@ -1,8 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-public class BehaviourController : Component
+public class BehaviourController : Component, IBlockableBySpell
 {
+    public AbilitySO description;
+
+    private Blocker _blocker = new();
+
     private readonly List<dynamic> _states = new();
 
     public dynamic Entity
@@ -15,6 +19,26 @@ public class BehaviourController : Component
     {
         get;
         private set;
+    }
+
+    public AbilitySO Description
+    {
+        get => description;
+    }
+
+    public bool IsLocked
+    {
+        get => _blocker.IsLocked;
+    }
+
+    public void Block()
+    {
+        _blocker.AddBlock();
+    }
+
+    public void Unlock()
+    {
+        _blocker.RemoveBlock();
     }
 
     protected virtual void Awake()
@@ -40,9 +64,12 @@ public class BehaviourController : Component
 
     public void GetTransition(dynamic target)
     {
-        Current.OnExit();
-        Current = target;
-        Current.OnEnter();
+        if (!IsLocked)
+        {
+            Current.OnExit();
+            Current = target;
+            Current.OnEnter();
+        }
     }
 
     protected void GetBehaviourStates<BehaviourT>() where BehaviourT : BehaviourController

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec233d8abed14a6d80bf31df113a37c6, type: 3}
   m_Name: BlockAbility
   m_EditorClassIdentifier: 
-  _guid: 
+  _guid: d9cf8eef803dbeb48be410d1e376d77a
   description: 
-  _abilitiesToBlock: []
+  _abilitiesToBlock:
+  - {fileID: 11400000, guid: 99a88a3b80e77ee4ca12906185d729bb, type: 2}

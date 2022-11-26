@@ -5,7 +5,7 @@
 [RequireComponent(typeof(SkeletonWarriorWalkBS), typeof(SkeletonWarriorStayBS), typeof(SkeletonWarriorMoveToTargetBS))]
 [RequireComponent(typeof(SkeletonWarriorAttackBS))]
 
-public class SkeletonWarriorBehaviour : BehaviourController, IMoveController, IAttackController
+public class SkeletonWarriorBehaviour : BehaviourController, IMoveController, IAttackController 
 {
     private MoveController _moveController;
     private AttackController _attackController;
@@ -61,5 +61,14 @@ public class SkeletonWarriorBehaviour : BehaviourController, IMoveController, IA
         AttackCommand = GetComponent<SkeletonWarriorAttackBS>();
 
         GetBehaviourStates<SkeletonWarriorBehaviour>();
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+        if (IsLocked)
+        {
+            Move = Vector2Int.zero;
+        }
     }
 }

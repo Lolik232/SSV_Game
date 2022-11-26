@@ -63,6 +63,8 @@ GameObject:
   - component: {fileID: 5951797871956850465}
   - component: {fileID: 3883778745036390565}
   - component: {fileID: 10410966333511330}
+  - component: {fileID: 431889317679443203}
+  - component: {fileID: 5240224390174223817}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -357,6 +359,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc84e82edc8e4bf428463fdd0d27981e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  description: {fileID: 11400000, guid: 99a88a3b80e77ee4ca12906185d729bb, type: 2}
   _pauseEventChannel: {fileID: 11400000, guid: f5306b4c59c6ba14ab61637668548883, type: 2}
   _jumpInputHoldTime: 0.1
   _dashInputPressTime: 0.5
@@ -1140,6 +1143,33 @@ MonoBehaviour:
   _didManaChangeEventChannelSo: {fileID: 11400000, guid: bea6b3032a8c9b143a4900bbbddd3ce1, type: 2}
   _startMana: 100
   _manaRegeneration: 20
+--- !u!114 &431889317679443203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16557013547266712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 718c45a27ddcafa41946032d87cddb89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5240224390174223817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16557013547266712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4d7569a4fa748e496d35b6e3f7bc08e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spells: []
+  _spellFilterSO: {fileID: 0}
+  _exclusiveTableSO: {fileID: 0}
 --- !u!1 &3238070780658984553
 GameObject:
   m_ObjectHideFlags: 0

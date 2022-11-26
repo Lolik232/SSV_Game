@@ -145,7 +145,7 @@ MonoBehaviour:
   whatIsTarget:
     serializedVersion: 2
     m_Bits: 1024
-  _damage: 3
+  _damage: 6
   _radius: 0.3
   _range: 11
   _attackSpeed: 0.05
