@@ -48,7 +48,7 @@ Material:
     - _Size: 0.374
     - _Speed: 3.12
     m_Colors:
-    - _Color: {r: 26.566036, g: 2.4206238, b: 0.41726682, a: 0}
+    - _Color: {r: 48.10064, g: 1.5882295, b: 1.5882295, a: 0}
     - _Direction: {r: -0.89, g: 1.13, b: 0, a: 0}
     - _Size: {r: 0.1, g: 0.1, b: 0, a: 0}
   m_BuildTextureStacks: []
