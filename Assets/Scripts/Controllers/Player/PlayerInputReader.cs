@@ -193,7 +193,10 @@ public class PlayerInputReader : Component,
 
     public void OnDirection(InputAction.CallbackContext context)
     {
-       _mouseInputPosition = context.ReadValue<Vector2>();
+        if (_playerInput.currentControlScheme == "Keyboard")
+        {
+            _mouseInputPosition = context.ReadValue<Vector2>();
+        }
     }
 
     public void OnPause(InputAction.CallbackContext context)
