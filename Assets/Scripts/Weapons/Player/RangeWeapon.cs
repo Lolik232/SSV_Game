@@ -21,6 +21,8 @@ public class RangeWeapon : Weapon
 
     private LineRenderer _lr;
 
+    private CheckArea _ray;
+
     protected override void Awake()
     {
         base.Awake();
@@ -32,7 +34,7 @@ public class RangeWeapon : Weapon
         _lr.enabled = false;
 
         TextInfo ti = new CultureInfo("en-US",false).TextInfo;
-        SetAnimationSpeed(ti.ToTitleCase(Name) + "Attack", _attackSpeed);
+        SetAnimationSpeed(ti.ToTitleCase(Name) + "Attack", Mathf.Max(_attackSpeed, 0.2f));
     }
 
     protected override void ApplyEnterActions()
@@ -55,10 +57,12 @@ public class RangeWeapon : Weapon
         collisions.Clear();
 
         RaycastHit2D hit = Physics2D.Raycast(Entity.Center, attackDirection, _range, _whatIsBarier);
-        _lr.SetPosition(0, Entity.Center);
-        _lr.SetPosition(1, hit ? hit.point : Entity.Center + attackDirection * _range);
+        _ray = new(Entity.Center, hit ? hit.point : Entity.Center + attackDirection * _range);
 
-        _collisionsBuffer = new List<Collider2D>(Physics2D.OverlapCircleAll(hit.point, _radius, whatIsTarget));
+        _lr.SetPosition(0, _ray.a);
+        _lr.SetPosition(1, _ray.b);
+
+        _collisionsBuffer = new List<Collider2D>(Physics2D.OverlapCircleAll(_ray.b, _radius, whatIsTarget));
 
         foreach (var collision in _collisionsBuffer)
         {
@@ -96,6 +100,7 @@ public class RangeWeapon : Weapon
 
     private void OnDrawGizmos()
     {
-        Utility.DrawLine(new CheckArea(Entity.Center, attackPoint), collisions.Count > 0, Color.red);
+        Utility.DrawLine(_ray, collisions.Count > 0, Color.red);
+        Utility.DrawCircle(_ray.b, _radius, collisions.Count > 0, Color.red);
     }
 }

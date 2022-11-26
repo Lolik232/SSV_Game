@@ -56,7 +56,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: de2731c994ffa2849b8695ed49bb4520, type: 2}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -147,8 +147,8 @@ MonoBehaviour:
     m_Bits: 1024
   _damage: 3
   _radius: 0.3
-  _range: 15
-  _attackSpeed: 0.1
+  _range: 11
+  _attackSpeed: 0.05
   _whatIsBarier:
     serializedVersion: 2
     m_Bits: 1544

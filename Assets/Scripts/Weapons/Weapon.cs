@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 
 using UnityEngine;
 
@@ -8,6 +9,8 @@ public abstract class Weapon : ComponentBase
 {
     [SerializeField] private string _name;
     [SerializeField] protected LayerMask whatIsTarget;
+
+    private Coroutine _exitTimeOutHolder;
 
     protected Vector2 attackPoint;
 
@@ -111,11 +114,24 @@ public abstract class Weapon : ComponentBase
             OriginAnim.SetTrigger(Name);
             Debug.Log(Name);
         }
+
+        if (_exitTimeOutHolder != null)
+        {
+            StopCoroutine(_exitTimeOutHolder);
+        }
     }
 
     protected override void ApplyExitActions()
     {
         base.ApplyExitActions();
+        _exitTimeOutHolder = StartCoroutine(ExitTineOut());
+    }
+
+    private IEnumerator ExitTineOut()
+    {
+        yield return new WaitUntil(() => ActiveTime > 0.2f);
+
+        _exitTimeOutHolder = null;
         if (Name != string.Empty)
         {
             Anim.SetBool(Name, false);

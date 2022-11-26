@@ -29,7 +29,7 @@ public class AttackAbility : Ability
     protected override void Start()
     {
         base.Start();
-        enterConditions.Add(() => Entity.Behaviour.Attack && InactiveTime > _cooldown && (Entity is not IPower || Entity.Mana > 0f));
+        enterConditions.Add(() => Entity.Behaviour.Attack && InactiveTime > _cooldown && (Entity is not IPower || Entity.Mana >= _manaCost));
         exitConditions.Add(() => false);
     }
 

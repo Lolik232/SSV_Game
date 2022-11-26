@@ -5,6 +5,7 @@ using All.Events;
 
 using UnityEngine;
 
+[RequireComponent(typeof(Physical))]
 public class TargetChecker : Component, ITargetChecker, IChecker
 {
     [SerializeField] private PickableColor _color;
@@ -12,6 +13,8 @@ public class TargetChecker : Component, ITargetChecker, IChecker
     [SerializeField] private LayerMask _whatIsTarget;
 
     [SerializeField] private float _targetDetectRadius;
+
+    private Physical _physical;
 
     public float TargetDistance
     {
@@ -36,6 +39,11 @@ public class TargetChecker : Component, ITargetChecker, IChecker
         get => TargetPosition.x - transform.position.x > 0 ? 1 : -1;
     }
 
+    private void Awake()
+    {
+        _physical = GetComponent<Physical>();
+    }
+
     private void FixedUpdate()
     {
         TargetDistance = Mathf.Abs((TargetPosition - (Vector2)transform.position).magnitude);
@@ -53,7 +61,7 @@ public class TargetChecker : Component, ITargetChecker, IChecker
 
     public void DoChecks()
     {
-        Collider2D hit = Physics2D.OverlapCircle(transform.position, _targetDetectRadius, _whatIsTarget);
+        Collider2D hit = Physics2D.OverlapCircle(_physical.Center, _targetDetectRadius, _whatIsTarget);
         TargetDetected = hit;
         if (TargetDetected)
         {

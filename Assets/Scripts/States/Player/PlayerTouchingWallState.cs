@@ -8,7 +8,7 @@ public class PlayerTouchingWallState : PlayerState
     protected override void Start()
     {
         base.Start();
-        bool GroundedCondition() => Player.Grounded && (Player.Behaviour.Move.y == -1 || !Player.Behaviour.Grab || Player.Behaviour.Attack);
+        bool GroundedCondition() => Player.Grounded && (Player.Behaviour.Move.y == -1 || !Player.Behaviour.Grab || Player.AttackAbility.IsActive);
 
         bool InAirCondition() => !Player.TouchingWall || (!Player.Behaviour.Grab && Player.Behaviour.Move.x != Player.FacingDirection);
 
