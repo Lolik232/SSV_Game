@@ -22,7 +22,7 @@ public class InGameMenu : MonoBehaviour
     {
         _resumeButton.onClick.AddListener(Resume);
         _backToMainMenuButton.onClick.AddListener(BackToMainMenu);
-        _quitGameButton.onClick.AddListener(QuitGame);
+        _quitGameButton.onClick.AddListener(OnQuit);
     }
 
     private void OnClose()
@@ -35,7 +35,7 @@ public class InGameMenu : MonoBehaviour
         Resume();
         _resumeButton.onClick.RemoveListener(Resume);
         _backToMainMenuButton.onClick.RemoveListener(BackToMainMenu);
-        _quitGameButton.onClick.RemoveListener(QuitGame);
+        _quitGameButton.onClick.RemoveListener(OnQuit);
     }
 
     private void Resume()
@@ -48,7 +48,7 @@ public class InGameMenu : MonoBehaviour
         BackToMainMenuClicked?.Invoke();
     }
 
-    private void QuitGame()
+    private void OnQuit()
     {
         QuitGameClicked?.Invoke();
     }
