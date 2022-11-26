@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 
 [RequireComponent(typeof(WallChecker), typeof(GroundChecker), typeof(EdgeChecker))]
-[RequireComponent(typeof(TargetChecker))]
+[RequireComponent(typeof(TargetChecker), typeof(AttackChecker))]
 
 [RequireComponent(typeof(SkeletonWarriorGroundedState), typeof(SkeletonWarriorInAirState))]
 
@@ -17,12 +17,13 @@ using UnityEngine;
 [RequireComponent(typeof(MoveHorizontalAbility), typeof(AttackAbility))]
 
 public class SkeletonWarrior : Entity, IPhysical, IRotateable, IMovable, IDamageable,
-                             IGrounded, ITouchingWall, ITouchingEdge, ITargetChecker
+                             IGrounded, ITouchingWall, ITouchingEdge, ITargetChecker, IAttackChecker
 {
     private GroundChecker _groundChecker;
     private WallChecker _wallChecker;
     private EdgeChecker _edgeChecker;
     private TargetChecker _targetChecker;
+    private AttackChecker _attackChecker;
 
     private Physical _physical;
     private Movable _movable;
@@ -115,6 +116,8 @@ public class SkeletonWarrior : Entity, IPhysical, IRotateable, IMovable, IDamage
     public float TargetDistance => ((ITargetChecker)_targetChecker).TargetDistance;
 
     public int TargetDirection => ((ITargetChecker)_targetChecker).TargetDirection;
+
+    public bool AttackPermited => ((IAttackChecker)_attackChecker).AttackPermited;
 
     public void BlockPosition()
     {
@@ -250,6 +253,7 @@ public class SkeletonWarrior : Entity, IPhysical, IRotateable, IMovable, IDamage
         _edgeChecker = GetComponent<EdgeChecker>();
         _groundChecker = GetComponent<GroundChecker>();
         _targetChecker = GetComponent<TargetChecker>();
+        _attackChecker = GetComponent<AttackChecker>();
 
         _physical = GetComponent<Physical>();
         _movable = GetComponent<Movable>();

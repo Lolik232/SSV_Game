@@ -19,21 +19,22 @@ public class SkeletonWarriorAttackBS : BehaviuorState<SkeletonWarriorBehaviour>
     {
         base.ApplyEnterActions();
         Controller.Move = Vector2Int.zero;
+        _prepareForAttack = true;
+        Controller.LookAt = Entity.TargetPosition;
         StartCoroutine(Attack());
     }
 
     private IEnumerator Attack()
     {
-        _prepareForAttack = true;
-        while (ActiveTime < _prepareForAttackTime)
+        while (ActiveTime < _prepareForAttackTime && Entity.AttackPermited)
         {
             yield return null;
+            Controller.LookAt = Entity.TargetPosition;
         }
 
         _prepareForAttack = false;
-        if (Entity.TargetDetected && Entity.TargetDistance < ((MeleeWeapon)Entity.Inventory.Current).Length)
+        if (Entity.AttackPermited)
         {
-            Controller.LookAt = Entity.TargetPosition;
             Controller.Attack = true;
         }
     }

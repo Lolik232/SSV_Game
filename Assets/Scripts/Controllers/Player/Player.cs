@@ -8,7 +8,7 @@ using UnityEngine;
 [RequireComponent(typeof(LedgeChecker))]
 
 [RequireComponent(typeof(Physical), typeof(Movable), typeof(Crouchable))]
-[RequireComponent(typeof(Rotateable), typeof(Damageable))]
+[RequireComponent(typeof(Rotateable), typeof(Damageable), typeof(Power))]
 
 [RequireComponent(typeof(PlayerInputReader))]
 
@@ -23,10 +23,9 @@ using UnityEngine;
 [RequireComponent(typeof(AttackAbility))]
 
 public class Player : Entity, IPhysical, IMovable, ICrouchable, IRotateable,
-                              IGrounded, ITouchingWall, ITouchingCeiling, ITouchingLedge, IDamageable
+                              IGrounded, ITouchingWall, ITouchingCeiling, ITouchingLedge, IDamageable, IPower
 { 
     [SerializeField] private VoidEventChannelSO _playerDiedChannel = default;
-
     [SerializeField] private AudioClip _hitSound;
     
     private WallChecker _wallChecker;
@@ -39,6 +38,7 @@ public class Player : Entity, IPhysical, IMovable, ICrouchable, IRotateable,
     private Crouchable _crouchable;
     private Rotateable _rotateable;
     private Damageable _damageable;
+    private Power _power;
 
     public PlayerInputReader Behaviour
     {
@@ -172,6 +172,18 @@ public class Player : Entity, IPhysical, IMovable, ICrouchable, IRotateable,
     public float Health => ((IDamageable)_damageable).Health;
 
     public bool IsDead => ((IDamageable)_damageable).IsDead;
+
+    public float MaxMana
+    {
+        get => ((IPower)_power).MaxMana;
+        set => ((IPower)_power).MaxMana = value;
+    }
+
+    public float Mana => ((IPower)_power).Mana;
+
+    public bool ManaRegenBlocked => ((IPower)_power).ManaRegenBlocked;
+
+    public float ManaRegeneration => ((IPower)_power).ManaRegeneration;
 
     public void BlockPosition()
     {
@@ -337,6 +349,7 @@ public class Player : Entity, IPhysical, IMovable, ICrouchable, IRotateable,
         _rotateable = GetComponent<Rotateable>();
         _crouchable = GetComponent<Crouchable>();
         _damageable = GetComponent<Damageable>();
+        _power = GetComponent<Power>();
 
         Behaviour = GetComponent<PlayerInputReader>();
 
@@ -354,9 +367,37 @@ public class Player : Entity, IPhysical, IMovable, ICrouchable, IRotateable,
         AttackAbility = GetComponent<AttackAbility>();
     }
 
+    private void Update()
+    {
+        if (!ManaRegenBlocked)
+        {
+            RestoreMana(ManaRegeneration * Time.deltaTime);
+        }
+    }
+
     private void Start()
     {
         RotateIntoDirection(1);
         Stand();
+    }
+
+    public void UseMana(float cost)
+    {
+        ((IPower)_power).UseMana(cost);
+    }
+
+    public void RestoreMana(float regeneration)
+    {
+        ((IPower)_power).RestoreMana(regeneration);
+    }
+
+    public void BlockManaRegen()
+    {
+        ((IPower)_power).BlockManaRegen();
+    }
+
+    public void UnlockManaRegen()
+    {
+        ((IPower)_power).UnlockManaRegen();
     }
 }

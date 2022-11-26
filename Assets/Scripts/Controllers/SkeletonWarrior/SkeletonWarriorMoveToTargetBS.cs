@@ -9,7 +9,7 @@ public class SkeletonWarriorMoveToTargetBS : BehaviuorState<SkeletonWarriorBehav
     {
         bool StayCondition() => !Entity.TargetDetected || !Entity.TouchingEdge || Entity.TouchingWall;
 
-        bool AttackCondition() => Entity.TargetDistance < ((MeleeWeapon)Entity.Inventory.Current).Length;
+        bool AttackCondition() => Entity.AttackPermited;
 
         Transitions.Add(new(Controller.StayCommand, StayCondition));
         Transitions.Add(new(Controller.AttackCommand, AttackCondition));
@@ -18,13 +18,6 @@ public class SkeletonWarriorMoveToTargetBS : BehaviuorState<SkeletonWarriorBehav
     protected override void ApplyUpdateActions()
     {
         base.ApplyUpdateActions();
-        if (Mathf.Abs(Entity.Position.x - Entity.TargetPosition.x) > Entity.Size.x)
-        {
-            Controller.Move = new Vector2Int(Entity.TargetDirection, 0);
-        }
-        else
-        {
-            Controller.Move = Vector2Int.zero;
-        }
+        Controller.Move = new Vector2Int(Entity.TargetDirection, 0);
     }
 }
