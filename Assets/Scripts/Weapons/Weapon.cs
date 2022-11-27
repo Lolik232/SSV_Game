@@ -94,7 +94,7 @@ public abstract class Weapon : ComponentBase
                 else
                 {
                     player.Behaviour.Block();
-                    _stanHolder = StartCoroutine(StanTimeOut(player));
+                    _stanHolder = player.StartCoroutine(StanTimeOut(player));
                 }
             }
 
@@ -189,8 +189,11 @@ public abstract class Weapon : ComponentBase
     private IEnumerator StanTimeOut(Player player)
     {
         yield return new WaitForSeconds(0.5f);
-        player.Behaviour.Unlock();
+        if (player != null && player.enabled)
+        {
+            player.Behaviour.Unlock();
 
-        _stanHolder = null;
+            _stanHolder = null;
+        }
     }
 }
