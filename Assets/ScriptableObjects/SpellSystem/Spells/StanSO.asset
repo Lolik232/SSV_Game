@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d65a8e80ce647e8ba00eded152ad67c, type: 3}
+  m_Name: StanSO
+  m_EditorClassIdentifier: 
+  _guid: 6273c8e4476fdfd4ebe7f130ab5de03a
+  description: 
+  _name: stan
+  _liveCycleSO: {fileID: 11400000, guid: 57033f6ce22ec2d469d6e2bdd8a10eff, type: 2}
+  _effectsSO:
+  - {fileID: 11400000, guid: 77c68e23163c8024595ae73eca4cca56, type: 2}
+  _effects:
+  - _effectSO: {fileID: 11400000, guid: 77c68e23163c8024595ae73eca4cca56, type: 2}

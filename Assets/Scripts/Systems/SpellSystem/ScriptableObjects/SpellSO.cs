@@ -41,6 +41,7 @@ namespace Systems.SpellSystem.SpellEffect
             _liveCycle = _liveCycleSO.CreateLiveCycle();
             _effects.Clear();
             _effects = _effectsSO.Select(e => e.CreateEffect()).ToList();
+            Debug.Log("initialized");
             // _effectsSO.ForEach(e => _effects.Add(e.CreateEffect()));
         }
 

@@ -33,10 +33,6 @@ MonoBehaviour:
     m_Address: Assets/Scenes/Level1.unity
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 2123febb9bc08e741af7292389d56d91
-    m_Address: Assets/Scenes/Startscreen.unity
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: 6101fdfd88686e242a278adcca199cf5
     m_Address: Assets/ScriptableObjects/Channels/Audio/Effects Volume Event Channel.asset
     m_ReadOnly: 0
@@ -392,6 +388,30 @@ MonoBehaviour:
     m_SerializedLabels: []
   - m_GUID: bea6b3032a8c9b143a4900bbbddd3ce1
     m_Address: Assets/ScriptableObjects/UI/HUD/ManaEventChannelSO.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 6273c8e4476fdfd4ebe7f130ab5de03a
+    m_Address: Assets/ScriptableObjects/SpellSystem/Spells/StanSO.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: d9cf8eef803dbeb48be410d1e376d77a
+    m_Address: Assets/ScriptableObjects/SpellSystem/Effects/Actions/BlockAbility.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 77c68e23163c8024595ae73eca4cca56
+    m_Address: Assets/ScriptableObjects/SpellSystem/Effects/BlockEffect.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 99a88a3b80e77ee4ca12906185d729bb
+    m_Address: Assets/ScriptableObjects/SpellSystem/Effects/Actions/BehaviurSO.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 1faac8aa5f200ca418bddda6fa7326ad
+    m_Address: Assets/ScriptableObjects/SpellSystem/Effects/Apply Strategy/OneTimeApplyStrategy.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 2123febb9bc08e741af7292389d56d91
+    m_Address: Assets/Scenes/Startscreen.unity
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

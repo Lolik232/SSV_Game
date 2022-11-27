@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Prefabs/Gameplay/Modal Window.prefab.meta
+guid: 57073f80d4849d64a810ace0f53c9084
+PrefabImporter:
+========
+guid: 99a88a3b80e77ee4ca12906185d729bb
+NativeFormatImporter:
+>>>>>>>> enemies:Assets/ScriptableObjects/SpellSystem/Effects/Actions/BehaviurSO.asset.meta
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

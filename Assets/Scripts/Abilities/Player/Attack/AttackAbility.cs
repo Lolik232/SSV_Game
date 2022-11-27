@@ -11,6 +11,13 @@ public class AttackAbility : Ability
     [SerializeField] private float _manaCost;
 
     private Coroutine _manaRegenTimeOutHolder;
+    private Coroutine _wallClimbTimeOutHolder;
+
+    public bool CanWallClimb
+    {
+        get;
+        private set;
+    } = true;
 
     public AttackAS Attack
     {
@@ -49,6 +56,15 @@ public class AttackAbility : Ability
 
             Entity.UseMana(_manaCost);
         }
+
+        if (_wallClimbTimeOutHolder != null)
+        {
+            StopCoroutine(_wallClimbTimeOutHolder);
+        }
+        else
+        {
+            CanWallClimb = false;
+        }
     }
 
     protected override void ApplyExitActions()
@@ -60,6 +76,16 @@ public class AttackAbility : Ability
         {
             _manaRegenTimeOutHolder = StartCoroutine(ManaRegenTimeOut());
         }
+
+        _wallClimbTimeOutHolder = StartCoroutine(WallClimbTimeOut());
+    }
+
+    private IEnumerator WallClimbTimeOut()
+    {
+        yield return new WaitForSeconds(0.2f);
+
+        CanWallClimb = true;
+        _wallClimbTimeOutHolder = null;
     }
 
     private IEnumerator ManaRegenTimeOut()

@@ -23,7 +23,7 @@ namespace Systems.SpellSystem.SpellEffect
 
         public void AddSpell(SpellSO spell)
         {
-            if (_spellFilterSO.InBlackList(spell))
+            if (_spellFilterSO != null && _spellFilterSO.InBlackList(spell))
                 return;
 
             _spells.Add(spell.CreateSpell());

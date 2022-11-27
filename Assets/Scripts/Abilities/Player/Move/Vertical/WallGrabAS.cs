@@ -9,10 +9,10 @@ public class WallGrabAS : StayAS<MoveOnWallAbility>
                                                          Mathf.Abs(Entity.Velocity.y) < 0.01f;
 
         bool SlideCondition() => (Entity.Behaviour.Grab && Entity.Behaviour.Move.y == -1 || !Entity.Behaviour.Grab) &&
-                                                         Mathf.Abs(Entity.Velocity.y) < 0.01f || Entity.AttackAbility.IsActive;
+                                                         Mathf.Abs(Entity.Velocity.y) < 0.01f || !Entity.AttackAbility.CanWallClimb;
 
-        Transitions.Add(new(Ability.Climb, ClimbCondition));
         Transitions.Add(new(Ability.Slide, SlideCondition));
+        Transitions.Add(new(Ability.Climb, ClimbCondition));
     }
 
     protected override void ApplyEnterActions()

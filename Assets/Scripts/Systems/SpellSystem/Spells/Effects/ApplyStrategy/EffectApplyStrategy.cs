@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Systems.SpellSystem.SpellEffect
 {
     [Serializable]
-    public abstract class EffectApplyStrategy : ICloneable
+    public class EffectApplyStrategy : ICloneable
     {
         [SerializeField] private EffectApplyStrategySO _applyStrategySO;
         public EffectApplyStrategySO ApplyStrategySO => _applyStrategySO;
@@ -16,10 +16,13 @@ namespace Systems.SpellSystem.SpellEffect
             _applyStrategySO = applyStrategySo;
         }
 
-        public abstract void OnApply();
-        public abstract bool CanApply();
+        public virtual void OnApply()  { }
+        public virtual bool CanApply() { return true;}
 
         // public abstract void LogicUpdate();
-        public abstract object Clone();
+        public virtual object Clone()
+        {
+            return new EffectApplyStrategy(_applyStrategySO);
+        }
     }
 }

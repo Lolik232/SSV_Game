@@ -1,24 +1,36 @@
 ﻿using System;
+
 using All.Events;
+
 using Input;
+
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 
 [RequireComponent(typeof(MoveController), typeof(JumpController), typeof(DashController))]
 [RequireComponent(typeof(GrabController), typeof(AttackController), typeof(AbilityController))]
 [RequireComponent(typeof(PlayerInput))]
 public class PlayerInputReader : Component,
-    GameInput.IGameplayActions,
-    IMoveController,
-    IJumpController,
-    IGrabController,
-    IAttackController,
-    IDashContorller,
-    IAbilityControlller
+                                 GameInput.IGameplayActions,
+                                 IMoveController,
+                                 IJumpController,
+                                 IGrabController,
+                                 IAttackController,
+                                 IDashContorller,
+                                 IAbilityControlller,
+                                 IBlockableBySpell,
+                                 IBlockable
 {
+    [SerializeField] private SpriteRenderer _stan;
+
+    public AbilitySO description;
+
     private GameInput _gameInput;
 
     private Inventory _inventory;
+
+    private Blocker _blocker = new();
 
     [SerializeField] private VoidEventChannelSO _pauseEventChannel = default;
 
@@ -81,6 +93,14 @@ public class PlayerInputReader : Component,
         get => ((IAbilityControlller)_abilityController).Ability;
         set => ((IAbilityControlller)_abilityController).Ability = value;
     }
+    public bool IsLocked
+    {
+        get => _blocker.IsLocked;
+    }
+    public AbilitySO Description
+    {
+        get => description;
+    }
 
     private void Awake()
     {
@@ -121,6 +141,10 @@ public class PlayerInputReader : Component,
         _gameInput.Gameplay.SetCallbacks(this);
     }
 
+    private void Start()
+    {
+        _stan.enabled = false;
+    }
 
     public void OnMovement(InputAction.CallbackContext context)
     {
@@ -207,6 +231,24 @@ public class PlayerInputReader : Component,
         if (context.performed)
         {
             _inventory.GetNext();
+        }
+    }
+
+    public void Block()
+    {
+        _stan.enabled = true;
+        GameInputSingeltone.GameInput.DisablePlayerInput();
+        _blocker.AddBlock();
+        Move = Vector2Int.zero;
+    }
+
+    public void Unlock()
+    {
+        _stan.enabled = false;
+        _blocker.RemoveBlock();
+        if (!IsLocked)
+        {
+            GameInputSingeltone.GameInput.EnablePlayerInput();
         }
     }
 }

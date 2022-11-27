@@ -5799,7 +5799,7 @@ MonoBehaviour:
   _saveSettingsEventChannelSO: {fileID: 11400000, guid: 03e464b9efe0c4c49bddff3551926ffc, type: 2}
   _resetSettingsEventChannelSO: {fileID: 0}
   _settings: {fileID: 11400000, guid: f6eb78f1a31f6c3488200d318a9a6368, type: 2}
-  _defaultSettings: {fileID: 11400000, guid: 45ed7c9c5922dcc45b021434e3abae82, type: 2}
+  _defaultSettings: {fileID: 0}
   _masterVolumeSlider: {fileID: 948133738}
   _musicVolumeSlider: {fileID: 1725798020}
   _effectsVolumeSlider: {fileID: 1594970958}

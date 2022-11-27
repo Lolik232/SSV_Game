@@ -1,5 +1,10 @@
 ﻿using System.Collections;
+
 using All.Events;
+using All.Interfaces;
+
+using Systems.SpellSystem.SpellEffect.Actions;
+
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
@@ -22,12 +27,14 @@ using UnityEngine;
 [RequireComponent(typeof(DashAbility))]
 [RequireComponent(typeof(AttackAbility))]
 
+[RequireComponent(typeof(PlayerEffectApplyVisitor))]
+
 public class Player : Entity, IPhysical, IMovable, ICrouchable, IRotateable,
-                              IGrounded, ITouchingWall, ITouchingCeiling, ITouchingLedge, IDamageable, IPower
-{ 
+                              IGrounded, ITouchingWall, ITouchingCeiling, ITouchingLedge, IDamageable, IPower, ISpellEffectActionVisitor
+{
     [SerializeField] private VoidEventChannelSO _playerDiedChannel = default;
     [SerializeField] private AudioClip _hitSound;
-    
+
     private WallChecker _wallChecker;
     private GroundChecker _groundChecker;
     private CeilChecker _ceilChecker;
@@ -103,6 +110,11 @@ public class Player : Entity, IPhysical, IMovable, ICrouchable, IRotateable,
     {
         get;
         private set;
+    }
+
+    public PlayerEffectApplyVisitor PlayerEffectApplyVisitor
+    {
+        get; private set;
     }
 
     public Vector2 Position => ((IPhysical)_physical).Position;
@@ -209,7 +221,7 @@ public class Player : Entity, IPhysical, IMovable, ICrouchable, IRotateable,
     {
         ((IRotateable)_rotateable).LookAt(position);
     }
-    
+
     public void OnDead()
     {
         ((IDamageable)_damageable).OnDead();
@@ -221,7 +233,7 @@ public class Player : Entity, IPhysical, IMovable, ICrouchable, IRotateable,
     private IEnumerator AfterDeadTimeOut()
     {
         yield return new WaitForSeconds(2f);
-    } 
+    }
 
     public IEnumerator Push(float force, Vector2 angle)
     {
@@ -311,12 +323,12 @@ public class Player : Entity, IPhysical, IMovable, ICrouchable, IRotateable,
     public void TakeDamage(float damage, Vector2 attackPoint)
     {
         LookAt(attackPoint);
-        
+
         if (_hitSound != null)
         {
             Source.PlayOneShot(_hitSound, 1f);
         }
-        
+
         ((IDamageable)_damageable).TakeDamage(damage, attackPoint);
     }
 
@@ -365,6 +377,8 @@ public class Player : Entity, IPhysical, IMovable, ICrouchable, IRotateable,
         LedgeClimbAbility = GetComponent<LedgeClimbAbility>();
         DashAbility = GetComponent<DashAbility>();
         AttackAbility = GetComponent<AttackAbility>();
+
+        PlayerEffectApplyVisitor = GetComponent<PlayerEffectApplyVisitor>();
     }
 
     private void Update()
@@ -399,5 +413,15 @@ public class Player : Entity, IPhysical, IMovable, ICrouchable, IRotateable,
     public void UnlockManaRegen()
     {
         ((IPower)_power).UnlockManaRegen();
+    }
+
+    public void Visit(DamageAction damageAction)
+    {
+        ((ISpellEffectActionVisitor)PlayerEffectApplyVisitor).Visit(damageAction);
+    }
+
+    public void Visit(BlockAbilityAction blockAbilityAction)
+    {
+        ((ISpellEffectActionVisitor)PlayerEffectApplyVisitor).Visit(blockAbilityAction);
     }
 }

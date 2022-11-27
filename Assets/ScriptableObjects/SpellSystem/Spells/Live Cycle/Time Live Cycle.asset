@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebea9ef0dc8345c5bae74f292a6d66b7, type: 3}
   m_Name: Time Live Cycle
   m_EditorClassIdentifier: 
+  _time: 0.1

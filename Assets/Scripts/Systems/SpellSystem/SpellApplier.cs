@@ -22,7 +22,7 @@ namespace Systems.SpellSystem.SpellEffect
         {
             foreach (var spellApplyProbability in _spellsToApply)
             {
-                if (Random.Range(0f, 1f) >= spellApplyProbability.probability)
+                if (Random.Range(0f, 1f) <= spellApplyProbability.probability)
                 {
                     holderToApply.AddSpell(spellApplyProbability.spellToApply);
                 }

@@ -4,10 +4,10 @@
     {
         base.Start();
         bool GrabCondition() => !Entity.Behaviour.Grab || Entity.Behaviour.Move.y != 1;
-        bool SlideCondition() => Entity.AttackAbility.IsActive;
+        bool SlideCondition() => !Entity.AttackAbility.CanWallClimb;
 
-        Transitions.Add(new(Ability.Grab, GrabCondition));
         Transitions.Add(new(Ability.Slide, SlideCondition));
+        Transitions.Add(new(Ability.Grab, GrabCondition));
     }
 
     protected override void ApplyEnterActions()

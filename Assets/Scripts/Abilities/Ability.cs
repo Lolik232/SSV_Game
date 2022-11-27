@@ -5,7 +5,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(AbilitiesManager))]
 
-public abstract class Ability : ComponentBase
+public abstract class Ability : ComponentBase, IBlockableBySpell
 {
     public AbilitySO description;
 
@@ -56,6 +56,10 @@ public abstract class Ability : ComponentBase
     {
         get;
         set;
+    }
+    public AbilitySO Description
+    {
+        get => description;
     }
 
     protected virtual void Awake()
