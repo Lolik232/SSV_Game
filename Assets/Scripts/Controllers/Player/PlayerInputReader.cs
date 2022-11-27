@@ -237,7 +237,7 @@ public class PlayerInputReader : Component,
     public void Block()
     {
         _stan.enabled = true;
-        GameInputSingeltone.GameInput.DisablePlayerInput();
+        GameInputSingleton.GameInput.DisablePlayerInput();
         _blocker.AddBlock();
         Move = Vector2Int.zero;
     }
@@ -248,7 +248,7 @@ public class PlayerInputReader : Component,
         _blocker.RemoveBlock();
         if (!IsLocked)
         {
-            GameInputSingeltone.GameInput.EnablePlayerInput();
+            GameInputSingleton.GameInput.EnablePlayerInput();
         }
     }
 }
