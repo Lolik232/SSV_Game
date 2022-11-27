@@ -12,7 +12,6 @@ public class UISettingsManager : MonoBehaviour
     [SerializeField] private FloatEventChannelSO _musicVolumeEventChannelSO   = default;
     [SerializeField] private FloatEventChannelSO _effectsVolumeEventChannelSO = default;
     [SerializeField] private VoidEventChannelSO  _saveSettingsEventChannelSO  = default;
-    [SerializeField] private VoidEventChannelSO  _resetSettingsEventChannelSO  = default;
 
     [SerializeField] private SettingsSO _settings;
     [SerializeField] private SettingsSO _defaultSettings;
