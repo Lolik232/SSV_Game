@@ -60,7 +60,7 @@ public class Power : Component, IPower
         }
 
         Mana = Mathf.Clamp(Mana + regeneration, 0, MaxMana);
-        Debug.Log(this + " Health: " + Mana);
+        // Debug.Log(this + "Mana: " + Mana);
     }
 
     public void UnlockManaRegen()

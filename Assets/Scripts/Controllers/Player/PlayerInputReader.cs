@@ -8,13 +8,13 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(GrabController), typeof(AttackController), typeof(AbilityController))]
 [RequireComponent(typeof(PlayerInput))]
 public class PlayerInputReader : Component,
-                                 GameInput.IGameplayActions,
-                                 IMoveController,
-                                 IJumpController,
-                                 IGrabController,
-                                 IAttackController,
-                                 IDashContorller,
-                                 IAbilityControlller
+    GameInput.IGameplayActions,
+    IMoveController,
+    IJumpController,
+    IGrabController,
+    IAttackController,
+    IDashContorller,
+    IAbilityControlller
 {
     private GameInput _gameInput;
 
@@ -27,17 +27,17 @@ public class PlayerInputReader : Component,
 
     private Vector2 _mouseInputPosition;
 
-    private Camera      _camera;
+    private Camera _camera;
     private PlayerInput _playerInput;
 
     private float _jumpInputStartTime;
     private float _dashInputStartTime;
 
-    private MoveController    _moveController;
-    private JumpController    _jumpController;
-    private DashController    _dashController;
-    private GrabController    _grabController;
-    private AttackController  _attackController;
+    private MoveController _moveController;
+    private JumpController _jumpController;
+    private DashController _dashController;
+    private GrabController _grabController;
+    private AttackController _attackController;
     private AbilityController _abilityController;
 
     public Vector2Int Move
@@ -45,31 +45,37 @@ public class PlayerInputReader : Component,
         get => ((IMoveController)_moveController).Move;
         set => ((IMoveController)_moveController).Move = value;
     }
+
     public Vector2 LookAt
     {
         get => ((IMoveController)_moveController).LookAt;
         set => ((IMoveController)_moveController).LookAt = value;
     }
+
     public bool Jump
     {
         get => ((IJumpController)_jumpController).Jump;
         set => ((IJumpController)_jumpController).Jump = value;
     }
+
     public bool Grab
     {
         get => ((IGrabController)_grabController).Grab;
         set => ((IGrabController)_grabController).Grab = value;
     }
+
     public bool Attack
     {
         get => ((IAttackController)_attackController).Attack;
         set => ((IAttackController)_attackController).Attack = value;
     }
+
     public bool Dash
     {
         get => ((IDashContorller)_dashController).Dash;
         set => ((IDashContorller)_dashController).Dash = value;
     }
+
     public bool Ability
     {
         get => ((IAbilityControlller)_abilityController).Ability;
@@ -79,23 +85,32 @@ public class PlayerInputReader : Component,
     private void Awake()
     {
         _inventory = GetComponentInChildren<Inventory>();
-        _camera            = Camera.main;
-        _playerInput       = GetComponent<PlayerInput>();
-        _moveController    = GetComponent<MoveController>();
-        _jumpController    = GetComponent<JumpController>();
-        _dashController    = GetComponent<DashController>();
-        _grabController    = GetComponent<GrabController>();
-        _attackController  = GetComponent<AttackController>();
+        _camera = Camera.main;
+        _playerInput = GetComponent<PlayerInput>();
+        _moveController = GetComponent<MoveController>();
+        _jumpController = GetComponent<JumpController>();
+        _dashController = GetComponent<DashController>();
+        _grabController = GetComponent<GrabController>();
+        _attackController = GetComponent<AttackController>();
         _abilityController = GetComponent<AbilityController>();
     }
 
     private void Update()
     {
-        _moveController.LookAt =  _camera.ScreenToWorldPoint(_mouseInputPosition);
-        _jumpController.Jump   &= Time.time < _jumpInputStartTime + _jumpInputHoldTime;
-        _dashController.Dash   &= Time.time < _dashInputStartTime + _dashInputPressTime;
+        if (_playerInput.currentControlScheme == "Keyboard")
+        {
+            _moveController.LookAt = _camera.ScreenToWorldPoint(_mouseInputPosition);
+        }
+        else
+        {
+            _moveController.LookAt = (Vector2)transform.position + _mouseInputPosition * 10f;
+        }
+        
+        // _moveController.LookAt = _camera.ScreenToWorldPoint(_mouseInputPosition);
+        _jumpController.Jump &= Time.time < _jumpInputStartTime + _jumpInputHoldTime;
+        _dashController.Dash &= Time.time < _dashInputStartTime + _dashInputPressTime;
     }
-    
+
     private void OnEnable()
     {
         if (_gameInput == null)
@@ -117,8 +132,9 @@ public class PlayerInputReader : Component,
         if (context.performed)
         {
             _jumpController.Jump = true;
-            _jumpInputStartTime  = Time.time;
-        } else if (context.canceled)
+            _jumpInputStartTime = Time.time;
+        }
+        else if (context.canceled)
         {
             _jumpController.Jump = false;
         }
@@ -129,7 +145,8 @@ public class PlayerInputReader : Component,
         if (context.performed)
         {
             _grabController.Grab = true;
-        } else if (context.canceled)
+        }
+        else if (context.canceled)
         {
             _grabController.Grab = false;
         }
@@ -140,8 +157,9 @@ public class PlayerInputReader : Component,
         if (context.performed)
         {
             _dashController.Dash = true;
-            _dashInputStartTime  = Time.time;
-        } else if (context.canceled)
+            _dashInputStartTime = Time.time;
+        }
+        else if (context.canceled)
         {
             _dashController.Dash = false;
         }
@@ -152,7 +170,8 @@ public class PlayerInputReader : Component,
         if (context.performed)
         {
             _attackController.Attack = true;
-        } else if (context.canceled)
+        }
+        else if (context.canceled)
         {
             _attackController.Attack = false;
         }
@@ -163,7 +182,8 @@ public class PlayerInputReader : Component,
         if (context.performed)
         {
             _abilityController.Ability = true;
-        } else if (context.canceled)
+        }
+        else if (context.canceled)
         {
             _abilityController.Ability = false;
         }
@@ -171,10 +191,7 @@ public class PlayerInputReader : Component,
 
     public void OnDirection(InputAction.CallbackContext context)
     {
-        if (_playerInput.currentControlScheme == "Keyboard")
-        {
-            _mouseInputPosition = context.ReadValue<Vector2>();
-        }
+        _mouseInputPosition = context.ReadValue<Vector2>();
     }
 
     public void OnPause(InputAction.CallbackContext context)
