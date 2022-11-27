@@ -61,11 +61,29 @@ public class TargetChecker : Component, ITargetChecker, IChecker
 
     public void DoChecks()
     {
-        Collider2D hit = Physics2D.OverlapCircle(_physical.Center, _targetDetectRadius, _whatIsTarget);
-        TargetDetected = hit;
-        if (TargetDetected)
+        var hits = Physics2D.OverlapCircleAll(_physical.Center, _targetDetectRadius, _whatIsTarget);
+        if (TargetDetected = hits.Length > 0)
         {
-            TargetPosition = hit.transform.position;
+            Collider2D nearest = hits[0];
+            foreach (var hit in hits)
+            {
+                if ((hit.transform.position - transform.position).magnitude < (nearest.transform.position - transform.position).magnitude)
+                {
+                    nearest = hit;
+                }
+            }
+
+            if (TargetDetected)
+            {
+                if (nearest.GetComponent<Entity>() is IPhysical physical)
+                {
+                    TargetPosition = physical.Center;
+                }
+                else
+                {
+                    TargetPosition = nearest.transform.position;
+                }
+            }
         }
     }
 }

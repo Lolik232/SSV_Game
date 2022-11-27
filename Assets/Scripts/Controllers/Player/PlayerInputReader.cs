@@ -10,7 +10,9 @@ using UnityEngine.Rendering;
 
 [RequireComponent(typeof(MoveController), typeof(JumpController), typeof(DashController))]
 [RequireComponent(typeof(GrabController), typeof(AttackController), typeof(AbilityController))]
-[RequireComponent(typeof(PlayerInput))]
+[RequireComponent(typeof(PlayerInput), typeof(TargetChecker))]
+
+
 public class PlayerInputReader : Component,
                                  GameInput.IGameplayActions,
                                  IMoveController,
@@ -22,6 +24,9 @@ public class PlayerInputReader : Component,
                                  IBlockableBySpell,
                                  IBlockable
 {
+    private TargetChecker _targetChecker;
+    private Player _player;
+
     [SerializeField] private SpriteRenderer _stan;
 
     public AbilitySO description;
@@ -104,6 +109,8 @@ public class PlayerInputReader : Component,
 
     private void Awake()
     {
+        _targetChecker = GetComponent<TargetChecker>();
+        _player = GetComponent<Player>();
         _inventory = GetComponentInChildren<Inventory>();
         _camera = Camera.main;
         _playerInput = GetComponent<PlayerInput>();
@@ -121,12 +128,19 @@ public class PlayerInputReader : Component,
         {
             _moveController.LookAt = _camera.ScreenToWorldPoint(_mouseInputPosition);
         }
+        else if (_targetChecker.TargetDetected)
+        {
+            _moveController.LookAt = _targetChecker.TargetPosition;
+        }
+        else if (Move != Vector2Int.zero)
+        {
+            _moveController.LookAt = _player.Center + (Vector2)Move * 10f;
+        }
         else
         {
-            _moveController.LookAt = (Vector2)transform.position + _mouseInputPosition * 10f;
+            _moveController.LookAt = _player.Center + _player.FacingDirection * 10f * Vector2.right;
         }
-        
-        // _moveController.LookAt = _camera.ScreenToWorldPoint(_mouseInputPosition);
+
         _jumpController.Jump &= Time.time < _jumpInputStartTime + _jumpInputHoldTime;
         _dashController.Dash &= Time.time < _dashInputStartTime + _dashInputPressTime;
     }
