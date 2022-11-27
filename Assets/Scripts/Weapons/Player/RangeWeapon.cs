@@ -45,10 +45,6 @@ public class RangeWeapon : Weapon
     protected override void ApplyEnterActions()
     {
         base.ApplyEnterActions();
-        if (!Entity.IsRotationLocked)
-        {
-            Entity.LookAt(Entity.Behaviour.LookAt);
-        }
 
         Vector2 attackDirection = (Entity.Behaviour.LookAt - Entity.Center).normalized;
 
@@ -57,8 +53,6 @@ public class RangeWeapon : Weapon
             Entity.AttackAbility.OnExit();
             return;
         }
-
-        Entity.BlockRotation();
         collisions.Clear();
 
         RaycastHit2D hit = Physics2D.Raycast(Entity.Center, attackDirection, _range, _whatIsBarier);
@@ -88,12 +82,6 @@ public class RangeWeapon : Weapon
         yield return new WaitForSeconds(0.1f);
 
         _lr.enabled = false;
-    }
-
-    protected override void ApplyExitActions()
-    {
-        base.ApplyExitActions();
-        Entity.UnlockRotation();
     }
 
     private IEnumerator WaitForEndOfAtack()

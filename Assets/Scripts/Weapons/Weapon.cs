@@ -12,6 +12,8 @@ using UnityEngine;
 
 public abstract class Weapon : ComponentBase
 {
+    private Coroutine _stanHolder;
+
     protected SpellApplier SpellApplier
     {
         get;
@@ -70,18 +72,29 @@ public abstract class Weapon : ComponentBase
 
         if (collider.TryGetComponent<Entity>(out var entity))
         {
-            if (needPush && entity is IPhysical)
+            if (needPush && entity is IPhysical physical)
             {
-                var physical = entity as IPhysical;
                 entity.StartCoroutine(physical.Push(force, physical.Center - this.attackPoint));
             }
 
-            if (entity is IDamageable)
+            if (entity is IDamageable damageable)
             {
-                var damageable = entity as IDamageable;
                 if (!damageable.IsDead)
                 {
                     damageable.TakeDamage(damage, attackPoint);
+                }
+            }
+
+            if (entity is Player player)
+            {
+                if (_stanHolder != null)
+                {
+                    StopCoroutine(_stanHolder);
+                }
+                else
+                {
+                    player.Behaviour.Block();
+                    _stanHolder = StartCoroutine(StanTimeOut(player));
                 }
             }
 
@@ -91,6 +104,8 @@ public abstract class Weapon : ComponentBase
             }
         }
     }
+
+
 
     public override void OnEnter()
     {
@@ -134,8 +149,16 @@ public abstract class Weapon : ComponentBase
 
         if (_exitTimeOutHolder != null)
         {
+            Entity.UnlockRotation();
             StopCoroutine(_exitTimeOutHolder);
         }
+
+        if (!Entity.IsRotationLocked)
+        {
+            Entity.LookAt(Entity.Behaviour.LookAt);
+        }
+
+        Entity.BlockRotation();
     }
 
     protected override void ApplyExitActions()
@@ -154,10 +177,20 @@ public abstract class Weapon : ComponentBase
             Anim.SetBool(Name, false);
             Debug.Log(Name);
         }
+
+        Entity.UnlockRotation();
     }
 
     protected void SetAnimationSpeed(string clipName, float duration)
     {
         Utility.SetAnimationSpeed(OriginAnim, clipName, Name, duration);
+    }
+
+    private IEnumerator StanTimeOut(Player player)
+    {
+        yield return new WaitForSeconds(0.5f);
+        player.Behaviour.Unlock();
+
+        _stanHolder = null;
     }
 }

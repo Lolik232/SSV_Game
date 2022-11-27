@@ -7,6 +7,7 @@ using UnityEngine.U2D.Animation;
 
 public class MeleeWeapon : Weapon
 {
+
     [SerializeField] private float _length;
     [SerializeField] private float _attackSpeed;
     [SerializeField] private float _force;
@@ -33,21 +34,8 @@ public class MeleeWeapon : Weapon
     protected override void ApplyEnterActions()
     {
         base.ApplyEnterActions();
-
-        if (!Entity.IsRotationLocked)
-        {
-            Entity.LookAt(Entity.Behaviour.LookAt);
-        }
-
-        Entity.BlockRotation();
         collisions.Clear();
         StartCoroutine(WaitForEndOfAtack());
-    }
-
-    protected override void ApplyExitActions()
-    {
-        base.ApplyExitActions();
-        Entity.UnlockRotation();
     }
 
     protected override void ApplyUpdateActions()
