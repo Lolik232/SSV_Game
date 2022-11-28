@@ -31,12 +31,12 @@ public class BehaviourController : Component, IBlockableBySpell
         get => _blocker.IsLocked;
     }
 
-    public void Block()
+    public virtual void Block()
     {
         _blocker.AddBlock();
     }
 
-    public void Unlock()
+    public virtual void Unlock()
     {
         _blocker.RemoveBlock();
     }
@@ -53,6 +53,7 @@ public class BehaviourController : Component, IBlockableBySpell
 
     protected virtual void Update()
     {
+        if(IsLocked) return;
         Current.OnUpdate();
     }
 
@@ -81,4 +82,6 @@ public class BehaviourController : Component, IBlockableBySpell
             _states.Add(state);
         }
     }
+    
+
 }

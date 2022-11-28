@@ -1,12 +1,16 @@
-﻿using UnityEngine;
+﻿using System;
+using Unity.VisualScripting;
+using UnityEngine;
 
 [RequireComponent(typeof(MoveController), typeof(AttackController))]
 
 [RequireComponent(typeof(SkeletonWarriorWalkBS), typeof(SkeletonWarriorStayBS), typeof(SkeletonWarriorMoveToTargetBS))]
 [RequireComponent(typeof(SkeletonWarriorAttackBS))]
 
-public class SkeletonWarriorBehaviour : BehaviourController, IMoveController, IAttackController 
-{
+public class SkeletonWarriorBehaviour : BehaviourController, IMoveController, IAttackController{
+    [SerializeField] private SpriteRenderer _stan;
+
+    
     private MoveController _moveController;
     private AttackController _attackController;
 
@@ -70,5 +74,30 @@ public class SkeletonWarriorBehaviour : BehaviourController, IMoveController, IA
         {
             Move = Vector2Int.zero;
         }
+    }
+
+    private void OnDisable()
+    {
+        _stan.enabled = false;
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+        _stan.enabled = false;
+    }
+
+    public override void Block()
+    {
+        base.Block();
+        _stan.enabled = true;
+       
+        Move = Vector2Int.zero;
+    }
+
+    public override void Unlock()
+    {
+        base.Unlock();
+        _stan.enabled = false;
     }
 }
