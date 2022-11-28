@@ -1,34 +1,30 @@
 ﻿using System.Collections;
-
+using All.Interfaces;
+using Systems.SpellSystem.SpellEffect.Actions;
+using TestComponents;
 using Unity.VisualScripting;
-
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
-
 [RequireComponent(typeof(WallChecker), typeof(GroundChecker), typeof(EdgeChecker))]
 [RequireComponent(typeof(TargetChecker), typeof(AttackChecker))]
-
 [RequireComponent(typeof(SkeletonWarriorGroundedState), typeof(SkeletonWarriorInAirState))]
-
 [RequireComponent(typeof(Physical), typeof(Movable), typeof(Rotateable))]
 [RequireComponent(typeof(Damageable))]
-
 [RequireComponent(typeof(SkeletonWarriorBehaviour))]
-
 [RequireComponent(typeof(MoveHorizontalAbility), typeof(AttackAbility))]
-
 public class SkeletonWarrior : Entity, IPhysical, IRotateable, IMovable, IDamageable,
-                             IGrounded, ITouchingWall, ITouchingEdge, ITargetChecker, IAttackChecker
+                               IGrounded, ITouchingWall, ITouchingEdge, ITargetChecker, IAttackChecker,
+                               ISpellEffectActionVisitor
 {
     private GroundChecker _groundChecker;
-    private WallChecker _wallChecker;
-    private EdgeChecker _edgeChecker;
+    private WallChecker   _wallChecker;
+    private EdgeChecker   _edgeChecker;
     private TargetChecker _targetChecker;
     private AttackChecker _attackChecker;
 
-    private Physical _physical;
-    private Movable _movable;
+    private Physical   _physical;
+    private Movable    _movable;
     private Rotateable _rotateable;
     private Damageable _damageable;
 
@@ -58,6 +54,12 @@ public class SkeletonWarrior : Entity, IPhysical, IRotateable, IMovable, IDamage
         private set;
     }
     public Inventory Inventory
+    {
+        get;
+        private set;
+    }
+
+    public ISpellEffectActionVisitor SkeleteonSpellApplyVisitor
     {
         get;
         private set;
@@ -251,30 +253,42 @@ public class SkeletonWarrior : Entity, IPhysical, IRotateable, IMovable, IDamage
     {
         base.Awake();
 
-        _wallChecker = GetComponent<WallChecker>();
-        _edgeChecker = GetComponent<EdgeChecker>();
+        _wallChecker   = GetComponent<WallChecker>();
+        _edgeChecker   = GetComponent<EdgeChecker>();
         _groundChecker = GetComponent<GroundChecker>();
         _targetChecker = GetComponent<TargetChecker>();
         _attackChecker = GetComponent<AttackChecker>();
 
-        _physical = GetComponent<Physical>();
-        _movable = GetComponent<Movable>();
+        _physical   = GetComponent<Physical>();
+        _movable    = GetComponent<Movable>();
         _rotateable = GetComponent<Rotateable>();
         _damageable = GetComponent<Damageable>();
 
         Behaviour = GetComponent<SkeletonWarriorBehaviour>();
 
         GroundedState = GetComponent<SkeletonWarriorGroundedState>();
-        InAirState = GetComponent<SkeletonWarriorInAirState>();
+        InAirState    = GetComponent<SkeletonWarriorInAirState>();
 
         MoveHorizontalAbility = GetComponent<MoveHorizontalAbility>();
-        AttackAbility = GetComponent<AttackAbility>();
+        AttackAbility         = GetComponent<AttackAbility>();
 
         Inventory = GetComponentInChildren<Inventory>();
+
+        SkeleteonSpellApplyVisitor = GetComponent<SkeletonEffectApplyVisitor>();
     }
 
     private void Start()
     {
         RotateIntoDirection(-1);
+    }
+
+    public void Visit(DamageAction damageAction)
+    {
+        SkeleteonSpellApplyVisitor.Visit(damageAction);
+    }
+
+    public void Visit(BlockAbilityAction blockAbilityAction)
+    {
+        SkeleteonSpellApplyVisitor.Visit(blockAbilityAction);
     }
 }

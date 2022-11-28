@@ -33,7 +33,7 @@ public class SkeletonWarriorAttackBS : BehaviuorState<SkeletonWarriorBehaviour>
         }
 
         _prepareForAttack = false;
-        if (Entity.AttackPermited)
+        if (Entity.AttackPermited && !Entity.Behaviour.IsLocked)
         {
             Controller.Attack = true;
         }

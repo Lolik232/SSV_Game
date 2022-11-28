@@ -2433,6 +2433,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 419892272669476488, guid: 85541185c3b67904c80dc7e83ab0c41e, type: 3}
+      propertyPath: _spellsToApply.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 419892272669476488, guid: 85541185c3b67904c80dc7e83ab0c41e, type: 3}
+      propertyPath: _spellsToApply.Array.data[0].probability
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 419892272669476488, guid: 85541185c3b67904c80dc7e83ab0c41e, type: 3}
+      propertyPath: _spellsToApply.Array.data[0].spellToApply
+      value: 
+      objectReference: {fileID: 11400000, guid: 6273c8e4476fdfd4ebe7f130ab5de03a, type: 2}
     - target: {fileID: 1722718722470275133, guid: 85541185c3b67904c80dc7e83ab0c41e, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -2515,7 +2527,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8102075181438412010, guid: 85541185c3b67904c80dc7e83ab0c41e, type: 3}
       propertyPath: _damage
-      value: 25
+      value: 17
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 85541185c3b67904c80dc7e83ab0c41e, type: 3}
@@ -2531,6 +2543,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5135331856560676693}
     m_Modifications:
+    - target: {fileID: 916458424302993233, guid: 085993b5a4a830747974c93d788657c5, type: 3}
+      propertyPath: _attackSpeed
+      value: 0.05
+      objectReference: {fileID: 0}
     - target: {fileID: 1428139145375693425, guid: 085993b5a4a830747974c93d788657c5, type: 3}
       propertyPath: m_RootBone
       value: 
