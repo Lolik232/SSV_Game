@@ -18,23 +18,23 @@ namespace Systems.SpellSystem.SpellEffect.Editor
                 EditorUtility.OpenPropertyEditor(_effectSo);
         }
 
-        public override void OnInspectorGUI()
-        {
-            base.OnInspectorGUI();
-
-            EditorGUILayout.BeginHorizontal();
-            _effectSo = (EffectSO)EditorGUILayout.ObjectField(_effectSo, typeof(EffectSO));
-            EditorGUILayout.EndHorizontal();
-            
-            if (_effectSo != null && GUILayout.Button("Add effect"))
-            {
-                _spellSO.AddEffect(_effectSo);
-            }
-
-            if (_spellSO.EffectsSO.Count != 0 && GUILayout.Button("Initialize Spell"))
-            {
-                _spellSO.InitializeSpell();
-            }
-        }
+        // public override void OnInspectorGUI()
+        // {
+        //     base.OnInspectorGUI();
+        //     //
+        //     // EditorGUILayout.BeginHorizontal();
+        //     // _effectSo = (EffectSO)EditorGUILayout.ObjectField(_effectSo, typeof(EffectSO));
+        //     // EditorGUILayout.EndHorizontal();
+        //     //
+        //     // if (_effectSo != null && GUILayout.Button("Add effect"))
+        //     // {
+        //     //     _spellSO.AddEffect(_effectSo);
+        //     // }
+        //     //
+        //     // if (_spellSO.EffectsSO.Count != 0 && GUILayout.Button("Initialize Spell"))
+        //     // {
+        //     //     _spellSO.InitializeSpell();
+        //     // }
+        // }
     }
 }

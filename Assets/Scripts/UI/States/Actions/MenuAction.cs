@@ -1,5 +1,7 @@
 using FSM;
+
 using UnityEngine;
+using UnityEngine.UI;
 
 [CreateAssetMenu(menuName = "FSM/Actions/Menu Action")]
 public class MenuAction : FSMAction
@@ -10,8 +12,19 @@ public class MenuAction : FSMAction
         stateMachine.menuAnim.SetBool("isTextHidden", true);
 
         stateMachine.menuGroup.interactable = true;
-
-        stateMachine.continueButton.SetActive(stateMachine._saveSystem.HasSave());
+        
+        var button = stateMachine.continueButton.GetComponentInChildren<Button>();
+        if (stateMachine._saveSystem.HasSave())
+        {
+            stateMachine.continueButton.SetActive(true);
+            button.Select();
+        }
+        else
+        {
+            button.interactable = false;
+            stateMachine.continueButton.SetActive(false);
+            stateMachine.newGameButton.Select();
+        }
     }
 
     public override void OnExit(BaseStateMachine stateMachine)

@@ -2,7 +2,7 @@
 
 [RequireComponent(typeof(Rotateable), typeof(Physical), typeof(WallChecker))]
 
-public class LedgeChecker : MonoBehaviour, ITouchingLedge, IChecker
+public class LedgeChecker : Component, ITouchingLedge, IChecker
 {
     [SerializeField] private LayerMask _whatIsTarget;
     [SerializeField] private float _ledgeCheckDistance;
@@ -16,7 +16,7 @@ public class LedgeChecker : MonoBehaviour, ITouchingLedge, IChecker
     private Rotateable _rotateable;
     private WallChecker _wallChecker;
 
-    public bool TouchingLegde
+    public bool TouchingLedge
     {
         get; private set;
     }
@@ -42,13 +42,13 @@ public class LedgeChecker : MonoBehaviour, ITouchingLedge, IChecker
 
     private void OnDrawGizmos()
     {
-        Utility.DrawArea(_ledgeCheckRay, TouchingLegde, _color.Color);
+        Utility.DrawArea(_ledgeCheckRay, TouchingLedge, _color.Color);
         Utility.DrawArea(_groundCheckRay, TouchingGround, _color.Color);
     }
 
     public void DoChecks()
     {
-        TouchingLegde = Physics2D.Linecast(_ledgeCheckRay.a, _ledgeCheckRay.b, _whatIsTarget);
+        TouchingLedge = Physics2D.Linecast(_ledgeCheckRay.a, _ledgeCheckRay.b, _whatIsTarget);
         RaycastHit2D hit =  Physics2D.Linecast(_groundCheckRay.a, _groundCheckRay.b, _whatIsTarget);
         TouchingGround = hit;
         if (TouchingGround)
@@ -64,14 +64,14 @@ public class LedgeChecker : MonoBehaviour, ITouchingLedge, IChecker
 
         Vector2 workspace = new(rightCheckerPositionX, _physical.Position.y + YOffset);
         _ledgeCheckRay = new CheckArea(workspace.x,
-                                                                        workspace.y,
-                                                                        workspace.x + _rotateable.FacingDirection * _ledgeCheckDistance,
-                                                                        workspace.y);
+                                        workspace.y,
+                                        workspace.x + _rotateable.FacingDirection * _ledgeCheckDistance,
+                                        workspace.y);
         workspace.x += _rotateable.FacingDirection * _ledgeCheckDistance;
         _groundCheckRay = new CheckArea(workspace.x,
-                                                                        workspace.y,
-                                                                        workspace.x,
-                                                                        workspace.y - (YOffset - _wallChecker.YOffset + IChecker.CHECK_OFFSET));
+                                        workspace.y,
+                                        workspace.x,
+                                        workspace.y - (YOffset - _wallChecker.YOffset + IChecker.CHECK_OFFSET));
     }
 }
 

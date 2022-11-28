@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 
-public interface ITouchingLedge {
-    public bool TouchingLegde
+public interface ITouchingLedge
+{
+    public bool TouchingLedge
     {
         get;
     }

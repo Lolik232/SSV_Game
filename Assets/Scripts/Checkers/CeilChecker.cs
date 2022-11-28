@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class CeilChecker : MonoBehaviour, ITouchingCeiling, IChecker
+public class CeilChecker : Component, ITouchingCeiling, IChecker
 {
     [SerializeField] private LayerMask _whatIsTarget;
     [SerializeField] private float _ceilCheckDistance;

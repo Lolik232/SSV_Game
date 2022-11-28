@@ -1,12 +1,15 @@
 ﻿using System;
-
+using All.Events;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [RequireComponent(typeof(DeadState))]
-
-public class Damageable : MonoBehaviour, IDamageable
+public class Damageable : Component, IDamageable
 {
-    [SerializeField] private float _health;
+    [SerializeField] private HealthEventChannelSO _didHealthChangeEventChannelSo = default;
+    
+    [FormerlySerializedAs("_health")] [SerializeField] private float _startHealth;
+    private float _health;
 
     private StateMachine _machine;
     private DeadState _deadState;
@@ -19,8 +22,12 @@ public class Damageable : MonoBehaviour, IDamageable
     }
     public float Health
     {
-        get;
-        private set;
+        get => _health;
+        private set
+        {
+            _health = value;
+            _didHealthChangeEventChannelSo?.RaiseEvent(_health, MaxHealth);
+        }
     }
     public bool IsDead
     {
@@ -34,8 +41,8 @@ public class Damageable : MonoBehaviour, IDamageable
         _deadState = GetComponent<DeadState>();
         _anim = GetComponent<Animator>();
 
-        MaxHealth = _health;
-        Health = _health;
+        MaxHealth = _startHealth;
+        Health = _startHealth;
     }
 
     public void RestoreHealth(float regeneration)
@@ -49,7 +56,7 @@ public class Damageable : MonoBehaviour, IDamageable
         Debug.Log(this + " Health: " + Health);
     }
 
-    public void TakeDamage(float damage, Entity damager)
+    public void TakeDamage(float damage, Vector2 attackPoint)
     {
         if (IsDead)
         {
@@ -66,12 +73,17 @@ public class Damageable : MonoBehaviour, IDamageable
 
         if (Health == 0)
         {
-            IsDead = true;
-            _machine.GetTransition(_deadState);
+            OnDead();
         }
         else
         {
             _anim.SetTrigger("hit");
         }
+    }
+
+    public void OnDead()
+    {
+        IsDead = true;
+        _machine.GetTransition(_deadState);
     }
 }

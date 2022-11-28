@@ -5,7 +5,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(AbilitiesManager))]
 
-public abstract class Ability : ComponentBase
+public abstract class Ability : ComponentBase, IBlockableBySpell
 {
     public AbilitySO description;
 
@@ -17,6 +17,12 @@ public abstract class Ability : ComponentBase
     private readonly Blocker _blocker = new();
 
     private dynamic _requested;
+
+    public dynamic Entity
+    {
+        get;
+        private set;
+    }
 
     public dynamic Current
     {
@@ -51,10 +57,14 @@ public abstract class Ability : ComponentBase
         get;
         set;
     }
+    public AbilitySO Description
+    {
+        get => description;
+    }
 
     protected virtual void Awake()
     {
-
+        Entity = GetComponent<Entity>();
     }
 
     protected virtual void Start()

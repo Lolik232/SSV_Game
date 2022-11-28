@@ -1,9 +1,8 @@
-﻿using UnityEngine;
-
-public class DummyInAirState : DummyState
+﻿public class DummyInAirState : DummyState
 {
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         bool GroundedCondition() => Dummy.Grounded && Dummy.Velocity.y < 0.01f;
 
         Transitions.Add(new(Dummy.GroundedState, GroundedCondition));

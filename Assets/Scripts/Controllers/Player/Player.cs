@@ -1,4 +1,11 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+
+using All.Events;
+using All.Interfaces;
+
+using Systems.SpellSystem.SpellEffect.Actions;
+
+using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
 
@@ -6,23 +13,28 @@
 [RequireComponent(typeof(LedgeChecker))]
 
 [RequireComponent(typeof(Physical), typeof(Movable), typeof(Crouchable))]
-[RequireComponent(typeof(Rotateable))]
+[RequireComponent(typeof(Rotateable), typeof(Damageable), typeof(Power))]
 
 [RequireComponent(typeof(PlayerInputReader))]
 
 [RequireComponent(typeof(PlayerGroundedState), typeof(PlayerInAirState), typeof(PlayerTouchingWallState))]
 [RequireComponent(typeof(PlayerOnLedgeState))]
 
-[RequireComponent(typeof(PlayerMoveHorizontalAbility), typeof(PlayerMoveVerticalAbility))]
-[RequireComponent(typeof(PlayerLedgeClimbAbility))]
-[RequireComponent(typeof(PlayerCrouchAbility))]
-[RequireComponent(typeof(PlayerJumpAbility))]
-[RequireComponent(typeof(PlayerDashAbility))]
-[RequireComponent(typeof(PlayerAttackAbility))]
+[RequireComponent(typeof(MoveHorizontalAbility), typeof(MoveOnWallAbility))]
+[RequireComponent(typeof(LedgeClimbAbility))]
+[RequireComponent(typeof(CrouchAbility))]
+[RequireComponent(typeof(JumpAbility))]
+[RequireComponent(typeof(DashAbility))]
+[RequireComponent(typeof(AttackAbility))]
 
-public class Player : Entity, IPhysical, IMovable, ICrouchable, IRotateable, 
-                              IGrounded, ITouchingWall, ITouchingCeiling, ITouchingLedge
+[RequireComponent(typeof(PlayerEffectApplyVisitor))]
+
+public class Player : Entity, IPhysical, IMovable, ICrouchable, IRotateable,
+                              IGrounded, ITouchingWall, ITouchingCeiling, ITouchingLedge, IDamageable, IPower, ISpellEffectActionVisitor
 {
+    [SerializeField] private VoidEventChannelSO _playerDiedChannel = default;
+    [SerializeField] private AudioClip _hitSound;
+
     private WallChecker _wallChecker;
     private GroundChecker _groundChecker;
     private CeilChecker _ceilChecker;
@@ -32,8 +44,10 @@ public class Player : Entity, IPhysical, IMovable, ICrouchable, IRotateable,
     private Movable _movable;
     private Crouchable _crouchable;
     private Rotateable _rotateable;
+    private Damageable _damageable;
+    private Power _power;
 
-    public PlayerInputReader Input
+    public PlayerInputReader Behaviour
     {
         get;
         private set;
@@ -60,42 +74,47 @@ public class Player : Entity, IPhysical, IMovable, ICrouchable, IRotateable,
         private set;
     }
 
-    public PlayerMoveHorizontalAbility MoveHorizontalAbility
+    public MoveHorizontalAbility MoveHorizontalAbility
     {
         get;
         private set;
     }
-    public PlayerMoveVerticalAbility MoveVerticalAbility
+    public MoveOnWallAbility MoveVerticalAbility
     {
         get;
         private set;
     }
-    public PlayerJumpAbility JumpAbility
+    public JumpAbility JumpAbility
     {
         get;
         private set;
     }
-    public PlayerCrouchAbility CrouchAbility
+    public CrouchAbility CrouchAbility
     {
         get;
         private set;
     }
-    public PlayerLedgeClimbAbility LedgeClimbAbility
-    {
-        get;
-        private set;
-    }
-
-    public PlayerDashAbility DashAbility
+    public LedgeClimbAbility LedgeClimbAbility
     {
         get;
         private set;
     }
 
-    public PlayerAttackAbility AttackAbility
+    public DashAbility DashAbility
     {
         get;
         private set;
+    }
+
+    public AttackAbility AttackAbility
+    {
+        get;
+        private set;
+    }
+
+    public PlayerEffectApplyVisitor PlayerEffectApplyVisitor
+    {
+        get; private set;
     }
 
     public Vector2 Position => ((IPhysical)_physical).Position;
@@ -112,7 +131,7 @@ public class Player : Entity, IPhysical, IMovable, ICrouchable, IRotateable,
 
     public bool IsPositionLocked => ((IMovable)_movable).IsPositionLocked;
 
-    public bool IsVelocityLocked => ((IMovable)_movable).IsVelocityLocked;
+    public bool IsVelocityLocked => ((IMovable)_movable).IsVelocityLocked || IsPushed;
 
     public Vector2 StandSize => ((ICrouchable)_crouchable).StandSize;
 
@@ -148,11 +167,35 @@ public class Player : Entity, IPhysical, IMovable, ICrouchable, IRotateable,
 
     public bool TouchingCeiling => ((ITouchingCeiling)_ceilChecker).TouchingCeiling;
 
-    public bool TouchingLegde => ((ITouchingLedge)_ledgeChecker).TouchingLegde;
+    public bool TouchingLedge => ((ITouchingLedge)_ledgeChecker).TouchingLedge;
 
     public bool TouchingGround => ((ITouchingLedge)_ledgeChecker).TouchingGround;
 
     public Vector2 GroundPosition => ((ITouchingLedge)_ledgeChecker).GroundPosition;
+
+    public bool IsPushed => ((IPhysical)_physical).IsPushed;
+
+    public float MaxHealth
+    {
+        get => ((IDamageable)_damageable).MaxHealth;
+        set => ((IDamageable)_damageable).MaxHealth = value;
+    }
+
+    public float Health => ((IDamageable)_damageable).Health;
+
+    public bool IsDead => ((IDamageable)_damageable).IsDead;
+
+    public float MaxMana
+    {
+        get => ((IPower)_power).MaxMana;
+        set => ((IPower)_power).MaxMana = value;
+    }
+
+    public float Mana => ((IPower)_power).Mana;
+
+    public bool ManaRegenBlocked => ((IPower)_power).ManaRegenBlocked;
+
+    public float ManaRegeneration => ((IPower)_power).ManaRegeneration;
 
     public void BlockPosition()
     {
@@ -179,14 +222,32 @@ public class Player : Entity, IPhysical, IMovable, ICrouchable, IRotateable,
         ((IRotateable)_rotateable).LookAt(position);
     }
 
-    public void Push(float force, Vector2 angle)
+    public void OnDead()
     {
-        ((IPhysical)_physical).Push(force, angle);
+        ((IDamageable)_damageable).OnDead();
+        _playerDiedChannel.RaiseEvent();
+
+        StartCoroutine(AfterDeadTimeOut());
+    }
+
+    private IEnumerator AfterDeadTimeOut()
+    {
+        yield return new WaitForSeconds(2f);
+    }
+
+    public IEnumerator Push(float force, Vector2 angle)
+    {
+        return ((IPhysical)_physical).Push(force, angle);
     }
 
     public void ResetGravity()
     {
         ((IMovable)_movable).ResetGravity();
+    }
+
+    public void RestoreHealth(float regeneration)
+    {
+        ((IDamageable)_damageable).RestoreHealth(regeneration);
     }
 
     public void RotateBodyAt(Vector2 position)
@@ -259,6 +320,18 @@ public class Player : Entity, IPhysical, IMovable, ICrouchable, IRotateable,
         ((ICrouchable)_crouchable).Stand();
     }
 
+    public void TakeDamage(float damage, Vector2 attackPoint)
+    {
+        LookAt(attackPoint);
+
+        if (_hitSound != null)
+        {
+            Source.PlayOneShot(_hitSound, 1f);
+        }
+
+        ((IDamageable)_damageable).TakeDamage(damage, attackPoint);
+    }
+
     public void UnlockPosition()
     {
         ((IMovable)_movable).UnlockPosition();
@@ -287,26 +360,68 @@ public class Player : Entity, IPhysical, IMovable, ICrouchable, IRotateable,
         _movable = GetComponent<Movable>();
         _rotateable = GetComponent<Rotateable>();
         _crouchable = GetComponent<Crouchable>();
+        _damageable = GetComponent<Damageable>();
+        _power = GetComponent<Power>();
 
-        Input = GetComponent<PlayerInputReader>();
+        Behaviour = GetComponent<PlayerInputReader>();
 
         GroundedState = GetComponent<PlayerGroundedState>();
         InAirState = GetComponent<PlayerInAirState>();
         TouchingWallState = GetComponent<PlayerTouchingWallState>();
         OnLedgeState = GetComponent<PlayerOnLedgeState>();
 
-        MoveHorizontalAbility = GetComponent<PlayerMoveHorizontalAbility>();
-        MoveVerticalAbility = GetComponent<PlayerMoveVerticalAbility>();
-        JumpAbility = GetComponent<PlayerJumpAbility>();
-        CrouchAbility = GetComponent<PlayerCrouchAbility>();
-        LedgeClimbAbility = GetComponent<PlayerLedgeClimbAbility>();
-        DashAbility = GetComponent<PlayerDashAbility>();
-        AttackAbility = GetComponent<PlayerAttackAbility>();
+        MoveHorizontalAbility = GetComponent<MoveHorizontalAbility>();
+        MoveVerticalAbility = GetComponent<MoveOnWallAbility>();
+        JumpAbility = GetComponent<JumpAbility>();
+        CrouchAbility = GetComponent<CrouchAbility>();
+        LedgeClimbAbility = GetComponent<LedgeClimbAbility>();
+        DashAbility = GetComponent<DashAbility>();
+        AttackAbility = GetComponent<AttackAbility>();
+
+        PlayerEffectApplyVisitor = GetComponent<PlayerEffectApplyVisitor>();
+    }
+
+    private void Update()
+    {
+        if (!ManaRegenBlocked)
+        {
+            RestoreMana(ManaRegeneration * Time.deltaTime);
+        }
     }
 
     private void Start()
     {
         RotateIntoDirection(1);
         Stand();
+    }
+
+    public void UseMana(float cost)
+    {
+        ((IPower)_power).UseMana(cost);
+    }
+
+    public void RestoreMana(float regeneration)
+    {
+        ((IPower)_power).RestoreMana(regeneration);
+    }
+
+    public void BlockManaRegen()
+    {
+        ((IPower)_power).BlockManaRegen();
+    }
+
+    public void UnlockManaRegen()
+    {
+        ((IPower)_power).UnlockManaRegen();
+    }
+
+    public void Visit(DamageAction damageAction)
+    {
+        ((ISpellEffectActionVisitor)PlayerEffectApplyVisitor).Visit(damageAction);
+    }
+
+    public void Visit(BlockAbilityAction blockAbilityAction)
+    {
+        ((ISpellEffectActionVisitor)PlayerEffectApplyVisitor).Visit(blockAbilityAction);
     }
 }

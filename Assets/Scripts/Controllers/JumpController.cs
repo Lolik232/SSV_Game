@@ -1,5 +1,4 @@
-using UnityEngine;
-public class JumpController : MonoBehaviour, IJumpController
+﻿public class JumpController : Component, IJumpController
 {
     public bool Jump
     {

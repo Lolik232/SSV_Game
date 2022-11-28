@@ -77,10 +77,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64f7871d020f40aea1f4d21a83d210ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_playerPrefab: {fileID: 4839718794917041577, guid: 9910b7cf424e9134ea5fd433dd4bc562, type: 3}
-  m_onSceneReadyChan: {fileID: 11400000, guid: c78296a871062f34e9879fa67fe14abd, type: 2}
-  m_transformEventChannel: {fileID: 11400000, guid: 4d7eb21ddd8805749aba73e1ba9b84e0, type: 2}
-  m_defaultSpawnPoint: {fileID: 0}
+  _playerPrefab: {fileID: 4908588619935511770, guid: 9910b7cf424e9134ea5fd433dd4bc562, type: 3}
+  _onSceneReadyChan: {fileID: 11400000, guid: c78296a871062f34e9879fa67fe14abd, type: 2}
+  _transformEventChannel: {fileID: 11400000, guid: 4d7eb21ddd8805749aba73e1ba9b84e0, type: 2}
+  _defaultSpawnPoint: {fileID: 0}
 --- !u!114 &5707999906340140397
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -93,5 +93,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37f454fb0418ba24590b6c48a33c1ee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_isTargeting: 0
-  m_targetPosition: {x: 0, y: 0, z: 0}
+  _isTargeting: 0
+  _targetPosition: {x: 0, y: 0, z: 0}

@@ -6,8 +6,6 @@ using UnityEngine;
 
 public abstract class State : StateBase
 {
-    private Entity _entity;
-
     protected StateMachine Machine
     {
         get;
@@ -18,12 +16,17 @@ public abstract class State : StateBase
         get;
         protected set;
     } = new();
+    protected dynamic Entity
+    {
+        get;
+        private set;
+    }
 
     protected override void Awake()
     {
         base.Awake();
         Machine = GetComponent<StateMachine>();
-        _entity = GetComponent<Entity>();
+        Entity = GetComponent<Entity>();
     }
 
     protected override void TryGetTransition()
@@ -42,6 +45,6 @@ public abstract class State : StateBase
     protected override void ApplyEnterActions()
     {
         base.ApplyEnterActions();
-        _entity.DoChecks();
+        Entity.DoChecks();
     }
 }

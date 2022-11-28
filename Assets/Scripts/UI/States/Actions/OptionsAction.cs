@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using FSM;
+
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "FSM/Actions/Options Action")]
@@ -14,12 +13,13 @@ public class OptionsAction : FSMAction
         stateMachine.optionsAnim.SetBool("isButtonPressed", true);
 
         stateMachine.optionsGroup.interactable = true;
+        stateMachine.gameVolumeSlider.Select();
     }
 
     public override void OnExit(BaseStateMachine stateMachine)
     {
         stateMachine.UIInputSO.optionsPressed = false;
-        stateMachine.UIInputSO.escPressed     = false;
+        stateMachine.UIInputSO.escPressed = false;
 
         stateMachine.optionsGroup.interactable = false;
 

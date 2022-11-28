@@ -3,14 +3,16 @@
 public class PlayerTouchingWallState : PlayerState
 {
     private Vector2 _holdPosition;
+    private int _wallDirection;
 
-    private void Start()
+    protected override void Start()
     {
-        bool GroundedCondition() => Player.Grounded && (Player.Input.Move.y == -1 || !Player.Input.Grab || Player.Input.Attack);
+        base.Start();
+        bool GroundedCondition() => Player.Grounded && (Player.Behaviour.Move.y == -1 || !Player.Behaviour.Grab || Player.AttackAbility.IsActive);
 
-        bool InAirCondition() => !Player.TouchingWall || (!Player.Input.Grab && Player.Input.Move.x != Player.FacingDirection);
+        bool InAirCondition() => !Player.TouchingWall || (!Player.Behaviour.Grab && Player.Behaviour.Move.x != Player.FacingDirection);
 
-        bool OnLedgeCondition() => Player.TouchingWall && !Player.TouchingLegde;
+        bool OnLedgeCondition() => Player.TouchingWall && !Player.TouchingLedge;
 
         void OnLedgeAction()
         {
@@ -26,8 +28,8 @@ public class PlayerTouchingWallState : PlayerState
         }
 
         Transitions.Add(new(Player.GroundedState, GroundedCondition));
-        Transitions.Add(new(Player.InAirState, InAirCondition, InAirAction));
         Transitions.Add(new(Player.OnLedgeState, OnLedgeCondition, OnLedgeAction));
+        Transitions.Add(new(Player.InAirState, InAirCondition, InAirAction));
     }
 
     protected override void ApplyEnterActions()
@@ -43,6 +45,7 @@ public class PlayerTouchingWallState : PlayerState
 
         Player.JumpAbility.Request(Player.JumpAbility.WallJump);
         Player.SetPosition(_holdPosition);
+        Player.RotateIntoDirection(-_wallDirection);
         Player.SetGravity(0f);
         Player.BlockRotation();
     }
@@ -57,5 +60,6 @@ public class PlayerTouchingWallState : PlayerState
     public void DetermineWallPosition()
     {
         _holdPosition = new Vector2(Player.WallPosition.x + Player.WallDirection * (Player.Size.x / 2 + IChecker.CHECK_OFFSET), Player.Position.y);
+        _wallDirection = Player.WallDirection;
     }
 }

@@ -23,6 +23,7 @@ namespace Systems.SpellSystem.SpellEffect.Actions
 
         public override void Apply(ISpellEffectActionVisitor visitor)
         {
+            base.Apply(visitor);
             visitor.Visit(this);
         }
     }

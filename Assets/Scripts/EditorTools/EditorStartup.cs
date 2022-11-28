@@ -1,5 +1,4 @@
-﻿using System;
-using All.Events;
+﻿using All.Events;
 using Systems.SaveSystem;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -19,7 +18,7 @@ namespace EditorTools
         [FormerlySerializedAs("m_managers")]
         [SerializeField] private GameSceneSO _managers = default;
         [FormerlySerializedAs("m_notifyEditorStartupChannel")]
-        [SerializeField] private AssetReference _notifyEditorStartupChannel = default;
+        [SerializeField] private LoadEventChannelSO _notifyEditorStartupChannel = default;
         [FormerlySerializedAs("m_onReadySceneChannel")]
         [SerializeField] private VoidEventChannelSO _onReadySceneChannel = default;
 
@@ -40,7 +39,7 @@ namespace EditorTools
             InitializeSave();
         }
 
-        private void Start()
+        private void OnEnable()
         {
             if (m_editorStartup)
             {
@@ -50,7 +49,7 @@ namespace EditorTools
 
         private void OnLoadManagers(AsyncOperationHandle<SceneInstance> obj)
         {
-            _notifyEditorStartupChannel.LoadAssetAsync<LoadEventChannelSO>().Completed += OnNotifyChannelLoad;
+            _notifyEditorStartupChannel.RaiseEvent(_thisScene);
         }
 
         private void OnNotifyChannelLoad(AsyncOperationHandle<LoadEventChannelSO> obj)

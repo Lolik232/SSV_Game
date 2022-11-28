@@ -1,4 +1,6 @@
-﻿public interface IDamageable
+﻿using UnityEngine;
+
+public interface IDamageable
 {
     public float MaxHealth
     {
@@ -16,7 +18,9 @@
         get;
     }
 
-    public void TakeDamage(float damage, Entity damager);
+    public void OnDead();
+
+    public void TakeDamage(float damage, Vector2 attackPoint);
 
     public void RestoreHealth(float regeneration);
 }

@@ -1,12 +1,44 @@
-﻿using UnityEngine;
+﻿using System;
+
+using All.Events;
+
+using Input;
+
+using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 
 [RequireComponent(typeof(MoveController), typeof(JumpController), typeof(DashController))]
 [RequireComponent(typeof(GrabController), typeof(AttackController), typeof(AbilityController))]
-[RequireComponent(typeof(PlayerInput))]
+[RequireComponent(typeof(PlayerInput), typeof(TargetChecker))]
 
-public class PlayerInputReader : Component, IMoveController, IJumpController, IGrabController, IAttackController, IDashContorller, IAbilityControlller
+
+public class PlayerInputReader : Component,
+                                 GameInput.IGameplayActions,
+                                 IMoveController,
+                                 IJumpController,
+                                 IGrabController,
+                                 IAttackController,
+                                 IDashContorller,
+                                 IAbilityControlller,
+                                 IBlockableBySpell,
+                                 IBlockable
 {
+    private TargetChecker _targetChecker;
+    private Player _player;
+
+    [SerializeField] private SpriteRenderer _stan;
+
+    public AbilitySO description;
+
+    private GameInput _gameInput;
+
+    private Inventory _inventory;
+
+    private Blocker _blocker = new();
+
+    [SerializeField] private VoidEventChannelSO _pauseEventChannel = default;
+
     [SerializeField] private float _jumpInputHoldTime;
     [SerializeField] private float _dashInputPressTime;
 
@@ -27,46 +59,59 @@ public class PlayerInputReader : Component, IMoveController, IJumpController, IG
 
     public Vector2Int Move
     {
-        get => _moveController.Move;
-        set => _moveController.Move = value;
+        get => ((IMoveController)_moveController).Move;
+        set => ((IMoveController)_moveController).Move = value;
     }
 
     public Vector2 LookAt
     {
-        get => _moveController.LookAt;
-        set => _moveController.LookAt = value;
+        get => ((IMoveController)_moveController).LookAt;
+        set => ((IMoveController)_moveController).LookAt = value;
     }
 
     public bool Jump
     {
-        get => _jumpController.Jump;
-        set => _jumpController.Jump = value;
+        get => ((IJumpController)_jumpController).Jump;
+        set => ((IJumpController)_jumpController).Jump = value;
     }
 
     public bool Grab
     {
-        get => _grabController.Grab;
-        set => _grabController.Grab = value;
+        get => ((IGrabController)_grabController).Grab;
+        set => ((IGrabController)_grabController).Grab = value;
+    }
+
+    public bool Attack
+    {
+        get => ((IAttackController)_attackController).Attack;
+        set => ((IAttackController)_attackController).Attack = value;
     }
 
     public bool Dash
     {
-        get => _dashController.Dash;
-        set => _dashController.Dash = value;
+        get => ((IDashContorller)_dashController).Dash;
+        set => ((IDashContorller)_dashController).Dash = value;
     }
-    public bool Attack
-    {
-        get => _attackController.Attack;
-        set => _attackController.Attack = value;
-    }
+
     public bool Ability
     {
-        get => _abilityController.Ability;
-        set => _abilityController.Ability = value;
+        get => ((IAbilityControlller)_abilityController).Ability;
+        set => ((IAbilityControlller)_abilityController).Ability = value;
+    }
+    public bool IsLocked
+    {
+        get => _blocker.IsLocked;
+    }
+    public AbilitySO Description
+    {
+        get => description;
     }
 
     private void Awake()
     {
+        _targetChecker = GetComponent<TargetChecker>();
+        _player = GetComponent<Player>();
+        _inventory = GetComponentInChildren<Inventory>();
         _camera = Camera.main;
         _playerInput = GetComponent<PlayerInput>();
         _moveController = GetComponent<MoveController>();
@@ -79,17 +124,61 @@ public class PlayerInputReader : Component, IMoveController, IJumpController, IG
 
     private void Update()
     {
-        _moveController.LookAt = _camera.ScreenToWorldPoint(_mouseInputPosition);
+        if (_playerInput.currentControlScheme == "Keyboard")
+        {
+            _moveController.LookAt = _camera.ScreenToWorldPoint(_mouseInputPosition);
+        }
+        else if (_targetChecker.TargetDetected)
+        {
+            _moveController.LookAt = _targetChecker.TargetPosition;
+        }
+        else if (Move != Vector2Int.zero)
+        {
+            _moveController.LookAt = _player.Center + (Vector2)Move * 10f;
+        }
+        else
+        {
+            _moveController.LookAt = _player.Center + _player.FacingDirection * 10f * Vector2.right;
+        }
+
         _jumpController.Jump &= Time.time < _jumpInputStartTime + _jumpInputHoldTime;
         _dashController.Dash &= Time.time < _dashInputStartTime + _dashInputPressTime;
     }
 
-    public void OnMoveInput(InputAction.CallbackContext context)
+    private void OnEnable()
+    {
+        if (_gameInput == null)
+        {
+            _gameInput = GameInputSingleton.GameInput;
+        }
+
+        _gameInput.Gameplay.SetCallbacks(this);
+    }
+
+    private void Start()
+    {
+        _stan.enabled = false;
+    }
+
+    public void OnMovement(InputAction.CallbackContext context)
     {
         _moveController.Move = Vector2Int.RoundToInt(context.ReadValue<Vector2>());
     }
 
-    public void OnGrabInput(InputAction.CallbackContext context)
+    public void OnJump(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            _jumpController.Jump = true;
+            _jumpInputStartTime = Time.time;
+        }
+        else if (context.canceled)
+        {
+            _jumpController.Jump = false;
+        }
+    }
+
+    public void OnGrab(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
@@ -101,7 +190,7 @@ public class PlayerInputReader : Component, IMoveController, IJumpController, IG
         }
     }
 
-    public void OnDashInput(InputAction.CallbackContext context)
+    public void OnDash(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
@@ -114,7 +203,7 @@ public class PlayerInputReader : Component, IMoveController, IJumpController, IG
         }
     }
 
-    public void OnAttackInput(InputAction.CallbackContext context)
+    public void OnAttack(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
@@ -126,7 +215,7 @@ public class PlayerInputReader : Component, IMoveController, IJumpController, IG
         }
     }
 
-    public void OnAbilityInput(InputAction.CallbackContext context)
+    public void OnAbility(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
@@ -138,24 +227,42 @@ public class PlayerInputReader : Component, IMoveController, IJumpController, IG
         }
     }
 
-    public void OnDirectionInput(InputAction.CallbackContext context)
+    public void OnDirection(InputAction.CallbackContext context)
     {
-        if (_playerInput.currentControlScheme == "Keyboard")
-        {
-            _mouseInputPosition = context.ReadValue<Vector2>();
-        }
+        _mouseInputPosition = context.ReadValue<Vector2>();
     }
 
-    public void OnJumpInput(InputAction.CallbackContext context)
+    public void OnPause(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
-            _jumpController.Jump = true;
-            _jumpInputStartTime = Time.time;
+            _pauseEventChannel.RaiseEvent();
         }
-        else if (context.canceled)
+    }
+
+    public void OnChangeWeapon(InputAction.CallbackContext context)
+    {
+        if (context.performed)
         {
-            _jumpController.Jump = false;
+            _inventory.GetNext();
+        }
+    }
+
+    public void Block()
+    {
+        _stan.enabled = true;
+        GameInputSingleton.GameInput.DisablePlayerInput();
+        _blocker.AddBlock();
+        Move = Vector2Int.zero;
+    }
+
+    public void Unlock()
+    {
+        _stan.enabled = false;
+        _blocker.RemoveBlock();
+        if (!IsLocked)
+        {
+            GameInputSingleton.GameInput.EnablePlayerInput();
         }
     }
 }

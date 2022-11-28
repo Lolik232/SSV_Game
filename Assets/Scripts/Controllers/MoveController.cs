@@ -1,6 +1,6 @@
-using UnityEngine;
+﻿using UnityEngine;
 
-public class MoveController : MonoBehaviour, IMoveController
+public class MoveController : Component, IMoveController
 {
     public Vector2Int Move
     {

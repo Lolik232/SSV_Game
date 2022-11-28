@@ -38,11 +38,13 @@ MonoBehaviour:
   m_RemoteCatalogLoadPath:
     m_Id: 
   m_ContentStateBuildPath: 
-  m_BuildAddressablesWithPlayerBuild: 0
+  m_BuildAddressablesWithPlayerBuild: 1
   m_overridePlayerVersion: 
   m_GroupAssets:
   - {fileID: 11400000, guid: 7decb0f638a0cfd4c93eec4aeb596eb6, type: 2}
   - {fileID: 11400000, guid: 071811e345771f943be31c04fb0c5101, type: 2}
+  - {fileID: 11400000, guid: 965c43ce0ab5d624986ca6a14c7a98db, type: 2}
+  - {fileID: 11400000, guid: 0594b972652a01b4c87b8dbb507215ad, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1

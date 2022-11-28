@@ -33,10 +33,6 @@ MonoBehaviour:
     m_Address: Assets/Scenes/Level1.unity
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 2123febb9bc08e741af7292389d56d91
-    m_Address: Assets/Scenes/Startscreen.unity
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: 6101fdfd88686e242a278adcca199cf5
     m_Address: Assets/ScriptableObjects/Channels/Audio/Effects Volume Event Channel.asset
     m_ReadOnly: 0
@@ -215,6 +211,211 @@ MonoBehaviour:
     m_SerializedLabels: []
   - m_GUID: 4b6ccb5cd6a75904591efcaf22d42fe2
     m_Address: Assets/Prefabs/Gameplay/Cameras.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 79b41746cf4c07d4281c4af1b911ec98
+    m_Address: Assets/UniversalRenderPipelineGlobalSettings.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 5078ac33c1a2a014fb04a6e7cd16f74a
+    m_Address: Assets/Scenes/GameplayManagers.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 93b6005c6d8c4fc498b549ab767686cd
+    m_Address: Assets/ScriptableObjects/SceneDatas/Managers/GameplayManagers.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: f5306b4c59c6ba14ab61637668548883
+    m_Address: Assets/ScriptableObjects/Channels/SceneManagement/PauseEventChannel.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 3ecb14bd78076fc40ab29999df6b030a
+    m_Address: Assets/ScriptableObjects/UI/Menu/Game State.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 13cc2359d89d7a649a0925efb89c77e9
+    m_Address: Assets/ScriptableObjects/UI/Menu/Game Action.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 9406d16109105e74aa8eafffc864d533
+    m_Address: Assets/ScriptableObjects/UI/Menu/Game To Pause Decision.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: c9a2c3fb548e3f14a8c83e0263be2f70
+    m_Address: Assets/ScriptableObjects/UI/Menu/Game To Pause Transition.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 11a3d5be7f70ee54ab131156dbf782e1
+    m_Address: Assets/ScriptableObjects/UI/Menu/Options Action.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: e78505c7c8a324f468a39ad3a5984e64
+    m_Address: Assets/ScriptableObjects/UI/Menu/Options State.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: cd08a58c329449c4f867e44d01be38f6
+    m_Address: Assets/ScriptableObjects/UI/Menu/RemainInState.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 88f4ee6b6f0151c47b10d5c148aceda7
+    m_Address: Assets/ScriptableObjects/UI/Menu/Pause To Options Transition.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 039e8ba5aa0f8ba4b9b95b4ea44796b1
+    m_Address: Assets/ScriptableObjects/UI/Menu/Pause To Options Decision.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: e279f0089cf7a5247b69f244b46ef181
+    m_Address: Assets/ScriptableObjects/UI/Menu/Pause To Game Transition.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 9c006e248fec5ae42b17fce28f23ad5e
+    m_Address: Assets/ScriptableObjects/UI/Menu/Pause To Game Decision.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: a8d917420ad47cd4292666dc8e754ad2
+    m_Address: Assets/ScriptableObjects/UI/Menu/Pause State.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 5219886aaa0261d4dbd8af22ec214b3d
+    m_Address: Assets/ScriptableObjects/UI/Menu/Pause Action.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 73f51050d8b44b441994293cf0a9b62a
+    m_Address: Assets/ScriptableObjects/UI/Menu/Options To Pause Transition.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 7817b975cdfb9034c82f22360812e9c9
+    m_Address: Assets/ScriptableObjects/UI/Menu/Options To Pause Decision.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: a58c2637d2d5d7d4b9060c281ba74957
+    m_Address: Assets/Prefabs/Gameplay/InGameMenu.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 93aa4169bca15c34c8cd72885bfb246d
+    m_Address: Assets/Prefabs/Gameplay/EventSystem.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 2d1b7db1e4ea67549bc100bbfcf33f60
+    m_Address: Assets/Music/Tracks/Step_Rock.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 396e2979d6f8d204bbecaf6881de96dd
+    m_Address: Assets/Music/Tracks/Jump.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 0417b5f06be4dd44c82f633f130c3114
+    m_Address: Assets/Music/Tracks/Dash.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 14e3e1aa910b3a048a8b9efc3d497b7e
+    m_Address: Assets/Music/Tracks/Click.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 7917bdf58296a4341ad34ee9e5d77729
+    m_Address: Assets/Music/Tracks/Select.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 9820a8b199e8ef2468500a96ba88c9f3
+    m_Address: Assets/Music/Tracks/Slider.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 7da750b8b9b369642b61d1cb9194c776
+    m_Address: Assets/Music/Tracks/Attack.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: ca1506f1eb2284c46b6372ef40b0d4fe
+    m_Address: Assets/Music/Tracks/Bring Me The Horizon - And the Snakes Start to
+      Sing.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 34399263cc80deb4d9619ab8bee9d7f8
+    m_Address: Assets/Music/Tracks/Landing.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 949b5eafbd93a05428e57e1db0427ba2
+    m_Address: Assets/Music/Tracks/PlayerHit.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: a5e4b071cd0b23e4daed7604a57e0d87
+    m_Address: Assets/Music/Tracks/Climb.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 177292ee65f7069428ece308fb736599
+    m_Address: Assets/Music/Mixer.mixer
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 296a5f7886247a04f98101b04f8c2e39
+    m_Address: Assets/Scenes/Level3.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 5529cf70ce89ab74db88f08d0300235f
+    m_Address: Assets/ScriptableObjects/SceneDatas/Locations/Level3.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: cd63f4189f9bfae429150a6e9de81387
+    m_Address: Assets/ScriptableObjects/UI/HUD/Health Event Channel SO.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 45ed7c9c5922dcc45b021434e3abae82
+    m_Address: Assets/ScriptableObjects/Settings/DefaultSettings.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: dc291033ae8daa84dbb9e711baa3c51a
+    m_Address: Assets/Scenes/Level1/Global Volume Profile.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: dc90820f4271a764388180497c65b65d
+    m_Address: Assets/Scenes/Level1/Level1 GVP.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 3013d5a9c2919a34b8cd494d4368e823
+    m_Address: Assets/Scenes/Level2/Level2 GVP.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: ab8157b9e62b41140b671c0ca0716eff
+    m_Address: Assets/Scenes/Tiles
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 209111c7d3fe5eb4886bcd642514c07a
+    m_Address: Assets/Scenes/Tile Palletes
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: f20abbdf3b757404b81a7adf0c651106
+    m_Address: Assets/ScriptableObjects/Channels/Runtime/PlayerDeadChannel.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: bea6b3032a8c9b143a4900bbbddd3ce1
+    m_Address: Assets/ScriptableObjects/UI/HUD/ManaEventChannelSO.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 6273c8e4476fdfd4ebe7f130ab5de03a
+    m_Address: Assets/ScriptableObjects/SpellSystem/Spells/StanSO.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: d9cf8eef803dbeb48be410d1e376d77a
+    m_Address: Assets/ScriptableObjects/SpellSystem/Effects/Actions/BlockAbility.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 77c68e23163c8024595ae73eca4cca56
+    m_Address: Assets/ScriptableObjects/SpellSystem/Effects/BlockEffect.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 1faac8aa5f200ca418bddda6fa7326ad
+    m_Address: Assets/ScriptableObjects/SpellSystem/Effects/Apply Strategy/OneTimeApplyStrategy.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 2123febb9bc08e741af7292389d56d91
+    m_Address: Assets/Scenes/Startscreen.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 6cac9e17b60e93b44abcbfa78f5b701c
+    m_Address: Assets/ScriptableObjects/SpellSystem/Effects/Stan/Action/Stan_BlockAction.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 9f7c617cb77eecf46bbfa3c1076be3b5
+    m_Address: Assets/ScriptableObjects/SpellSystem/Effects/Stan/Stan_blockAbilities.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

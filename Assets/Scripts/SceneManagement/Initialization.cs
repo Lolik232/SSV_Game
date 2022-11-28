@@ -1,8 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using All.Events;
-using Systems.SaveSystem;
+
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -26,7 +23,7 @@ public class Initialization : MonoBehaviour
 
     private void OnManagersSceneLoaded(AsyncOperationHandle<SceneInstance> obj)
     {
-       // _menuLoadEventChannel.RaiseEvent(_menuToLoad, true);
+        // _menuLoadEventChannel.RaiseEvent(_menuToLoad, true);
         // SceneManager.UnloadSceneAsync(0);
         _menuLoadChannel.LoadAssetAsync<LoadEventChannelSO>().Completed += LoadMainMenu;
     }
