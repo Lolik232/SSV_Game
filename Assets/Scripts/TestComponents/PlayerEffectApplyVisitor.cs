@@ -45,6 +45,9 @@ public class PlayerEffectApplyVisitor : MonoBehaviour, ISpellEffectActionVisitor
 
         yield return new WaitForSeconds(0.5f);
 
-        component.Unlock();
+        if (_player != null && _player.enabled)
+        {
+            component.Unlock();
+        }
     }
 }

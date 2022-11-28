@@ -11,7 +11,7 @@ namespace Systems.SpellSystem.SpellEffect.Actions.ScriptableObjects
 
         public override EffectAction CreateAction()
         {
-            return new BlockAbilityAction(this);
+            return new BlockAbilityAction(this, _abilitiesToBlock);
         }
     }
 }

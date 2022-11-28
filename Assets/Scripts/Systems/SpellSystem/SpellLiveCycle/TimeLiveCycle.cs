@@ -1,5 +1,4 @@
 ﻿using System;
-
 using UnityEngine;
 
 namespace Systems.SpellSystem.SpellEffect.SpellLiveCycle
@@ -34,8 +33,7 @@ namespace Systems.SpellSystem.SpellEffect.SpellLiveCycle
 
         public override void LogicUpdate()
         {
-            if (!_isStarted || IsEnd())
-                return;
+            if (!_isStarted || IsEnd()) return;
 
             _timeFromStart += Time.deltaTime;
         }
@@ -47,13 +45,13 @@ namespace Systems.SpellSystem.SpellEffect.SpellLiveCycle
 
         public override void Reset()
         {
-            _isStarted = false;
+            _isStarted     = false;
             _timeFromStart = 0;
         }
 
         public override bool IsEnd()
         {
-            return _timeFromStart >= _time;
+            return _isStarted && _timeFromStart >= _time;
         }
     }
 }

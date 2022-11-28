@@ -85,18 +85,18 @@ public abstract class Weapon : ComponentBase
                 }
             }
 
-            if (entity is Player player)
-            {
-                if (_stanHolder != null)
-                {
-                    StopCoroutine(_stanHolder);
-                }
-                else
-                {
-                    player.Behaviour.Block();
-                    _stanHolder = player.StartCoroutine(StanTimeOut(player));
-                }
-            }
+            // if (entity is Player player)
+            // {
+            //     if (_stanHolder != null)
+            //     {
+            //         StopCoroutine(_stanHolder);
+            //     }
+            //     else
+            //     {
+            //         player.Behaviour.Block();
+            //         _stanHolder = player.StartCoroutine(StanTimeOut(player));
+            //     }
+            // }
 
             if (entity is ISpellEffectActionVisitor)
             {

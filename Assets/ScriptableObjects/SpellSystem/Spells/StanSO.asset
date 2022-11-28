@@ -14,9 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _guid: 6273c8e4476fdfd4ebe7f130ab5de03a
   description: 
+  Icon: {fileID: 0}
   _name: stan
-  _liveCycleSO: {fileID: 11400000, guid: 57033f6ce22ec2d469d6e2bdd8a10eff, type: 2}
+  _liveCycleSO: {fileID: 11400000, guid: 1611cb36f59cba64f95d1a557778eb78, type: 2}
   _effectsSO:
-  - {fileID: 11400000, guid: 77c68e23163c8024595ae73eca4cca56, type: 2}
-  _effects:
-  - _effectSO: {fileID: 11400000, guid: 77c68e23163c8024595ae73eca4cca56, type: 2}
+  - {fileID: 11400000, guid: 9f7c617cb77eecf46bbfa3c1076be3b5, type: 2}

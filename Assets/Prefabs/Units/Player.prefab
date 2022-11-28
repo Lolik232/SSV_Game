@@ -361,7 +361,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _stan: {fileID: 3740195262486331493}
-  description: {fileID: 11400000, guid: 99a88a3b80e77ee4ca12906185d729bb, type: 2}
+  description: {fileID: 11400000, guid: 1f936c7adbc5f424886a315710da1405, type: 2}
   _pauseEventChannel: {fileID: 11400000, guid: f5306b4c59c6ba14ab61637668548883, type: 2}
   _jumpInputHoldTime: 0.1
   _dashInputPressTime: 0.5

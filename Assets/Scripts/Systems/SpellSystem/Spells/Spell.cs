@@ -43,5 +43,10 @@ namespace Systems.SpellSystem.SpellEffect
         {
             _liveCycle.LogicUpdate();
         }
+
+        public void Start()
+        {
+            _liveCycle.Start();
+        }
     }
 }
