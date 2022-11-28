@@ -67,15 +67,6 @@ public class SkeletonWarriorBehaviour : BehaviourController, IMoveController, IA
         GetBehaviourStates<SkeletonWarriorBehaviour>();
     }
 
-    protected override void Update()
-    {
-        base.Update();
-        if (IsLocked)
-        {
-            Move = Vector2Int.zero;
-        }
-    }
-
     private void OnDisable()
     {
         _stan.enabled = false;
@@ -91,8 +82,9 @@ public class SkeletonWarriorBehaviour : BehaviourController, IMoveController, IA
     {
         base.Block();
         _stan.enabled = true;
-       
+
         Move = Vector2Int.zero;
+        GetTransition(StayCommand);
     }
 
     public override void Unlock()

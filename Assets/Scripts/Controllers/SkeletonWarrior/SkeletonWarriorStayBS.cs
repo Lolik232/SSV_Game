@@ -9,12 +9,12 @@ public class SkeletonWarriorStayBS : BehaviuorState<SkeletonWarriorBehaviour>
 
     protected void Start()
     {
-        bool WalkCondition() => ActiveTime > _stayRandomTime && !Entity.TargetDetected;
+        bool WalkCondition() => ActiveTime > _stayRandomTime && !Entity.TargetDetected && !Entity.Behaviour.IsLocked;
 
         bool MoveToTargetCondition() => Entity.TargetDetected && (Entity.TargetDirection == -Entity.FacingDirection ||
-                                                                   Entity.TouchingEdge && !Entity.TouchingWall);
+                                                                   Entity.TouchingEdge && !Entity.TouchingWall) && !Entity.Behaviour.IsLocked;
 
-        bool AttackCondition() => Entity.AttackPermited;
+        bool AttackCondition() => Entity.AttackPermited && !Entity.Behaviour.IsLocked;
 
         Transitions.Add(new(Controller.AttackCommand, AttackCondition));
         Transitions.Add(new(Controller.WalkCommand, WalkCondition));

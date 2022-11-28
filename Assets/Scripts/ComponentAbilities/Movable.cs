@@ -111,6 +111,11 @@ public class Movable : Component, IMovable
         _velocityBlocker.RemoveBlock();
     }
 
+    private void OnDisable()
+    {
+        Velocity = new Vector2(0f, Velocity.y);
+    }
+
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
