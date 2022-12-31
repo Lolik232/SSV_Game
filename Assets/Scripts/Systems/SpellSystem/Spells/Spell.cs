@@ -31,14 +31,23 @@ namespace Systems.SpellSystem.SpellEffect
             _effects.AddRange(effects);
         }
 
-        public void ApplyEffects(ISpellEffectActionVisitor visitor)
+        
+        public void CancelEffects(ISpellEffectActionVisitor canceller)
         {
             foreach (var effect in _effects)
             {
-                effect.Apply(visitor);
+                effect.Cancel(canceller);
+            }
+        }
+        public void ApplyEffects(ISpellEffectActionVisitor applier)
+        {
+            foreach (var effect in _effects)
+            {
+                effect.Apply(applier);
             }
         }
 
+        
         public void LogicUpdate()
         {
             _liveCycle.LogicUpdate();

@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace TestComponents
 {
-    public class SkeletonEffectApplyVisitor : MonoBehaviour, ISpellEffectActionVisitor
+    public class SkeletonEffectApplyVisitor : MonoBehaviour, ISpellEffectActionApplier
     {
         private SkeletonWarriorBehaviour _skeletonBehaviour;
         private List<IBlockableBySpell>  _blockedComponents = new();

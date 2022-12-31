@@ -13,13 +13,14 @@ namespace Systems.SpellSystem.SpellEffect
         [SerializeField] private FilterSO                 _spellFilterSO    ;
         [SerializeField] private MutuallyExclusiveTableSO _exclusiveTableSO;
 
-        private List<Spell>               _spellsToRemove = new();
-        private List<Spell>               _spellsToActivate = new();
-        private ISpellEffectActionVisitor _visitor;
+        private          List<Spell>               _spellsToRemove   = new();
+        private readonly List<Spell>               _spellsToActivate = new();
+        private          ISpellEffectActionVisitor _applier;
+        private          ISpellEffectActionVisitor _canceller;
 
         private void Awake()
         {
-            _visitor = GetComponent<ISpellEffectActionVisitor>();
+            _applier = GetComponent<ISpellEffectActionVisitor>();
         }
 
         public void AddSpell(SpellSO spell)
@@ -42,8 +43,9 @@ namespace Systems.SpellSystem.SpellEffect
         private void Update()
         {
             RemoveSpellsFromList();
+            CancelSpellsEffects();
             ActivateSpells();
-            ApplyAllSpells();
+            ApplySpellsEffects();
             LogicUpdate();
             CheckLiveCycle();
         }
@@ -60,11 +62,19 @@ namespace Systems.SpellSystem.SpellEffect
             _spellsToRemove.Clear();
         }
 
-        private void ApplyAllSpells()
+        private void ApplySpellsEffects()
         {
             foreach (var spell in _spells)
             {
-                spell.ApplyEffects(_visitor);
+                spell.ApplyEffects(_applier);
+            }
+        }
+
+        private void CancelSpellsEffects()
+        {
+            foreach (var spell in _spells)
+            {
+                spell.CancelEffects(_applier);
             }
         }
 

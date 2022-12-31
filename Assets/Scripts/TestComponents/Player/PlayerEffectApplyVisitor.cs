@@ -1,18 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-
 using All.Interfaces;
-
 using Systems.SpellSystem.SpellEffect.Actions;
-
 using Unity.VisualScripting;
-
 using UnityEngine;
 
-public class PlayerEffectApplyVisitor : MonoBehaviour, ISpellEffectActionVisitor
+public class PlayerEffectApplyVisitor : MonoBehaviour, ISpellEffectActionApplier
 {
-    private Player _player;
-    private List<IBlockableBySpell> _blockedComponents = new();
+    private          Player                  _player;
+    private readonly List<IBlockableBySpell> _blockedComponents = new();
 
     private void Awake()
     {
@@ -22,7 +18,7 @@ public class PlayerEffectApplyVisitor : MonoBehaviour, ISpellEffectActionVisitor
 
     public void Visit(DamageAction damageAction)
     {
-        throw new System.NotImplementedException();
+        // nothing
     }
 
     public void Visit(BlockAbilityAction blockAbilityAction)

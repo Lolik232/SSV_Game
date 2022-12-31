@@ -15,8 +15,12 @@ namespace Systems.SpellSystem.SpellEffect
         {
             _effectUsed = true;
         }
+        public override void OnCancel()
+        {
+        }
 
-        public override bool CanApply() => !_effectUsed;
+        public override bool CanApply()  => !_effectUsed;
+        public override bool CanCancel() => _effectUsed;
 
         public override object Clone()
         {

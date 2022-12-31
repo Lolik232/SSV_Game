@@ -415,6 +415,7 @@ public class Player : Entity, IPhysical, IMovable, ICrouchable, IRotateable,
         ((IPower)_power).UnlockManaRegen();
     }
 
+    // TODO: remove
     public void Visit(DamageAction damageAction)
     {
         ((ISpellEffectActionVisitor)PlayerEffectApplyVisitor).Visit(damageAction);
@@ -424,4 +425,6 @@ public class Player : Entity, IPhysical, IMovable, ICrouchable, IRotateable,
     {
         ((ISpellEffectActionVisitor)PlayerEffectApplyVisitor).Visit(blockAbilityAction);
     }
+    
+    // end remove
 }

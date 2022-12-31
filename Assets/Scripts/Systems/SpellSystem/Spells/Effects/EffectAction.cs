@@ -21,5 +21,10 @@ namespace Systems.SpellSystem.SpellEffect
         {
             
         }
+
+        public virtual void Cancel(ISpellEffectActionVisitor canceller)
+        {
+            
+        }
     }
 }

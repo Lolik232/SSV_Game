@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace TestComponents
 {
-    public class TestEffectApplyVisitor : MonoBehaviour, ISpellEffectActionVisitor
+    public class TestEffectApplyVisitor : MonoBehaviour, ISpellEffectActionApplier
     {
         public void Visit(DamageAction damageAction)
         {
