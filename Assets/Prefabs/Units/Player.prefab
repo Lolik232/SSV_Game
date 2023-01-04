@@ -2477,6 +2477,18 @@ PrefabInstance:
       propertyPath: m_Emitting
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3610886207290022470, guid: 85541185c3b67904c80dc7e83ab0c41e, type: 3}
+      propertyPath: _spellsToApply.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3610886207290022470, guid: 85541185c3b67904c80dc7e83ab0c41e, type: 3}
+      propertyPath: _spellsToApply.Array.data[0].probability
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3610886207290022470, guid: 85541185c3b67904c80dc7e83ab0c41e, type: 3}
+      propertyPath: _spellsToApply.Array.data[0].spellToApply
+      value: 
+      objectReference: {fileID: 11400000, guid: 6273c8e4476fdfd4ebe7f130ab5de03a, type: 2}
     - target: {fileID: 4478344929916401108, guid: 85541185c3b67904c80dc7e83ab0c41e, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -2528,6 +2540,18 @@ PrefabInstance:
     - target: {fileID: 8102075181438412010, guid: 85541185c3b67904c80dc7e83ab0c41e, type: 3}
       propertyPath: _damage
       value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 8102075181438412010, guid: 85541185c3b67904c80dc7e83ab0c41e, type: 3}
+      propertyPath: EntityHit.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8102075181438412010, guid: 85541185c3b67904c80dc7e83ab0c41e, type: 3}
+      propertyPath: EntityHit.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8102075181438412010, guid: 85541185c3b67904c80dc7e83ab0c41e, type: 3}
+      propertyPath: EntityHit.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 85541185c3b67904c80dc7e83ab0c41e, type: 3}

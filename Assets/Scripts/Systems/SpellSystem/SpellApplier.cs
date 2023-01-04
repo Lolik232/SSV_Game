@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
 
 using Random = UnityEngine.Random;
@@ -17,6 +17,13 @@ namespace Systems.SpellSystem.SpellEffect
         }
 
         [SerializeField] private List<SpellApplyProbability> _spellsToApply = new();
+        
+        public void Apply(Entity entity)
+        {
+            if(!entity.TryGetComponent<SpellHolder>(out var holder)) return;
+            
+            Apply(holder);
+        }
 
         public void Apply(SpellHolder holderToApply)
         {

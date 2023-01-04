@@ -1,26 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-
 using All.Interfaces;
-
+using SceneManagement;
 using Systems.SpellSystem.SpellEffect;
-
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Animator))]
-[RequireComponent(typeof(SpellApplier))]
-
 public abstract class Weapon : ComponentBase
 {
+    public UnityEvent<Entity> EntityHit = default;
+
     private Coroutine _stanHolder;
 
-    protected SpellApplier SpellApplier
-    {
-        get;
-        private set;
-    }
+    // protected SpellApplier SpellApplier
+    // {
+    //     get;
+    //     private set;
+    // }
 
-    [SerializeField] private string _name;
+    [SerializeField] private   string    _name;
     [SerializeField] protected LayerMask whatIsTarget;
 
     private Coroutine _exitTimeOutHolder;
@@ -57,16 +57,20 @@ public abstract class Weapon : ComponentBase
 
     protected virtual void Awake()
     {
-        Anim = GetComponent<Animator>();
-        Inventory = GetComponentInParent<Inventory>();
-        Entity = Inventory.GetComponentInParent<Entity>();
-        OriginAnim = Entity.GetComponent<Animator>();
-        SpellApplier = GetComponent<SpellApplier>();
+        Anim         = GetComponent<Animator>();
+        Inventory    = GetComponentInParent<Inventory>();
+        Entity       = Inventory.GetComponentInParent<Entity>();
+        OriginAnim   = Entity.GetComponent<Animator>();
+        // SpellApplier = GetComponent<SpellApplier>();
     }
 
     protected abstract void Start();
 
-    public void OnHit(Vector2 attackPoint, Collider2D collider, float force, float damage, bool needPush = true)
+    public void OnHit(Vector2    attackPoint,
+                      Collider2D collider,
+                      float      force,
+                      float      damage,
+                      bool       needPush = true)
     {
         this.attackPoint = attackPoint;
 
@@ -85,26 +89,9 @@ public abstract class Weapon : ComponentBase
                 }
             }
 
-            // if (entity is Player player)
-            // {
-            //     if (_stanHolder != null)
-            //     {
-            //         StopCoroutine(_stanHolder);
-            //     }
-            //     else
-            //     {
-            //         player.Behaviour.Block();
-            //         _stanHolder = player.StartCoroutine(StanTimeOut(player));
-            //     }
-            // }
-
-            if (entity is ISpellEffectActionVisitor)
-            {
-                SpellApplier.Apply(entity.SpellHolder);
-            }
+            EntityHit?.Invoke(entity);
         }
     }
-
 
 
     public override void OnEnter()

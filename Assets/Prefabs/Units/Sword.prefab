@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1722718722470275134}
   - component: {fileID: 1722718722470275522}
   - component: {fileID: 8102075181438412010}
+  - component: {fileID: 3610886207290022470}
   m_Layer: 6
   m_Name: Sword
   m_TagString: Untagged
@@ -141,6 +142,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5158d203abf4cbb48873943e9c2f9c02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EntityHit:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3610886207290022470}
+        m_TargetAssemblyTypeName: Systems.SpellSystem.SpellEffect.SpellApplier, Assembly-CSharp
+        m_MethodName: Apply
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _name: sword
   whatIsTarget:
     serializedVersion: 2
@@ -149,6 +165,19 @@ MonoBehaviour:
   _attackSpeed: 0.3
   _force: 5
   _damage: 15
+--- !u!114 &3610886207290022470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 285608673936149439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fce9c7f15dde483eb50cc4cfcc2a791c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spellsToApply: []
 --- !u!1 &5580056690343092411
 GameObject:
   m_ObjectHideFlags: 0

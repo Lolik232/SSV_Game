@@ -30,7 +30,7 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerEffectApplyVisitor))]
 
 public class Player : Entity, IPhysical, IMovable, ICrouchable, IRotateable,
-                              IGrounded, ITouchingWall, ITouchingCeiling, ITouchingLedge, IDamageable, IPower, ISpellEffectActionVisitor
+                              IGrounded, ITouchingWall, ITouchingCeiling, ITouchingLedge, IDamageable, IPower
 {
     [SerializeField] private VoidEventChannelSO _playerDiedChannel = default;
     [SerializeField] private AudioClip _hitSound;
@@ -414,17 +414,4 @@ public class Player : Entity, IPhysical, IMovable, ICrouchable, IRotateable,
     {
         ((IPower)_power).UnlockManaRegen();
     }
-
-    // TODO: remove
-    public void Visit(DamageAction damageAction)
-    {
-        ((ISpellEffectActionVisitor)PlayerEffectApplyVisitor).Visit(damageAction);
-    }
-
-    public void Visit(BlockAbilityAction blockAbilityAction)
-    {
-        ((ISpellEffectActionVisitor)PlayerEffectApplyVisitor).Visit(blockAbilityAction);
-    }
-    
-    // end remove
 }
