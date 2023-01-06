@@ -1,5 +1,6 @@
 ﻿using System;
-
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public abstract class StateBase : ComponentBase
@@ -23,7 +24,6 @@ public abstract class StateBase : ComponentBase
 
     protected virtual void Start()
     {
-
     }
 
     public override void OnEnter()
@@ -92,14 +92,22 @@ public abstract class StateBase : ComponentBase
 
 public struct TransitionItem<T> where T : ComponentBase
 {
-    public T target;
+    public T          target;
     public Func<bool> condition;
-    public Action action;
 
-    public TransitionItem(T target, Func<bool> condition, Action action = null)
+    public List<Action> actions;
+    // public Action       action;
+    // public TransitionItem(T target, Func<bool> condition, Action action = null)
+    // {
+    //     this.target    = target;
+    //     this.condition = condition;
+    //     this.action    = action;
+    // }
+
+    public TransitionItem(T target, Func<bool> condition, params Action[] actions)
     {
-        this.target = target;
+        this.target    = target;
         this.condition = condition;
-        this.action = action;
+        this.actions   = actions.ToList();
     }
 }

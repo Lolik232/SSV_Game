@@ -1,31 +1,33 @@
 ﻿using System.Collections.Generic;
-
+using Controllers.ScriptableObjects;
 using Systems.SpellSystem.SpellEffect;
-
+using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource), typeof(SpellHolder))]
 
 public class Entity : MonoBehaviour
 {
+    [SerializeField] private EntityAudioClipsSO _audio = default;
+    public                   EntityAudioClipsSO Audio => _audio;
+
     public SpellHolder SpellHolder{
         get;
         private set;
     }
 
     private List<Component> _components = new();
-
     public AudioSource Source
     {
         get;
         private set;
     }
-
     protected List<IChecker> Checkers
     {
         get;
         private set;
     } = new();
+    
 
     protected virtual void Awake()
     {
@@ -72,4 +74,5 @@ public class Entity : MonoBehaviour
             checker.DoChecks();
         }
     }
+
 }

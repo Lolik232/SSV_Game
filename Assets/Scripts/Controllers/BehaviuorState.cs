@@ -67,7 +67,7 @@ public class BehaviuorState<BehaviourControllerT> : ComponentBase where Behaviou
         {
             if (transition.condition())
             {
-                transition.action?.Invoke();
+                transition.actions.ForEach(a => a?.Invoke());
                 Controller.GetTransition(transition.target);
                 return;
             }

@@ -7,24 +7,23 @@ namespace SceneManagement
 {
     public class SceneRestarter : MonoBehaviour
     {
-        [SerializeField]private LocationSO _currentLocation = default;
+        [SerializeField] private LocationSO _currentLocation = default;
 
         [Header("Listening to")]
         [SerializeField] private LoadEventChannelSO _locationLoadEventChannelSO = default;
-        [SerializeField] private VoidEventChannelSO _onDeadEventChannelSO = default;
-
+        [SerializeField] private VoidEventChannelSO _sceneRestartEventChannelSO = default;
 
         [SerializeField] private SaveSystem _saveSystem = default;
 
         private void OnEnable()
         {
-            _onDeadEventChannelSO.OnEventRaised       += Restart;
+            _sceneRestartEventChannelSO.OnEventRaised += Restart;
             _locationLoadEventChannelSO.OnEventRaised += UpdateCurrentLocation;
         }
 
         private void OnDisable()
         {
-            _onDeadEventChannelSO.OnEventRaised       -= Restart;
+            _sceneRestartEventChannelSO.OnEventRaised -= Restart;
             _locationLoadEventChannelSO.OnEventRaised -= UpdateCurrentLocation;
         }
 

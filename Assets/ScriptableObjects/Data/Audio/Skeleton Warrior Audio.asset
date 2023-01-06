@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10fa63016fab41349796e3d0950d70c4, type: 3}
+  m_Name: Skeleton Warrior Audio
+  m_EditorClassIdentifier: 
+  _hitSound: {fileID: 8300000, guid: 949b5eafbd93a05428e57e1db0427ba2, type: 3}
+  _moveSound: {fileID: 8300000, guid: 2d1b7db1e4ea67549bc100bbfcf33f60, type: 3}
+  _landing: {fileID: 8300000, guid: 34399263cc80deb4d9619ab8bee9d7f8, type: 3}
+  _jump: {fileID: 8300000, guid: 396e2979d6f8d204bbecaf6881de96dd, type: 3}

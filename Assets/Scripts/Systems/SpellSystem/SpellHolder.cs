@@ -1,32 +1,34 @@
 ﻿using System.Collections.Generic;
-
 using All.Interfaces;
-
 using UnityEngine;
 
 namespace Systems.SpellSystem.SpellEffect
 {
-    [RequireComponent(typeof(ISpellEffectActionVisitor))]
+    [RequireComponent(typeof(ISpellEffectActionApplier))]
+    [RequireComponent(typeof(ISpellEffectActionCanceller))]
     public class SpellHolder : MonoBehaviour, ILogicUpdate
     {
-        [SerializeField] private List<Spell>              _spells           = new();
-        [SerializeField] private FilterSO                 _spellFilterSO    ;
+        [SerializeField] private List<Spell>              _spells = new();
+        [SerializeField] private FilterSO                 _spellFilterSO;
         [SerializeField] private MutuallyExclusiveTableSO _exclusiveTableSO;
 
         private          List<Spell>               _spellsToRemove   = new();
         private readonly List<Spell>               _spellsToActivate = new();
-        private          ISpellEffectActionVisitor _applier;
-        private          ISpellEffectActionVisitor _canceller;
+        private          ISpellEffectActionVisitor _applier          = default;
+        private          ISpellEffectActionVisitor _canceller        = default;
 
         private void Awake()
         {
-            _applier = GetComponent<ISpellEffectActionVisitor>();
+            _applier = GetComponent<ISpellEffectActionApplier>();
+            _canceller = GetComponent<ISpellEffectActionCanceller>();
         }
 
         public void AddSpell(SpellSO spell)
         {
-            if (_spellFilterSO != null && _spellFilterSO.InBlackList(spell))
+            if (_spellFilterSO != null &&
+                _spellFilterSO.InBlackList(spell))
                 return;
+            
             var createdSpell = spell.CreateSpell();
             _spells.Add(createdSpell);
             _spellsToActivate.Add(createdSpell);
@@ -74,7 +76,7 @@ namespace Systems.SpellSystem.SpellEffect
         {
             foreach (var spell in _spells)
             {
-                spell.CancelEffects(_applier);
+                spell.CancelEffects(_canceller);
             }
         }
 

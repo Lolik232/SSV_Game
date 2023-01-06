@@ -9,8 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a13fc0d7dae54140b3b346ca2656338a, type: 3}
-  m_Name: PlayerDeadChannel
+  m_Script: {fileID: 11500000, guid: 10fa63016fab41349796e3d0950d70c4, type: 3}
+  m_Name: Dummy Audio
   m_EditorClassIdentifier: 
-  _guid: 
-  description: 
+  _hitSound: {fileID: 0}
+  _moveSound: {fileID: 0}
+  _landing: {fileID: 0}
+  _jump: {fileID: 0}

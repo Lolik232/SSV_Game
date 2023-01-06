@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 6102479093100682634}
   - component: {fileID: 3755585702244668893}
   - component: {fileID: 524419237848015427}
+  - component: {fileID: 7794222384273985193}
   m_Layer: 10
   m_Name: Dummy
   m_TagString: Untagged
@@ -154,6 +155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40de2f0ceb896b24283f6cda06194d0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _audio: {fileID: 11400000, guid: c68e5e69deb34574ca39131706cf552b, type: 2}
 --- !u!114 &1041264271751596699
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -166,7 +168,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56c622b16e5d29241810216118426762, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: 100
+  Damaged:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8923049773883233930}
+        m_TargetAssemblyTypeName: Rotateable, Assembly-CSharp
+        m_MethodName: LookAt
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  Died:
+    m_PersistentCalls:
+      m_Calls: []
+  _didHealthChangeEventChannelSo: {fileID: 0}
+  _startHealth: 100
 --- !u!114 &2439350024075074900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -347,6 +368,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &7794222384273985193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1837904100336767985}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4d7569a4fa748e496d35b6e3f7bc08e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spells: []
+  _spellFilterSO: {fileID: 0}
+  _exclusiveTableSO: {fileID: 0}
 --- !u!1001 &903591865431232984
 PrefabInstance:
   m_ObjectHideFlags: 0

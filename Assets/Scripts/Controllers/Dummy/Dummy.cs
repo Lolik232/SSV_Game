@@ -6,8 +6,10 @@ using UnityEngine;
 
 [RequireComponent(typeof(DummyGroundedState), typeof(DummyInAirState))]
 
-public class Dummy : Entity, IPhysical, IRotateable, IDamageable,
-                             IGrounded
+public class Dummy : Entity,
+                     IPhysical, 
+                     IRotateable,
+                     IGrounded
 {
     private GroundChecker _groundChecker;
 
@@ -99,11 +101,11 @@ public class Dummy : Entity, IPhysical, IRotateable, IDamageable,
         ((IRotateable)_rotateable).RotateIntoDirection(direction);
     }
 
-    public void TakeDamage(float damage, Vector2 attackPoint)
-    {
-        LookAt(attackPoint);
-        ((IDamageable)_damageable).TakeDamage(damage, attackPoint);
-    }
+    // public void TakeDamage(float damage, Vector2 attackPoint)
+    // {
+    //     LookAt(attackPoint);
+    //     ((IDamageable)_damageable).TakeDamage(damage, attackPoint);
+    // }
 
     public void UnlockRotation()
     {

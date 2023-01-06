@@ -1,11 +1,15 @@
 ﻿using System;
 using All.Events;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Serialization;
 
 [RequireComponent(typeof(DeadState))]
 public class Damageable : Component, IDamageable
 {
+    public UnityEvent<Vector2> Damaged = default;
+    public UnityEvent          Died    = default;
+
     [SerializeField] private HealthEventChannelSO _didHealthChangeEventChannelSo = default;
     
     [FormerlySerializedAs("_health")] [SerializeField] private float _startHealth;
@@ -15,6 +19,8 @@ public class Damageable : Component, IDamageable
     private DeadState _deadState;
     private Animator _anim;
 
+    // TODO: create events 
+    private Entity _entity;
     public float MaxHealth
     {
         get;
@@ -37,9 +43,10 @@ public class Damageable : Component, IDamageable
 
     private void Awake()
     {
-        _machine = GetComponent<StateMachine>();
+        _machine   = GetComponent<StateMachine>();
         _deadState = GetComponent<DeadState>();
-        _anim = GetComponent<Animator>();
+        _anim      = GetComponent<Animator>();
+        _entity    = GetComponent<Entity>();
 
         MaxHealth = _startHealth;
         Health = _startHealth;
@@ -70,7 +77,20 @@ public class Damageable : Component, IDamageable
 
         Health = Mathf.Clamp(Health - damage, 0, MaxHealth);
         Debug.Log(this + " Health: " + Health);
+        
+        Damaged?.Invoke(attackPoint);
+        
+        //TODO: fix this code...
+        #region code to refactoring
 
+        var hitSound = _entity.Audio.HitSound;
+        if (hitSound != null)
+        {
+            _entity.Source.PlayOneShot(hitSound);
+        }
+        
+        #endregion
+        
         if (Health == 0)
         {
             OnDead();
@@ -85,5 +105,6 @@ public class Damageable : Component, IDamageable
     {
         IsDead = true;
         _machine.GetTransition(_deadState);
+        Died?.Invoke();
     }
 }

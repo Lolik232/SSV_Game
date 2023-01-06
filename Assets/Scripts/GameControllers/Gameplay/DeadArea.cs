@@ -6,12 +6,10 @@ public class DeadArea : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Entity entity = collision.GetComponent<Entity>();
-
-        if (entity is IDamageable)
+        if (collision.TryGetComponent<Damageable>(out var damageable))
         {
-            var damageable = entity as IDamageable;
-            damageable.TakeDamage(damageable.Health, transform.position);
+            damageable.TakeDamage(damageable.Health,
+                                  transform.position);
         }
     }
 }

@@ -276,6 +276,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56c622b16e5d29241810216118426762, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Damaged:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 917918444699001965}
+        m_TargetAssemblyTypeName: Rotateable, Assembly-CSharp
+        m_MethodName: LookAt
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  Died:
+    m_PersistentCalls:
+      m_Calls: []
   _didHealthChangeEventChannelSo: {fileID: 0}
   _startHealth: 150
 --- !u!114 &9184122244981123963
@@ -328,6 +346,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a71cb02e31b1f98479c7a4acb3f95ae7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _audio: {fileID: 11400000, guid: 21408874798b5174a9f1390ed941d4c4, type: 2}
 --- !u!114 &9064478950505191541
 MonoBehaviour:
   m_ObjectHideFlags: 0

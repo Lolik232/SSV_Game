@@ -56,7 +56,6 @@ GameObject:
   - component: {fileID: 745683197121119685}
   - component: {fileID: 7127529741881988708}
   - component: {fileID: -3732219779705251845}
-  - component: {fileID: 4908588619935511770}
   - component: {fileID: 7656289285633951347}
   - component: {fileID: 6429904734341296822}
   - component: {fileID: 5513969224647444367}
@@ -66,6 +65,7 @@ GameObject:
   - component: {fileID: 431889317679443203}
   - component: {fileID: 5240224390174223817}
   - component: {fileID: 1289277255038843405}
+  - component: {fileID: 5136607496674558344}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -969,20 +969,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: dead
---- !u!114 &4908588619935511770
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 16557013547266712}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5bc956ee196fa34d9849921a1018d1f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playerDiedChannel: {fileID: 11400000, guid: f20abbdf3b757404b81a7adf0c651106, type: 2}
-  _hitSound: {fileID: 8300000, guid: 0b845bf7b0919fa45ba45e390ea1706c, type: 3}
 --- !u!114 &7656289285633951347
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -995,6 +981,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56c622b16e5d29241810216118426762, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Damaged:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2135678407702807999}
+        m_TargetAssemblyTypeName: Rotateable, Assembly-CSharp
+        m_MethodName: LookAt
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  Died:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5136607496674558344}
+        m_TargetAssemblyTypeName: All.Gameplay.PlayerRespawnInitiator, Assembly-CSharp
+        m_MethodName: Respawn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _didHealthChangeEventChannelSo: {fileID: 11400000, guid: cd63f4189f9bfae429150a6e9de81387, type: 2}
   _startHealth: 300
 --- !u!114 &6429904734341296822
@@ -1128,6 +1144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5bc956ee196fa34d9849921a1018d1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _audio: {fileID: 11400000, guid: 7321ede38fbf6db40998aa79fbc9ea47, type: 2}
   _playerDiedChannel: {fileID: 11400000, guid: f20abbdf3b757404b81a7adf0c651106, type: 2}
   _hitSound: {fileID: 8300000, guid: 949b5eafbd93a05428e57e1db0427ba2, type: 3}
 --- !u!114 &10410966333511330
@@ -1193,6 +1210,19 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   _targetDetectRadius: 12
+--- !u!114 &5136607496674558344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16557013547266712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f7de1271a024954b02df2a81a6e41c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sceneRestartEventChannelSO: {fileID: 11400000, guid: f20abbdf3b757404b81a7adf0c651106, type: 2}
 --- !u!1 &1126451087426500185
 GameObject:
   m_ObjectHideFlags: 0
@@ -2547,14 +2577,41 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8102075181438412010, guid: 85541185c3b67904c80dc7e83ab0c41e, type: 3}
       propertyPath: EntityHit.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8102075181438412010, guid: 85541185c3b67904c80dc7e83ab0c41e, type: 3}
+      propertyPath: EntityHit.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 170931938231020279}
     - target: {fileID: 8102075181438412010, guid: 85541185c3b67904c80dc7e83ab0c41e, type: 3}
       propertyPath: EntityHit.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 8102075181438412010, guid: 85541185c3b67904c80dc7e83ab0c41e, type: 3}
+      propertyPath: EntityHit.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Apply
+      objectReference: {fileID: 0}
+    - target: {fileID: 8102075181438412010, guid: 85541185c3b67904c80dc7e83ab0c41e, type: 3}
+      propertyPath: EntityHit.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Systems.SpellSystem.SpellEffect.SpellApplier, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8102075181438412010, guid: 85541185c3b67904c80dc7e83ab0c41e, type: 3}
+      propertyPath: EntityHit.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 85541185c3b67904c80dc7e83ab0c41e, type: 3}
+--- !u!114 &170931938231020279 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3610886207290022470, guid: 85541185c3b67904c80dc7e83ab0c41e, type: 3}
+  m_PrefabInstance: {fileID: 3477680988587716785}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fce9c7f15dde483eb50cc4cfcc2a791c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1037361262577632613 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4478344929916401108, guid: 85541185c3b67904c80dc7e83ab0c41e, type: 3}

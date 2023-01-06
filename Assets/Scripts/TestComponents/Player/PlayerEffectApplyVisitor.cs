@@ -5,6 +5,7 @@ using Systems.SpellSystem.SpellEffect.Actions;
 using Unity.VisualScripting;
 using UnityEngine;
 
+[RequireComponent(typeof(Player))]
 public class PlayerEffectApplyVisitor : MonoBehaviour, ISpellEffectActionApplier
 {
     private          Player                  _player;

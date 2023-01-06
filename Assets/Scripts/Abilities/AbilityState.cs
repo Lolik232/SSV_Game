@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public abstract class AbilityState<AbilityT> : StateBase where AbilityT : Ability
@@ -24,14 +25,11 @@ public abstract class AbilityState<AbilityT> : StateBase where AbilityT : Abilit
 
     protected override void TryGetTransition()
     {
-        foreach (var transition in Transitions)
+        foreach (var transition in Transitions.Where(transition => transition.condition()))
         {
-            if (transition.condition())
-            {
-                transition.action?.Invoke();
-                Ability.GetTransition(transition.target);
-                return;
-            }
+            transition.actions.ForEach(a => a.Invoke());
+            Ability.GetTransition(transition.target);
+            return;
         }
     }
 }

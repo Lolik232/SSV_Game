@@ -1,51 +1,42 @@
 ﻿using System.Collections;
-
 using All.Events;
 using All.Interfaces;
-
 using Systems.SpellSystem.SpellEffect.Actions;
-
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
-
 [RequireComponent(typeof(WallChecker), typeof(GroundChecker), typeof(CeilChecker))]
 [RequireComponent(typeof(LedgeChecker))]
-
 [RequireComponent(typeof(Physical), typeof(Movable), typeof(Crouchable))]
 [RequireComponent(typeof(Rotateable), typeof(Damageable), typeof(Power))]
-
 [RequireComponent(typeof(PlayerInputReader))]
-
 [RequireComponent(typeof(PlayerGroundedState), typeof(PlayerInAirState), typeof(PlayerTouchingWallState))]
 [RequireComponent(typeof(PlayerOnLedgeState))]
-
 [RequireComponent(typeof(MoveHorizontalAbility), typeof(MoveOnWallAbility))]
 [RequireComponent(typeof(LedgeClimbAbility))]
 [RequireComponent(typeof(CrouchAbility))]
 [RequireComponent(typeof(JumpAbility))]
 [RequireComponent(typeof(DashAbility))]
 [RequireComponent(typeof(AttackAbility))]
-
 [RequireComponent(typeof(PlayerEffectApplyVisitor))]
-
 public class Player : Entity, IPhysical, IMovable, ICrouchable, IRotateable,
-                              IGrounded, ITouchingWall, ITouchingCeiling, ITouchingLedge, IDamageable, IPower
+                      IGrounded, ITouchingWall, ITouchingCeiling, 
+                      ITouchingLedge, IPower
 {
     [SerializeField] private VoidEventChannelSO _playerDiedChannel = default;
-    [SerializeField] private AudioClip _hitSound;
+    [SerializeField] private AudioClip          _hitSound;
 
-    private WallChecker _wallChecker;
+    private WallChecker   _wallChecker;
     private GroundChecker _groundChecker;
-    private CeilChecker _ceilChecker;
-    private LedgeChecker _ledgeChecker;
+    private CeilChecker   _ceilChecker;
+    private LedgeChecker  _ledgeChecker;
 
-    private Physical _physical;
-    private Movable _movable;
+    private Physical   _physical;
+    private Movable    _movable;
     private Crouchable _crouchable;
     private Rotateable _rotateable;
     private Damageable _damageable;
-    private Power _power;
+    private Power      _power;
 
     public PlayerInputReader Behaviour
     {
@@ -114,7 +105,8 @@ public class Player : Entity, IPhysical, IMovable, ICrouchable, IRotateable,
 
     public PlayerEffectApplyVisitor PlayerEffectApplyVisitor
     {
-        get; private set;
+        get;
+        private set;
     }
 
     public Vector2 Position => ((IPhysical)_physical).Position;
@@ -224,15 +216,7 @@ public class Player : Entity, IPhysical, IMovable, ICrouchable, IRotateable,
 
     public void OnDead()
     {
-        ((IDamageable)_damageable).OnDead();
         _playerDiedChannel.RaiseEvent();
-
-        StartCoroutine(AfterDeadTimeOut());
-    }
-
-    private IEnumerator AfterDeadTimeOut()
-    {
-        yield return new WaitForSeconds(2f);
     }
 
     public IEnumerator Push(float force, Vector2 angle)
@@ -320,18 +304,6 @@ public class Player : Entity, IPhysical, IMovable, ICrouchable, IRotateable,
         ((ICrouchable)_crouchable).Stand();
     }
 
-    public void TakeDamage(float damage, Vector2 attackPoint)
-    {
-        LookAt(attackPoint);
-
-        if (_hitSound != null)
-        {
-            Source.PlayOneShot(_hitSound, 1f);
-        }
-
-        ((IDamageable)_damageable).TakeDamage(damage, attackPoint);
-    }
-
     public void UnlockPosition()
     {
         ((IMovable)_movable).UnlockPosition();
@@ -351,32 +323,32 @@ public class Player : Entity, IPhysical, IMovable, ICrouchable, IRotateable,
     {
         base.Awake();
 
-        _wallChecker = GetComponent<WallChecker>();
-        _ledgeChecker = GetComponent<LedgeChecker>();
-        _ceilChecker = GetComponent<CeilChecker>();
+        _wallChecker   = GetComponent<WallChecker>();
+        _ledgeChecker  = GetComponent<LedgeChecker>();
+        _ceilChecker   = GetComponent<CeilChecker>();
         _groundChecker = GetComponent<GroundChecker>();
 
-        _physical = GetComponent<Physical>();
-        _movable = GetComponent<Movable>();
+        _physical   = GetComponent<Physical>();
+        _movable    = GetComponent<Movable>();
         _rotateable = GetComponent<Rotateable>();
         _crouchable = GetComponent<Crouchable>();
         _damageable = GetComponent<Damageable>();
-        _power = GetComponent<Power>();
+        _power      = GetComponent<Power>();
 
         Behaviour = GetComponent<PlayerInputReader>();
 
-        GroundedState = GetComponent<PlayerGroundedState>();
-        InAirState = GetComponent<PlayerInAirState>();
+        GroundedState     = GetComponent<PlayerGroundedState>();
+        InAirState        = GetComponent<PlayerInAirState>();
         TouchingWallState = GetComponent<PlayerTouchingWallState>();
-        OnLedgeState = GetComponent<PlayerOnLedgeState>();
+        OnLedgeState      = GetComponent<PlayerOnLedgeState>();
 
         MoveHorizontalAbility = GetComponent<MoveHorizontalAbility>();
-        MoveVerticalAbility = GetComponent<MoveOnWallAbility>();
-        JumpAbility = GetComponent<JumpAbility>();
-        CrouchAbility = GetComponent<CrouchAbility>();
-        LedgeClimbAbility = GetComponent<LedgeClimbAbility>();
-        DashAbility = GetComponent<DashAbility>();
-        AttackAbility = GetComponent<AttackAbility>();
+        MoveVerticalAbility   = GetComponent<MoveOnWallAbility>();
+        JumpAbility           = GetComponent<JumpAbility>();
+        CrouchAbility         = GetComponent<CrouchAbility>();
+        LedgeClimbAbility     = GetComponent<LedgeClimbAbility>();
+        DashAbility           = GetComponent<DashAbility>();
+        AttackAbility         = GetComponent<AttackAbility>();
 
         PlayerEffectApplyVisitor = GetComponent<PlayerEffectApplyVisitor>();
     }

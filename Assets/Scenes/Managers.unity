@@ -244,6 +244,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _saveSettingsEventChannelSO: {fileID: 11400000, guid: 03e464b9efe0c4c49bddff3551926ffc, type: 2}
+  _resetSettingsEventChannelSO: {fileID: 0}
   _saveSystem: {fileID: 11400000, guid: ca5a00e8b8acb964cb88e77d41600973, type: 2}
   _currentSettings: {fileID: 11400000, guid: f6eb78f1a31f6c3488200d318a9a6368, type: 2}
   _defaultSettings: {fileID: 11400000, guid: 45ed7c9c5922dcc45b021434e3abae82, type: 2}
@@ -279,8 +280,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77c3c7e057e442f9b00a9395cfd313e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _currentLocation: {fileID: 0}
   _locationLoadEventChannelSO: {fileID: 11400000, guid: efcd5361b4da801408cb91de1a0effaa, type: 2}
-  _onDeadEventChannelSO: {fileID: 11400000, guid: f20abbdf3b757404b81a7adf0c651106, type: 2}
+  _sceneRestartEventChannelSO: {fileID: 11400000, guid: f20abbdf3b757404b81a7adf0c651106, type: 2}
   _saveSystem: {fileID: 11400000, guid: ca5a00e8b8acb964cb88e77d41600973, type: 2}
 --- !u!4 &531009727
 Transform:

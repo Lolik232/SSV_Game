@@ -13,9 +13,9 @@ using UnityEngine;
 [RequireComponent(typeof(Damageable))]
 [RequireComponent(typeof(SkeletonWarriorBehaviour))]
 [RequireComponent(typeof(MoveHorizontalAbility), typeof(AttackAbility))]
-public class SkeletonWarrior : Entity, IPhysical, IRotateable, IMovable, IDamageable,
-                               IGrounded, ITouchingWall, ITouchingEdge, ITargetChecker, IAttackChecker,
-                               ISpellEffectActionVisitor
+public class SkeletonWarrior : Entity, IPhysical, IMovable, IRotateable,
+                               IGrounded, ITouchingWall, ITouchingEdge,
+                               ITargetChecker, IAttackChecker
 {
     private GroundChecker _groundChecker;
     private WallChecker   _wallChecker;
@@ -54,12 +54,6 @@ public class SkeletonWarrior : Entity, IPhysical, IRotateable, IMovable, IDamage
         private set;
     }
     public Inventory Inventory
-    {
-        get;
-        private set;
-    }
-
-    public ISpellEffectActionVisitor SkeleteonSpellApplyVisitor
     {
         get;
         private set;
@@ -228,11 +222,11 @@ public class SkeletonWarrior : Entity, IPhysical, IRotateable, IMovable, IDamage
         ((IMovable)_movable).SetVelocityY(Y);
     }
 
-    public void TakeDamage(float damage, Vector2 attackPoint)
-    {
-        LookAt(attackPoint);
-        ((IDamageable)_damageable).TakeDamage(damage, attackPoint);
-    }
+    // public void TakeDamage(float damage, Vector2 attackPoint)
+    // {
+    //     LookAt(attackPoint);
+    //     ((IDamageable)_damageable).TakeDamage(damage, attackPoint);
+    // }
 
     public void UnlockPosition()
     {
@@ -273,22 +267,10 @@ public class SkeletonWarrior : Entity, IPhysical, IRotateable, IMovable, IDamage
         AttackAbility         = GetComponent<AttackAbility>();
 
         Inventory = GetComponentInChildren<Inventory>();
-
-        SkeleteonSpellApplyVisitor = GetComponent<SkeletonEffectApplyVisitor>();
     }
 
     private void Start()
     {
         RotateIntoDirection(-1);
-    }
-
-    public void Visit(DamageAction damageAction)
-    {
-        SkeleteonSpellApplyVisitor.Visit(damageAction);
-    }
-
-    public void Visit(BlockAbilityAction blockAbilityAction)
-    {
-        SkeleteonSpellApplyVisitor.Visit(blockAbilityAction);
     }
 }

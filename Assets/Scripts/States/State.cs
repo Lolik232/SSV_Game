@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-
+using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(StateMachine))]
@@ -31,14 +31,11 @@ public abstract class State : StateBase
 
     protected override void TryGetTransition()
     {
-        foreach (var transition in Transitions)
+        foreach (var transition in Transitions.Where(transition => transition.condition()))
         {
-            if (transition.condition())
-            {
-                transition.action?.Invoke();
-                Machine.GetTransition(transition.target);
-                return;
-            }
+            transition.actions.ForEach(a => a?.Invoke());
+            Machine.GetTransition(transition.target);
+            return;
         }
     }
 

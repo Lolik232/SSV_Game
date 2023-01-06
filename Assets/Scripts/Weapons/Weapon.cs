@@ -81,7 +81,7 @@ public abstract class Weapon : ComponentBase
                 entity.StartCoroutine(physical.Push(force, physical.Center - this.attackPoint));
             }
 
-            if (entity is IDamageable damageable)
+            if (entity.TryGetComponent<Damageable>(out var damageable))
             {
                 if (!damageable.IsDead)
                 {
